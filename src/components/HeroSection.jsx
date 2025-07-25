@@ -115,7 +115,7 @@ const HeroSection = () => {
       {/* Left Section */}
       <div className="flex-1 min-w-[500px] flex flex-col justify-center hero-left">
         <h1 className="font-inter font-bold text-5xl text-gray-900 m-0 animate-fadeInUp" style={{ animationDuration: '0.6s' }}>
-          Find Your <span className="text-red-500">Ideal</span>
+          Find Your <span className="text-red-500">Idealll</span>
         </h1>
         <h1 className="font-inter font-bold text-5xl text-gray-900 m-0 animate-fadeInUp" style={{ animationDuration: '0.7s' }}>Course, Build</h1>
         <h1 className="font-inter font-bold text-5xl text-blue-600 mb-6 animate-fadeInUp" style={{ animationDuration: '0.8s' }}>Skills</h1>
