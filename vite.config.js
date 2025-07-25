@@ -1,13 +1,18 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  base: '/',  // ← Critical for Vercel
   build: {
+    outDir: 'dist',
+    emptyOutDir: true,
     rollupOptions: {
-      // ❌ Remove 'react-router-dom' from external
-      external: [], // Keep empty unless you have a specific reason
-    },
+      input: './index.html'  // ← Ensures HTML processing
+    }
   },
-})
+  server: {
+    historyApiFallback: true  // ← For client-side routing
+  }
+});

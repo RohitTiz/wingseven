@@ -1,15 +1,16 @@
-// src/main.jsx
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import App from './App.jsx'
-import './index.css'
-import './App.css'
-//css
-ReactDOM.createRoot(document.getElementById('root')).render(
+import App from './App.jsx';
+import './index.css';
+import './App.css';
+
+const root = createRoot(document.getElementById('root'));
+
+root.render(
   <React.StrictMode>
-    <BrowserRouter></BrowserRouter>
-    <App />
+    <BrowserRouter> {/* This is the ONLY Router in your app */}
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
-
