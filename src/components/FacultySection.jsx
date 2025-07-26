@@ -20,6 +20,17 @@ const FacultySection = () => {
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -30,6 +41,10 @@ const FacultySection = () => {
   }, [facultyData.length]);
 
   const getPositionClass = (index) => {
+    if (isMobile) {
+      return index === activeIndex ? 'center' : 'hidden';
+    }
+    
     const diff = (index - activeIndex + facultyData.length) % facultyData.length;
 
     if (diff === 0) return 'center';
@@ -40,17 +55,28 @@ const FacultySection = () => {
   };
 
   return (
-    <div style={{ padding: '70px 20px', textAlign: 'center', background: '#fff' }}>
+    <div style={{ 
+      padding: isMobile ? '40px 20px' : '70px 20px', 
+      textAlign: 'center', 
+      background: '#fff',
+      overflow: 'hidden'
+    }}>
       <h2 style={{
-        fontSize: '2.2rem',
+        fontSize: isMobile ? '1.8rem' : '2.2rem',
         fontWeight: 'bold',
         color: '#1b3a57',
-        marginBottom: '90px' // Increased from 50px to 90px to add 40px more spacing
+        marginBottom: isMobile ? '40px' : '90px'
       }}>
         OUR FACULTY
       </h2>
 
-      <div style={{ position: 'relative', height: '350px', width: '100%', maxWidth: '880px', margin: '0 auto' }}>
+      <div style={{ 
+        position: 'relative', 
+        height: isMobile ? '300px' : '350px', 
+        width: '100%', 
+        maxWidth: '880px', 
+        margin: '0 auto',
+      }}>
         {facultyData.map((faculty, index) => {
           const position = getPositionClass(index);
 
@@ -74,7 +100,7 @@ const FacultySection = () => {
           } else if (position === 'center') {
             containerStyle = {
               ...containerStyle,
-              transform: 'translateX(-50%) scale(1.4)', // Bigger for center
+              transform: 'translateX(-50%) scale(1.4)',
               opacity: 1,
               zIndex: 2,
             };
@@ -87,7 +113,9 @@ const FacultySection = () => {
             };
           }
 
-          const imageSize = position === 'center' ? '208px' : '176px'; // 30% larger for center
+          const imageSize = position === 'center' 
+            ? (isMobile ? '160px' : '208px') 
+            : (isMobile ? '120px' : '176px');
 
           return (
             <div key={index} style={containerStyle}>
@@ -115,11 +143,24 @@ const FacultySection = () => {
               </div>
 
               {position === 'center' && (
-                <div style={{ marginTop: '20px' }}>
-                  <h3 style={{ fontWeight: 'bold', color: '#1b3a57', fontSize: '1.32rem', margin: 0 }}>
+                <div style={{ 
+                  marginTop: '20px',
+                  padding: isMobile ? '0 20px' : '0'
+                }}>
+                  <h3 style={{ 
+                    fontWeight: 'bold', 
+                    color: '#1b3a57', 
+                    fontSize: isMobile ? '1.1rem' : '1.32rem', 
+                    margin: 0 
+                  }}>
                     {faculty.name}
                   </h3>
-                  <p style={{ fontStyle: 'italic', color: '#666', fontSize: '1.1rem', margin: 0 }}>
+                  <p style={{ 
+                    fontStyle: 'italic', 
+                    color: '#666', 
+                    fontSize: isMobile ? '0.9rem' : '1.1rem', 
+                    margin: '5px 0 0' 
+                  }}>
                     {faculty.role}
                   </p>
                 </div>
@@ -128,6 +169,32 @@ const FacultySection = () => {
           );
         })}
       </div>
+
+      {isMobile && (
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '20px',
+          gap: '10px'
+        }}>
+          {facultyData.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveIndex(index)}
+              style={{
+                width: '12px',
+                height: '12px',
+                borderRadius: '50%',
+                border: 'none',
+                backgroundColor: index === activeIndex ? '#1b3a57' : '#ccc',
+                cursor: 'pointer',
+                padding: 0
+              }}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
