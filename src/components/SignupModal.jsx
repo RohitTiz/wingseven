@@ -72,33 +72,35 @@ const ForgotPasswordModal = ({ onClose, onBack }) => {
   };
 
   return (
-    <div className="fixed inset-0 backdrop-blur-sm flex justify-center items-center z-50">
-      <div className="bg-gradient-to-b from-blue-50 to-white rounded-2xl p-8 w-full max-w-sm text-center relative shadow-lg">
+    <div className="fixed inset-0 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+      <div className="bg-gradient-to-b from-blue-50 to-white rounded-2xl p-6 w-full max-w-sm text-center relative shadow-lg">
         <button 
           onClick={onBack} 
-          className="absolute top-5 left-5 bg-transparent border-none text-gray-500 text-lg cursor-pointer"
+          className="absolute top-4 left-4 bg-transparent border-none text-gray-500 text-lg cursor-pointer"
+          aria-label="Go back"
         >
           ←
         </button>
         <button 
           onClick={onClose} 
-          className="absolute top-5 right-5 bg-transparent border-none text-gray-500 text-xl cursor-pointer"
+          className="absolute top-4 right-4 bg-transparent border-none text-gray-500 text-xl cursor-pointer"
+          aria-label="Close modal"
         >
           ×
         </button>
         
         {step === 'phone' ? (
           <>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Forgot Password?</h2>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Forgot Password?</h2>
+            <p className="text-xs md:text-sm text-gray-500 mb-6 leading-relaxed">
               Enter your phone number and we'll send you an OTP to reset your password
             </p>
             
-            <div className="flex gap-2 mb-4">
+            <div className="flex flex-col md:flex-row gap-2 mb-4">
               <select
                 value={countryCode}
                 onChange={e => setCountryCode(e.target.value)}
-                className="w-28 p-3 rounded-xl border border-gray-300 text-sm outline-none bg-gray-50 cursor-pointer"
+                className="w-full md:w-28 p-3 rounded-xl border border-gray-300 text-sm outline-none bg-gray-50 cursor-pointer"
               >
                 {popularCountries.map(country => (
                   <option key={country.code} value={country.code}>
@@ -111,21 +113,22 @@ const ForgotPasswordModal = ({ onClose, onBack }) => {
                 placeholder="Phone number"
                 value={phoneNumber}
                 onChange={e => setPhoneNumber(e.target.value)}
-                className="flex-1 p-3 rounded-xl border border-gray-300 text-sm outline-none"
+                className="w-full p-3 rounded-xl border border-gray-300 text-sm outline-none"
+                inputMode="numeric"
               />
             </div>
             
             <button 
               onClick={handleSendOtp}
-              className="w-full p-3 bg-gray-900 text-white border-none rounded-xl text-sm font-semibold cursor-pointer"
+              className="w-full p-3 bg-gray-900 text-white border-none rounded-xl text-sm font-semibold cursor-pointer hover:bg-gray-800 transition-colors"
             >
               Send OTP
             </button>
           </>
         ) : (
           <>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Enter OTP</h2>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Enter OTP</h2>
+            <p className="text-xs md:text-sm text-gray-500 mb-6 leading-relaxed">
               We've sent a 6-digit code to {countryCode} {phoneNumber}
             </p>
             
@@ -137,27 +140,28 @@ const ForgotPasswordModal = ({ onClose, onBack }) => {
                   type="text"
                   value={digit}
                   onChange={e => handleOtpChange(index, e.target.value)}
-                  className="w-10 h-12 rounded-xl border-2 border-gray-300 text-lg text-center outline-none font-semibold"
+                  className="w-10 h-12 rounded-xl border-2 border-gray-300 text-lg text-center outline-none font-semibold focus:border-gray-900"
                   maxLength="1"
+                  inputMode="numeric"
                 />
               ))}
             </div>
             
             <button 
               onClick={handleVerifyOtp}
-              className="w-full p-3 bg-gray-900 text-white border-none rounded-xl text-sm font-semibold cursor-pointer"
+              className="w-full p-3 bg-gray-900 text-white border-none rounded-xl text-sm font-semibold cursor-pointer hover:bg-gray-800 transition-colors"
             >
               Verify OTP
             </button>
             
-            <div className="text-sm text-gray-500 mt-4">
+            <div className="text-xs md:text-sm text-gray-500 mt-4">
               {canResend ? (
-                <span 
+                <button
                   onClick={handleResend}
-                  className="text-blue-500 cursor-pointer"
+                  className="text-blue-500 cursor-pointer hover:text-blue-600 focus:outline-none"
                 >
                   Resend OTP
-                </span>
+                </button>
               ) : (
                 `Resend OTP in ${timer}s`
               )}
@@ -249,21 +253,21 @@ const SignupModal = ({ onClose, onSignUp }) => {
 
   if (user) {
     return (
-      <div className="fixed inset-0 backdrop-blur-sm flex justify-center items-center z-[4000] animate-fadeIn">
-        <div className="bg-white rounded-2xl p-8 text-center shadow-lg max-w-sm w-[90%] transform transition-all animate-popIn">
+      <div className="fixed inset-0 backdrop-blur-sm flex justify-center items-center z-[4000] animate-fadeIn p-4">
+        <div className="bg-white rounded-2xl p-6 text-center shadow-lg max-w-sm w-full transform transition-all animate-popIn">
           <div className="text-5xl text-green-500 mb-4 animate-bounce">✓</div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-3">
+          <h2 className="text-lg md:text-xl font-semibold text-gray-900 mb-3">
             {activeTab === 'signup' ? 'Successfully Registered!' : 'Successfully Logged In!'}
           </h2>
           <div className="my-4">
             <ProfileAvatar user={user} onSignOut={handleSignOut} />
           </div>
-          <p className="text-gray-500 mb-5">
+          <p className="text-sm text-gray-500 mb-5">
             Welcome back, {user.name}!
           </p>
           <button
             onClick={onClose}
-            className="px-5 py-2.5 bg-gray-900 text-white border-none rounded-lg text-sm font-semibold cursor-pointer"
+            className="px-5 py-2.5 bg-gray-900 text-white border-none rounded-lg text-sm font-semibold cursor-pointer hover:bg-gray-800 transition-colors"
           >
             Continue
           </button>
@@ -305,17 +309,28 @@ const SignupModal = ({ onClose, onSignUp }) => {
           -ms-overflow-style: none;
           scrollbar-width: none;
         }
+        /* Better mobile input zoom behavior */
+        @media screen and (max-width: 640px) {
+          input, select, textarea {
+            font-size: 16px !important;
+          }
+          input[type="text"],
+          input[type="password"],
+          input[type="email"],
+          input[type="tel"] {
+            min-height: 44px; /* Better touch target */
+          }
+        }
       `}</style>
       
-      {/* CHANGED: Increased backdrop blur effect by 20% (from backdrop-blur-sm to backdrop-blur) */}
-      <div className="fixed inset-0 backdrop-blur flex justify-center items-center z-[2000]">
-        {/* CHANGED: Increased height of register page by 15px (from h-[580px] to h-[595px] and h-[520px] to h-[535px]) */}
-        <div className={`bg-gradient-to-b from-blue-50 to-white rounded-2xl p-6 w-full max-w-[85%] sm:max-w-md text-center shadow-lg relative flex flex-col no-scrollbar ${
-          activeTab === 'signup' ? 'h-[640px]' : 'h-[580px]'
+      <div className="fixed inset-0 backdrop-blur flex justify-center items-center z-[2000] p-4">
+        <div className={`bg-gradient-to-b from-blue-50 to-white rounded-2xl p-6 w-full max-w-md text-center shadow-lg relative flex flex-col no-scrollbar ${
+          activeTab === 'signup' ? 'min-h-[580px] max-h-[90vh]' : 'min-h-[520px] max-h-[90vh]'
         }`}>
           <button 
             onClick={onClose} 
-            className="absolute -top-6 -right-6 bg-transparent border-none text-gray-600 text-xl cursor-pointer z-[2100]"
+            className="absolute -top-6 -right-6 bg-white border border-gray-200 rounded-full w-10 h-10 flex items-center justify-center text-gray-600 text-xl cursor-pointer z-[2100] shadow-md hover:bg-gray-100 transition-colors"
+            aria-label="Close modal"
           >
             ×
           </button>
@@ -323,26 +338,26 @@ const SignupModal = ({ onClose, onSignUp }) => {
           <div className="flex justify-center bg-gray-200 rounded-full mb-5 overflow-hidden">
             <button
               onClick={() => setActiveTab('login')}
-              className={`px-5 py-2 ${
+              className={`px-4 py-2 ${
                 activeTab === 'login' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-500'
-              } border-none font-semibold rounded-full cursor-pointer transition-all text-sm flex-1`}
+              } border-none font-semibold rounded-full cursor-pointer transition-all text-sm flex-1 hover:bg-gray-300`}
             >
               Login
             </button>
             <button
               onClick={() => setActiveTab('signup')}
-              className={`px-5 py-2 ${
+              className={`px-4 py-2 ${
                 activeTab === 'signup' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-500'
-              } border-none font-semibold rounded-full cursor-pointer transition-all text-sm flex-1`}
+              } border-none font-semibold rounded-full cursor-pointer transition-all text-sm flex-1 hover:bg-gray-300`}
             >
               Register
             </button>
           </div>
 
-          <h2 className="text-xl font-bold text-gray-900 mb-1">
+          <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-1">
             {activeTab === 'signup' ? 'Create Account' : 'Welcome Back'}
           </h2>
-          <p className="text-sm text-gray-500 mb-5 leading-relaxed">
+          <p className="text-xs md:text-sm text-gray-500 mb-5 leading-relaxed">
             {activeTab === 'signup' 
               ? 'Please fill in your details to get started'
               : 'Sign in to continue to your account'
@@ -350,7 +365,7 @@ const SignupModal = ({ onClose, onSignUp }) => {
           </p>
 
           <div className="flex-1 overflow-y-auto no-scrollbar px-2">
-            <div className="max-w-xs mx-auto">
+            <div className="max-w-xs mx-auto w-full">
               {activeTab === 'signup' && (
                 <>
                   <input
@@ -358,14 +373,14 @@ const SignupModal = ({ onClose, onSignUp }) => {
                     placeholder="First name"
                     value={firstName}
                     onChange={e => setFirstName(e.target.value)}
-                    className="w-full p-2.5 rounded-xl border border-gray-300 text-sm outline-none mb-3"
+                    className="w-full p-3 rounded-xl border border-gray-300 text-sm outline-none mb-3 focus:border-gray-900"
                   />
                   <input
                     type="text"
                     placeholder="Last name"
                     value={lastName}
                     onChange={e => setLastName(e.target.value)}
-                    className="w-full p-2.5 rounded-xl border border-gray-300 text-sm outline-none mb-3"
+                    className="w-full p-3 rounded-xl border border-gray-300 text-sm outline-none mb-3 focus:border-gray-900"
                   />
                 </>
               )}
@@ -375,15 +390,16 @@ const SignupModal = ({ onClose, onSignUp }) => {
                 placeholder={activeTab === 'signup' ? 'Enter your email' : 'Enter your email'}
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="w-full p-2.5 rounded-xl border border-gray-300 text-sm outline-none mb-3"
+                className="w-full p-3 rounded-xl border border-gray-300 text-sm outline-none mb-3 focus:border-gray-900"
+                inputMode="email"
               />
 
               {activeTab === 'signup' && (
-                <div className="flex mb-3 gap-2">
+                <div className="flex flex-col md:flex-row mb-3 gap-2">
                   <select
                     value={countryCode}
                     onChange={e => setCountryCode(e.target.value)}
-                    className="w-24 p-2 rounded-xl border border-gray-300 text-sm outline-none bg-gray-50 text-gray-700 cursor-pointer text-center"
+                    className="w-full md:w-24 p-3 rounded-xl border border-gray-300 text-sm outline-none bg-gray-50 text-gray-700 cursor-pointer"
                   >
                     {popularCountries.map(country => (
                       <option key={country.code} value={country.code}>
@@ -397,13 +413,10 @@ const SignupModal = ({ onClose, onSignUp }) => {
                     placeholder="Phone number"
                     value={phoneNumber}
                     onChange={e => setPhoneNumber(e.target.value)}
-                    className="flex-1 p-2.5 rounded-xl border border-gray-300 text-sm outline-none"
+                    className="w-full p-3 rounded-xl border border-gray-300 text-sm outline-none focus:border-gray-900"
+                    inputMode="tel"
                   />
                 </div>
-              )}
-                {/* PASSOWRDD */}
-              {activeTab === 'login' && (
-                <label className="block text-left text-xs font-medium text-gray-700 mb-1"></label>
               )}
 
               <input
@@ -411,7 +424,7 @@ const SignupModal = ({ onClose, onSignUp }) => {
                 placeholder={activeTab === 'signup' ? 'Create a password' : 'Enter your password'}
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                className="w-full p-2.5 rounded-xl border border-gray-300 text-sm outline-none mb-3"
+                className="w-full p-3 rounded-xl border border-gray-300 text-sm outline-none mb-3 focus:border-gray-900"
               />
 
               {activeTab === 'signup' && (
@@ -420,19 +433,19 @@ const SignupModal = ({ onClose, onSignUp }) => {
                   placeholder="Confirm your password"
                   value={confirmPassword}
                   onChange={e => setConfirmPassword(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-gray-300 text-sm outline-none mb-3"
+                  className="w-full p-3 rounded-xl border border-gray-300 text-sm outline-none mb-3 focus:border-gray-900"
                 />
               )}
 
               <div className={`text-right text-xs text-gray-500 mb-3 ${
                 activeTab === 'login' ? 'visible' : 'invisible'
               }`}>
-                <span 
+                <button
                   onClick={handleForgotPassword} 
-                  className="text-blue-500 cursor-pointer"
+                  className="text-blue-500 cursor-pointer hover:text-blue-600 focus:outline-none"
                 >
                   Forgot Password?
-                </span>
+                </button>
               </div>
 
               {activeTab === 'signup' && (
@@ -442,38 +455,40 @@ const SignupModal = ({ onClose, onSignUp }) => {
                     id="terms"
                     checked={agreeToTerms}
                     onChange={e => setAgreeToTerms(e.target.checked)}
-                    className="mr-2 accent-gray-900"
+                    className="mr-2 accent-gray-900 w-4 h-4"
                   />
-                  <label htmlFor="terms">
-                    I agree to the <a href="#" className="text-blue-500 cursor-pointer">Terms</a>
+                  <label htmlFor="terms" className="cursor-pointer">
+                    I agree to the <a href="#" className="text-blue-500 hover:text-blue-600">Terms</a>
                   </label>
                 </div>
               )}
 
               <button 
                 onClick={handleSignUp}
-                className="w-full p-2.5 bg-gray-900 text-white border-none rounded-xl text-sm font-semibold cursor-pointer mb-3"
+                className="w-full p-3 bg-gray-900 text-white border-none rounded-xl text-sm font-semibold cursor-pointer mb-3 hover:bg-gray-800 transition-colors"
               >
                 {activeTab === 'signup' ? 'Create Account' : 'Sign In'}
               </button>
 
               {activeTab === 'signup' ? (
                 <div className="text-xs text-gray-500">
-                  Already have an account? <span 
+                  Already have an account?{' '}
+                  <button
                     onClick={() => setActiveTab('login')} 
-                    className="text-blue-500 cursor-pointer"
+                    className="text-blue-500 cursor-pointer hover:text-blue-600 focus:outline-none"
                   >
                     Login
-                  </span>
+                  </button>
                 </div>
               ) : (
                 <div className="text-xs text-gray-500">
-                  Don't have an account? <span 
+                  Don't have an account?{' '}
+                  <button
                     onClick={() => setActiveTab('signup')} 
-                    className="text-blue-500 cursor-pointer"
+                    className="text-blue-500 cursor-pointer hover:text-blue-600 focus:outline-none"
                   >
                     Register
-                  </span>
+                  </button>
                 </div>
               )}
             </div>
@@ -485,13 +500,22 @@ const SignupModal = ({ onClose, onSignUp }) => {
                 Or log in with
               </div>
               <div className="flex justify-center gap-3">
-                <button className="w-10 h-10 rounded-xl border border-gray-200 bg-white flex items-center justify-center cursor-pointer">
+                <button 
+                  className="w-10 h-10 rounded-xl border border-gray-200 bg-white flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
+                  aria-label="Login with Google"
+                >
                   <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google" width="18" />
                 </button>
-                <button className="w-10 h-10 rounded-xl border border-gray-200 bg-white flex items-center justify-center cursor-pointer">
+                <button 
+                  className="w-10 h-10 rounded-xl border border-gray-200 bg-white flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
+                  aria-label="Login with Facebook"
+                >
                   <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="18" />
                 </button>
-                <button className="w-10 h-10 rounded-xl border border-gray-200 bg-white flex items-center justify-center cursor-pointer">
+                <button 
+                  className="w-10 h-10 rounded-xl border border-gray-200 bg-white flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
+                  aria-label="Login with Apple"
+                >
                   <img src="https://cdn-icons-png.flaticon.com/512/831/831276.png" alt="Apple" width="18" />
                 </button>
               </div>
@@ -502,10 +526,10 @@ const SignupModal = ({ onClose, onSignUp }) => {
 
       {/* Success Message */}
       {showSuccess && !user && (
-        <div className="fixed inset-0 backdrop-blur-sm flex justify-center items-center z-[4000] animate-fadeIn">
-          <div className="bg-white rounded-2xl p-8 text-center shadow-lg transform animate-popIn">
+        <div className="fixed inset-0 backdrop-blur-sm flex justify-center items-center z-[4000] animate-fadeIn p-4">
+          <div className="bg-white rounded-2xl p-6 text-center shadow-lg max-w-sm w-full transform animate-popIn">
             <div className="text-5xl text-green-500 mb-4 animate-bounce">✓</div>
-            <div className="text-xl font-semibold text-gray-900">
+            <div className="text-lg md:text-xl font-semibold text-gray-900">
               {activeTab === 'signup' ? 'Successfully Registered!' : 'Successfully Logged In!'}
             </div>
           </div>
