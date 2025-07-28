@@ -1,26 +1,68 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-
 import CoursesData from './CoursesData';
 import AuthSection from './AuthSection';
+import Footer from './Footer';
 
 const CourseDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const course = CoursesData.find(c => c.id === Number(id));
+  const [expandedSections, setExpandedSections] = useState({});
+  const [showAllContent, setShowAllContent] = useState(false);
+  const [showCouponInput, setShowCouponInput] = useState(false);
+  const [couponCode, setCouponCode] = useState('');
 
-  // Scroll to top on component mount
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  const toggleSection = (index) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
+  const toggleAllContent = () => {
+    setShowAllContent(!showAllContent);
+  };
+
+  const handleBuyNow = () => {
+    navigate('/checkout', { state: { course } });
+  };
+
+  const handleGiftCourse = () => {
+    alert('Gift course functionality will be implemented here');
+    // You can navigate to a gift purchase page or show a modal
+  };
+
+  const handleApplyCoupon = () => {
+    if (showCouponInput) {
+      // Apply coupon logic here
+      alert(`Applying coupon code: ${couponCode}`);
+      // You would typically validate the coupon and apply discount here
+    } else {
+      setShowCouponInput(true);
+    }
+  };
+
+  const getYouTubeEmbedUrl = (url) => {
+    if (!url) return '';
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11)
+      ? `https://www.youtube.com/embed/${match[2]}`
+      : url;
+  };
+
   if (!course) {
     return (
-      <div className="container mx-auto px-4 py-8 text-center">
+      <div className="mx-auto py-8 text-center">
         <h1 className="text-2xl font-bold mb-4">Course not found</h1>
         <button 
           onClick={() => navigate('/course')}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
         >
           Back to Courses
         </button>
@@ -28,191 +70,267 @@ const CourseDetails = () => {
     );
   }
 
-  const handleBuyNow = () => {
-    navigate('/checkout', { state: { course } });
-  };
-
   return (
-    <div className="container mx-auto px-4">
-      {/* Add AuthSection at the top */}
-      <AuthSection />
-      
-      <button 
-        onClick={() => navigate('/course')}
-        className="mb-4 flex items-center text-blue-600 hover:text-blue-800"
-      >
-        ← Back to Courses
-      </button>
-      
-      <div className="max-w-6xl mx-auto">
-        {/* Course Header Section */}
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold mb-2">{course.title}</h1>
-          <div className="flex items-center mb-4">
-            <div className="flex items-center mr-4">
-              <span className="text-yellow-400">★</span>
-              <span className="ml-1 font-bold">{course.rating}</span>
-              <span className="ml-1 text-gray-600">({course.reviews} ratings)</span>
-            </div>
-            <span className="text-gray-600">{course.students} students</span>
-          </div>
-          <p className="text-lg mb-4">{course.shortDescription}</p>
-          <div className="flex items-center text-gray-600 text-sm">
-            <span>Created by {course.instructor}</span>
-            <span className="mx-2">•</span>
-            <span>📍 Last updated {course.updatedDate}</span>
-            <span className="mx-2">•</span>
-            <span>💬 {course.languages}</span>
-          </div>
+    <div className="w-full min-h-screen flex flex-col">
+      {/* Header Section */}
+      <div className="relative">
+        <AuthSection />
+        <div className="absolute top-full mt-2.5 left-4 sm:left-6">
+          <button 
+            onClick={() => navigate('/course')}
+            className="flex items-center bg-white hover:bg-gray-100 text-gray-800 text-sm font-medium py-1.5 px-3 border border-gray-300 rounded-md shadow-sm transition-colors"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+            </svg>
+            <span className="ml-1">Back</span>
+          </button>
         </div>
+      </div>
 
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Main Content */}
-          <div className="flex-1">
-            {/* Video Preview Section */}
-            <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
-              <h2 className="text-2xl font-bold mb-4">Course Preview</h2>
-              <div className="aspect-w-16 aspect-h-9 mb-4">
-                <iframe 
-                  src={course.videoUrl}
-                  className="w-full h-96 rounded-lg"
-                  frameBorder="0"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowFullScreen
-                  title="Course Preview Video"
-                ></iframe>
+      {/* Main Content */}
+      <div className="flex-1 w-full mx-auto pt-12 sm:pt-14 pb-16 px-4 sm:px-6">
+        <div className="w-full max-w-6xl mx-auto">
+          {/* Course Header */}
+          <div className="mb-6">
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2">{course.title}</h1>
+            <div className="flex flex-col sm:flex-row sm:items-center mb-4">
+              <div className="flex items-center mb-2 sm:mb-0 sm:mr-4">
+                <span className="text-yellow-400">★</span>
+                <span className="ml-1 font-bold">{course.rating}</span>
+                <span className="ml-1 text-gray-600">({course.reviews} ratings)</span>
               </div>
-              <p className="text-gray-600">This preview gives you an overview of what you'll learn in this course.</p>
+              <span className="text-gray-600">{course.students} students</span>
             </div>
-
-            {/* What You'll Learn Section */}
-            <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
-              <h2 className="text-2xl font-bold mb-4">What you'll learn</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                {course.learningOutcomes?.map((outcome, index) => (
-                  <div key={index} className="flex items-start">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span>{outcome}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Course Content Section */}
-            <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
-              <h2 className="text-2xl font-bold mb-4">Course content</h2>
-              <div className="text-gray-600 mb-4">
-                {course.sections} sections • {course.lectures} lectures • {course.duration} total length
-              </div>
-              <div className="border border-gray-200 rounded-lg overflow-hidden">
-                {course.syllabus?.map((section, index) => (
-                  <div key={index} className="border-b border-gray-200 last:border-b-0">
-                    <div className="p-4 bg-gray-50 flex justify-between items-center cursor-pointer">
-                      <h3 className="font-bold">{section.week}: {section.title}</h3>
-                      <span className="text-gray-500">{section.duration}</span>
-                    </div>
-                    <div className="px-4 py-2 bg-white">
-                      <ul className="space-y-2">
-                        {section.topics?.map((topic, i) => (
-                          <li key={i} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
-                            <span className="flex items-center">
-                              <span className="text-gray-400 mr-2">▶</span>
-                              {topic}
-                            </span>
-                            <span className="text-gray-500 text-sm">02:45</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Requirements Section */}
-            <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
-              <h2 className="text-2xl font-bold mb-4">Requirements</h2>
-              <ul className="list-disc list-inside space-y-2">
-                {course.requirements?.map((req, index) => (
-                  <li key={index}>{req}</li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Description Section */}
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h2 className="text-2xl font-bold mb-4">Description</h2>
-              <p className="mb-4">{course.longDescription}</p>
-              <button className="text-blue-600 font-medium">Show more</button>
+            <p className="text-base sm:text-lg mb-4">{course.shortDescription}</p>
+            <div className="flex flex-wrap items-center text-gray-600 text-xs sm:text-sm gap-y-1">
+              <span>Created by {course.instructor}</span>
+              <span className="mx-2 hidden sm:inline">•</span>
+              <span className="w-full sm:w-auto">📍 Last updated {course.updatedDate}</span>
+              <span className="mx-2 hidden sm:inline">•</span>
+              <span>💬 {course.languages}</span>
             </div>
           </div>
 
-          {/* Sidebar */}
-          <div className="lg:w-80 flex-shrink-0">
-            <div className="sticky top-4 space-y-4">
-              {/* Course Preview */}
-              <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-                <div className="p-4 border-b border-gray-200">
-                  <div className="text-3xl font-bold text-gray-900 mb-2">
-                    {course.price === 0 ? 'Free' : `₹${course.discountedPrice}`}
-                    {course.originalPrice && (
-                      <span className="ml-2 text-lg text-gray-500 line-through">₹{course.originalPrice}</span>
-                    )}
-                  </div>
-                  {course.discountPercentage && (
-                    <div className="text-green-600 font-medium mb-2">
-                      {course.discountPercentage}% off
+          <div className="flex flex-col lg:flex-row gap-6">
+            {/* Left Content */}
+            <div className="flex-1">
+              {/* Video Preview */}
+              <div className="bg-white rounded-lg shadow-sm mb-6 overflow-hidden">
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6">Course Preview</h2>
+                <div className="aspect-w-16 aspect-h-9 mb-4 px-4 sm:px-6">
+                  {course.videoUrl ? (
+                    <iframe 
+                      src={getYouTubeEmbedUrl(course.videoUrl)}
+                      className="w-full h-48 sm:h-64 md:h-80 lg:h-96 rounded-lg"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      title="Course Preview Video"
+                    ></iframe>
+                  ) : (
+                    <div className="w-full h-48 sm:h-64 md:h-80 lg:h-96 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-gray-500">Video preview not available</p>
                     </div>
                   )}
                 </div>
+                <p className="text-gray-600 text-sm sm:text-base px-4 sm:px-6 pb-4">
+                  This preview gives you an overview of what you'll learn in this course.
+                </p>
+              </div>
+
+              {/* What You'll Learn */}
+              <div className="bg-white rounded-lg shadow-sm mb-6 overflow-hidden">
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6">What you'll learn</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 px-4 sm:px-6 pb-4">
+                  {course.learningOutcomes?.map((outcome, index) => (
+                    <div key={index} className="flex items-start text-sm sm:text-base">
+                      <span className="text-green-500 mr-2">✓</span>
+                      <span>{outcome}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Course Content */}
+              <div className="bg-white rounded-lg shadow-sm mb-6 overflow-hidden">
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6">Course content</h2>
+                <div className="text-gray-600 text-sm sm:text-base mb-4 px-4 sm:px-6">
+                  {course.sections} sections • {course.lectures} lectures • {course.duration} total length
+                </div>
+                <div className="border border-gray-200 rounded-lg overflow-hidden mx-4 sm:mx-6 mb-4">
+                  {course.syllabus?.map((section, index) => (
+                    <div key={index} className="border-b border-gray-200 last:border-b-0">
+                      <div 
+                        className="p-3 sm:p-4 bg-gray-50 flex justify-between items-center cursor-pointer hover:bg-gray-100 transition-colors"
+                        onClick={() => toggleSection(index)}
+                      >
+                        <div className="flex items-center">
+                          <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            className={`h-4 w-4 sm:h-5 sm:w-5 mr-2 transform transition-transform ${expandedSections[index] ? 'rotate-90' : ''}`} 
+                            viewBox="0 0 20 20" 
+                            fill="currentColor"
+                          >
+                            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                          </svg>
+                          <h3 className="font-bold text-sm sm:text-base">{section.week}: {section.title}</h3>
+                        </div>
+                        <span className="text-gray-500 text-xs sm:text-sm">{section.duration}</span>
+                      </div>
+                      {(expandedSections[index] || showAllContent) && (
+                        <div className="px-3 sm:px-4 py-2 bg-white">
+                          <ul className="space-y-2">
+                            {section.topics?.map((topic, i) => (
+                              <li key={i} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
+                                <span className="flex items-center text-xs sm:text-sm">
+                                  <span className="text-gray-400 mr-2">▶</span>
+                                  {topic}
+                                </span>
+                                <span className="text-gray-500 text-xs">02:45</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
                 
-                <div className="p-4 space-y-4">
-                  <button 
-                    onClick={handleBuyNow}
-                    className="w-full bg-black hover:bg-gray-800 text-white font-bold py-3 px-4 rounded-lg transition-colors"
+                <button 
+                  onClick={toggleAllContent}
+                  className="mx-4 sm:mx-6 mb-4 flex items-center justify-center w-[calc(100%-2rem)] sm:w-[calc(100%-3rem)] py-2 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-sm sm:text-base"
+                >
+                  {showAllContent ? 'Show Less' : 'Show All Content'}
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    className={`h-4 w-4 sm:h-5 sm:w-5 ml-2 transform transition-transform ${showAllContent ? 'rotate-180' : ''}`} 
+                    viewBox="0 0 20 20" 
+                    fill="currentColor"
                   >
-                    Buy now
-                  </button>
-                  
-                  <div className="text-center text-sm">
-                    <span className="text-gray-600">30-Day Money-Back Guarantee</span>
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Requirements */}
+              <div className="bg-white rounded-lg shadow-sm mb-6 overflow-hidden">
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6">Requirements</h2>
+                <ul className="list-disc list-inside space-y-2 text-sm sm:text-base px-4 sm:px-6 pb-4">
+                  {course.requirements?.map((req, index) => (
+                    <li key={index}>{req}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Description */}
+              <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6">Description</h2>
+                <p className="mb-4 text-sm sm:text-base px-4 sm:px-6">{course.longDescription}</p>
+                <button className="text-blue-600 font-medium hover:text-blue-800 transition-colors text-sm sm:text-base px-4 sm:px-6 pb-4">
+                  Show more
+                </button>
+              </div>
+            </div>
+
+            {/* Right Sidebar */}
+            <div className="lg:w-80 flex-shrink-0">
+              <div className="sticky top-4 space-y-4">
+                <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+                  <div className="p-4 border-b border-gray-200">
+                    <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+                      {course.price === 0 ? 'Free' : `₹${course.discountedPrice}`}
+                      {course.originalPrice && (
+                        <span className="ml-2 text-base sm:text-lg text-gray-500 line-through">
+                          ₹{course.originalPrice}
+                        </span>
+                      )}
+                    </div>
+                    {course.discountPercentage && (
+                      <div className="text-green-600 font-medium mb-2 text-sm sm:text-base">
+                        {course.discountPercentage}% off
+                      </div>
+                    )}
                   </div>
                   
-                  <div className="space-y-2">
-                    <h3 className="font-bold">This course includes:</h3>
-                    <ul className="text-sm space-y-1">
-                      <li className="flex items-center">
-                        <span className="text-gray-500 mr-2">✓</span>
-                        {course.videoHours} hours on-demand video
-                      </li>
-                      <li className="flex items-center">
-                        <span className="text-gray-500 mr-2">✓</span>
-                        {course.articles} articles
-                      </li>
-                      <li className="flex items-center">
-                        <span className="text-gray-500 mr-2">✓</span>
-                        Access on mobile and TV
-                      </li>
-                      <li className="flex items-center">
-                        <span className="text-gray-500 mr-2">✓</span>
-                        Certificate of completion
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <div className="flex space-x-2">
-                    <button className="flex-1 border border-gray-300 rounded-lg py-2 text-sm font-medium hover:bg-gray-50">
-                      Gift this course
+                  <div className="p-4 space-y-4">
+                    <button 
+                      onClick={handleBuyNow}
+                      className="w-full bg-black hover:bg-gray-800 text-white font-bold py-2 sm:py-3 px-4 rounded-lg transition-colors text-sm sm:text-base"
+                    >
+                      Buy now
                     </button>
-                    <button className="flex-1 border border-gray-300 rounded-lg py-2 text-sm font-medium hover:bg-gray-50">
-                      Apply Coupon
-                    </button>
+                    
+                    <div className="text-center text-xs sm:text-sm">
+                      <span className="text-gray-600">30-Day Money-Back Guarantee</span>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <h3 className="font-bold text-sm sm:text-base">This course includes:</h3>
+                      <ul className="text-xs sm:text-sm space-y-1">
+                        <li className="flex items-center">
+                          <span className="text-gray-500 mr-2">✓</span>
+                          {course.videoHours} hours on-demand video
+                        </li>
+                        <li className="flex items-center">
+                          <span className="text-gray-500 mr-2">✓</span>
+                          {course.articles} articles
+                        </li>
+                        <li className="flex items-center">
+                          <span className="text-gray-500 mr-2">✓</span>
+                          Access on mobile and TV
+                        </li>
+                        <li className="flex items-center">
+                          <span className="text-gray-500 mr-2">✓</span>
+                          Certificate of completion
+                        </li>
+                      </ul>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <button 
+                        onClick={handleGiftCourse}
+                        className="w-full border border-gray-300 rounded-lg py-2 text-sm font-medium hover:bg-gray-50 transition-colors"
+                      >
+                        Gift this course
+                      </button>
+                      
+                      {showCouponInput ? (
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            value={couponCode}
+                            onChange={(e) => setCouponCode(e.target.value)}
+                            placeholder="Enter coupon code"
+                            className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                          />
+                          <button 
+                            onClick={handleApplyCoupon}
+                            className="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors"
+                          >
+                            Apply
+                          </button>
+                        </div>
+                      ) : (
+                        <button 
+                          onClick={handleApplyCoupon}
+                          className="w-full border border-gray-300 rounded-lg py-2 text-sm font-medium hover:bg-gray-50 transition-colors"
+                        >
+                          Apply Coupon
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      
+      {/* Footer */}
+      <div className="w-full">
+        <Footer />
       </div>
     </div>
   );
