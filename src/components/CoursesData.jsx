@@ -9,6 +9,13 @@ const CoursesData = [
     duration: "60 hours",
     rating: 4.8,
     price: 2999,
+    level: "Beginner to Advanced",
+    requirements: [
+      "Basic computer literacy",
+      "No prior programming experience needed",
+      "Windows, Mac or Linux computer",
+      "Internet connection"
+    ],
     image: "https://media.istockphoto.com/id/1992829718/photo/professor-teaching-about-it-and-pointing-at-a-user-experience-diagram-on-the-board.webp",
     videoUrl: "https://www.youtube.com/watch?v=oO2i35tRQp4",
     instructor: "Dr. Sarah Johnson",
@@ -35,6 +42,14 @@ const CoursesData = [
     duration: "6 months",
     rating: 4.9,
     price: 4999,
+    level: "Intermediate to Advanced",
+    requirements: [
+      "Python programming knowledge",
+      "Basic understanding of linear algebra",
+      "Familiarity with probability concepts",
+      "Jupyter Notebooks installed",
+      "GPU recommended but not required"
+    ],
     image: "https://media.istockphoto.com/id/2025258370/photo/it-student-works-with-artificial-intelligence-brain-system-on-laptop.webp",
     videoUrl: "https://player.vimeo.com/video/829035736?h=1a2b3c4d5f",
     instructor: "Prof. Michael Chen",
@@ -60,6 +75,13 @@ const CoursesData = [
     duration: "50 hours",
     rating: 4.7,
     price: 3999,
+    level: "Intermediate",
+    requirements: [
+      "Basic programming knowledge",
+      "Understanding of OOP concepts",
+      "Node.js installed for frontend development",
+      "Java Development Kit (JDK) 11 or later"
+    ],
     image: "https://plus.unsplash.com/premium_photo-1661671913094-9dad189bba6a?w=600&auto=format&fit=crop&q=60",
     videoUrl: "https://player.vimeo.com/video/829035737?h=1a2b3c4d5g",
     instructor: "James Wilson",
@@ -85,6 +107,13 @@ const CoursesData = [
     duration: "45 hours",
     rating: 4.6,
     price: 0,
+    level: "Beginner",
+    requirements: [
+      "Basic computer skills",
+      "Text editor (VS Code recommended)",
+      "Modern web browser",
+      "No prior coding experience required"
+    ],
     image: "https://media.istockphoto.com/id/1434742171/photo/laptop-ppt-presentation-business-meeting-and-team-working-on-review-for-new-digital-website.webp",
     videoUrl: "https://player.vimeo.com/video/829035738?h=1a2b3c4d5h",
     instructor: "Lisa Thompson",
@@ -110,6 +139,13 @@ const CoursesData = [
     duration: "35 hours",
     rating: 4.8,
     price: 3499,
+    level: "Intermediate",
+    requirements: [
+      "Python programming basics",
+      "Basic understanding of statistics",
+      "Anaconda distribution installed",
+      "Jupyter Notebooks familiarity"
+    ],
     image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=600&auto=format&fit=crop&q=60",
     videoUrl: "https://player.vimeo.com/video/829035739?h=1a2b3c4d5i",
     instructor: "Dr. Raj Patel",
@@ -135,6 +171,13 @@ const CoursesData = [
     duration: "30 hours",
     rating: 4.9,
     price: 2499,
+    level: "Intermediate",
+    requirements: [
+      "JavaScript fundamentals",
+      "Basic HTML/CSS knowledge",
+      "Node.js and npm installed",
+      "VS Code or similar IDE"
+    ],
     image: "https://images.unsplash.com/photo-1455894127589-22f75500213a?w=600&auto=format&fit=crop&q=60",
     videoUrl: "https://player.vimeo.com/video/829035740?h=1a2b3c4d5j",
     instructor: "David Kim",
@@ -160,6 +203,14 @@ const CoursesData = [
     duration: "55 hours",
     rating: 4.7,
     price: 4499,
+    level: "Advanced",
+    requirements: [
+      "Strong Python skills",
+      "Understanding of machine learning basics",
+      "Linear algebra fundamentals",
+      "GPU with CUDA support recommended",
+      "TensorFlow 2.x installed"
+    ],
     image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&auto=format&fit=crop&q=60",
     videoUrl: "https://player.vimeo.com/video/829035741?h=1a2b3c4d5k",
     instructor: "Dr. Emily Zhang",
@@ -185,6 +236,14 @@ const CoursesData = [
     duration: "40 hours",
     rating: 4.6,
     price: 0,
+    level: "Advanced",
+    requirements: [
+      "Java programming experience",
+      "Spring Framework basics",
+      "Docker basics",
+      "Linux command line familiarity",
+      "Postman or similar API tool"
+    ],
     image: "https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=600&auto=format&fit=crop&q=60",
     videoUrl: "https://player.vimeo.com/video/829035742?h=1a2b3c4d5l",
     instructor: "Robert Johnson",
@@ -210,6 +269,13 @@ const CoursesData = [
     duration: "38 hours",
     rating: 4.5,
     price: 2799,
+    level: "Intermediate",
+    requirements: [
+      "Python programming basics",
+      "Basic understanding of web concepts",
+      "SQL knowledge helpful but not required",
+      "PostgreSQL or MySQL installed"
+    ],
     image: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=600&auto=format&fit=crop&q=60",
     videoUrl: "https://player.vimeo.com/video/829035743?h=1a2b3c4d5m",
     instructor: "Sophia Martinez",
@@ -235,6 +301,13 @@ const CoursesData = [
     duration: "48 hours",
     rating: 4.8,
     price: 3999,
+    level: "Intermediate to Advanced",
+    requirements: [
+      "Python programming skills",
+      "Basic calculus and linear algebra",
+      "NumPy and pandas familiarity",
+      "Jupyter Notebooks environment"
+    ],
     image: "https://media.istockphoto.com/id/1439425791/photo/digital-technology-software-development-concept-coding-programmer-working-on-laptop-with.webp",
     videoUrl: "https://player.vimeo.com/video/829035744?h=1a2b3c4d5n",
     instructor: "Dr. Alan Turing",
@@ -260,6 +333,13 @@ const CoursesData = [
     duration: "42 hours",
     rating: 4.7,
     price: 3299,
+    level: "Advanced",
+    requirements: [
+      "2+ years Java experience",
+      "Understanding of OOP principles",
+      "Java 8 or later installed",
+      "IntelliJ IDEA or Eclipse IDE"
+    ],
     image: "https://images.unsplash.com/photo-1595675024853-0f3ec9098ac7?w=600&auto=format&fit=crop&q=60",
     videoUrl: "https://player.vimeo.com/video/829035745?h=1a2b3c4d5o",
     instructor: "Mark Anderson",
@@ -285,6 +365,13 @@ const CoursesData = [
     duration: "55 hours",
     rating: 4.8,
     price: 4299,
+    level: "Intermediate",
+    requirements: [
+      "JavaScript fundamentals",
+      "Basic understanding of web development",
+      "Node.js and npm installed",
+      "MongoDB Community Edition"
+    ],
     image: "https://images.unsplash.com/photo-1593376853899-fbb47a057fa0?w=600&auto=format&fit=crop&q=60",
     videoUrl: "https://player.vimeo.com/video/829035746?h=1a2b3c4d5p",
     instructor: "Emily Rodriguez",

@@ -34,14 +34,11 @@ const CourseDetails = () => {
 
   const handleGiftCourse = () => {
     alert('Gift course functionality will be implemented here');
-    // You can navigate to a gift purchase page or show a modal
   };
 
   const handleApplyCoupon = () => {
     if (showCouponInput) {
-      // Apply coupon logic here
       alert(`Applying coupon code: ${couponCode}`);
-      // You would typically validate the coupon and apply discount here
     } else {
       setShowCouponInput(true);
     }
@@ -100,13 +97,13 @@ const CourseDetails = () => {
                 <span className="ml-1 font-bold">{course.rating}</span>
                 <span className="ml-1 text-gray-600">({course.reviews} ratings)</span>
               </div>
-              <span className="text-gray-600">{course.students} students</span>
+              <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                {course.level || 'All Levels'}
+              </span>
             </div>
             <p className="text-base sm:text-lg mb-4">{course.shortDescription}</p>
             <div className="flex flex-wrap items-center text-gray-600 text-xs sm:text-sm gap-y-1">
               <span>Created by {course.instructor}</span>
-              <span className="mx-2 hidden sm:inline">•</span>
-              <span className="w-full sm:w-auto">📍 Last updated {course.updatedDate}</span>
               <span className="mx-2 hidden sm:inline">•</span>
               <span>💬 {course.languages}</span>
             </div>
@@ -216,11 +213,50 @@ const CourseDetails = () => {
               {/* Requirements */}
               <div className="bg-white rounded-lg shadow-sm mb-6 overflow-hidden">
                 <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6">Requirements</h2>
-                <ul className="list-disc list-inside space-y-2 text-sm sm:text-base px-4 sm:px-6 pb-4">
-                  {course.requirements?.map((req, index) => (
-                    <li key={index}>{req}</li>
-                  ))}
-                </ul>
+                <div className="px-4 sm:px-6 pb-4">
+                  <div className="mb-4">
+                    <p className="text-sm sm:text-base mb-3">To get the most out of this course, you should have:</p>
+                    <ul className="list-disc list-inside space-y-2 text-sm sm:text-base">
+                      {course.requirements?.map((req, index) => (
+                        <li key={index}>{req}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h3 className="font-bold text-sm sm:text-base mb-2">Recommended Tools & Resources</h3>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                      <div className="flex flex-col items-center">
+                        <img 
+                          src="https://cdn-icons-png.flaticon.com/512/732/732212.png" 
+                          alt="Web Browser" 
+                          className="h-12 w-12 object-contain mb-1"
+                        />
+                        <span className="text-xs text-center">Modern Web Browser</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <img 
+                          src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" 
+                          alt="VS Code" 
+                          className="h-12 w-12 object-contain mb-1"
+                        />
+                        <span className="text-xs text-center">Code Editor</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <img 
+                          src="https://cdn-icons-png.flaticon.com/512/888/888859.png" 
+                          alt="Computer" 
+                          className="h-12 w-12 object-contain mb-1"
+                        />
+                        <span className="text-xs text-center">Computer with Internet</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <p className="text-sm sm:text-base mt-4">
+                    Don't worry if you're missing some requirements - we'll guide you through everything you need to know!
+                  </p>
+                </div>
               </div>
 
               {/* Description */}
@@ -262,7 +298,7 @@ const CourseDetails = () => {
                     </button>
                     
                     <div className="text-center text-xs sm:text-sm">
-                      <span className="text-gray-600">30-Day Money-Back Guarantee</span>
+                      <span className="text-gray-600">7-Day Money-Back Guarantee</span>
                     </div>
                     
                     <div className="space-y-2">

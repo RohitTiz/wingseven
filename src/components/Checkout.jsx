@@ -385,13 +385,16 @@ const Checkout = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
-        <div className="container mx-auto px-4 py-4">
-          <button className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors">
-            <img src="https://img.icons8.com/ios-filled/20/000000/long-arrow-left.png" alt="back" />
-            <span>Back to Course</span>
-          </button>
-        </div>
-      </div>
+  <div className="container mx-auto px-4 py-4">
+    <button 
+      className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors"
+      onClick={() => navigate('/course')}
+    >
+      <img src="https://img.icons8.com/ios-filled/20/000000/long-arrow-left.png" alt="back" />
+      <span>Back to Course</span>
+    </button>
+  </div>
+</div>
 
       <div className="container mx-auto px-4 py-8 max-w-6xl grid lg:grid-cols-3 gap-8">
         
@@ -542,10 +545,10 @@ const Checkout = () => {
           <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl shadow-lg p-6 text-center border border-green-200">
             <h3 className="font-bold mb-2 text-green-800 flex items-center justify-center gap-2 text-lg">
               <img src="https://img.icons8.com/ios-filled/24/4CAF50/checkmark--v1.png" alt="guarantee" />
-              30-Day Money-Back Guarantee
+              7-Day Money-Back Guarantee
             </h3>
             <p className="text-sm text-gray-700">
-              Not satisfied? Get a full refund within 30 days. Simple and straightforward!
+              Not satisfied? Get a full refund within 7 days. Simple and straightforward!
             </p>
           </div>
 
