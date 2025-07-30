@@ -32,6 +32,11 @@ const CourseDetails = () => {
     navigate('/checkout', { state: { course } });
   };
 
+  const handleAddToCart = () => {
+    alert(`${course.title} has been added to your cart!`);
+    // Here you would typically add to cart logic
+  };
+
   const handleGiftCourse = () => {
     alert('Gift course functionality will be implemented here');
   };
@@ -273,29 +278,40 @@ const CourseDetails = () => {
             <div className="lg:w-80 flex-shrink-0">
               <div className="sticky top-4 space-y-4">
                 <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+                  {/* Price Display Section */}
                   <div className="p-4 border-b border-gray-200">
-                    <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-                      {course.price === 0 ? 'Free' : `₹${course.discountedPrice}`}
-                      {course.originalPrice && (
-                        <span className="ml-2 text-base sm:text-lg text-gray-500 line-through">
-                          ₹{course.originalPrice}
+                    <div className="flex items-center justify-between">
+                      <span className="text-2xl font-bold text-gray-900">
+                        {course.price === 0 ? 'Free' : `₹${course.price}`}
+                      </span>
+                      {course.price !== 0 && (
+                        <span className="text-sm text-gray-500 line-through">
+                          ₹{Math.round(course.price * 1.2)}
                         </span>
                       )}
                     </div>
-                    {course.discountPercentage && (
-                      <div className="text-green-600 font-medium mb-2 text-sm sm:text-base">
-                        {course.discountPercentage}% off
+                    {course.price !== 0 && (
+                      <div className="text-sm text-green-600 mt-1">
+                        Limited time offer
                       </div>
                     )}
                   </div>
                   
                   <div className="p-4 space-y-4">
-                    <button 
-                      onClick={handleBuyNow}
-                      className="w-full bg-black hover:bg-gray-800 text-white font-bold py-2 sm:py-3 px-4 rounded-lg transition-colors text-sm sm:text-base"
-                    >
-                      Buy now
-                    </button>
+                    <div className="flex flex-col gap-3">
+                      <button 
+                        onClick={handleBuyNow}
+                        className="w-full bg-black hover:bg-gray-800 text-white font-bold py-2 sm:py-3 px-4 rounded-lg transition-colors text-sm sm:text-base"
+                      >
+                        Buy now
+                      </button>
+                      <button 
+                        onClick={handleAddToCart}
+                        className="w-full border-2 border-black hover:bg-gray-100 text-black font-bold py-2 sm:py-3 px-4 rounded-lg transition-colors text-sm sm:text-base"
+                      >
+                        Add to cart
+                      </button>
+                    </div>
                     
                     <div className="text-center text-xs sm:text-sm">
                       <span className="text-gray-600">7-Day Money-Back Guarantee</span>
