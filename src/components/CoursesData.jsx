@@ -30,7 +30,47 @@ const CoursesData = [
       { week: 1, title: "Python Fundamentals", topics: ["Variables & Data Types", "Operators", "Control Flow"] },
       { week: 2, title: "Functions & Modules", topics: ["Function Definition", "Parameters & Arguments", "Importing Modules"] },
       { week: 3, title: "Object-Oriented Programming", topics: ["Classes & Objects", "Inheritance", "Polymorphism"] }
-    ]
+    ],
+    faqs: [
+      {
+        question: "How long do I have access to this course?",
+        answer: "You get lifetime access to all course materials after purchase."
+      },
+      {
+        question: "Do I need any programming experience?",
+        answer: "No, this course starts from absolute basics and is perfect for beginners."
+      },
+      {
+        question: "What projects will I work on?",
+        answer: "You'll build a web scraper, data analysis tool, and automation scripts."
+      }
+    ],
+    reviews: [
+      {
+        name: "John D.",
+        rating: 5,
+        comment: "Excellent introduction to Python! The projects were especially helpful for my job.",
+        date: "2023-05-15"
+      },
+      {
+        name: "Sarah M.",
+        rating: 4,
+        comment: "Great content but could use more advanced exercises in the later sections.",
+        date: "2023-04-22"
+      },
+      {
+        name: "Raj P.",
+        rating: 5,
+        comment: "The instructor explains complex concepts in a very simple way. Highly recommended!",
+        date: "2023-03-10"
+      }
+    ],
+    videoHours: 25,
+    articles: 15,
+    sections: 12,
+    lectures: 85,
+    languages: "English, Spanish subtitles",
+    reviewsCount: 1243
   },
   {
     id: 2,
@@ -63,7 +103,47 @@ const CoursesData = [
     syllabus: [
       { week: 1, title: "ML Fundamentals", topics: ["Supervised vs Unsupervised", "Regression", "Classification"] },
       { week: 2, title: "Neural Networks", topics: ["Perceptrons", "Backpropagation", "Activation Functions"] }
-    ]
+    ],
+    faqs: [
+      {
+        question: "What math background do I need?",
+        answer: "Basic linear algebra and probability concepts are recommended but we cover the essentials."
+      },
+      {
+        question: "Can I take this without Python experience?",
+        answer: "No, Python proficiency is required for this advanced course."
+      },
+      {
+        question: "Will I get hands-on project experience?",
+        answer: "Yes, you'll complete 5 real-world projects including image recognition and NLP applications."
+      }
+    ],
+    reviews: [
+      {
+        name: "Alex K.",
+        rating: 5,
+        comment: "The best ML course I've taken. Projects were directly applicable to my work in computer vision.",
+        date: "2023-06-10"
+      },
+      {
+        name: "Priya S.",
+        rating: 5,
+        comment: "Excellent instructor and well-structured content. The live Q&A sessions were invaluable.",
+        date: "2023-05-28"
+      },
+      {
+        name: "Mark T.",
+        rating: 4,
+        comment: "Very comprehensive but some sections could be more beginner-friendly.",
+        date: "2023-04-15"
+      }
+    ],
+    videoHours: 50,
+    articles: 20,
+    sections: 24,
+    lectures: 120,
+    languages: "English",
+    reviewsCount: 892
   },
   {
     id: 3,
@@ -95,7 +175,47 @@ const CoursesData = [
     syllabus: [
       { week: 1, title: "Spring Boot Basics", topics: ["Dependency Injection", "Spring MVC", "REST Controllers"] },
       { week: 2, title: "React Fundamentals", topics: ["Components", "Props", "State"] }
-    ]
+    ],
+    faqs: [
+      {
+        question: "Do I need to know JavaScript before taking this course?",
+        answer: "Basic JavaScript knowledge is helpful but we cover React from scratch."
+      },
+      {
+        question: "Will this course teach database integration?",
+        answer: "Yes, we cover both SQL and NoSQL databases with Spring Data."
+      },
+      {
+        question: "Is there a final project?",
+        answer: "Yes, you'll build a complete e-commerce application with user auth and payment processing."
+      }
+    ],
+    reviews: [
+      {
+        name: "Emily R.",
+        rating: 5,
+        comment: "Perfect balance between theory and practice. The e-commerce project was fantastic!",
+        date: "2023-07-05"
+      },
+      {
+        name: "David L.",
+        rating: 4,
+        comment: "Great content but the React section could be more detailed.",
+        date: "2023-06-18"
+      },
+      {
+        name: "Sophia K.",
+        rating: 5,
+        comment: "James is an amazing instructor. I got a job as a full-stack developer after completing this course!",
+        date: "2023-05-22"
+      }
+    ],
+    videoHours: 35,
+    articles: 18,
+    sections: 15,
+    lectures: 90,
+    languages: "English, French subtitles",
+    reviewsCount: 756
   },
   {
     id: 4,
@@ -127,7 +247,47 @@ const CoursesData = [
     syllabus: [
       { week: 1, title: "HTML & CSS Fundamentals", topics: ["Semantic HTML", "CSS Grid", "Flexbox"] },
       { week: 2, title: "JavaScript Basics", topics: ["Variables", "Functions", "DOM Manipulation"] }
-    ]
+    ],
+    faqs: [
+      {
+        question: "Is this course really free?",
+        answer: "Yes, all content is completely free as part of our mission to make coding education accessible."
+      },
+      {
+        question: "Will I be able to get a job after this course?",
+        answer: "Many students have landed junior developer positions after completing this and building their portfolio."
+      },
+      {
+        question: "How much time should I dedicate per week?",
+        answer: "We recommend 5-7 hours per week to finish in about 2 months."
+      }
+    ],
+    reviews: [
+      {
+        name: "Miguel S.",
+        rating: 5,
+        comment: "Amazing free resource! I went from zero to building my own website in 6 weeks.",
+        date: "2023-08-12"
+      },
+      {
+        name: "Anna B.",
+        rating: 4,
+        comment: "Great introduction to web dev. The React section was particularly well-explained.",
+        date: "2023-07-29"
+      },
+      {
+        name: "Tom H.",
+        rating: 5,
+        comment: "Can't believe this is free. Better than many paid courses I've taken!",
+        date: "2023-06-15"
+      }
+    ],
+    videoHours: 30,
+    articles: 25,
+    sections: 10,
+    lectures: 60,
+    languages: "English, Spanish, French",
+    reviewsCount: 2350
   },
   {
     id: 5,
@@ -159,7 +319,47 @@ const CoursesData = [
     syllabus: [
       { week: 1, title: "Pandas Fundamentals", topics: ["DataFrames", "Series", "Data Cleaning"] },
       { week: 2, title: "Data Visualization", topics: ["Matplotlib", "Seaborn", "Plotly"] }
-    ]
+    ],
+    faqs: [
+      {
+        question: "What statistical knowledge is required?",
+        answer: "Basic understanding of mean, median, standard deviation is helpful but we cover the essentials."
+      },
+      {
+        question: "Will we learn machine learning in this course?",
+        answer: "We cover the fundamentals but focus primarily on data analysis and visualization."
+      },
+      {
+        question: "Can I use Google Colab instead of local setup?",
+        answer: "Yes, all exercises can be completed in Google Colab if you prefer."
+      }
+    ],
+    reviews: [
+      {
+        name: "Lisa W.",
+        rating: 5,
+        comment: "Transformed how I work with data at my job. The pandas content was exceptional.",
+        date: "2023-08-20"
+      },
+      {
+        name: "Carlos M.",
+        rating: 4,
+        comment: "Great content but could use more real-world dataset examples.",
+        date: "2023-07-15"
+      },
+      {
+        name: "Nina Z.",
+        rating: 5,
+        comment: "Dr. Patel explains complex concepts with such clarity. Highly recommend!",
+        date: "2023-06-30"
+      }
+    ],
+    videoHours: 20,
+    articles: 12,
+    sections: 8,
+    lectures: 45,
+    languages: "English",
+    reviewsCount: 678
   },
   {
     id: 6,
@@ -191,7 +391,47 @@ const CoursesData = [
     syllabus: [
       { week: 1, title: "React Core Concepts", topics: ["Components", "Props", "State"] },
       { week: 2, title: "Advanced React", topics: ["Hooks", "Context", "Redux"] }
-    ]
+    ],
+    faqs: [
+      {
+        question: "Do you cover class components?",
+        answer: "We focus on functional components with hooks but include class components for reference."
+      },
+      {
+        question: "Will we learn Redux in this course?",
+        answer: "Yes, we cover Redux but emphasize the Context API as a modern alternative."
+      },
+      {
+        question: "Is TypeScript included?",
+        answer: "This course focuses on JavaScript but we provide TypeScript resources."
+      }
+    ],
+    reviews: [
+      {
+        name: "Ryan B.",
+        rating: 5,
+        comment: "Best React course I've taken. The performance optimization section was gold!",
+        date: "2023-09-05"
+      },
+      {
+        name: "Priya K.",
+        rating: 5,
+        comment: "David explains complex React concepts in such an approachable way.",
+        date: "2023-08-22"
+      },
+      {
+        name: "Mike T.",
+        rating: 4,
+        comment: "Excellent content but could use more advanced project examples.",
+        date: "2023-07-18"
+      }
+    ],
+    videoHours: 18,
+    articles: 15,
+    sections: 12,
+    lectures: 65,
+    languages: "English, Japanese subtitles",
+    reviewsCount: 1124
   },
   {
     id: 7,
@@ -224,7 +464,47 @@ const CoursesData = [
     syllabus: [
       { week: 1, title: "Neural Network Basics", topics: ["Perceptrons", "Activation Functions", "Backpropagation"] },
       { week: 2, title: "Computer Vision", topics: ["CNNs", "Image Classification", "Object Detection"] }
-    ]
+    ],
+    faqs: [
+      {
+        question: "How much math is required?",
+        answer: "Understanding of linear algebra and calculus is helpful but we review key concepts."
+      },
+      {
+        question: "Can I use PyTorch instead?",
+        answer: "The course focuses on TensorFlow but concepts transfer to other frameworks."
+      },
+      {
+        question: "Will we deploy models to production?",
+        answer: "Yes, we cover deployment to cloud platforms and mobile devices."
+      }
+    ],
+    reviews: [
+      {
+        name: "Daniel L.",
+        rating: 5,
+        comment: "Changed my career trajectory. Landed an AI research position after completing!",
+        date: "2023-10-15"
+      },
+      {
+        name: "Sophie M.",
+        rating: 5,
+        comment: "Dr. Zhang is brilliant. The CNN implementations were particularly insightful.",
+        date: "2023-09-28"
+      },
+      {
+        name: "Arjun P.",
+        rating: 4,
+        comment: "Challenging but rewarding. Could use more NLP content.",
+        date: "2023-08-10"
+      }
+    ],
+    videoHours: 40,
+    articles: 22,
+    sections: 18,
+    lectures: 95,
+    languages: "English",
+    reviewsCount: 845
   },
   {
     id: 8,
@@ -257,7 +537,47 @@ const CoursesData = [
     syllabus: [
       { week: 1, title: "Microservice Fundamentals", topics: ["Design Patterns", "Service Boundaries", "API Contracts"] },
       { week: 2, title: "Spring Cloud", topics: ["Eureka", "Zuul", "Config Server"] }
-    ]
+    ],
+    faqs: [
+      {
+        question: "Is Kubernetes covered in depth?",
+        answer: "We cover Kubernetes fundamentals but focus more on Spring Cloud features."
+      },
+      {
+        question: "Will this work with non-Java services?",
+        answer: "The course focuses on Java but concepts apply to polyglot architectures."
+      },
+      {
+        question: "How current is the Spring version used?",
+        answer: "We use Spring Boot 3.x and Spring Cloud 2022.x (latest stable releases)."
+      }
+    ],
+    reviews: [
+      {
+        name: "Thomas R.",
+        rating: 5,
+        comment: "Exactly what I needed to modernize our legacy monolith at work.",
+        date: "2023-11-05"
+      },
+      {
+        name: "Maria G.",
+        rating: 4,
+        comment: "Great content but the Kubernetes section could be expanded.",
+        date: "2023-10-18"
+      },
+      {
+        name: "Samuel K.",
+        rating: 5,
+        comment: "Robert's industry experience shines through in every lecture. Practical and insightful!",
+        date: "2023-09-22"
+      }
+    ],
+    videoHours: 28,
+    articles: 16,
+    sections: 14,
+    lectures: 75,
+    languages: "English, German subtitles",
+    reviewsCount: 523
   },
   {
     id: 9,
@@ -289,7 +609,47 @@ const CoursesData = [
     syllabus: [
       { week: 1, title: "Django Basics", topics: ["MTV Architecture", "URL Routing", "Templates"] },
       { week: 2, title: "Database Models", topics: ["Models", "Migrations", "Admin Interface"] }
-    ]
+    ],
+    faqs: [
+      {
+        question: "Do you cover Django REST Framework?",
+        answer: "Yes, we dedicate a full section to building REST APIs with DRF."
+      },
+      {
+        question: "Will we deploy to production?",
+        answer: "Yes, we cover deployment to platforms like Heroku and AWS."
+      },
+      {
+        question: "Is this good for absolute beginners?",
+        answer: "You should know Python basics first, as we don't cover Python syntax."
+      }
+    ],
+    reviews: [
+      {
+        name: "Ethan W.",
+        rating: 5,
+        comment: "Sophia explains Django concepts so clearly. Built my first SaaS after this course!",
+        date: "2023-12-10"
+      },
+      {
+        name: "Olivia T.",
+        rating: 4,
+        comment: "Great course but could use more real-world deployment examples.",
+        date: "2023-11-25"
+      },
+      {
+        name: "Diego M.",
+        rating: 5,
+        comment: "The authentication section alone was worth the price. Very thorough!",
+        date: "2023-10-15"
+      }
+    ],
+    videoHours: 22,
+    articles: 14,
+    sections: 10,
+    lectures: 58,
+    languages: "English, Spanish",
+    reviewsCount: 732
   },
   {
     id: 10,
@@ -321,7 +681,47 @@ const CoursesData = [
     syllabus: [
       { week: 1, title: "Supervised Learning", topics: ["Linear Regression", "Logistic Regression", "Decision Trees"] },
       { week: 2, title: "Unsupervised Learning", topics: ["K-Means", "PCA", "Hierarchical Clustering"] }
-    ]
+    ],
+    faqs: [
+      {
+        question: "Do we use scikit-learn?",
+        answer: "We implement algorithms from scratch first, then compare with scikit-learn."
+      },
+      {
+        question: "How much math is involved?",
+        answer: "We derive key equations but focus on practical implementation."
+      },
+      {
+        question: "Will this help with interviews?",
+        answer: "Yes, we include common ML interview questions and solutions."
+      }
+    ],
+    reviews: [
+      {
+        name: "Aisha K.",
+        rating: 5,
+        comment: "Finally understand the math behind ML algorithms! Worth every penny.",
+        date: "2024-01-15"
+      },
+      {
+        name: "Nathan P.",
+        rating: 5,
+        comment: "Dr. Turing is legendary. The decision tree implementation was eye-opening.",
+        date: "2023-12-28"
+      },
+      {
+        name: "Liam S.",
+        rating: 4,
+        comment: "Challenging but rewarding. The math sections could be more gradual.",
+        date: "2023-11-10"
+      }
+    ],
+    videoHours: 32,
+    articles: 18,
+    sections: 16,
+    lectures: 80,
+    languages: "English",
+    reviewsCount: 945
   },
   {
     id: 11,
@@ -353,7 +753,47 @@ const CoursesData = [
     syllabus: [
       { week: 1, title: "Concurrency", topics: ["Threads", "Executors", "Synchronization"] },
       { week: 2, title: "Design Patterns", topics: ["Singleton", "Factory", "Observer"] }
-    ]
+    ],
+    faqs: [
+      {
+        question: "Is Java 17 covered?",
+        answer: "Yes, we cover features up to Java 17 including new APIs and language features."
+      },
+      {
+        question: "Will this help with system design interviews?",
+        answer: "Absolutely, we cover many patterns and practices used in system design."
+      },
+      {
+        question: "How much focus on performance tuning?",
+        answer: "We dedicate several modules to JVM performance and optimization techniques."
+      }
+    ],
+    reviews: [
+      {
+        name: "Julia R.",
+        rating: 5,
+        comment: "Mark's expertise in Java is unmatched. The concurrency deep dive was incredible.",
+        date: "2024-02-05"
+      },
+      {
+        name: "Hiroshi T.",
+        rating: 5,
+        comment: "Finally understand Java memory model and performance tuning. Career-changing!",
+        date: "2024-01-20"
+      },
+      {
+        name: "Emma L.",
+        rating: 4,
+        comment: "Excellent but very dense. Could benefit from more practical examples.",
+        date: "2023-12-15"
+      }
+    ],
+    videoHours: 30,
+    articles: 15,
+    sections: 12,
+    lectures: 70,
+    languages: "English, Chinese subtitles",
+    reviewsCount: 687
   },
   {
     id: 12,
@@ -385,7 +825,47 @@ const CoursesData = [
     syllabus: [
       { week: 1, title: "Node.js Fundamentals", topics: ["Modules", "NPM", "File System"] },
       { week: 2, title: "Express Framework", topics: ["Routing", "Middleware", "Error Handling"] }
-    ]
+    ],
+    faqs: [
+      {
+        question: "Do you cover GraphQL?",
+        answer: "We focus on REST but include GraphQL resources and comparisons."
+      },
+      {
+        question: "Will we implement authentication?",
+        answer: "Yes, we cover JWT authentication and session management."
+      },
+      {
+        question: "Is this good for job preparation?",
+        answer: "Absolutely, we include portfolio project guidance and interview tips."
+      }
+    ],
+    reviews: [
+      {
+        name: "Daniel K.",
+        rating: 5,
+        comment: "Emily is an amazing teacher. Went from beginner to building my own SaaS!",
+        date: "2024-03-10"
+      },
+      {
+        name: "Sophie L.",
+        rating: 5,
+        comment: "The authentication implementation was worth the course price alone. So thorough!",
+        date: "2024-02-25"
+      },
+      {
+        name: "Rahul P.",
+        rating: 4,
+        comment: "Great content but could use more TypeScript integration.",
+        date: "2024-01-18"
+      }
+    ],
+    videoHours: 38,
+    articles: 20,
+    sections: 18,
+    lectures: 85,
+    languages: "English, Portuguese subtitles",
+    reviewsCount: 1023
   }
 ];
 
