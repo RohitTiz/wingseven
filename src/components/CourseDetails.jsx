@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import CoursesData from './CoursesData';
 import AuthSection from './AuthSection';
 import Footer from './Footer';
+import CourseCard from './CourseCard';
+import { motion } from 'framer-motion';
 
 const CourseDetails = () => {
   const { id } = useParams();
@@ -15,7 +17,12 @@ const CourseDetails = () => {
   const [userQuery, setUserQuery] = useState('');
   const [userReview, setUserReview] = useState('');
   const [userRating, setUserRating] = useState(0);
-  const [activeTab, setActiveTab] = useState('about'); // ['about', 'requirements', 'reviews', 'faq']
+  const [activeTab, setActiveTab] = useState('about');
+  
+  // Get recommended courses (same category, excluding current course)
+  const recommendedCourses = CoursesData.filter(
+    c => c.category === course?.category && c.id !== course?.id
+  ).slice(0, 4); // Show max 4 recommended courses
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -66,7 +73,6 @@ const CourseDetails = () => {
       comment: userReview,
       date: new Date().toISOString().split('T')[0]
     };
-    // In a real app, you would add this to the course.reviews array in your backend
     alert('Thank you for your review!');
     setUserReview('');
     setUserRating(0);
@@ -95,6 +101,28 @@ const CourseDetails = () => {
     );
   }
 
+  // Animation variants
+  const cardVariants = {
+    offscreen: {
+      y: 50,
+      opacity: 0
+    },
+    onscreen: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        bounce: 0.4,
+        duration: 0.8
+      }
+    }
+  };
+
+  const fadeIn = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.6 } }
+  };
+
   return (
     <div className="w-full min-h-screen flex flex-col">
       {/* Header Section */}
@@ -117,7 +145,12 @@ const CourseDetails = () => {
       <div className="flex-1 w-full mx-auto pt-12 sm:pt-14 pb-16 px-4 sm:px-6">
         <div className="w-full max-w-6xl mx-auto">
           {/* Course Header */}
-          <div className="mb-6">
+          <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={fadeIn}
+            className="mb-6"
+          >
             <h1 className="text-2xl sm:text-3xl font-bold mb-2">{course.title}</h1>
             <div className="flex flex-col sm:flex-row sm:items-center mb-4">
               <div className="flex items-center mb-2 sm:mb-0 sm:mr-4">
@@ -135,13 +168,19 @@ const CourseDetails = () => {
               <span className="mx-2 hidden sm:inline">•</span>
               <span>💬 {course.languages}</span>
             </div>
-          </div>
+          </motion.div>
 
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Left Content */}
             <div className="flex-1">
               {/* Video Preview */}
-              <div className="bg-white rounded-lg shadow-sm mb-6 overflow-hidden">
+              <motion.div 
+                initial="offscreen"
+                whileInView="onscreen"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={cardVariants}
+                className="bg-white rounded-lg shadow-sm mb-6 overflow-hidden transition-all hover:shadow-md"
+              >
                 <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6">Course Preview</h2>
                 <div className="aspect-w-16 aspect-h-9 mb-4 px-4 sm:px-6">
                   {course.videoUrl ? (
@@ -162,10 +201,16 @@ const CourseDetails = () => {
                 <p className="text-gray-600 text-sm sm:text-base px-4 sm:px-6 pb-4">
                   This preview gives you an overview of what you'll learn in this course.
                 </p>
-              </div>
+              </motion.div>
 
               {/* Navigation Tabs */}
-              <div className="bg-white rounded-lg shadow-sm mb-6 overflow-hidden">
+              <motion.div 
+                initial="offscreen"
+                whileInView="onscreen"
+                viewport={{ once: true, amount: 0.1 }}
+                variants={cardVariants}
+                className="bg-white rounded-lg shadow-sm mb-6 overflow-hidden transition-all hover:shadow-md"
+              >
                 <div className="flex overflow-x-auto scrollbar-hide">
                   <button
                     onClick={() => setActiveTab('about')}
@@ -192,14 +237,19 @@ const CourseDetails = () => {
                     FAQ
                   </button>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Tab Content */}
               <div className="space-y-6">
                 {/* About Course */}
                 {activeTab === 'about' && (
                   <>
-                    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <motion.div 
+                      initial="hidden"
+                      animate="visible"
+                      variants={fadeIn}
+                      className="bg-white rounded-lg shadow-sm overflow-hidden transition-all hover:shadow-md"
+                    >
                       <div className="px-4 sm:px-6 py-4">
                         <p className="mb-6 text-sm sm:text-base">{course.longDescription}</p>
                         
@@ -213,10 +263,15 @@ const CourseDetails = () => {
                           ))}
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
 
                     {/* Course Content */}
-                    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <motion.div 
+                      initial="hidden"
+                      animate="visible"
+                      variants={fadeIn}
+                      className="bg-white rounded-lg shadow-sm overflow-hidden transition-all hover:shadow-md"
+                    >
                       <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6">Course content</h2>
                       <div className="text-gray-600 text-sm sm:text-base mb-4 px-4 sm:px-6">
                         {course.sections} sections • {course.lectures} lectures • {course.duration} total length
@@ -242,7 +297,12 @@ const CourseDetails = () => {
                               <span className="text-gray-500 text-xs sm:text-sm">{section.duration}</span>
                             </div>
                             {(expandedSections[index] || showAllContent) && (
-                              <div className="px-3 sm:px-4 py-2 bg-white">
+                              <motion.div 
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                transition={{ duration: 0.3 }}
+                                className="px-3 sm:px-4 py-2 bg-white"
+                              >
                                 <ul className="space-y-2">
                                   {section.topics?.map((topic, i) => (
                                     <li key={i} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
@@ -254,7 +314,7 @@ const CourseDetails = () => {
                                     </li>
                                   ))}
                                 </ul>
-                              </div>
+                              </motion.div>
                             )}
                           </div>
                         ))}
@@ -274,13 +334,18 @@ const CourseDetails = () => {
                           <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                         </svg>
                       </button>
-                    </div>
+                    </motion.div>
                   </>
                 )}
 
                 {/* Requirements */}
                 {activeTab === 'requirements' && (
-                  <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                  <motion.div 
+                    initial="hidden"
+                    animate="visible"
+                    variants={fadeIn}
+                    className="bg-white rounded-lg shadow-sm overflow-hidden transition-all hover:shadow-md"
+                  >
                     <div className="px-4 sm:px-6 py-4">
                       <div className="mb-4">
                         <p className="text-sm sm:text-base mb-3">To get the most out of this course, you should have:</p>
@@ -321,12 +386,17 @@ const CourseDetails = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 )}
 
                 {/* Reviews */}
                 {activeTab === 'reviews' && (
-                  <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                  <motion.div 
+                    initial="hidden"
+                    animate="visible"
+                    variants={fadeIn}
+                    className="bg-white rounded-lg shadow-sm overflow-hidden transition-all hover:shadow-md"
+                  >
                     <div className="px-4 sm:px-6 py-4">
                       <div className="space-y-6 mb-6">
                         {course.reviews?.map((review, index) => (
@@ -380,12 +450,17 @@ const CourseDetails = () => {
                         </form>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 )}
 
                 {/* FAQ */}
                 {activeTab === 'faq' && (
-                  <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                  <motion.div 
+                    initial="hidden"
+                    animate="visible"
+                    variants={fadeIn}
+                    className="bg-white rounded-lg shadow-sm overflow-hidden transition-all hover:shadow-md"
+                  >
                     <div className="px-4 sm:px-6 py-4">
                       <div className="space-y-4 mb-6">
                         {course.faqs?.map((faq, index) => (
@@ -416,15 +491,21 @@ const CourseDetails = () => {
                         </form>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 )}
               </div>
             </div>
 
             {/* Right Sidebar - Sticky on desktop */}
             <div className="lg:w-80 flex-shrink-0">
-              <div className="sticky top-4 space-y-4">
-                <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+              <motion.div 
+                initial="offscreen"
+                whileInView="onscreen"
+                viewport={{ once: true, amount: 0.1 }}
+                variants={cardVariants}
+                className="sticky top-4 space-y-4"
+              >
+                <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm transition-all hover:shadow-md">
                   {/* Price Display Section */}
                   <div className="p-4 border-b border-gray-200">
                     <div className="flex items-center justify-between">
@@ -448,13 +529,13 @@ const CourseDetails = () => {
                     <div className="flex flex-col gap-3">
                       <button 
                         onClick={handleBuyNow}
-                        className="w-full bg-black hover:bg-gray-800 text-white font-bold py-2 sm:py-3 px-4 rounded-lg transition-colors text-sm sm:text-base"
+                        className="w-full bg-black hover:bg-gray-800 text-white font-bold py-2 sm:py-3 px-4 rounded-lg transition-colors text-sm sm:text-base transform hover:scale-[1.02] active:scale-[0.98]"
                       >
                         Buy now
                       </button>
                       <button 
                         onClick={handleAddToCart}
-                        className="w-full border-2 border-black hover:bg-gray-100 text-black font-bold py-2 sm:py-3 px-4 rounded-lg transition-colors text-sm sm:text-base"
+                        className="w-full border-2 border-black hover:bg-gray-100 text-black font-bold py-2 sm:py-3 px-4 rounded-lg transition-colors text-sm sm:text-base transform hover:scale-[1.02] active:scale-[0.98]"
                       >
                         Add to cart
                       </button>
@@ -489,13 +570,17 @@ const CourseDetails = () => {
                     <div className="space-y-2">
                       <button 
                         onClick={handleGiftCourse}
-                        className="w-full border border-gray-300 rounded-lg py-2 text-sm font-medium hover:bg-gray-50 transition-colors"
+                        className="w-full border border-gray-300 rounded-lg py-2 text-sm font-medium hover:bg-gray-50 transition-colors transform hover:scale-[1.01]"
                       >
                         Gift this course
                       </button>
                       
                       {showCouponInput ? (
-                        <div className="flex gap-2">
+                        <motion.div 
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          className="flex gap-2"
+                        >
                           <input
                             type="text"
                             value={couponCode}
@@ -509,11 +594,11 @@ const CourseDetails = () => {
                           >
                             Apply
                           </button>
-                        </div>
+                        </motion.div>
                       ) : (
                         <button 
                           onClick={handleApplyCoupon}
-                          className="w-full border border-gray-300 rounded-lg py-2 text-sm font-medium hover:bg-gray-50 transition-colors"
+                          className="w-full border border-gray-300 rounded-lg py-2 text-sm font-medium hover:bg-gray-50 transition-colors transform hover:scale-[1.01]"
                         >
                           Apply Coupon
                         </button>
@@ -521,10 +606,37 @@ const CourseDetails = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
+
+        {/* Recommended Courses Section */}
+        {recommendedCourses.length > 0 && (
+          <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={fadeIn}
+            className="mt-16 w-full"
+          >
+            <div className="max-w-6xl mx-auto px-4 sm:px-6">
+              <h2 className="text-2xl font-bold mb-6 text-center">More {course.category} Courses You Might Like</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {recommendedCourses.map((recommendedCourse) => (
+                  <motion.div
+                    key={recommendedCourse.id}
+                    whileHover={{ y: -5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <CourseCard 
+                      course={recommendedCourse} 
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
       </div>
       
       {/* Footer */}
