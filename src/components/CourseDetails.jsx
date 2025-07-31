@@ -25,7 +25,7 @@ const CourseDetails = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [id]); // Add id as dependency to scroll to top when course changes
 
   const toggleSection = (index) => {
     setExpandedSections(prev => ({
@@ -540,7 +540,8 @@ const CourseDetails = () => {
                 {recommendedCourses.map((recommendedCourse) => (
                   <CourseCard 
                     key={recommendedCourse.id}
-                    course={recommendedCourse} 
+                    course={recommendedCourse}
+                    onClick={() => navigate(`/courses/${recommendedCourse.id}`)}
                   />
                 ))}
               </div>
