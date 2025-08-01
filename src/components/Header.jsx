@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import SignupModal from './SignupModal';
+import ProfileAvatar from './ProfileAvatar';
 
-const Header = ({ userEmail, setUserEmail }) => {
+const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, setUserName = () => {} }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const location = useLocation(); // Close menu on route change
+  const location = useLocation();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -15,7 +16,6 @@ const Header = ({ userEmail, setUserEmail }) => {
   }, []);
 
   useEffect(() => {
-    // Close menu when route changes
     setMenuOpen(false);
   }, [location]);
 
@@ -24,8 +24,14 @@ const Header = ({ userEmail, setUserEmail }) => {
     return () => document.body.classList.remove('modal-open');
   }, [showModal]);
 
-  const handleSignUp = (email) => {
+  const handleSignUp = (email, name) => {
     setUserEmail(email);
+    setUserName(name || email.split('@')[0]); // Fallback to email prefix if name not provided
+  };
+
+  const handleSignOut = () => {
+    setUserEmail(null);
+    setUserName(null);
   };
 
   return (
@@ -56,27 +62,41 @@ const Header = ({ userEmail, setUserEmail }) => {
             <button className="bg-transparent text-blue-500 border-2 border-blue-500 rounded-lg px-4 py-2 cursor-pointer text-sm font-semibold">
               Book a Demo
             </button>
-            <button 
-              className="bg-blue-500 text-white border-none rounded-lg px-4 py-2 cursor-pointer text-sm font-semibold" 
-              onClick={() => !userEmail && setShowModal(true)}
-            >
-              {userEmail ? userEmail.substring(0, 5) : 'Signup'}
-            </button>
+            {userEmail ? (
+              <ProfileAvatar 
+                user={{ email: userEmail, name: userName || userEmail.split('@')[0] }} 
+                onSignOut={handleSignOut}
+              />
+            ) : (
+              <button 
+                className="bg-blue-500 text-white border-none rounded-lg px-4 py-2 cursor-pointer text-sm font-semibold" 
+                onClick={() => setShowModal(true)}
+              >
+                Signup
+              </button>
+            )}
           </div>
         )}
       </div>
 
       {isMobile && menuOpen && (
-        <div className="flex gap-2.5 items-center px-6">
+        <div className="flex gap-2.5 items-center px-6 pb-3">
           <button className="bg-transparent text-blue-500 border-2 border-blue-500 rounded-lg px-4 py-2 cursor-pointer text-sm font-semibold">
             Book a Demo
           </button>
-          <button 
-            className="bg-blue-500 text-white border-none rounded-lg px-4 py-2 cursor-pointer text-sm font-semibold" 
-            onClick={() => !userEmail && setShowModal(true)}
-          >
-            {userEmail ? userEmail.substring(0, 5) : 'Signup'}
-          </button>
+          {userEmail ? (
+            <ProfileAvatar 
+              user={{ email: userEmail, name: userName || userEmail.split('@')[0] }} 
+              onSignOut={handleSignOut}
+            />
+          ) : (
+            <button 
+              className="bg-blue-500 text-white border-none rounded-lg px-4 py-2 cursor-pointer text-sm font-semibold" 
+              onClick={() => setShowModal(true)}
+            >
+              Signup
+            </button>
+          )}
         </div>
       )}
 

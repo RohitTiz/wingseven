@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 
-// Profile Avatar Dropdown Component - Add this to your existing code
-const ProfileAvatar = ({ user, onSignOut }) => {
+const ProfileAvatar = ({ user = { name: 'User', email: '' }, onSignOut = () => {} }) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const getInitials = (name) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase();
+    if (!name) return 'U';
+    const nameParts = name.split(' ');
+    return nameParts.map(n => n[0]).join('').toUpperCase().substring(0, 2);
   };
 
   return (
@@ -14,7 +15,7 @@ const ProfileAvatar = ({ user, onSignOut }) => {
         onClick={() => setShowDropdown(!showDropdown)}
         className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold text-sm flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 border-2 border-white"
       >
-        {getInitials(user.name)}
+        {getInitials(user?.name || user?.email?.split('@')[0])}
       </button>
 
       {showDropdown && (
@@ -25,20 +26,18 @@ const ProfileAvatar = ({ user, onSignOut }) => {
           ></div>
           
           <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-lg border border-gray-200 z-50 overflow-hidden">
-            {/* User Info Header */}
             <div className="p-4 bg-gray-50 border-b border-gray-200">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold text-lg flex items-center justify-center">
-                  {getInitials(user.name)}
+                  {getInitials(user?.name || user?.email?.split('@')[0])}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="font-semibold text-gray-900 truncate">{user.name}</div>
-                  <div className="text-sm text-gray-500 truncate">{user.email}</div>
+                  <div className="font-semibold text-gray-900 truncate">{user?.name || user?.email?.split('@')[0]}</div>
+                  <div className="text-sm text-gray-500 truncate">{user?.email || 'No email'}</div>
                 </div>
               </div>
             </div>
 
-            {/* Menu Items */}
             <div className="py-2">
               <button className="w-full px-4 py-3 text-left text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors">
                 <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -63,7 +62,6 @@ const ProfileAvatar = ({ user, onSignOut }) => {
               </button>
             </div>
 
-            {/* Theme Selector */}
             <div className="px-4 py-3 border-t border-gray-200">
               <div className="flex items-center justify-between gap-2">
                 <button className="flex items-center gap-2 text-xs text-gray-600 hover:text-gray-800">
@@ -89,7 +87,6 @@ const ProfileAvatar = ({ user, onSignOut }) => {
               </div>
             </div>
 
-            {/* Sign Out */}
             <div className="border-t border-gray-200">
               <button 
                 onClick={onSignOut}
