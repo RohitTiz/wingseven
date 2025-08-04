@@ -76,6 +76,22 @@ const CourseDetails = () => {
     setUserRating(0);
   };
 
+  const handleDownloadBrochure = () => {
+    if (course?.brochureUrl) {
+      // Create a temporary anchor element to trigger download
+      const link = document.createElement('a');
+      link.href = course.brochureUrl;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.download = `${course.title.replace(/\s+/g, '-').toLowerCase()}-brochure.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      alert('Brochure not available for this course');
+    }
+  };
+
   const getYouTubeEmbedUrl = (url) => {
     if (!url) return '';
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -172,7 +188,20 @@ const CourseDetails = () => {
               <div className="space-y-6">
                 {/* About Course */}
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                  <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6 pt-4">About Course</h2>
+                  <div className="flex justify-between items-start px-4 sm:px-6 pt-4">
+                    <h2 className="text-xl sm:text-2xl font-bold mb-4">About Course</h2>
+                    {course.brochureUrl && (
+                      <button 
+                        onClick={handleDownloadBrochure}
+                        className="flex items-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm sm:text-base"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                        Download Brochure
+                      </button>
+                    )}
+                  </div>
                   <div className="px-4 sm:px-6 pb-4">
                     <p className="mb-6 text-sm sm:text-base">{course.longDescription}</p>
                     
@@ -351,41 +380,6 @@ const CourseDetails = () => {
                     </div>
                   </div>
                 </div>
-
-                {/* FAQ */}
-                <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                  <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6 pt-4">Frequently Asked Questions</h2>
-                  <div className="px-4 sm:px-6 pb-4">
-                    <div className="space-y-4 mb-6">
-                      {course.faqs?.map((faq, index) => (
-                        <div key={index} className="border-b border-gray-100 pb-4">
-                          <h3 className="font-bold text-sm sm:text-base mb-2">{faq.question}</h3>
-                          <p className="text-gray-600 text-sm sm:text-base">{faq.answer}</p>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <h3 className="font-bold text-sm sm:text-base mb-3">Have a question?</h3>
-                      <form onSubmit={handleSubmitQuery}>
-                        <textarea
-                          value={userQuery}
-                          onChange={(e) => setUserQuery(e.target.value)}
-                          placeholder="Write your question here..."
-                          className="w-full border border-gray-300 rounded-lg p-3 mb-3 text-sm sm:text-base"
-                          rows="3"
-                          required
-                        />
-                        <button 
-                          type="submit"
-                          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm sm:text-base"
-                        >
-                          Submit Question
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -491,44 +485,23 @@ const CourseDetails = () => {
                   </div>
                 </div>
 
-                {/* Recommended Courses */}
+                {/* Recommended Courses - Full Size with Scroll */}
                 {recommendedCourses.length > 0 && (
-                  <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm p-4">
-                    <h3 className="font-bold text-lg mb-4">Courses you might like</h3>
-                    <div className="space-y-4">
-                      {recommendedCourses.map((recommendedCourse) => (
-                        <div 
-                          key={recommendedCourse.id}
-                          className="cursor-pointer hover:bg-gray-50 p-2 rounded transition-colors"
-                          onClick={() => navigate(`/courses/${recommendedCourse.id}`)}
-                        >
-                          <div className="flex items-start">
-                            <img 
-                              src={recommendedCourse.image} 
-                              alt={recommendedCourse.title}
-                              className="w-16 h-16 object-cover rounded mr-3"
-                            />
-                            <div>
-                              <h4 className="font-medium text-sm line-clamp-2">{recommendedCourse.title}</h4>
-                              <div className="flex items-center mt-1">
-                                <span className="text-yellow-400 text-xs">★</span>
-                                <span className="text-xs font-bold ml-1">{recommendedCourse.rating}</span>
-                                <span className="text-gray-500 text-xs ml-1">({recommendedCourse.reviews.length})</span>
-                              </div>
-                              <div className="mt-1">
-                                <span className="font-bold text-sm">
-                                  {recommendedCourse.price === 0 ? 'Free' : `₹${recommendedCourse.price}`}
-                                </span>
-                                {recommendedCourse.price !== 0 && (
-                                  <span className="text-gray-500 text-xs line-through ml-1">
-                                    ₹{Math.round(recommendedCourse.price * 1.2)}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
+                  <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+                    <div className="p-4 border-b border-gray-200">
+                      <h3 className="font-bold text-lg">Courses you might like</h3>
+                    </div>
+                    <div className="max-h-[calc(100vh-300px)] overflow-y-auto">
+                      <div className="grid grid-cols-1 gap-4 p-4">
+                        {recommendedCourses.map((recommendedCourse) => (
+                          <CourseCard 
+                            key={recommendedCourse.id}
+                            course={recommendedCourse}
+                            onClick={() => navigate(`/courses/${recommendedCourse.id}`)}
+                            compact={true}
+                          />
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}

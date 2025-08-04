@@ -2,6 +2,7 @@ const CoursesData = [
   {
     id: 1,
     title: "Complete Python Programming",
+    brochureUrl: "https://example.com/brochures/python-programming.pdf",
     description: "Learn Python from basics to advanced with hands-on projects and real-world applications",
     longDescription: "This comprehensive Python course covers everything from basic syntax to advanced concepts like decorators, generators, and OOP. You'll work on real-world projects including web scraping, data analysis, and automation scripts.",
     category: "Python",
@@ -75,6 +76,7 @@ const CoursesData = [
   {
     id: 2,
     title: "AI & Machine Learning Masterclass",
+    brochureUrl: "https://example.com/brochures/python-programming.pdf",
     description: "Master AI and ML concepts with real-world applications and industry projects",
     longDescription: "This intensive masterclass takes you through the complete machine learning pipeline from data preprocessing to model deployment. You'll work with TensorFlow and PyTorch on real-world datasets.",
     category: "AI/ML",
@@ -148,6 +150,7 @@ const CoursesData = [
   {
     id: 3,
     title: "Java Full Stack Development",
+    brochureUrl: "https://example.com/brochures/python-programming.pdf",
     description: "Complete Java development from backend to frontend with Spring Boot and React",
     longDescription: "Learn to build enterprise-grade applications using Java with Spring Boot for the backend and React for the frontend. Includes database integration, REST APIs, and deployment strategies.",
     category: "Java",
@@ -220,6 +223,7 @@ const CoursesData = [
   {
     id: 4,
     title: "Modern Web Development",
+    brochureUrl: "https://example.com/brochures/python-programming.pdf",
     description: "Build responsive websites with HTML, CSS, JavaScript & React from scratch",
     longDescription: "Master the fundamentals of web development including HTML5, CSS3, modern JavaScript (ES6+), and React. Learn responsive design principles and build portfolio-ready projects.",
     category: "Web Development",
@@ -292,6 +296,7 @@ const CoursesData = [
   {
     id: 5,
     title: "Advanced Python for Data Science",
+    brochureUrl: "https://example.com/brochures/python-programming.pdf",
     description: "Use Python for data analysis, visualization, and machine learning with pandas and numpy",
     longDescription: "Take your Python skills to the next level with data science applications. Learn to clean, analyze, and visualize data using pandas, NumPy, Matplotlib, and Seaborn.",
     category: "Python",
@@ -364,6 +369,7 @@ const CoursesData = [
   {
     id: 6,
     title: "React.js Complete Guide",
+    brochureUrl: "https://example.com/brochures/python-programming.pdf",
     description: "Master React.js with hooks, context, and modern patterns for building scalable apps",
     longDescription: "Deep dive into React.js with comprehensive coverage of hooks, context API, state management, and performance optimization techniques for building production-ready applications.",
     category: "Web Development",
@@ -436,6 +442,7 @@ const CoursesData = [
   {
     id: 7,
     title: "Deep Learning with TensorFlow",
+    brochureUrl: "https://example.com/brochures/python-programming.pdf",
     description: "Build neural networks and deep learning models for computer vision and NLP",
     longDescription: "Master deep learning concepts and implement neural networks using TensorFlow. Covers CNNs for computer vision, RNNs for sequence data, and transformers for NLP applications.",
     category: "AI/ML",
@@ -509,6 +516,7 @@ const CoursesData = [
   {
     id: 8,
     title: "Spring Boot Microservices",
+    brochureUrl: "https://example.com/brochures/python-programming.pdf",
     description: "Build scalable microservices with Spring Boot, Docker, and cloud deployment",
     longDescription: "Learn to design, build, and deploy microservices architectures using Spring Boot, Spring Cloud, Docker, and Kubernetes. Includes service discovery, API gateways, and distributed tracing.",
     category: "Java",
@@ -582,6 +590,7 @@ const CoursesData = [
   {
     id: 9,
     title: "Python Web Development with Django",
+    brochureUrl: "https://example.com/brochures/python-programming.pdf",
     description: "Create powerful web applications using Django framework with database integration",
     longDescription: "Build full-featured web applications with Django, covering models, views, templates, forms, authentication, and deployment. Includes REST API development with Django REST Framework.",
     category: "Python",
@@ -654,6 +663,7 @@ const CoursesData = [
   {
     id: 10,
     title: "Machine Learning Algorithms",
+    brochureUrl: "https://example.com/brochures/python-programming.pdf",
     description: "Understand and implement various ML algorithms from scratch with practical examples",
     longDescription: "Deep dive into machine learning algorithms, covering both theory and practical implementation. Learn regression, classification, clustering, and dimensionality reduction techniques.",
     category: "AI/ML",
@@ -726,6 +736,7 @@ const CoursesData = [
   {
     id: 11,
     title: "Advanced Java Programming",
+    brochureUrl: "https://example.com/brochures/python-programming.pdf",
     description: "Master advanced Java concepts including multithreading, collections, and design patterns",
     longDescription: "Take your Java skills to expert level with deep dives into concurrency, performance optimization, design patterns, and JVM internals. Includes hands-on coding exercises.",
     category: "Java",
@@ -798,6 +809,7 @@ const CoursesData = [
   {
     id: 12,
     title: "Full Stack JavaScript Development",
+    brochureUrl: "https://example.com/brochures/python-programming.pdf",
     description: "Build complete web applications using Node.js, Express, MongoDB, and React",
     longDescription: "Master the MERN stack (MongoDB, Express, React, Node.js) to build modern web applications. Learn to create APIs, work with databases, and build responsive UIs.",
     category: "Web Development",
