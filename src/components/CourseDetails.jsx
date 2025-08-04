@@ -16,7 +16,6 @@ const CourseDetails = () => {
   const [userQuery, setUserQuery] = useState('');
   const [userReview, setUserReview] = useState('');
   const [userRating, setUserRating] = useState(0);
-  const [activeTab, setActiveTab] = useState('about');
   
   // Get recommended courses (same category, excluding current course)
   const recommendedCourses = CoursesData.filter(
@@ -169,266 +168,231 @@ const CourseDetails = () => {
                 </p>
               </div>
 
-              {/* Navigation Tabs */}
-              <div className="bg-white rounded-lg shadow-sm mb-6 overflow-hidden">
-                <div className="flex overflow-x-auto scrollbar-hide">
-                  <button
-                    onClick={() => setActiveTab('about')}
-                    className={`px-4 py-3 font-medium text-sm sm:text-base whitespace-nowrap ${activeTab === 'about' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600 hover:text-gray-900'}`}
-                  >
-                    About Course
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('requirements')}
-                    className={`px-4 py-3 font-medium text-sm sm:text-base whitespace-nowrap ${activeTab === 'requirements' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600 hover:text-gray-900'}`}
-                  >
-                    Requirements
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('reviews')}
-                    className={`px-4 py-3 font-medium text-sm sm:text-base whitespace-nowrap ${activeTab === 'reviews' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600 hover:text-gray-900'}`}
-                  >
-                    Reviews
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('faq')}
-                    className={`px-4 py-3 font-medium text-sm sm:text-base whitespace-nowrap ${activeTab === 'faq' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600 hover:text-gray-900'}`}
-                  >
-                    FAQ
-                  </button>
-                </div>
-              </div>
-
-              {/* Tab Content */}
+              {/* All Content Sections */}
               <div className="space-y-6">
                 {/* About Course */}
-                {activeTab === 'about' && (
-                  <>
-                    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                      <div className="px-4 sm:px-6 py-4">
-                        <p className="mb-6 text-sm sm:text-base">{course.longDescription}</p>
-                        
-                        <h3 className="font-bold text-lg sm:text-xl mb-3">What you'll learn</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                          {course.learningOutcomes?.map((outcome, index) => (
-                            <div key={index} className="flex items-start text-sm sm:text-base">
-                              <span className="text-green-500 mr-2">✓</span>
-                              <span>{outcome}</span>
-                            </div>
-                          ))}
+                <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                  <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6 pt-4">About Course</h2>
+                  <div className="px-4 sm:px-6 pb-4">
+                    <p className="mb-6 text-sm sm:text-base">{course.longDescription}</p>
+                    
+                    <h3 className="font-bold text-lg sm:text-xl mb-3">What you'll learn</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      {course.learningOutcomes?.map((outcome, index) => (
+                        <div key={index} className="flex items-start text-sm sm:text-base">
+                          <span className="text-green-500 mr-2">✓</span>
+                          <span>{outcome}</span>
                         </div>
-                      </div>
+                      ))}
                     </div>
+                  </div>
+                </div>
 
-                    {/* Course Content */}
-                    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                      <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6">Course content</h2>
-                      <div className="text-gray-600 text-sm sm:text-base mb-4 px-4 sm:px-6">
-                        {course.sections} sections • {course.lectures} lectures • {course.duration} total length
-                      </div>
-                      <div className="border border-gray-200 rounded-lg overflow-hidden mx-4 sm:mx-6 mb-4">
-                        {course.syllabus?.map((section, index) => (
-                          <div key={index} className="border-b border-gray-200 last:border-b-0">
-                            <div 
-                              className="p-3 sm:p-4 bg-gray-50 flex justify-between items-center cursor-pointer hover:bg-gray-100 transition-colors"
-                              onClick={() => toggleSection(index)}
-                            >
-                              <div className="flex items-center">
-                                <svg 
-                                  xmlns="http://www.w3.org/2000/svg" 
-                                  className={`h-4 w-4 sm:h-5 sm:w-5 mr-2 transform transition-transform ${expandedSections[index] ? 'rotate-90' : ''}`} 
-                                  viewBox="0 0 20 20" 
-                                  fill="currentColor"
-                                >
-                                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                                </svg>
-                                <h3 className="font-bold text-sm sm:text-base">{section.week}: {section.title}</h3>
-                              </div>
-                              <span className="text-gray-500 text-xs sm:text-sm">{section.duration}</span>
-                            </div>
-                            {(expandedSections[index] || showAllContent) && (
-                              <div className="px-3 sm:px-4 py-2 bg-white">
-                                <ul className="space-y-2">
-                                  {section.topics?.map((topic, i) => (
-                                    <li key={i} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
-                                      <span className="flex items-center text-xs sm:text-sm">
-                                        <span className="text-gray-400 mr-2">▶</span>
-                                        {topic}
-                                      </span>
-                                      <span className="text-gray-500 text-xs">02:45</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                      
-                      <button 
-                        onClick={toggleAllContent}
-                        className="mx-4 sm:mx-6 mb-4 flex items-center justify-center w-[calc(100%-2rem)] sm:w-[calc(100%-3rem)] py-2 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-sm sm:text-base"
-                      >
-                        {showAllContent ? 'Show Less' : 'Show All Content'}
-                        <svg 
-                          xmlns="http://www.w3.org/2000/svg" 
-                          className={`h-4 w-4 sm:h-5 sm:w-5 ml-2 transform transition-transform ${showAllContent ? 'rotate-180' : ''}`} 
-                          viewBox="0 0 20 20" 
-                          fill="currentColor"
+                {/* Course Content */}
+                <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                  <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6 pt-4">Course content</h2>
+                  <div className="text-gray-600 text-sm sm:text-base mb-4 px-4 sm:px-6">
+                    {course.sections} sections • {course.lectures} lectures • {course.duration} total length
+                  </div>
+                  <div className="border border-gray-200 rounded-lg overflow-hidden mx-4 sm:mx-6 mb-4">
+                    {course.syllabus?.map((section, index) => (
+                      <div key={index} className="border-b border-gray-200 last:border-b-0">
+                        <div 
+                          className="p-3 sm:p-4 bg-gray-50 flex justify-between items-center cursor-pointer hover:bg-gray-100 transition-colors"
+                          onClick={() => toggleSection(index)}
                         >
-                          <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                      </button>
-                    </div>
-                  </>
-                )}
+                          <div className="flex items-center">
+                            <svg 
+                              xmlns="http://www.w3.org/2000/svg" 
+                              className={`h-4 w-4 sm:h-5 sm:w-5 mr-2 transform transition-transform ${expandedSections[index] ? 'rotate-90' : ''}`} 
+                              viewBox="0 0 20 20" 
+                              fill="currentColor"
+                            >
+                              <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                            </svg>
+                            <h3 className="font-bold text-sm sm:text-base">{section.week}: {section.title}</h3>
+                          </div>
+                          <span className="text-gray-500 text-xs sm:text-sm">{section.duration}</span>
+                        </div>
+                        {(expandedSections[index] || showAllContent) && (
+                          <div className="px-3 sm:px-4 py-2 bg-white">
+                            <ul className="space-y-2">
+                              {section.topics?.map((topic, i) => (
+                                <li key={i} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
+                                  <span className="flex items-center text-xs sm:text-sm">
+                                    <span className="text-gray-400 mr-2">▶</span>
+                                    {topic}
+                                  </span>
+                                  <span className="text-gray-500 text-xs">02:45</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <button 
+                    onClick={toggleAllContent}
+                    className="mx-4 sm:mx-6 mb-4 flex items-center justify-center w-[calc(100%-2rem)] sm:w-[calc(100%-3rem)] py-2 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-sm sm:text-base"
+                  >
+                    {showAllContent ? 'Show Less' : 'Show All Content'}
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      className={`h-4 w-4 sm:h-5 sm:w-5 ml-2 transform transition-transform ${showAllContent ? 'rotate-180' : ''}`} 
+                      viewBox="0 0 20 20" 
+                      fill="currentColor"
+                    >
+                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
 
                 {/* Requirements */}
-                {activeTab === 'requirements' && (
-                  <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                    <div className="px-4 sm:px-6 py-4">
-                      <div className="mb-4">
-                        <p className="text-sm sm:text-base mb-3">To get the most out of this course, you should have:</p>
-                        <ul className="list-disc list-inside space-y-2 text-sm sm:text-base">
-                          {course.requirements?.map((req, index) => (
-                            <li key={index}>{req}</li>
-                          ))}
-                        </ul>
-                      </div>
-                      
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <h3 className="font-bold text-sm sm:text-base mb-2">Recommended Tools & Resources</h3>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                          <div className="flex flex-col items-center">
-                            <img 
-                              src="https://cdn-icons-png.flaticon.com/512/732/732212.png" 
-                              alt="Web Browser" 
-                              className="h-12 w-12 object-contain mb-1"
-                            />
-                            <span className="text-xs text-center">Modern Web Browser</span>
-                          </div>
-                          <div className="flex flex-col items-center">
-                            <img 
-                              src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" 
-                              alt="VS Code" 
-                              className="h-12 w-12 object-contain mb-1"
-                            />
-                            <span className="text-xs text-center">Code Editor</span>
-                          </div>
-                          <div className="flex flex-col items-center">
-                            <img 
-                              src="https://cdn-icons-png.flaticon.com/512/888/888859.png" 
-                              alt="Computer" 
-                              className="h-12 w-12 object-contain mb-1"
-                            />
-                            <span className="text-xs text-center">Computer with Internet</span>
-                          </div>
+                <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                  <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6 pt-4">Requirements</h2>
+                  <div className="px-4 sm:px-6 pb-4">
+                    <div className="mb-4">
+                      <p className="text-sm sm:text-base mb-3">To get the most out of this course, you should have:</p>
+                      <ul className="list-disc list-inside space-y-2 text-sm sm:text-base">
+                        {course.requirements?.map((req, index) => (
+                          <li key={index}>{req}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h3 className="font-bold text-sm sm:text-base mb-2">Recommended Tools & Resources</h3>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <div className="flex flex-col items-center">
+                          <img 
+                            src="https://cdn-icons-png.flaticon.com/512/732/732212.png" 
+                            alt="Web Browser" 
+                            className="h-12 w-12 object-contain mb-1"
+                          />
+                          <span className="text-xs text-center">Modern Web Browser</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <img 
+                            src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" 
+                            alt="VS Code" 
+                            className="h-12 w-12 object-contain mb-1"
+                          />
+                          <span className="text-xs text-center">Code Editor</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <img 
+                            src="https://cdn-icons-png.flaticon.com/512/888/888859.png" 
+                            alt="Computer" 
+                            className="h-12 w-12 object-contain mb-1"
+                          />
+                          <span className="text-xs text-center">Computer with Internet</span>
                         </div>
                       </div>
                     </div>
                   </div>
-                )}
+                </div>
 
                 {/* Reviews */}
-                {activeTab === 'reviews' && (
-                  <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                    <div className="px-4 sm:px-6 py-4">
-                      <div className="space-y-6 mb-6">
-                        {course.reviews?.map((review, index) => (
-                          <div key={index} className="border-b border-gray-100 pb-6">
-                            <div className="flex items-center mb-2">
-                              <div className="flex items-center mr-3">
-                                {[...Array(5)].map((_, i) => (
-                                  <span key={i} className={i < review.rating ? "text-yellow-400" : "text-gray-300"}>★</span>
-                                ))}
-                              </div>
-                              <span className="font-medium text-sm sm:text-base">{review.name}</span>
-                              <span className="text-gray-500 text-xs sm:text-sm ml-auto">{review.date}</span>
-                            </div>
-                            <p className="text-gray-600 text-sm sm:text-base">{review.comment}</p>
-                          </div>
-                        ))}
-                      </div>
-                      
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <h3 className="font-bold text-sm sm:text-base mb-3">Write a Review</h3>
-                        <form onSubmit={handleSubmitReview}>
-                          <div className="flex items-center mb-3">
-                            <span className="mr-2 text-sm sm:text-base">Rating:</span>
-                            <div className="flex">
-                              {[1, 2, 3, 4, 5].map((star) => (
-                                <button
-                                  key={star}
-                                  type="button"
-                                  onClick={() => setUserRating(star)}
-                                  className="text-2xl focus:outline-none"
-                                >
-                                  {star <= userRating ? '★' : '☆'}
-                                </button>
+                <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                  <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6 pt-4">Reviews</h2>
+                  <div className="px-4 sm:px-6 pb-4">
+                    <div className="space-y-6 mb-6">
+                      {course.reviews?.map((review, index) => (
+                        <div key={index} className="border-b border-gray-100 pb-6">
+                          <div className="flex items-center mb-2">
+                            <div className="flex items-center mr-3">
+                              {[...Array(5)].map((_, i) => (
+                                <span key={i} className={i < review.rating ? "text-yellow-400" : "text-gray-300"}>★</span>
                               ))}
                             </div>
+                            <span className="font-medium text-sm sm:text-base">{review.name}</span>
+                            <span className="text-gray-500 text-xs sm:text-sm ml-auto">{review.date}</span>
                           </div>
-                          <textarea
-                            value={userReview}
-                            onChange={(e) => setUserReview(e.target.value)}
-                            placeholder="Share your experience with this course..."
-                            className="w-full border border-gray-300 rounded-lg p-3 mb-3 text-sm sm:text-base"
-                            rows="3"
-                            required
-                          />
-                          <button 
-                            type="submit"
-                            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm sm:text-base"
-                          >
-                            Submit Review
-                          </button>
-                        </form>
-                      </div>
+                          <p className="text-gray-600 text-sm sm:text-base">{review.comment}</p>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h3 className="font-bold text-sm sm:text-base mb-3">Write a Review</h3>
+                      <form onSubmit={handleSubmitReview}>
+                        <div className="flex items-center mb-3">
+                          <span className="mr-2 text-sm sm:text-base">Rating:</span>
+                          <div className="flex">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <button
+                                key={star}
+                                type="button"
+                                onClick={() => setUserRating(star)}
+                                className="text-2xl focus:outline-none"
+                              >
+                                {star <= userRating ? '★' : '☆'}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                        <textarea
+                          value={userReview}
+                          onChange={(e) => setUserReview(e.target.value)}
+                          placeholder="Share your experience with this course..."
+                          className="w-full border border-gray-300 rounded-lg p-3 mb-3 text-sm sm:text-base"
+                          rows="3"
+                          required
+                        />
+                        <button 
+                          type="submit"
+                          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm sm:text-base"
+                        >
+                          Submit Review
+                        </button>
+                      </form>
                     </div>
                   </div>
-                )}
+                </div>
 
                 {/* FAQ */}
-                {activeTab === 'faq' && (
-                  <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                    <div className="px-4 sm:px-6 py-4">
-                      <div className="space-y-4 mb-6">
-                        {course.faqs?.map((faq, index) => (
-                          <div key={index} className="border-b border-gray-100 pb-4">
-                            <h3 className="font-bold text-sm sm:text-base mb-2">{faq.question}</h3>
-                            <p className="text-gray-600 text-sm sm:text-base">{faq.answer}</p>
-                          </div>
-                        ))}
-                      </div>
-                      
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <h3 className="font-bold text-sm sm:text-base mb-3">Have a question?</h3>
-                        <form onSubmit={handleSubmitQuery}>
-                          <textarea
-                            value={userQuery}
-                            onChange={(e) => setUserQuery(e.target.value)}
-                            placeholder="Write your question here..."
-                            className="w-full border border-gray-300 rounded-lg p-3 mb-3 text-sm sm:text-base"
-                            rows="3"
-                            required
-                          />
-                          <button 
-                            type="submit"
-                            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm sm:text-base"
-                          >
-                            Submit Question
-                          </button>
-                        </form>
-                      </div>
+                <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                  <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6 pt-4">Frequently Asked Questions</h2>
+                  <div className="px-4 sm:px-6 pb-4">
+                    <div className="space-y-4 mb-6">
+                      {course.faqs?.map((faq, index) => (
+                        <div key={index} className="border-b border-gray-100 pb-4">
+                          <h3 className="font-bold text-sm sm:text-base mb-2">{faq.question}</h3>
+                          <p className="text-gray-600 text-sm sm:text-base">{faq.answer}</p>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h3 className="font-bold text-sm sm:text-base mb-3">Have a question?</h3>
+                      <form onSubmit={handleSubmitQuery}>
+                        <textarea
+                          value={userQuery}
+                          onChange={(e) => setUserQuery(e.target.value)}
+                          placeholder="Write your question here..."
+                          className="w-full border border-gray-300 rounded-lg p-3 mb-3 text-sm sm:text-base"
+                          rows="3"
+                          required
+                        />
+                        <button 
+                          type="submit"
+                          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm sm:text-base"
+                        >
+                          Submit Question
+                        </button>
+                      </form>
                     </div>
                   </div>
-                )}
+                </div>
               </div>
             </div>
 
             {/* Right Sidebar - Sticky on desktop */}
             <div className="lg:w-80 flex-shrink-0">
               <div className="sticky top-4 space-y-4">
+                {/* Purchase Box */}
                 <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
                   {/* Price Display Section */}
                   <div className="p-4 border-b border-gray-200">
@@ -496,7 +460,7 @@ const CourseDetails = () => {
                         onClick={handleGiftCourse}
                         className="w-full border border-gray-300 rounded-lg py-2 text-sm font-medium hover:bg-gray-50 transition-colors"
                       >
-                        Gift this course
+                        Share this course
                       </button>
                       
                       {showCouponInput ? (
@@ -526,28 +490,52 @@ const CourseDetails = () => {
                     </div>
                   </div>
                 </div>
+
+                {/* Recommended Courses */}
+                {recommendedCourses.length > 0 && (
+                  <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm p-4">
+                    <h3 className="font-bold text-lg mb-4">Courses you might like</h3>
+                    <div className="space-y-4">
+                      {recommendedCourses.map((recommendedCourse) => (
+                        <div 
+                          key={recommendedCourse.id}
+                          className="cursor-pointer hover:bg-gray-50 p-2 rounded transition-colors"
+                          onClick={() => navigate(`/courses/${recommendedCourse.id}`)}
+                        >
+                          <div className="flex items-start">
+                            <img 
+                              src={recommendedCourse.image} 
+                              alt={recommendedCourse.title}
+                              className="w-16 h-16 object-cover rounded mr-3"
+                            />
+                            <div>
+                              <h4 className="font-medium text-sm line-clamp-2">{recommendedCourse.title}</h4>
+                              <div className="flex items-center mt-1">
+                                <span className="text-yellow-400 text-xs">★</span>
+                                <span className="text-xs font-bold ml-1">{recommendedCourse.rating}</span>
+                                <span className="text-gray-500 text-xs ml-1">({recommendedCourse.reviews.length})</span>
+                              </div>
+                              <div className="mt-1">
+                                <span className="font-bold text-sm">
+                                  {recommendedCourse.price === 0 ? 'Free' : `₹${recommendedCourse.price}`}
+                                </span>
+                                {recommendedCourse.price !== 0 && (
+                                  <span className="text-gray-500 text-xs line-through ml-1">
+                                    ₹{Math.round(recommendedCourse.price * 1.2)}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
-
-        {/* Recommended Courses Section */}
-        {recommendedCourses.length > 0 && (
-          <div className="mt-16 w-full">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6">
-              <h2 className="text-2xl font-bold mb-6 text-center">More {course.category} Courses You Might Like</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {recommendedCourses.map((recommendedCourse) => (
-                  <CourseCard 
-                    key={recommendedCourse.id}
-                    course={recommendedCourse}
-                    onClick={() => navigate(`/courses/${recommendedCourse.id}`)}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
       </div>
       
       {/* Footer */}

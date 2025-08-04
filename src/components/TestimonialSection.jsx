@@ -12,21 +12,21 @@ const testimonials = [
     quote: 'Udemy gives you the ability to be persistent. I learned exactly what I needed to know in the real world. It helped me land a new role.',
     name: 'William Wachlin',
     title: 'Partner Account Manager at AWS',
-    avatar: 'https://randomuser.me/api/portraits/men/45.jpg',
+    initials: 'WW',
     category: 'business'
   },
   {
     quote: 'Udemy was truly a game-changer and a great guide for me as we brought Dimensional to life.',
     name: 'Alvin Lim',
     title: 'CTO at Dimensional',
-    avatar: 'https://randomuser.me/api/portraits/men/46.jpg',
+    initials: 'AL',
     category: 'technology'
   },
   {
     quote: 'The courses are comprehensive and well-structured. I was able to transition careers thanks to what I learned here.',
     name: 'Maria Garcia',
     title: 'Frontend Developer',
-    avatar: 'https://randomuser.me/api/portraits/women/32.jpg',
+    initials: 'MG',
     category: 'technology'
   },
   {
@@ -40,15 +40,14 @@ const testimonials = [
     quote: 'The instructors are top-notch and the content is always up-to-date with industry standards.',
     name: 'Lisa Chen',
     title: 'UX Designer',
-    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+    initials: 'LC',
     category: 'design'
   },
 ];
 
-const TestimonialMarquee = () => {
-  const [isMobile, setIsMobile] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
+const TestimonialCarousel = () => {
   const [activeFilter, setActiveFilter] = useState('all');
+  const [currentIndex, setCurrentIndex] = useState(0);
   const bgImage = 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1470&q=80';
 
   // Get unique categories
@@ -59,36 +58,43 @@ const TestimonialMarquee = () => {
     ? testimonials 
     : testimonials.filter(t => t.category === activeFilter);
 
-  // Duplicate filtered testimonials for seamless looping
-  const duplicatedTestimonials = [...filteredTestimonials, ...filteredTestimonials];
+  // Always show up to 3 cards at a time
+  const cardsToShow = 3;
+  const totalGroups = Math.ceil(filteredTestimonials.length / cardsToShow);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const togglePause = () => {
-    setIsPaused(!isPaused);
+  const scrollToGroup = (groupIndex) => {
+    const clampedIndex = Math.max(0, Math.min(groupIndex, totalGroups - 1));
+    setCurrentIndex(clampedIndex);
   };
 
+  const handleNext = () => {
+    if (currentIndex < totalGroups - 1) {
+      scrollToGroup(currentIndex + 1);
+    } else {
+      scrollToGroup(0); // Loop back to start
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      scrollToGroup(currentIndex - 1);
+    } else {
+      scrollToGroup(totalGroups - 1); // Loop to end
+    }
+  };
+
+  // Get current group of testimonials
+  const currentTestimonials = filteredTestimonials.slice(
+    currentIndex * cardsToShow,
+    (currentIndex + 1) * cardsToShow
+  );
+
   return (
-    <section className="relative py-12 md:py-20 px-4 overflow-hidden" style={{ fontFamily: "'Roboto', sans-serif" }}>
+    <section className="relative w-full py-16 overflow-hidden" style={{ fontFamily: "'Roboto', sans-serif" }}>
       {/* Google Font Import */}
       <style>
         {`
           @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-          @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-          .paused {
-            animation-play-state: paused !important;
-          }
         `}
       </style>
 
@@ -107,7 +113,7 @@ const TestimonialMarquee = () => {
       <div className="absolute inset-0 bg-black/50 z-0" />
 
       {/* Foreground Content */}
-      <div className="relative z-10 max-w-7xl mx-auto text-white text-center">
+      <div className="relative z-10 max-w-7xl mx-auto text-white text-center px-4">
         <h2 className="text-2xl md:text-4xl font-extrabold mb-8 md:mb-10">
           What Our Learners Say
         </h2>
@@ -117,7 +123,10 @@ const TestimonialMarquee = () => {
           {categories.map(category => (
             <button
               key={category}
-              onClick={() => setActiveFilter(category)}
+              onClick={() => {
+                setActiveFilter(category);
+                setCurrentIndex(0);
+              }}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 activeFilter === category 
                   ? 'bg-white text-indigo-600' 
@@ -129,44 +138,51 @@ const TestimonialMarquee = () => {
           ))}
         </div>
 
-        <div 
-          className="relative overflow-hidden w-full"
-          onClick={togglePause}
-          style={{ cursor: 'pointer' }}
-        >
-          {filteredTestimonials.length > 0 ? (
-            <div
-              className={`flex gap-4 md:gap-6 w-max animate-marquee ${isPaused ? 'paused' : ''}`}
-              style={{ 
-                animation: 'marquee 40s linear infinite',
-                animationDuration: isMobile ? '60s' : '40s'
-              }}
-            >
-              {duplicatedTestimonials.map((testimonial, index) => (
+        <div className="relative w-full">
+          {/* Navigation Arrows */}
+          {filteredTestimonials.length > cardsToShow && (
+            <>
+              <button 
+                onClick={handlePrev}
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-8 z-20 bg-white/80 text-indigo-600 rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:bg-white transition-all"
+                aria-label="Previous testimonial"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button 
+                onClick={handleNext}
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-8 z-20 bg-white/80 text-indigo-600 rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:bg-white transition-all"
+                aria-label="Next testimonial"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </>
+          )}
+
+          {/* Cards Container - Always Centered */}
+          <div className="flex justify-center w-full">
+            <div className="flex justify-center gap-4 md:gap-6 max-w-full overflow-x-hidden">
+              {currentTestimonials.map((testimonial, index) => (
                 <div
                   key={index}
-                  className="flex-shrink-0 w-[280px] md:w-[320px] bg-white/90 text-gray-800 rounded-xl p-5 md:p-6 shadow-lg backdrop-blur-sm"
+                  className="flex-shrink-0 w-[280px] md:w-[320px] bg-white/90 text-gray-800 rounded-xl p-5 md:p-6 shadow-lg backdrop-blur-sm flex flex-col"
                 >
-                  <p className="text-gray-700 font-medium mb-4 text-sm md:text-base">
+                  <p className="text-gray-700 font-medium mb-4 text-sm md:text-base line-clamp-4 flex-grow">
                     {testimonial.quote}
                   </p>
                   <div className="flex items-center">
-                    {testimonial.avatar ? (
-                      <img
-                        src={testimonial.avatar}
-                        alt={testimonial.name}
-                        className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover border-2 border-indigo-300"
-                      />
-                    ) : (
-                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-indigo-500 text-white flex items-center justify-center font-bold text-sm md:text-base">
-                        {testimonial.initials}
-                      </div>
-                    )}
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-indigo-500 text-white flex items-center justify-center font-bold text-sm md:text-base">
+                      {testimonial.initials}
+                    </div>
                     <div className="ml-3 md:ml-4 text-left">
-                      <h4 className="font-semibold text-gray-900 text-sm md:text-base">
+                      <h4 className="font-semibold text-gray-900 text-sm md:text-base truncate">
                         {testimonial.name}
                       </h4>
-                      <p className="text-xs md:text-sm text-gray-600">
+                      <p className="text-xs md:text-sm text-gray-600 truncate">
                         {testimonial.title}
                       </p>
                     </div>
@@ -174,17 +190,20 @@ const TestimonialMarquee = () => {
                 </div>
               ))}
             </div>
-          ) : (
-            <div className="py-10 text-white">
-              No testimonials found for this category.
-            </div>
-          )}
+          </div>
         </div>
 
-        {/* Pause indicator */}
-        {isPaused && filteredTestimonials.length > 0 && (
-          <div className="mt-4 text-sm text-white/80">
-            Click anywhere to resume scrolling
+        {/* Dots indicator */}
+        {totalGroups > 1 && (
+          <div className="flex justify-center mt-6 gap-2">
+            {Array.from({ length: totalGroups }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => scrollToGroup(index)}
+                className={`w-2 h-2 rounded-full transition-all ${index === currentIndex ? 'bg-white w-4' : 'bg-white/50'}`}
+                aria-label={`Go to testimonial group ${index + 1}`}
+              />
+            ))}
           </div>
         )}
       </div>
@@ -192,4 +211,4 @@ const TestimonialMarquee = () => {
   );
 };
 
-export default TestimonialMarquee;
+export default TestimonialCarousel;
