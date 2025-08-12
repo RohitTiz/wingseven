@@ -45,7 +45,7 @@ const ProfileAvatar = ({
       {showDropdown && (
         <>
           <div 
-            className="fixed inset-0 z-40 bg-black bg-opacity-10" 
+            className="fixed inset-0 z-40 backdrop-blur-sm bg-black/10" 
             onClick={() => setShowDropdown(false)}
             aria-hidden="true"
           />

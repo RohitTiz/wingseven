@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Header from '../componentsdash/DashHeader';
 import {modules} from '../dummydata/dummydata'
-
+import QuizResult from '../componentsdash/QuizResult';
 
 
 const QuizResultHistory = () => {

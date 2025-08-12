@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Router } from "react-router-dom";
 import HomePagee from "./components/HomePagee";
 import AboutPage from "./pages/AboutPage";
 import Coursespage from "./pages/Coursespage";
@@ -9,9 +9,10 @@ import CourseCard from './components/CourseCard';
 import EnrollNow from './components/EnrollNow';
 import CourseDetails from './components/CourseDetails';
 import Checkout from './components/Checkout';
-import DashboardLayout from './layout/dashboard';
+
 
 // Import all dashboard components
+import DashboardLayout from './layout/dashboard';
 import { StudyMaterials } from './pagesdash/StudyMaterials';
 import { Questions } from './pagesdash/Questions';
 import { CoursePage } from './pagesdash/CoursePage';
@@ -20,6 +21,7 @@ import QuizResultHistory from './pagesdash/QuizResultHistory';
 
 const App = () => {
   return (
+    
     <div className="app-container">
       <Routes>
         {/* Main Website Routes */}
@@ -34,7 +36,7 @@ const App = () => {
 
         {/* Dashboard Routes - All dashboard paths start with /dashboard */}
         <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<StudyMaterials />} /> {/* Default dashboard view */}
+          <Route index element={<StudyMaterials />} /> Default dashboard view
           <Route path="study-materials" element={<StudyMaterials />} />
           <Route path="certificate" element={<Certificate />} />
           <Route path="questions" element={<Questions />} />
@@ -45,7 +47,9 @@ const App = () => {
         {/* 404 Fallback */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      
     </div>
+    
   );
 };
 
@@ -55,7 +59,7 @@ const NotFound = () => {
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-4xl font-bold text-gray-800">404 - Page Not Found</h1>
       <p className="mt-4 text-lg text-gray-600">
-        The page you're looking for doesn't exist.
+        The page you're looking for doesn't existttt.
       </p>
     </div>
   );
