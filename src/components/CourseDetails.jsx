@@ -24,7 +24,7 @@ const CourseDetails = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [id]); // Add id as dependency to scroll to top when course changes
+  }, [id]);
 
   const toggleSection = (index) => {
     setExpandedSections(prev => ({
@@ -78,7 +78,6 @@ const CourseDetails = () => {
 
   const handleDownloadBrochure = () => {
     if (course?.brochureUrl) {
-      // Create a temporary anchor element to trigger download
       const link = document.createElement('a');
       link.href = course.brochureUrl;
       link.target = '_blank';
@@ -188,20 +187,7 @@ const CourseDetails = () => {
               <div className="space-y-6">
                 {/* About Course */}
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                  <div className="flex justify-between items-start px-4 sm:px-6 pt-4">
-                    <h2 className="text-xl sm:text-2xl font-bold mb-4">About Course</h2>
-                    {course.brochureUrl && (
-                      <button 
-                        onClick={handleDownloadBrochure}
-                        className="flex items-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm sm:text-base"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                        Download Brochure
-                      </button>
-                    )}
-                  </div>
+                  <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6 pt-4">About Course</h2>
                   <div className="px-4 sm:px-6 pb-4">
                     <p className="mb-6 text-sm sm:text-base">{course.longDescription}</p>
                     
@@ -219,7 +205,20 @@ const CourseDetails = () => {
 
                 {/* Course Content */}
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                  <h2 className="text-xl sm:text-2xl font-bold mb-4 px-4 sm:px-6 pt-4">Course content</h2>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start px-4 sm:px-6 pt-4">
+                    <h2 className="text-xl sm:text-2xl font-bold mb-4">Course content</h2>
+                    {course.brochureUrl && (
+                      <button 
+                        onClick={handleDownloadBrochure}
+                        className="flex items-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm sm:text-base mb-4 sm:mb-0"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                        Download Brochure
+                      </button>
+                    )}
+                  </div>
                   <div className="text-gray-600 text-sm sm:text-base mb-4 px-4 sm:px-6">
                     {course.sections} sections • {course.lectures} lectures • {course.duration} total length
                   </div>
@@ -474,11 +473,8 @@ const CourseDetails = () => {
                           </button>
                         </div>
                       ) : (
-                        <button 
-                          onClick={handleApplyCoupon}
-                          className="w-full border border-gray-300 rounded-lg py-2 text-sm font-medium hover:bg-gray-50 transition-colors"
-                        >
-                          Apply Coupon
+                        <button >
+                          
                         </button>
                       )}
                     </div>
