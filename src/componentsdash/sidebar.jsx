@@ -2,11 +2,11 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const menuItems = [
-  { label: "Dashboard", icon: HomeIcon, path: "/quizresult" },
-  { label: "Study Materials", icon: BookIcon, path: "/Study-Materials" },
-  { label: "Courses", icon: FileAltIcon, path: "/courses" },
-  { label: "Code Challenges", icon: PuzzlePieceIcon, path: "/questions" },
-  { label: "Certificate", icon: CertificateIcon, path: "/certificate" },
+  { label: "Dashboard", icon: HomeIcon, path: "/dashboard/quizresult" },
+  { label: "Study Materials", icon: BookIcon, path: "/dashboard/study-materials" },
+  { label: "Courses", icon: FileAltIcon, path: "/dashboard/courses" },
+  { label: "Code Challenges", icon: PuzzlePieceIcon, path: "/dashboard/questions" },
+  { label: "Certificate", icon: CertificateIcon, path: "/dashboard/certificate" },
 ];
 
 const Sidebar = ({ open, setOpen, isMobile }) => {
