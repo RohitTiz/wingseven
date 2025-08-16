@@ -1,7 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Main Hero Section
 const HeroSection = () => {
+  const navigate = useNavigate();
+
+  const handleBrowseCourses = () => {
+    navigate('/Course'); // This matches the route in your App.jsx
+  };
+
   return (
     <section className="w-full bg-white border-b border-gray-200 flex flex-col md:flex-row justify-between items-center px-5 md:px-20 py-10 md:py-16 box-border gap-10 overflow-hidden hero-container">
       <style>
@@ -79,6 +86,7 @@ const HeroSection = () => {
 
         <div className="flex gap-4 flex-wrap hero-buttons">
           <button
+            onClick={handleBrowseCourses}
             className="bg-blue-600 text-white px-5 py-2 md:px-6 md:py-3 border-none rounded-md font-semibold text-sm cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 active:scale-95"
           >
             Browse Courses ↗
