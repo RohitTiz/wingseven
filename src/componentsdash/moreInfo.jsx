@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 const tabs = [
   { label: 'Overview', key: 'overview' },
   { label: 'Author', key: 'author' },
+  { label: 'Certificate', key: 'certificate' },
   { label: 'FAQ', key: 'faq' },
   { label: 'Announcements', key: 'announcements' },
-  { label: 'Reviews', key: 'reviews' },
 ];
 
 const tabContent = {
@@ -39,6 +39,26 @@ const tabContent = {
       </div>
     </div>
   ),
+  certificate: (
+    <div>
+      <div className="font-bold text-lg mb-2">Course Certificate</div>
+      <div className="text-gray-700 mb-4">
+        Upon successful completion of this course, you will receive a certificate that you can share with your professional network or include in your resume/CV.
+      </div>
+      <div className="font-semibold mb-2">Certificate Details:</div>
+      <div className="text-sm space-y-2">
+        <div>✔ Officially recognized certificate</div>
+        <div>✔ Includes institution logo</div>
+        <div>✔ Verifiable online</div>
+        <div>✔ Can be shared on LinkedIn</div>
+      </div>
+      <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <div className="text-sm text-gray-600">
+          To earn your certificate, you must complete all course modules and achieve a passing score on the final assessment.
+        </div>
+      </div>
+    </div>
+  ),
   faq: (
     <div>
       <div className="font-semibold mb-1">Q: Is this course beginner friendly?</div>
@@ -49,9 +69,6 @@ const tabContent = {
   ),
   announcements: (
     <div className="text-gray-700">No announcements yet.</div>
-  ),
-  reviews: (
-    <div className="text-gray-700">No reviews yet.</div>
   ),
 };
 
@@ -64,7 +81,7 @@ const MoreInfo = () => {
         {tabs.map((tab) => (
           <button
             key={tab.key}
-            className={`py-2 px-4 font-medium transition-colors border-b-2 -mb-px ${activeTab === tab.key ? 'border-[#7C3AED] text-[#7C3AED]' : 'border-transparent text-gray-600 hover:text-[#7C3AED]'}`}
+            className={`py-2 px-4 font-medium transition-colors border-b-2 -mb-px whitespace-nowrap ${activeTab === tab.key ? 'border-[#7C3AED] text-[#7C3AED]' : 'border-transparent text-gray-600 hover:text-[#7C3AED]'}`}
             onClick={() => setActiveTab(tab.key)}
           >
             {tab.label}
