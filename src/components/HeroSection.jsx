@@ -1,77 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-
-// Custom Cursor Component - Only shows on non-touch devices
-const CustomCursor = () => {
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-  const dotRef = useRef(null);
-  const circleRef = useRef(null);
-
-  useEffect(() => {
-    // Check if the device supports touch
-    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
-    
-    if (isTouchDevice) return;
-
-    const dot = dotRef.current;
-    const circle = circleRef.current;
-
-    let mouseX = 0;
-    let mouseY = 0;
-    let circleX = 0;
-    let circleY = 0;
-    let animationFrameId;
-
-    const followMouse = () => {
-      circleX += (mouseX - circleX) * 0.1;
-      circleY += (mouseY - circleY) * 0.1;
-
-      if (circle) {
-        circle.style.transform = `translate(${circleX - 20}px, ${circleY - 20}px)`;
-      }
-
-      animationFrameId = requestAnimationFrame(followMouse);
-    };
-
-    const handleMouseMove = (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-
-      if (dot) {
-        dot.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`;
-      }
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    animationFrameId = requestAnimationFrame(followMouse);
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [isTouchDevice]);
-
-  if (isTouchDevice) return null;
-
-  return (
-    <>
-      <div
-        ref={circleRef}
-        className="fixed top-0 left-0 w-10 h-10 rounded-full bg-blue-500 bg-opacity-15 pointer-events-none z-[9999] transition-transform duration-75 ease-out"
-      />
-      <div
-        ref={dotRef}
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-blue-600 pointer-events-none z-[10000] transition-transform duration-50 ease-linear"
-      />
-    </>
-  );
-};
+import React from 'react';
 
 // Main Hero Section
 const HeroSection = () => {
   return (
     <section className="w-full bg-white border-b border-gray-200 flex flex-col md:flex-row justify-between items-center px-5 md:px-20 py-10 md:py-16 box-border gap-10 overflow-hidden hero-container">
-      <CustomCursor />
-
       <style>
         {`
           @keyframes fadeInUp {
