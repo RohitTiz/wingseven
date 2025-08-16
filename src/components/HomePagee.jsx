@@ -1,6 +1,6 @@
 import React from 'react';
 import HeroSection from '../components/HeroSection.jsx';
-import FeatureSection from '../components/FeatureSection.jsx';
+// import FeatureSection from '../components/FeatureSection.jsx';
 import FacultySection from '../components/FacultySection.jsx';
 import TestimonialSection from '../components/TestimonialSection.jsx';
 import CourseSection from '../components/CourseSection.jsx';
@@ -20,11 +20,11 @@ const HomePagee = () => {
     <>
       <AuthSection />
       <HeroSection />
-      <FeatureSection />
+      {/* <FeatureSection /> */}
+      <MetricsSection />
       <CourseSection />
       <FacultySection />
       <TestimonialSection />
-      <MetricsSection />
       <PartnerLogos />
       <CourseHighlights/>
       <WhyJoinSection />

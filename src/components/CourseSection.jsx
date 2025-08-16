@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CourseCard from './CourseCard';
 import courses from '../data/courses.json';
 
-// Custom SVG Icons as Components (replacing Lucide React)
+// Custom SVG Icons as Components
 const ChevronDownIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" {...props}>
     <path d="M6 9l6 6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -37,6 +37,7 @@ const CourseSection = () => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [typeFilter, setTypeFilter] = useState('all');
   const [showTypeDropdown, setShowTypeDropdown] = useState(false);
+  const [showAllCourses, setShowAllCourses] = useState(false);
 
   const categories = ['All', 'AI/ML', 'Python', 'Java', 'Web Development'];
 
@@ -48,35 +49,39 @@ const CourseSection = () => {
 
   const filteredCourses = courses.filter(course => {
     const categoryMatch = activeFilter === 'All' || course.category === activeFilter;
-    const typeMatch = typeFilter === 'all' || course.type === typeFilter || course.type === 'all';
+    const typeMatch = typeFilter === 'all' || course.type === typeFilter;
     return categoryMatch && typeMatch;
   });
 
+  const displayedCourses = showAllCourses ? filteredCourses : filteredCourses.slice(0, 6);
   const selectedTypeFilter = typeFilters.find(filter => filter.value === typeFilter);
 
   return (
-    <section className="py-16 px-4 bg-gray-50">
+    <section className="py-16 px-4 sm:px-6 bg-gray-50">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
             Explore Our Courses
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
             Discover a wide range of courses designed to help you master new skills and advance your career
           </p>
         </div>
 
-        {/* Filter Controls Section */}
-        <div className="mb-8">
+        {/* Filter Controls */}
+        <div className="mb-12">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
             {/* Category Filter Buttons */}
-            <div className="flex flex-wrap gap-2 lg:ml-[50px]">
+            <div className="flex flex-wrap gap-3 justify-center lg:justify-start w-full lg:w-auto">
               {categories.map((category) => (
                 <button
                   key={category}
-                  onClick={() => setActiveFilter(category)}
-                  className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  onClick={() => {
+                    setActiveFilter(category);
+                    setShowAllCourses(false);
+                  }}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                     activeFilter === category
                       ? 'bg-blue-600 text-white shadow-md'
                       : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
@@ -88,9 +93,12 @@ const CourseSection = () => {
             </div>
 
             {/* Type Filter Dropdown */}
-            <div className="relative lg:mr-[50px]">
+            <div className="relative w-full lg:w-auto flex justify-center lg:justify-end">
               <button
-                onClick={() => setShowTypeDropdown(!showTypeDropdown)}
+                onClick={() => {
+                  setShowTypeDropdown(!showTypeDropdown);
+                  setShowAllCourses(false);
+                }}
                 className="flex items-center space-x-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
               >
                 <selectedTypeFilter.icon className="w-4 h-4 text-gray-600" />
@@ -103,13 +111,14 @@ const CourseSection = () => {
               </button>
 
               {showTypeDropdown && (
-                <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                <div className="absolute top-full right-0 lg:right-auto mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                   {typeFilters.map((filter) => (
                     <button
                       key={filter.value}
                       onClick={() => {
                         setTypeFilter(filter.value);
                         setShowTypeDropdown(false);
+                        setShowAllCourses(false);
                       }}
                       className={`w-full flex items-center space-x-2 px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-200 ${
                         typeFilter === filter.value ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
@@ -126,10 +135,14 @@ const CourseSection = () => {
         </div>
 
         {/* Course Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-          {filteredCourses.map((course) => (
-            <CourseCard key={course.id} course={course} />
-          ))}
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl px-4">
+            {displayedCourses.map((course) => (
+              <div key={course.id} className="flex justify-center">
+                <CourseCard course={course} />
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Empty State */}
@@ -147,12 +160,21 @@ const CourseSection = () => {
           </div>
         )}
 
-        {/* CTA Button */}
-        <div className="text-center">
-          <button className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-md hover:shadow-lg">
-            Explore All Courses
-          </button>
-        </div>
+        {/* Show More/Less Buttons */}
+        {filteredCourses.length > 6 && (
+          <div className="text-center mt-8">
+            <button 
+              onClick={() => setShowAllCourses(!showAllCourses)}
+              className={`px-6 py-3 font-semibold rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg ${
+                showAllCourses 
+                  ? 'bg-gray-200 text-gray-700 hover:bg-gray-300' 
+                  : 'bg-blue-600 text-white hover:bg-blue-700'
+              }`}
+            >
+              {showAllCourses ? 'Show Less' : 'Explore All Courses'}
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
