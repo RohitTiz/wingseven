@@ -1,15 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import gsap from 'gsap';
-import { Power3 } from 'gsap';
-
-gsap.registerPlugin(Power3);
 
 const HeroSection = () => {
   const navigate = useNavigate();
   const button1Ref = useRef(null);
   const button2Ref = useRef(null);
-  const buttonsRef = useRef(null);
 
   const courses = [
     "Java", 
@@ -28,74 +23,34 @@ const HeroSection = () => {
   const [displayText, setDisplayText] = useState('');
   const [typingPhase, setTypingPhase] = useState('typing');
 
-  // Initialize GSAP animations for button interactions only
-  useEffect(() => {
-    if (!button1Ref.current || !button2Ref.current) return;
+  // Button hover effects using CSS classes instead of GSAP
+  const handleMouseEnter = (buttonRef) => {
+    if (buttonRef.current) {
+      buttonRef.current.style.transform = 'translateY(-4px)';
+      buttonRef.current.style.boxShadow = '0 8px 15px rgba(0, 0, 0, 0.2)';
+    }
+  };
 
-    const buttons = [button1Ref.current, button2Ref.current];
-    const handlers = [];
+  const handleMouseLeave = (buttonRef) => {
+    if (buttonRef.current) {
+      buttonRef.current.style.transform = 'translateY(0)';
+      buttonRef.current.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+    }
+  };
 
-    const createAnimation = (button) => {
-      const mouseEnter = () => {
-        gsap.to(button, {
-          y: -4,
-          boxShadow: '0 8px 15px rgba(0, 0, 0, 0.2)',
-          duration: 0.3,
-          ease: Power3.easeOut
-        });
-      };
+  const handleMouseDown = (buttonRef) => {
+    if (buttonRef.current) {
+      buttonRef.current.style.transform = 'translateY(2px)';
+    }
+  };
 
-      const mouseLeave = () => {
-        gsap.to(button, {
-          y: 0,
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-          duration: 0.3,
-          ease: Power3.easeOut
-        });
-      };
+  const handleMouseUp = (buttonRef) => {
+    if (buttonRef.current) {
+      buttonRef.current.style.transform = 'translateY(-4px)';
+    }
+  };
 
-      const mouseDown = () => {
-        gsap.to(button, {
-          y: 2,
-          duration: 0.1
-        });
-      };
-
-      const mouseUp = () => {
-        gsap.to(button, {
-          y: -4,
-          duration: 0.3
-        });
-      };
-
-      button.addEventListener('mouseenter', mouseEnter);
-      button.addEventListener('mouseleave', mouseLeave);
-      button.addEventListener('mousedown', mouseDown);
-      button.addEventListener('mouseup', mouseUp);
-
-      handlers.push(
-        { button, type: 'mouseenter', fn: mouseEnter },
-        { button, type: 'mouseleave', fn: mouseLeave },
-        { button, type: 'mousedown', fn: mouseDown },
-        { button, type: 'mouseup', fn: mouseUp }
-      );
-    };
-
-    buttons.forEach(createAnimation);
-
-    // Make buttons immediately visible
-    gsap.set(buttonsRef.current.children, { 
-      opacity: 1, 
-      y: 0 
-    });
-
-    return () => {
-      handlers.forEach(({ button, type, fn }) => {
-        button.removeEventListener(type, fn);
-      });
-    };
-  }, []);
-
+  // Typing effect (same as before but without GSAP)
   useEffect(() => {
     const currentCourse = courses[currentCourseIndex];
     let timeout;
@@ -135,23 +90,35 @@ const HeroSection = () => {
   }, [currentCourseIndex, displayText, typingPhase, courses]);
 
   const handleBrowseCourses = () => {
-    gsap.to(button1Ref.current, {
-      scale: 0.95,
-      duration: 0.1,
-      yoyo: true,
-      repeat: 1,
-      onComplete: () => navigate('/Course')
-    });
+    if (button1Ref.current) {
+      button1Ref.current.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        button1Ref.current.style.transform = 'scale(1)';
+        setTimeout(() => {
+          button1Ref.current.style.transform = 'scale(0.95)';
+          setTimeout(() => {
+            button1Ref.current.style.transform = 'scale(1)';
+            navigate('/Course');
+          }, 100);
+        }, 100);
+      }, 100);
+    }
   };
 
   const handleAboutUs = () => {
-    gsap.to(button2Ref.current, {
-      scale: 0.95,
-      duration: 0.1,
-      yoyo: true,
-      repeat: 1,
-      onComplete: () => navigate('/about')
-    });
+    if (button2Ref.current) {
+      button2Ref.current.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        button2Ref.current.style.transform = 'scale(1)';
+        setTimeout(() => {
+          button2Ref.current.style.transform = 'scale(0.95)';
+          setTimeout(() => {
+            button2Ref.current.style.transform = 'scale(1)';
+            navigate('/about');
+          }, 100);
+        }, 100);
+      }, 100);
+    }
   };
 
   const buttonClasses = `
@@ -186,11 +153,16 @@ const HeroSection = () => {
           Welcome to EduAll, where learning begins for every professional and lifelong learner.
         </p>
 
-        <div ref={buttonsRef} className="flex gap-3 sm:gap-4 mb-6 sm:mb-7 md:mb-8">
+        <div className="flex gap-3 sm:gap-4 mb-6 sm:mb-7 md:mb-8">
           <button
             ref={button1Ref}
             onClick={handleBrowseCourses}
+            onMouseEnter={() => handleMouseEnter(button1Ref)}
+            onMouseLeave={() => handleMouseLeave(button1Ref)}
+            onMouseDown={() => handleMouseDown(button1Ref)}
+            onMouseUp={() => handleMouseUp(button1Ref)}
             className={`${buttonClasses} bg-blue-600 text-white`}
+            style={{ transition: 'all 0.3s ease-out' }}
           >
             <span className="relative z-20">Browse Courses ↗</span>
             <span className="absolute inset-0 bg-gradient-to-b from-blue-400 to-blue-700 opacity-80 rounded-lg z-10"></span>
@@ -198,7 +170,12 @@ const HeroSection = () => {
           <button
             ref={button2Ref}
             onClick={handleAboutUs}
+            onMouseEnter={() => handleMouseEnter(button2Ref)}
+            onMouseLeave={() => handleMouseLeave(button2Ref)}
+            onMouseDown={() => handleMouseDown(button2Ref)}
+            onMouseUp={() => handleMouseUp(button2Ref)}
             className={`${buttonClasses} bg-white text-blue-600 border border-blue-600`}
+            style={{ transition: 'all 0.3s ease-out' }}
           >
             <span className="relative z-20">About Us ↗</span>
             <span className="absolute inset-0 bg-gradient-to-b from-white to-blue-100 opacity-80 rounded-lg z-10"></span>
@@ -206,17 +183,8 @@ const HeroSection = () => {
         </div>
 
         {/* Statistics Section */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 max-w-[500px]">
-          <div className="flex flex-col">
-            <span className="font-bold text-xl sm:text-2xl md:text-3xl text-gray-900">1500+</span>
-            <span className="text-gray-600 text-xs sm:text-sm md:text-base">Free Coding Videos</span>
-          </div>
-          
-          <div className="flex flex-col md:transform md:translate-x-20 lg:translate-x-24 xl:translate-x-28">
-            <span className="font-bold text-xl sm:text-2xl md:text-3xl text-gray-900">Real Projects</span>
-            <span className="text-gray-600 text-xs sm:text-sm md:text-base">Java, DevOps & More</span>
-          </div>
-        </div>
+        {/* Statistics Section */}
+
       </div>
 
       {/* Right Section - Image */}
