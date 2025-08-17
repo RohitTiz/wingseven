@@ -3,7 +3,7 @@ import React from 'react';
 const logos = [
   {
     src: 'https://upload.wikimedia.org/wikipedia/commons/4/44/Google-flutter-logo.svg',
-    alt: 'Google'
+    alt: 'Flutter'
   },
   {
     src: 'https://www.cam.ac.uk/sites/default/files/university-cambridge-full-colour-preferred-logo-transparency-2362x491.png',
@@ -47,7 +47,7 @@ const PartnerLogos = () => {
               key={index}
               src={logo.src}
               alt={logo.alt}
-              className="h-14 sm:h-16 object-contain grayscale hover:grayscale-0 transition duration-300 drop-shadow-md"
+              className="h-14 sm:h-16 object-contain drop-shadow-md"  // Removed grayscale classes
             />
           ))}
         </div>

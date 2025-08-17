@@ -1,159 +1,267 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import gsap from 'gsap';
+import { Power3 } from 'gsap';
 
-// Main Hero Section
+gsap.registerPlugin(Power3);
+
 const HeroSection = () => {
   const navigate = useNavigate();
+  const button1Ref = useRef(null);
+  const button2Ref = useRef(null);
+  const buttonsRef = useRef(null);
+
+  const courses = [
+    "Java", 
+    "Spring Boot", 
+    "Data Science", 
+    "Machine Learning", 
+    "React.js", 
+    "Python", 
+    "DevOps", 
+    "Node.js",
+    "Angular",
+    "MongoDB"
+  ];
+
+  const [currentCourseIndex, setCurrentCourseIndex] = useState(0);
+  const [displayText, setDisplayText] = useState('');
+  const [typingPhase, setTypingPhase] = useState('typing');
+
+  // Initialize GSAP animations for button interactions only
+  useEffect(() => {
+    if (!button1Ref.current || !button2Ref.current) return;
+
+    const buttons = [button1Ref.current, button2Ref.current];
+    const handlers = [];
+
+    const createAnimation = (button) => {
+      const mouseEnter = () => {
+        gsap.to(button, {
+          y: -4,
+          boxShadow: '0 8px 15px rgba(0, 0, 0, 0.2)',
+          duration: 0.3,
+          ease: Power3.easeOut
+        });
+      };
+
+      const mouseLeave = () => {
+        gsap.to(button, {
+          y: 0,
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          duration: 0.3,
+          ease: Power3.easeOut
+        });
+      };
+
+      const mouseDown = () => {
+        gsap.to(button, {
+          y: 2,
+          duration: 0.1
+        });
+      };
+
+      const mouseUp = () => {
+        gsap.to(button, {
+          y: -4,
+          duration: 0.3
+        });
+      };
+
+      button.addEventListener('mouseenter', mouseEnter);
+      button.addEventListener('mouseleave', mouseLeave);
+      button.addEventListener('mousedown', mouseDown);
+      button.addEventListener('mouseup', mouseUp);
+
+      handlers.push(
+        { button, type: 'mouseenter', fn: mouseEnter },
+        { button, type: 'mouseleave', fn: mouseLeave },
+        { button, type: 'mousedown', fn: mouseDown },
+        { button, type: 'mouseup', fn: mouseUp }
+      );
+    };
+
+    buttons.forEach(createAnimation);
+
+    // Make buttons immediately visible
+    gsap.set(buttonsRef.current.children, { 
+      opacity: 1, 
+      y: 0 
+    });
+
+    return () => {
+      handlers.forEach(({ button, type, fn }) => {
+        button.removeEventListener(type, fn);
+      });
+    };
+  }, []);
+
+  useEffect(() => {
+    const currentCourse = courses[currentCourseIndex];
+    let timeout;
+
+    const typingSpeed = 100;
+    const erasingSpeed = 50;
+    const pauseDuration = 800;
+
+    switch (typingPhase) {
+      case 'typing':
+        if (displayText.length < currentCourse.length) {
+          timeout = setTimeout(() => {
+            setDisplayText(currentCourse.slice(0, displayText.length + 1));
+          }, typingSpeed);
+        } else {
+          timeout = setTimeout(() => setTypingPhase('pausing'), pauseDuration);
+        }
+        break;
+
+      case 'pausing':
+        timeout = setTimeout(() => setTypingPhase('erasing'), pauseDuration);
+        break;
+
+      case 'erasing':
+        if (displayText.length > 0) {
+          timeout = setTimeout(() => {
+            setDisplayText(displayText.slice(0, -1));
+          }, erasingSpeed);
+        } else {
+          setCurrentCourseIndex((prev) => (prev + 1) % courses.length);
+          setTypingPhase('typing');
+        }
+        break;
+    }
+
+    return () => clearTimeout(timeout);
+  }, [currentCourseIndex, displayText, typingPhase, courses]);
 
   const handleBrowseCourses = () => {
-    navigate('/Course'); // This matches the route in your App.jsx
+    gsap.to(button1Ref.current, {
+      scale: 0.95,
+      duration: 0.1,
+      yoyo: true,
+      repeat: 1,
+      onComplete: () => navigate('/Course')
+    });
   };
 
+  const handleAboutUs = () => {
+    gsap.to(button2Ref.current, {
+      scale: 0.95,
+      duration: 0.1,
+      yoyo: true,
+      repeat: 1,
+      onComplete: () => navigate('/about')
+    });
+  };
+
+  const buttonClasses = `
+    relative px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 
+    rounded-lg font-semibold text-xs sm:text-sm md:text-base 
+    cursor-pointer transition-all duration-300 
+    transform hover:scale-105 active:scale-95 
+    overflow-hidden shadow-md hover:shadow-lg
+    border-none outline-none
+  `;
+
   return (
-    <section className="w-full bg-white border-b border-gray-200 flex flex-col md:flex-row justify-between items-center px-5 md:px-20 py-10 md:py-16 box-border gap-10 overflow-hidden hero-container">
-      <style>
-        {`
-          @keyframes fadeInUp {
-            0% {
-              opacity: 0;
-              transform: translateY(20px);
-            }
-            100% {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-
-          @keyframes float {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0); }
-          }
-
-          .animate-fadeInUp {
-            animation: fadeInUp 0.6s forwards;
-          }
-
-          .animate-float {
-            animation: float 3s infinite ease-in-out;
-          }
-
-          @media (max-width: 768px) {
-            .hero-left {
-              min-width: 100% !important;
-              align-items: center;
-              text-align: center;
-            }
-
-            .hero-buttons {
-              justify-content: center;
-            }
-
-            .hero-image-wrapper {
-              min-width: 100% !important;
-              max-width: 100%;
-              margin-top: 40px;
-            }
-
-            .decor-group img {
-              max-width: 30% !important;
-            }
-          }
-
-          @media (max-width: 480px) {
-            .hero-container {
-              padding: 30px 15px;
-            }
-
-            .decor-group {
-              display: none;
-            }
-          }
-        `}
-      </style>
-
-      {/* Left Section */}
-      <div className="w-full md:flex-1 md:min-w-[500px] flex flex-col justify-center hero-left">
-        <h1 className="font-inter font-bold text-4xl md:text-5xl text-gray-900 m-0 animate-fadeInUp" style={{ animationDuration: '0.6s' }}>
+    <section className="w-full bg-white border-b border-gray-200 flex flex-col lg:flex-row justify-between items-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-8 sm:py-12 md:py-14 lg:py-16 xl:py-20 box-border gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 overflow-hidden">
+      {/* Left Section - Text Content */}
+      <div className="w-full lg:flex-1 flex flex-col justify-center order-2 lg:order-1">
+        {/* First line - Static text */}
+        <div className="font-inter font-bold text-3xl xs:text-4xl sm:text-[2.5rem] md:text-5xl lg:text-[3rem] xl:text-[3.5rem] text-gray-900 m-0 leading-tight">
           Find Your <span className="text-red-500">Ideal</span>
-        </h1>
-        <h1 className="font-inter font-bold text-4xl md:text-5xl text-gray-900 m-0 animate-fadeInUp" style={{ animationDuration: '0.7s' }}>Course, Build</h1>
-        <h1 className="font-inter font-bold text-4xl md:text-5xl text-blue-600 mb-6 animate-fadeInUp" style={{ animationDuration: '0.8s' }}>Skills</h1>
+        </div>
+        
+        {/* Second line - Only the changing text moves */}
+        <div className="font-inter font-bold text-3xl xs:text-4xl sm:text-[2.5rem] md:text-5xl lg:text-[3rem] xl:text-[3.5rem] text-blue-600 m-0 h-[1.2em] leading-tight">
+          {displayText}
+        </div>
+        
+        {/* Third line - Static text */}
+        <div className="font-inter font-bold text-3xl xs:text-4xl sm:text-[2.5rem] md:text-5xl lg:text-[3rem] xl:text-[3.5rem] text-gray-900 mb-4 sm:mb-5 md:mb-6 leading-tight">
+          Course, Build Skills
+        </div>
 
-        <p className="font-inter text-base text-gray-600 leading-relaxed mb-8 max-w-[500px] animate-fadeInUp" style={{ animationDuration: '0.9s' }}>
+        <p className="font-inter text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed mb-5 sm:mb-6 md:mb-8 max-w-[500px] md:max-w-[550px] lg:max-w-[600px]">
           Welcome to EduAll, where learning begins for every professional and lifelong learner.
         </p>
 
-        <div className="flex gap-4 flex-wrap hero-buttons">
+        <div ref={buttonsRef} className="flex gap-3 sm:gap-4 mb-6 sm:mb-7 md:mb-8">
           <button
+            ref={button1Ref}
             onClick={handleBrowseCourses}
-            className="bg-blue-600 text-white px-5 py-2 md:px-6 md:py-3 border-none rounded-md font-semibold text-sm cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 active:scale-95"
+            className={`${buttonClasses} bg-blue-600 text-white`}
           >
-            Browse Courses ↗
+            <span className="relative z-20">Browse Courses ↗</span>
+            <span className="absolute inset-0 bg-gradient-to-b from-blue-400 to-blue-700 opacity-80 rounded-lg z-10"></span>
           </button>
           <button
-            className="bg-white text-blue-600 border border-blue-600 px-5 py-2 md:px-6 md:py-3 rounded-md font-semibold text-sm cursor-pointer transition-all duration-300 ease-in-out hover:bg-blue-50 active:bg-blue-100"
+            ref={button2Ref}
+            onClick={handleAboutUs}
+            className={`${buttonClasses} bg-white text-blue-600 border border-blue-600`}
           >
-            About Us ↗
+            <span className="relative z-20">About Us ↗</span>
+            <span className="absolute inset-0 bg-gradient-to-b from-white to-blue-100 opacity-80 rounded-lg z-10"></span>
           </button>
+        </div>
+
+        {/* Statistics Section */}
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 max-w-[500px]">
+          <div className="flex flex-col">
+            <span className="font-bold text-xl sm:text-2xl md:text-3xl text-gray-900">1500+</span>
+            <span className="text-gray-600 text-xs sm:text-sm md:text-base">Free Coding Videos</span>
+          </div>
+          
+          <div className="flex flex-col md:transform md:translate-x-20 lg:translate-x-24 xl:translate-x-28">
+            <span className="font-bold text-xl sm:text-2xl md:text-3xl text-gray-900">Real Projects</span>
+            <span className="text-gray-600 text-xs sm:text-sm md:text-base">Java, DevOps & More</span>
+          </div>
         </div>
       </div>
 
-      {/* Right Section - Images with Decorations */}
-      <div className="w-full md:flex-1 md:min-w-[500px] flex flex-col items-center relative hero-image-wrapper">
+      {/* Right Section - Image */}
+      <div className="w-full lg:flex-1 flex flex-col items-center relative order-1 lg:order-2 mb-6 sm:mb-8 md:mb-10 lg:mb-0">
         <img 
           src="/image/main.png" 
           alt="Hero" 
-          className="w-full max-w-[300px] md:max-w-[400px] h-auto z-10" 
+          className="w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[550px] xl:max-w-[600px] 2xl:max-w-[700px] h-auto z-10" 
           loading="lazy"
         />
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-20 decor-group">
-          <img 
-            src="/heroimage/triangle.png" 
-            alt="Triangle" 
-            className="absolute top-[10%] right-[10%] w-[40px] md:w-[60px] animate-float" 
-            style={{ animationDuration: '4s' }}
-            loading="lazy"
-          />
-          <img 
-            src="/heroimage/Button.png" 
-            alt="Button" 
-            className="absolute top-[45%] right-[3%] w-[80px] md:w-[120px] animate-float" 
-            style={{ animationDuration: '5s' }}
-            loading="lazy"
-          />
+        
+        {/* Decorative elements - Responsive sizes and positioning */}
+        <div className="hidden sm:block absolute top-0 left-0 w-full h-full pointer-events-none z-20">
           <img 
             src="/heroimage/enrolledstudents.png" 
             alt="Enrolled" 
-            className="absolute top-[-5%] left-[45%] w-[120px] md:w-[160px] animate-float" 
+            className="absolute top-[-5%] left-[45%] w-[80px] sm:w-[100px] md:w-[120px] lg:w-[140px] xl:w-[160px] animate-float" 
             style={{ animationDuration: '3.5s' }}
             loading="lazy"
           />
           <img 
             src="/heroimage/curlyarrow.png" 
             alt="Curly Arrow" 
-            className="absolute top-[20%] left-[5%] w-[60px] md:w-[90px] animate-float" 
+            className="absolute top-[15%] sm:top-[20%] left-[5%] w-[40px] sm:w-[50px] md:w-[70px] lg:w-[80px] xl:w-[90px] animate-float" 
             style={{ animationDuration: '6s' }}
             loading="lazy"
           />
           <img 
             src="/heroimage/off.png" 
             alt="20% Off" 
-            className="absolute top-[55%] left-[50%] w-[140px] md:w-[180px] animate-float" 
+            className="absolute top-[50%] sm:top-[55%] left-[50%] w-[80px] sm:w-[120px] md:w-[140px] lg:w-[160px] xl:w-[180px] animate-float" 
             style={{ animationDuration: '4.5s' }}
             loading="lazy"
           />
           <img 
             src="/heroimage/books.png" 
             alt="Books" 
-            className="absolute bottom-[5%] left-[80%] w-[30px] md:w-[50px] animate-float" 
+            className="absolute bottom-[5%] left-[80%] w-[20px] sm:w-[25px] md:w-[30px] lg:w-[40px] xl:w-[50px] animate-float" 
             style={{ animationDuration: '3s' }}
             loading="lazy"
           />
           <img 
             src="/heroimage/gird.png" 
             alt="Grid" 
-            className="absolute bottom-[0%] left-[0%] w-[40px] md:w-[60px] animate-float" 
+            className="absolute bottom-[0%] left-[0%] w-[25px] sm:w-[30px] md:w-[40px] lg:w-[50px] xl:w-[60px] animate-float" 
             style={{ animationDuration: '4s' }}
             loading="lazy"
           />
