@@ -184,7 +184,17 @@ const HeroSection = () => {
 
         {/* Statistics Section */}
         {/* Statistics Section */}
-
+<div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 max-w-[500px]">
+  <div className="flex flex-col">
+    <span className="font-bold text-xl sm:text-2xl md:text-3xl text-gray-900">1500+</span>
+    <span className="text-gray-600 text-xs sm:text-sm md:text-base">Free Coding Videos</span>
+  </div>
+  
+  <div className="flex flex-col">
+    <span className="font-bold text-xl sm:text-2xl md:text-3xl text-gray-900">Real Projects</span>
+    <span className="text-gray-600 text-xs sm:text-sm md:text-base">Java, DevOps & More</span>
+  </div>
+</div>
       </div>
 
       {/* Right Section - Image */}
