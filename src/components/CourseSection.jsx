@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CourseCard from './CourseCard';
 import courses from '../data/courses.json';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Custom SVG Icons as Components
 const ChevronDownIcon = (props) => (
@@ -38,9 +39,11 @@ const CourseSection = () => {
   const [typeFilter, setTypeFilter] = useState('all');
   const [showTypeDropdown, setShowTypeDropdown] = useState(false);
   const [showAllCourses, setShowAllCourses] = useState(false);
-
+  const [showAllCategories, setShowAllCategories] = useState(false);
+  
   const categories = ['All', 'AI/ML', 'Python', 'Java', 'Web Development'];
-
+  const otherCategories = categories.filter(cat => cat !== 'All');
+  
   const typeFilters = [
     { value: 'all', label: 'All Courses', icon: BookOpenIcon },
     { value: 'recorded', label: 'Recorded Courses', icon: VideoIcon },
@@ -56,62 +59,117 @@ const CourseSection = () => {
   const displayedCourses = showAllCourses ? filteredCourses : filteredCourses.slice(0, 6);
   const selectedTypeFilter = typeFilters.find(filter => filter.value === typeFilter);
 
+  const handleCategoryClick = (category) => {
+    if (category === 'All' && !showAllCategories) {
+      setShowAllCategories(true);
+      return;
+    }
+    setActiveFilter(category);
+    setShowAllCourses(false);
+  };
+
   return (
     <section className="py-16 px-4 sm:px-6 bg-gray-50">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
-            Explore Our Courses
-          </h2>
-          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover a wide range of courses designed to help you master new skills and advance your career
-          </p>
+          <motion.h2 
+            className="text-4xl sm:text-5xl font-extrabold text-gray-800 mb-4"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            EXPLORE OUR COURSES
+          </motion.h2>
         </div>
 
         {/* Filter Controls */}
-        <div className="mb-12">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-            {/* Category Filter Buttons */}
-            <div className="flex flex-wrap gap-3 justify-center lg:justify-start w-full lg:w-auto">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => {
-                    setActiveFilter(category);
-                    setShowAllCourses(false);
-                  }}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                    activeFilter === category
-                      ? 'bg-blue-600 text-white shadow-md'
-                      : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
+        <div className="mb-12 px-4 sm:px-6">
+          <div className="flex flex-col w-full max-w-6xl mx-auto relative">
+            {/* Category Filter Buttons - Aligned with course cards */}
+            <div className="w-full">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
+                {/* Empty grid cells for alignment */}
+                <div className="hidden md:block"></div>
+                <div className="hidden lg:block"></div>
+                
+                {/* Actual buttons container */}
+                <div className="col-span-1 md:col-span-2 lg:col-span-3">
+                  <div className="flex flex-wrap gap-3">
+                    {/* All Button - Positioned at start of first card */}
+                    <motion.button
+                      onClick={() => handleCategoryClick('All')}
+                      className={`px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 ${
+                        activeFilter === 'All'
+                          ? 'bg-blue-600 text-white shadow-lg'
+                          : 'bg-white text-gray-700 border-2 border-gray-300 hover:bg-gray-50'
+                      }`}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      animate={!showAllCategories ? { scale: [1, 1.05, 1] } : {}}
+                      transition={!showAllCategories ? { repeat: Infinity, duration: 2 } : {}}
+                    >
+                      ALL
+                    </motion.button>
+                    
+                    {/* Other buttons that emerge */}
+                    <AnimatePresence>
+                      {showAllCategories && (
+                        <>
+                          {otherCategories.map((category) => (
+                            <motion.button
+                              key={category}
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              exit={{ opacity: 0, scale: 0.8 }}
+                              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                              onClick={() => handleCategoryClick(category)}
+                              className={`px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 ${
+                                activeFilter === category
+                                  ? 'bg-blue-600 text-white shadow-lg'
+                                  : 'bg-white text-gray-700 border-2 border-gray-300 hover:bg-gray-50'
+                              }`}
+                              whileHover={{ scale: 1.05, y: -2 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              {category.toUpperCase()}
+                            </motion.button>
+                          ))}
+                        </>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Type Filter Dropdown */}
-            <div className="relative w-full lg:w-auto flex justify-center lg:justify-end">
-              <button
+            {/* Type Filter Dropdown - Positioned properly */}
+            <div className="relative mt-4 md:mt-0 md:absolute md:right-0 w-full md:w-auto flex justify-center md:justify-end">
+              <motion.button
                 onClick={() => {
                   setShowTypeDropdown(!showTypeDropdown);
                   setShowAllCourses(false);
                 }}
-                className="flex items-center space-x-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                className="flex items-center space-x-2 px-4 py-2 bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <selectedTypeFilter.icon className="w-4 h-4 text-gray-600" />
-                <span className="text-sm font-medium text-gray-700">
-                  {selectedTypeFilter.label}
+                <selectedTypeFilter.icon className="w-5 h-5 text-gray-600" />
+                <span className="text-sm font-bold text-gray-700">
+                  {selectedTypeFilter.label.toUpperCase()}
                 </span>
-                <ChevronDownIcon className={`w-4 h-4 text-gray-600 transition-transform duration-200 ${
+                <ChevronDownIcon className={`w-5 h-5 text-gray-600 transition-transform duration-200 ${
                   showTypeDropdown ? 'rotate-180' : ''
                 }`} />
-              </button>
+              </motion.button>
 
               {showTypeDropdown && (
-                <div className="absolute top-full right-0 lg:right-auto mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                <motion.div 
+                  className="absolute top-full mt-2 w-56 bg-white border-2 border-gray-200 rounded-lg shadow-xl z-10"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                >
                   {typeFilters.map((filter) => (
                     <button
                       key={filter.value}
@@ -120,34 +178,45 @@ const CourseSection = () => {
                         setShowTypeDropdown(false);
                         setShowAllCourses(false);
                       }}
-                      className={`w-full flex items-center space-x-2 px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-200 ${
+                      className={`w-full flex items-center space-x-3 px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-200 ${
                         typeFilter === filter.value ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
                       }`}
                     >
-                      <filter.icon className="w-4 h-4" />
-                      <span className="text-sm font-medium">{filter.label}</span>
+                      <filter.icon className="w-5 h-5" />
+                      <span className="text-sm font-bold">{filter.label.toUpperCase()}</span>
                     </button>
                   ))}
-                </div>
+                </motion.div>
               )}
             </div>
           </div>
         </div>
 
-        {/* Course Grid */}
-        <div className="flex justify-center">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl px-4">
+        {/* Course Grid - Perfectly aligned with filters */}
+        <div className="w-full px-4 sm:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {displayedCourses.map((course) => (
-              <div key={course.id} className="flex justify-center">
+              <motion.div 
+                key={course.id} 
+                className="flex justify-start"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
                 <CourseCard course={course} />
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
 
         {/* Empty State */}
         {filteredCourses.length === 0 && (
-          <div className="text-center py-12">
+          <motion.div 
+            className="text-center py-12 w-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             <div className="text-gray-400 mb-4">
               <BookOpenIcon className="w-16 h-16 mx-auto" />
             </div>
@@ -157,22 +226,29 @@ const CourseSection = () => {
             <p className="text-gray-500">
               Try adjusting your filters to see more courses
             </p>
-          </div>
+          </motion.div>
         )}
 
-        {/* Show More/Less Buttons */}
+        {/* Show More/Less Button - Now Centered */}
         {filteredCourses.length > 6 && (
-          <div className="text-center mt-8">
-            <button 
-              onClick={() => setShowAllCourses(!showAllCourses)}
-              className={`px-6 py-3 font-semibold rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg ${
-                showAllCourses 
-                  ? 'bg-gray-200 text-gray-700 hover:bg-gray-300' 
-                  : 'bg-blue-600 text-white hover:bg-blue-700'
-              }`}
-            >
-              {showAllCourses ? 'Show Less' : 'Explore All Courses'}
-            </button>
+          <div className="w-full px-4 sm:px-6 mt-8">
+            <div className="max-w-6xl mx-auto flex justify-center">
+              <motion.button 
+                onClick={() => setShowAllCourses(!showAllCourses)}
+                className={`px-8 py-4 font-extrabold rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl ${
+                  showAllCourses 
+                    ? 'bg-gray-200 text-gray-700 hover:bg-gray-300' 
+                    : 'bg-blue-600 text-white hover:bg-blue-700'
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {showAllCourses ? 'SHOW LESS' : 'EXPLORE ALL COURSES'}
+              </motion.button>
+            </div>
           </div>
         )}
       </div>
