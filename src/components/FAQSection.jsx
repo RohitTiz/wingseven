@@ -10,7 +10,7 @@ const FAQSection = () => {
   const faqs = [
     {
       question: 'What is a Payment Gateway?',
-      answer: 'A payment gateway is a technology used to accept debit or credit card purchases from customers.',
+      answer: 'A payment gateway is a technology used to accept debit or credit card purchases from customers. It acts as an intermediary between your website or app and the financial institutions that process the payment.',
       icon: Zap,
       color: 'from-blue-500 to-blue-600',
       bgColor: 'bg-blue-50',
@@ -18,7 +18,7 @@ const FAQSection = () => {
     },
     {
       question: 'Do I need to pay to Instapay when there are no transactions?',
-      answer: 'No, you do not need to pay Instapay when there is no transaction happening. With one of the lowest transaction charges in the industry, pay only when you get paid!',
+      answer: 'No, you do not need to pay Instapay when there is no transaction happening. With one of the lowest transaction charges in the industry, pay only when you get paid! There are no monthly fees or hidden charges.',
       icon: Sparkles,
       color: 'from-green-500 to-green-600',
       bgColor: 'bg-green-50',
@@ -26,7 +26,7 @@ const FAQSection = () => {
     },
     {
       question: 'What platforms does ACME payment gateway support?',
-      answer: 'ACME supports all major e-commerce platforms like Shopify, WooCommerce, and Magento, along with custom API integrations for bespoke solutions.',
+      answer: 'ACME supports all major e-commerce platforms like Shopify, WooCommerce, and Magento, along with custom API integrations for bespoke solutions. We also provide plugins for popular CMS platforms.',
       icon: HelpCircle,
       color: 'from-purple-500 to-purple-600',
       bgColor: 'bg-purple-50',
@@ -34,7 +34,7 @@ const FAQSection = () => {
     },
     {
       question: 'Does ACME provide international payments support?',
-      answer: 'Yes, ACME allows businesses to accept payments from international customers in multiple currencies with competitive exchange rates.',
+      answer: 'Yes, ACME allows businesses to accept payments from international customers in multiple currencies with competitive exchange rates. We support over 135 currencies and provide localized payment methods.',
       icon: Zap,
       color: 'from-yellow-500 to-yellow-600',
       bgColor: 'bg-yellow-50',
@@ -42,7 +42,7 @@ const FAQSection = () => {
     },
     {
       question: 'Is there any setup fee or annual maintenance fee?',
-      answer: 'There are no setup or annual maintenance fees. You only pay per transaction with our transparent pricing model.',
+      answer: 'There are no setup or annual maintenance fees. You only pay per transaction with our transparent pricing model. We believe in simple, straightforward pricing without any surprises.',
       icon: Sparkles,
       color: 'from-pink-500 to-pink-600',
       bgColor: 'bg-pink-50',
@@ -158,14 +158,18 @@ const FAQSection = () => {
         >
           <div className="sticky top-0 z-10 bg-white pb-4">
             <div className={`w-14 h-14 rounded-xl ${faqs[activeIndex].bgColor} flex items-center justify-center mb-6`}>
-              <faqs[activeIndex].icon className={`${faqs[activeIndex].textColor}`} size={24} />
+              {(() => {
+                const IconComponent = faqs[activeIndex].icon;
+                return <IconComponent className={`${faqs[activeIndex].textColor}`} size={24} />;
+              })()}
             </div>
             <h4 className="text-2xl font-bold text-gray-900 mb-4">
               {faqs[activeIndex].question}
             </h4>
           </div>
           <div className="prose prose-lg text-gray-600">
-            <p>{faqs[activeIndex].answer}</p>
+            <p className="mb-6">{faqs[activeIndex].answer}</p>
+            
             {/* Additional content example */}
             <div className="mt-8 bg-gradient-to-r from-blue-50 to-white p-6 rounded-lg border border-blue-100">
               <h5 className="text-lg font-semibold text-gray-800 mb-3">Related Information</h5>
