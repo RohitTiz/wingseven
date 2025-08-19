@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import CourseCard from './CourseCard';
 import courses from '../data/courses.json';
-import { motion, AnimatePresence } from 'framer-motion';
 
 // Custom SVG Icons as Components
 const ChevronDownIcon = (props) => (
@@ -73,14 +72,9 @@ const CourseSection = () => {
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <motion.h2 
-            className="text-4xl sm:text-5xl font-extrabold text-gray-800 mb-4"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-800 mb-4">
             EXPLORE OUR COURSES
-          </motion.h2>
+          </h2>
         </div>
 
         {/* Filter Controls */}
@@ -95,49 +89,37 @@ const CourseSection = () => {
                 
                 {/* Actual buttons container */}
                 <div className="col-span-1 md:col-span-2 lg:col-span-3">
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap items-center gap-3"> {/* Added items-center here */}
                     {/* All Button - Positioned at start of first card */}
-                    <motion.button
+                    <button
                       onClick={() => handleCategoryClick('All')}
-                      className={`px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 ${
+                      className={`px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 h-12 flex items-center ${
                         activeFilter === 'All'
                           ? 'bg-blue-600 text-white shadow-lg'
                           : 'bg-white text-gray-700 border-2 border-gray-300 hover:bg-gray-50'
-                      }`}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      animate={!showAllCategories ? { scale: [1, 1.05, 1] } : {}}
-                      transition={!showAllCategories ? { repeat: Infinity, duration: 2 } : {}}
+                      } ${!showAllCategories ? 'animate-pulse' : ''}`}
                     >
                       ALL
-                    </motion.button>
+                    </button>
                     
                     {/* Other buttons that emerge */}
-                    <AnimatePresence>
-                      {showAllCategories && (
-                        <>
-                          {otherCategories.map((category) => (
-                            <motion.button
-                              key={category}
-                              initial={{ opacity: 0, scale: 0.8 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              exit={{ opacity: 0, scale: 0.8 }}
-                              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                              onClick={() => handleCategoryClick(category)}
-                              className={`px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 ${
-                                activeFilter === category
-                                  ? 'bg-blue-600 text-white shadow-lg'
-                                  : 'bg-white text-gray-700 border-2 border-gray-300 hover:bg-gray-50'
-                              }`}
-                              whileHover={{ scale: 1.05, y: -2 }}
-                              whileTap={{ scale: 0.95 }}
-                            >
-                              {category.toUpperCase()}
-                            </motion.button>
-                          ))}
-                        </>
-                      )}
-                    </AnimatePresence>
+                    {showAllCategories && (
+                      <>
+                        {otherCategories.map((category) => (
+                          <button
+                            key={category}
+                            onClick={() => handleCategoryClick(category)}
+                            className={`px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 h-12 flex items-center ${
+                              activeFilter === category
+                                ? 'bg-blue-600 text-white shadow-lg'
+                                : 'bg-white text-gray-700 border-2 border-gray-300 hover:bg-gray-50'
+                            }`}
+                          >
+                            {category.toUpperCase()}
+                          </button>
+                        ))}
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -145,14 +127,12 @@ const CourseSection = () => {
 
             {/* Type Filter Dropdown - Positioned properly */}
             <div className="relative mt-4 md:mt-0 md:absolute md:right-0 w-full md:w-auto flex justify-center md:justify-end">
-              <motion.button
+              <button
                 onClick={() => {
                   setShowTypeDropdown(!showTypeDropdown);
                   setShowAllCourses(false);
                 }}
-                className="flex items-center space-x-2 px-4 py-2 bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="flex items-center space-x-2 px-4 py-2 bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200 h-12"
               >
                 <selectedTypeFilter.icon className="w-5 h-5 text-gray-600" />
                 <span className="text-sm font-bold text-gray-700">
@@ -161,14 +141,11 @@ const CourseSection = () => {
                 <ChevronDownIcon className={`w-5 h-5 text-gray-600 transition-transform duration-200 ${
                   showTypeDropdown ? 'rotate-180' : ''
                 }`} />
-              </motion.button>
+              </button>
 
               {showTypeDropdown && (
-                <motion.div 
-                  className="absolute top-full mt-2 w-56 bg-white border-2 border-gray-200 rounded-lg shadow-xl z-10"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                <div 
+                  className="absolute top-full mt-2 w-56 bg-white border-2 border-gray-200 rounded-lg shadow-xl z-10 transition-all duration-200"
                 >
                   {typeFilters.map((filter) => (
                     <button
@@ -186,7 +163,7 @@ const CourseSection = () => {
                       <span className="text-sm font-bold">{filter.label.toUpperCase()}</span>
                     </button>
                   ))}
-                </motion.div>
+                </div>
               )}
             </div>
           </div>
@@ -196,27 +173,19 @@ const CourseSection = () => {
         <div className="w-full px-4 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {displayedCourses.map((course) => (
-              <motion.div 
+              <div 
                 key={course.id} 
                 className="flex justify-start"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
               >
                 <CourseCard course={course} />
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
 
         {/* Empty State */}
         {filteredCourses.length === 0 && (
-          <motion.div 
-            className="text-center py-12 w-full"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
+          <div className="text-center py-12 w-full">
             <div className="text-gray-400 mb-4">
               <BookOpenIcon className="w-16 h-16 mx-auto" />
             </div>
@@ -226,28 +195,23 @@ const CourseSection = () => {
             <p className="text-gray-500">
               Try adjusting your filters to see more courses
             </p>
-          </motion.div>
+          </div>
         )}
 
         {/* Show More/Less Button - Now Centered */}
         {filteredCourses.length > 6 && (
           <div className="w-full px-4 sm:px-6 mt-8">
             <div className="max-w-6xl mx-auto flex justify-center">
-              <motion.button 
+              <button 
                 onClick={() => setShowAllCourses(!showAllCourses)}
-                className={`px-8 py-4 font-extrabold rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl ${
+                className={`px-8 py-3 font-extrabold rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl h-12 flex items-center ${
                   showAllCourses 
                     ? 'bg-gray-200 text-gray-700 hover:bg-gray-300' 
                     : 'bg-blue-600 text-white hover:bg-blue-700'
                 }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
               >
                 {showAllCourses ? 'SHOW LESS' : 'EXPLORE ALL COURSES'}
-              </motion.button>
+              </button>
             </div>
           </div>
         )}
