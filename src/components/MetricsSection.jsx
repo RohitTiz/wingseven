@@ -5,7 +5,7 @@ const LearningProcessSection = () => {
   const [activeCard, setActiveCard] = useState(0);
   const sectionRef = useRef(null);
 
-  // SVG Icons
+  // SVG Icons (unchanged)
   const PlayIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polygon points="5 3 19 12 5 21 5 3"></polygon>
@@ -149,15 +149,42 @@ const LearningProcessSection = () => {
         {/* Desktop Layout - Horizontal */}
         <div className="hidden lg:block">
           <div className="flex items-center justify-between relative">
-            {/* Connecting Line */}
-            <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-blue-200 via-green-200 to-purple-200 transform -translate-y-1/2 z-0">
-              <div 
-                className="h-full bg-gradient-to-r from-blue-500 via-green-500 to-purple-500 transition-all duration-2000 ease-out rounded-full"
-                style={{ 
-                  width: isVisible ? '100%' : '0%',
-                  transitionDelay: '800ms'
-                }}
-              ></div>
+            {/* Enhanced Curvy/Wavy Connecting Line */}
+            <div className="absolute top-1/2 left-0 right-0 transform -translate-y-1/2 z-0">
+              <svg 
+                viewBox="0 0 1000 200" 
+                className="w-full h-24"
+                preserveAspectRatio="none"
+              >
+                <defs>
+                  <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#3b82f6" />
+                    <stop offset="33%" stopColor="#10b981" />
+                    <stop offset="66%" stopColor="#8b5cf6" />
+                    <stop offset="100%" stopColor="#ec4899" />
+                  </linearGradient>
+                  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+                    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="glow" />
+                    <feComposite in="SourceGraphic" in2="glow" operator="over" />
+                  </filter>
+                </defs>
+                <path 
+                  d="M0,100 
+                     C100,20 150,180 250,100 
+                     C350,20 400,180 500,100 
+                     C600,20 650,180 750,100 
+                     C850,20 900,180 1000,100" 
+                  fill="none" 
+                  stroke="url(#gradient)" 
+                  strokeWidth="6" 
+                  strokeLinecap="round"
+                  filter="url(#glow)"
+                  className="transition-all duration-1500 ease-out"
+                  strokeDasharray={isVisible ? "1000 1000" : "0 1000"}
+                  strokeDashoffset={isVisible ? "0" : "1000"}
+                />
+              </svg>
             </div>
 
             {steps.map((step, index) => {
