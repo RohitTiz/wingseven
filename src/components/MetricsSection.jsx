@@ -267,17 +267,6 @@ const LearningProcessSection = () => {
             <ArrowRightIcon className="group-hover:translate-x-1 transition-transform duration-300" />
           </button>
         </div>
-      </div>
-
-      {/* Floating Animation Elements */}
-      <div className="absolute top-20 right-10 animate-bounce" style={{ animationDelay: '1s', animationDuration: '3s' }}>
-        <ZapIcon className="text-yellow-400" />
-      </div>
-      <div className="absolute bottom-20 right-1/4 animate-bounce" style={{ animationDelay: '2s', animationDuration: '4s' }}>
-        <TargetIcon className="text-green-400" />
-      </div>
-    </section>
-  );
 };
 
 export default LearningProcessSection;
