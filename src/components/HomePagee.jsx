@@ -8,6 +8,7 @@ import FreeCourseSection from './FreeCourseSection.jsx';
 import MetricsSection from '../components/MetricsSection.jsx';
 import PartnerLogos from '../components/PartnerLogos.jsx';
 import CourseHighlights from './NineSec.jsx';
+import CertificatePreview from './CertificatePreview.jsx';
 import WhyJoinSection from '../components/WhyJoinSection.jsx';
 import FAQSection from '../components/FAQSection.jsx';
 import ContactUs from '../components/ContactUs.jsx';
@@ -30,6 +31,7 @@ const HomePagee = () => {
       <PartnerLogos />
       <CourseHighlights/>
       <WhyJoinSection />
+      <CertificatePreview/>
       <FAQSection />
       <ContactUs />
       <ChatWidget />
