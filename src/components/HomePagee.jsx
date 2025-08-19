@@ -4,6 +4,7 @@ import HeroSection from '../components/HeroSection.jsx';
 import FacultySection from '../components/FacultySection.jsx';
 import TestimonialSection from '../components/TestimonialSection.jsx';
 import CourseSection from '../components/CourseSection.jsx';
+import FreeCourseSection from './FreeCourseSection.jsx';
 import MetricsSection from '../components/MetricsSection.jsx';
 import PartnerLogos from '../components/PartnerLogos.jsx';
 import CourseHighlights from './NineSec.jsx';
@@ -23,6 +24,7 @@ const HomePagee = () => {
       {/* <FeatureSection /> */}
       <MetricsSection />
       <CourseSection />
+      <FreeCourseSection/>
       <FacultySection />
       <TestimonialSection />
       <PartnerLogos />

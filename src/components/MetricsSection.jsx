@@ -1,14 +1,61 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Play, Code, Wrench, ArrowRight, BookOpen, Zap, Target } from 'lucide-react';
 
 const LearningProcessSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [activeCard, setActiveCard] = useState(0);
   const sectionRef = useRef(null);
 
+  // SVG Icons
+  const PlayIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="5 3 19 12 5 21 5 3"></polygon>
+    </svg>
+  );
+
+  const CodeIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="16 18 22 12 16 6"></polyline>
+      <polyline points="8 6 2 12 8 18"></polyline>
+    </svg>
+  );
+
+  const WrenchIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+    </svg>
+  );
+
+  const BookOpenIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+    </svg>
+  );
+
+  const ArrowRightIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+      <polyline points="12 5 19 12 12 19"></polyline>
+    </svg>
+  );
+
+  const ZapIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+  );
+
+  const TargetIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"></circle>
+      <circle cx="12" cy="12" r="6"></circle>
+      <circle cx="12" cy="12" r="2"></circle>
+    </svg>
+  );
+
   const steps = [
     {
-      icon: Play,
+      icon: PlayIcon,
       title: "Watch Video",
       description: "The first step to learn programming is to watch video carefully and take notes.",
       color: "from-blue-500 to-blue-600",
@@ -17,7 +64,7 @@ const LearningProcessSection = () => {
       delay: 0
     },
     {
-      icon: Code,
+      icon: CodeIcon,
       title: "Write Code",
       description: "Now write every single line of code and execute it. Don't expect your code to run the first time.",
       color: "from-green-500 to-green-600",
@@ -26,7 +73,7 @@ const LearningProcessSection = () => {
       delay: 200
     },
     {
-      icon: Wrench,
+      icon: WrenchIcon,
       title: "Build Something",
       description: "Just learning the syntax is not enough. Take some time and build real-world projects.",
       color: "from-purple-500 to-purple-600",
@@ -80,7 +127,7 @@ const LearningProcessSection = () => {
         <div className={`inline-flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-full text-sm font-medium mb-6 transition-all duration-700 transform ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
         }`}>
-          <BookOpen size={16} />
+          <BookOpenIcon />
           Learning Process
         </div>
         
@@ -134,7 +181,7 @@ const LearningProcessSection = () => {
                       <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${step.color} flex items-center justify-center mb-6 transform transition-all duration-500 ${
                         isActive ? 'rotate-6 scale-110' : 'group-hover:rotate-3 group-hover:scale-105'
                       }`}>
-                        <Icon className="text-white" size={24} />
+                        <Icon className="text-white" />
                       </div>
                       
                       {/* Content */}
@@ -186,7 +233,7 @@ const LearningProcessSection = () => {
                       <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${step.color} flex items-center justify-center flex-shrink-0 transform transition-all duration-500 ${
                         isActive ? 'rotate-6 scale-110' : ''
                       }`}>
-                        <Icon className="text-white" size={20} />
+                        <Icon className="text-white" />
                       </div>
                       
                       {/* Content */}
@@ -217,17 +264,17 @@ const LearningProcessSection = () => {
         }`} style={{ transitionDelay: '1200ms' }}>
           <button className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-blue-800 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
             Start Your Journey
-            <ArrowRight className="group-hover:translate-x-1 transition-transform duration-300" size={20} />
+            <ArrowRightIcon className="group-hover:translate-x-1 transition-transform duration-300" />
           </button>
         </div>
       </div>
 
       {/* Floating Animation Elements */}
       <div className="absolute top-20 right-10 animate-bounce" style={{ animationDelay: '1s', animationDuration: '3s' }}>
-        <Zap className="text-yellow-400" size={24} />
+        <ZapIcon className="text-yellow-400" />
       </div>
       <div className="absolute bottom-20 right-1/4 animate-bounce" style={{ animationDelay: '2s', animationDuration: '4s' }}>
-        <Target className="text-green-400" size={20} />
+        <TargetIcon className="text-green-400" />
       </div>
     </section>
   );
