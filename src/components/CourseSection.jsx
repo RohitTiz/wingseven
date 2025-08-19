@@ -77,106 +77,88 @@ const CourseSection = () => {
           </h2>
         </div>
 
-        {/* Filter Controls */}
-        <div className="mb-12 px-4 sm:px-6">
-          <div className="flex flex-col w-full max-w-6xl mx-auto relative">
-            {/* Category Filter Buttons - Aligned with course cards */}
-            <div className="w-full">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
-                {/* Empty grid cells for alignment */}
-                <div className="hidden md:block"></div>
-                <div className="hidden lg:block"></div>
-                
-                {/* Actual buttons container */}
-                <div className="col-span-1 md:col-span-2 lg:col-span-3">
-                  <div className="flex flex-wrap items-center gap-3"> {/* Added items-center here */}
-                    {/* All Button - Positioned at start of first card */}
+        {/* Filter Controls - Perfectly Aligned */}
+        <div className="mb-12">
+          <div className="flex flex-col w-full max-w-6xl mx-auto">
+            <div className="flex flex-col md:flex-row w-full items-baseline gap-4">
+              {/* Category Filters - Now perfectly aligned */}
+              <div className="flex-1">
+                <div className="flex flex-wrap items-center gap-3 h-12">
+                  <button
+                    onClick={() => handleCategoryClick('All')}
+                    className={`px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 h-full flex items-center ${
+                      activeFilter === 'All'
+                        ? 'bg-blue-600 text-white shadow-lg'
+                        : 'bg-white text-gray-700 border-2 border-gray-300 hover:bg-gray-50'
+                    } ${!showAllCategories ? 'animate-pulse' : ''}`}
+                  >
+                    ALL
+                  </button>
+                  
+                  {showAllCategories && otherCategories.map((category) => (
                     <button
-                      onClick={() => handleCategoryClick('All')}
-                      className={`px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 h-12 flex items-center ${
-                        activeFilter === 'All'
+                      key={category}
+                      onClick={() => handleCategoryClick(category)}
+                      className={`px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 h-full flex items-center ${
+                        activeFilter === category
                           ? 'bg-blue-600 text-white shadow-lg'
                           : 'bg-white text-gray-700 border-2 border-gray-300 hover:bg-gray-50'
-                      } ${!showAllCategories ? 'animate-pulse' : ''}`}
-                    >
-                      ALL
-                    </button>
-                    
-                    {/* Other buttons that emerge */}
-                    {showAllCategories && (
-                      <>
-                        {otherCategories.map((category) => (
-                          <button
-                            key={category}
-                            onClick={() => handleCategoryClick(category)}
-                            className={`px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 h-12 flex items-center ${
-                              activeFilter === category
-                                ? 'bg-blue-600 text-white shadow-lg'
-                                : 'bg-white text-gray-700 border-2 border-gray-300 hover:bg-gray-50'
-                            }`}
-                          >
-                            {category.toUpperCase()}
-                          </button>
-                        ))}
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Type Filter Dropdown - Positioned properly */}
-            <div className="relative mt-4 md:mt-0 md:absolute md:right-0 w-full md:w-auto flex justify-center md:justify-end">
-              <button
-                onClick={() => {
-                  setShowTypeDropdown(!showTypeDropdown);
-                  setShowAllCourses(false);
-                }}
-                className="flex items-center space-x-2 px-4 py-2 bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200 h-12"
-              >
-                <selectedTypeFilter.icon className="w-5 h-5 text-gray-600" />
-                <span className="text-sm font-bold text-gray-700">
-                  {selectedTypeFilter.label.toUpperCase()}
-                </span>
-                <ChevronDownIcon className={`w-5 h-5 text-gray-600 transition-transform duration-200 ${
-                  showTypeDropdown ? 'rotate-180' : ''
-                }`} />
-              </button>
-
-              {showTypeDropdown && (
-                <div 
-                  className="absolute top-full mt-2 w-56 bg-white border-2 border-gray-200 rounded-lg shadow-xl z-10 transition-all duration-200"
-                >
-                  {typeFilters.map((filter) => (
-                    <button
-                      key={filter.value}
-                      onClick={() => {
-                        setTypeFilter(filter.value);
-                        setShowTypeDropdown(false);
-                        setShowAllCourses(false);
-                      }}
-                      className={`w-full flex items-center space-x-3 px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-200 ${
-                        typeFilter === filter.value ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
                       }`}
                     >
-                      <filter.icon className="w-5 h-5" />
-                      <span className="text-sm font-bold">{filter.label.toUpperCase()}</span>
+                      {category.toUpperCase()}
                     </button>
                   ))}
                 </div>
-              )}
+              </div>
+
+              {/* Type Filter - Now perfectly aligned */}
+              <div className="relative h-12 flex-shrink-0">
+                <button
+                  onClick={() => {
+                    setShowTypeDropdown(!showTypeDropdown);
+                    setShowAllCourses(false);
+                  }}
+                  className="flex items-center space-x-2 px-4 py-2 bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200 h-full"
+                >
+                  <selectedTypeFilter.icon className="w-5 h-5 text-gray-600" />
+                  <span className="text-sm font-bold text-gray-700">
+                    {selectedTypeFilter.label.toUpperCase()}
+                  </span>
+                  <ChevronDownIcon className={`w-5 h-5 text-gray-600 transition-transform duration-200 ${
+                    showTypeDropdown ? 'rotate-180' : ''
+                  }`} />
+                </button>
+
+                {showTypeDropdown && (
+                  <div className="absolute top-full mt-2 w-56 bg-white border-2 border-gray-200 rounded-lg shadow-xl z-10 transition-all duration-200">
+                    {typeFilters.map((filter) => (
+                      <button
+                        key={filter.value}
+                        onClick={() => {
+                          setTypeFilter(filter.value);
+                          setShowTypeDropdown(false);
+                          setShowAllCourses(false);
+                        }}
+                        className={`w-full flex items-center space-x-3 px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-200 ${
+                          typeFilter === filter.value ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
+                        }`}
+                      >
+                        <filter.icon className="w-5 h-5" />
+                        <span className="text-sm font-bold">{filter.label.toUpperCase()}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Course Grid - Perfectly aligned with filters */}
+        {/* Course Grid */}
         <div className="w-full px-4 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {displayedCourses.map((course) => (
-              <div 
-                key={course.id} 
-                className="flex justify-start"
-              >
+              <div key={course.id} className="flex justify-start">
                 <CourseCard course={course} />
               </div>
             ))}
@@ -198,13 +180,13 @@ const CourseSection = () => {
           </div>
         )}
 
-        {/* Show More/Less Button - Now Centered */}
+        {/* Show More/Less Button */}
         {filteredCourses.length > 6 && (
           <div className="w-full px-4 sm:px-6 mt-8">
             <div className="max-w-6xl mx-auto flex justify-center">
               <button 
                 onClick={() => setShowAllCourses(!showAllCourses)}
-                className={`px-8 py-3 font-extrabold rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl h-12 flex items-center ${
+                className={`px-8 py-3 font-extrabold rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl h-12 ${
                   showAllCourses 
                     ? 'bg-gray-200 text-gray-700 hover:bg-gray-300' 
                     : 'bg-blue-600 text-white hover:bg-blue-700'
