@@ -17,7 +17,7 @@ const CourseCard = ({ course }) => {
 
   return (
     <div 
-      className="bg-white rounded-xl shadow-2xl overflow-hidden hover:shadow-3xl hover:scale-105 transition-all duration-300 border border-gray-200 flex flex-col h-full w-[120%] mx-auto"
+      className="bg-white rounded-xl shadow-2xl overflow-hidden hover:shadow-3xl hover:scale-105 transition-all duration-300 border border-gray-200 flex flex-col h-full w-full max-w-[26.4rem] mx-auto"
       onDoubleClick={handleCourseClick}
     >
       {/* Image Section - now clickable */}
@@ -49,7 +49,7 @@ const CourseCard = ({ course }) => {
           <div className="absolute top-6 left-6">
             <div className="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center space-x-1">
               <span>⭐</span>
-              <span>MOST POPULAR</span>
+              <span>POPULAR</span>
             </div>
           </div>
         )}
@@ -58,7 +58,7 @@ const CourseCard = ({ course }) => {
       {/* Content Section */}
       <div className="p-4 flex flex-col flex-grow text-gray-800">
         {/* Course Title - Enhanced */}
-        <h3 className="font-bold text-xl mb-2 text-gray-900 leading-tight">
+        <h3 className="font-bold text-lg mb-2 text-gray-900 leading-tight">
           {course.title}
         </h3>
         
@@ -94,20 +94,20 @@ const CourseCard = ({ course }) => {
         <div className="border-t border-gray-200 w-full mb-2"></div>
 
         {/* Price Section - Enhanced */}
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-2 sm:space-y-0">
           <div className="flex flex-col">
             <div className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-blue-600">
+              <span className="text-xl font-bold text-blue-600">
                 {course.price === 0 ? 'Free' : `₹${course.price}`}
               </span>
               {course.originalPrice && course.originalPrice > course.price && (
-                <span className="text-base text-gray-500 line-through">
+                <span className="text-sm text-gray-500 line-through">
                   ₹{course.originalPrice}
                 </span>
               )}
             </div>
             {course.originalPrice && course.originalPrice > course.price && (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 mt-1">
                 <span className="text-xs bg-green-500 text-white px-2 py-1 rounded-full font-bold">
                   {Math.round((1 - course.price / course.originalPrice) * 100)}% OFF
                 </span>
@@ -116,12 +116,12 @@ const CourseCard = ({ course }) => {
           </div>
           
           {/* Enhanced Enroll Button */}
-          <div className="ml-4">
+          <div className="sm:ml-2">
             <button 
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg text-sm w-full sm:w-auto"
               onClick={() => navigate(`/courses/${course.id}`)}
             >
-              Explore Course
+              Explore
             </button>
           </div>
         </div>

@@ -80,10 +80,7 @@ const CertificatePreview = () => {
       <div className="relative z-10 container mx-auto px-6 py-20">
         {/* Header Section */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-3 mb-6 px-6 py-3 bg-white/80 backdrop-blur-md rounded-full border border-slate-200 shadow-lg">
-            <Brain className="w-6 h-6 text-indigo-600" />
-            <span className="text-slate-700 font-semibold">Certification Preview</span>
-          </div>
+          
           
           <h1 className="text-6xl md:text-7xl font-black bg-gradient-to-r from-slate-800 via-indigo-700 to-slate-700 bg-clip-text text-transparent mb-6 leading-tight">
             Your Digital
