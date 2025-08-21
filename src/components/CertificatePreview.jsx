@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Award, Download, Eye, Star, Zap, Code, Brain } from 'lucide-react';
 
 const CertificatePreview = () => {
   const [selectedCert, setSelectedCert] = useState(0);
@@ -54,6 +53,55 @@ const CertificatePreview = () => {
 
   const currentCert = certificates[selectedCert];
 
+  // Simple SVG icons as components
+  const AwardIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="8" r="7"/>
+      <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+    </svg>
+  );
+
+  const StarIcon = ({ filled = false }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill={filled ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </svg>
+  );
+
+  const DownloadIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="7 10 12 15 17 10"/>
+      <line x1="12" y1="15" x2="12" y2="3"/>
+    </svg>
+  );
+
+  const EyeIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </svg>
+  );
+
+  const ZapIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+    </svg>
+  );
+
+  const CodeIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="16 18 22 12 16 6"/>
+      <polyline points="8 6 2 12 8 18"/>
+    </svg>
+  );
+
+  const BrainIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 2.5 2.5 0 0 1-3.08-2.96A2.5 2.5 0 0 1 4.5 12H12"/>
+      <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 2.5 2.5 0 0 0 3.08-2.96A2.5 2.5 0 0 0 19.5 12H12"/>
+    </svg>
+  );
+
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 overflow-hidden">
       {/* Animated Background */}
@@ -80,8 +128,6 @@ const CertificatePreview = () => {
       <div className="relative z-10 container mx-auto px-6 py-20">
         {/* Header Section */}
         <div className="text-center mb-16">
-          
-          
           <h1 className="text-6xl md:text-7xl font-black bg-gradient-to-r from-slate-800 via-indigo-700 to-slate-700 bg-clip-text text-transparent mb-6 leading-tight">
             Your Digital
             <br />
@@ -127,7 +173,7 @@ const CertificatePreview = () => {
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
                   <div className={`w-12 h-12 bg-gradient-to-r ${currentCert.color} rounded-xl flex items-center justify-center`}>
-                    <Award className="w-6 h-6 text-white" />
+                    <AwardIcon className="w-6 h-6 text-white" />
                   </div>
                   <div>
                     <h3 className="font-bold text-slate-800">Let's Code Brain</h3>
@@ -136,7 +182,7 @@ const CertificatePreview = () => {
                 </div>
                 <div className="flex gap-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                    <StarIcon key={i} filled className="w-4 h-4 text-yellow-400" />
                   ))}
                 </div>
               </div>
@@ -185,7 +231,7 @@ const CertificatePreview = () => {
           <div className="space-y-8">
             <div className="bg-white/90 backdrop-blur-md rounded-2xl p-6 border border-slate-200 shadow-lg">
               <div className="flex items-center gap-3 mb-4">
-                <Zap className="w-6 h-6 text-amber-500" />
+                <ZapIcon className="w-6 h-6 text-amber-500" />
                 <h3 className="text-xl font-bold text-slate-800">What You'll Achieve</h3>
               </div>
               <ul className="space-y-3 text-slate-700">
@@ -210,7 +256,7 @@ const CertificatePreview = () => {
 
             <div className="bg-white/90 backdrop-blur-md rounded-2xl p-6 border border-slate-200 shadow-lg">
               <div className="flex items-center gap-3 mb-4">
-                <Code className="w-6 h-6 text-emerald-600" />
+                <CodeIcon className="w-6 h-6 text-emerald-600" />
                 <h3 className="text-xl font-bold text-slate-800">Skills Mastered</h3>
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -228,11 +274,11 @@ const CertificatePreview = () => {
             {/* Action Buttons */}
             <div className="flex gap-4">
               <button className="flex-1 bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-4 px-6 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-indigo-500/25 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
-                <Eye className="w-5 h-5" />
+                <EyeIcon className="w-5 h-5" />
                 Preview Certificate
               </button>
               <button className="flex-1 bg-white/90 backdrop-blur-md text-slate-700 py-4 px-6 rounded-2xl font-bold text-lg border border-slate-200 hover:bg-white hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
-                <Download className="w-5 h-5" />
+                <DownloadIcon className="w-5 h-5" />
                 Download Sample
               </button>
             </div>
@@ -242,9 +288,9 @@ const CertificatePreview = () => {
         {/* Stats Section */}
         <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           {[
-            { number: "10,000+", label: "Certificates Issued", icon: Award },
-            { number: "95%", label: "Career Success Rate", icon: Star },
-            { number: "50+", label: "Industry Partners", icon: Zap }
+            { number: "10,000+", label: "Certificates Issued", icon: AwardIcon },
+            { number: "95%", label: "Career Success Rate", icon: StarIcon },
+            { number: "50+", label: "Industry Partners", icon: ZapIcon }
           ].map((stat, index) => (
             <div key={index} className="text-center bg-white/90 backdrop-blur-md rounded-2xl p-6 border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
               <stat.icon className="w-8 h-8 text-indigo-600 mx-auto mb-3" />
