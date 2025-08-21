@@ -7,6 +7,11 @@ import Footer from '../components/Footer';
 import ChatWidget from '../components/ChatWidget';
 import AuthSection from '../components/AuthSection';
 import FreeCourseSection from '../components/FreeCourseSection';
+import BestWorkshopSection from '../components/BestWorkshopSection';
+import InternshipSection from '../components/InternshipSection';
+
+
+
 
 // Icons
 const ChevronDownIcon = (props) => (
@@ -194,6 +199,11 @@ const CoursePage = () => {
 
       </div>
       <FreeCourseSection/>
+      <BestWorkshopSection/>
+      <InternshipSection/>
+      
+      
+      
 
       <Footer />
       <ChatWidget />

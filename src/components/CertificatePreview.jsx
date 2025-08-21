@@ -26,7 +26,8 @@ const CertificatePreview = () => {
 
   const certificates = [
     {
-      title: "Full Stack Web Development",
+      title: "Course Program",
+      type: "Course",
       level: "Advanced",
       duration: "12 Weeks",
       skills: ["React", "Node.js", "MongoDB", "TypeScript"],
@@ -34,20 +35,13 @@ const CertificatePreview = () => {
       accent: "purple"
     },
     {
-      title: "AI & Machine Learning",
-      level: "Expert",
+      title: "Internship Program",
+      type: "Internship",
+      level: "Professional",
       duration: "16 Weeks",
-      skills: ["Python", "TensorFlow", "PyTorch", "Neural Networks"],
+      skills: ["React", "Express.js", "MongoDB", "REST APIs", "Git", "Agile Methodology"],
       color: "from-emerald-600 via-teal-700 to-cyan-800",
       accent: "emerald"
-    },
-    {
-      title: "Mobile App Development",
-      level: "Intermediate",
-      duration: "10 Weeks",
-      skills: ["React Native", "Flutter", "Firebase", "Redux"],
-      color: "from-orange-600 via-red-700 to-pink-800",
-      accent: "orange"
     }
   ];
 
@@ -153,7 +147,7 @@ const CertificatePreview = () => {
                   : 'bg-white/80 text-slate-700 border border-slate-200 hover:bg-white hover:shadow-lg'
               }`}
             >
-              {cert.title}
+              {cert.type}
             </button>
           ))}
         </div>
