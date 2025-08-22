@@ -1,3 +1,4 @@
+// components/BlogArticle.js
 import React from 'react';
 
 const BlogArticle = ({ article }) => {
@@ -19,7 +20,7 @@ const BlogArticle = ({ article }) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-lg font-bold text-white mr-4">
-                {article.author.split(' ').map(n => n[0]).join('')}
+                {article.authorInitials}
               </div>
               <div>
                 <div className="font-semibold text-gray-800">{article.author}</div>
@@ -28,19 +29,68 @@ const BlogArticle = ({ article }) => {
             </div>
             <div className="text-right">
               <div className="text-sm text-gray-500">{article.readTime} read</div>
+              <div className="text-sm text-gray-500">{article.followers} followers</div>
             </div>
           </div>
         </header>
         
         <div className="prose prose-lg max-w-none">
-          <p className="text-gray-600 leading-relaxed mb-6">{article.content}</p>
+          {/* Article content */}
+          {article.content.map((section, index) => {
+            if (section.type === 'paragraph') {
+              return <p key={index} className="text-gray-600 leading-relaxed mb-6">{section.text}</p>;
+            } else if (section.type === 'heading') {
+              return <h2 key={index} className="text-2xl font-bold mt-8 mb-4 text-gray-800">{section.text}</h2>;
+            } else if (section.type === 'subheading') {
+              return <h3 key={index} className="text-xl font-semibold mt-6 mb-3 text-gray-800">{section.text}</h3>;
+            } else if (section.type === 'code') {
+              return (
+                <pre key={index} className="bg-gray-100 p-4 rounded-lg overflow-x-auto my-4">
+                  <code className="text-sm text-gray-800">{section.text}</code>
+                </pre>
+              );
+            } else if (section.type === 'image') {
+              return (
+                <div key={index} className="my-6">
+                  <img src={section.src} alt={section.alt} className="rounded-lg shadow-md w-full" />
+                  {section.caption && <p className="text-center text-sm text-gray-500 mt-2">{section.caption}</p>}
+                </div>
+              );
+            } else if (section.type === 'list') {
+              return (
+                <ul key={index} className="list-disc list-inside text-gray-600 mb-6 pl-5">
+                  {section.items.map((item, i) => (
+                    <li key={i} className="mb-2">{item}</li>
+                  ))}
+                </ul>
+              );
+            }
+            return null;
+          })}
           
+          {/* Key Takeaways */}
           <h2 className="text-2xl font-bold mt-8 mb-4 text-gray-800">Key Takeaways</h2>
-          <ul className="list-disc list-inside text-gray-600 mb-6">
-            <li>Important point one from the article</li>
-            <li>Key insight number two</li>
-            <li>Final major takeaway</li>
+          <ul className="list-disc list-inside text-gray-600 mb-6 pl-5">
+            {article.keyTakeaways.map((takeaway, index) => (
+              <li key={index} className="mb-2">{takeaway}</li>
+            ))}
           </ul>
+        </div>
+        
+        {/* Newsletter Signup */}
+        <div className="bg-gray-100 p-6 rounded-xl my-8">
+          <h3 className="text-lg font-semibold mb-2">Get {article.author.split(' ')[0]}'s stories in your inbox</h3>
+          <p className="text-gray-600 mb-4">Join Medium for free to get updates from this writer.</p>
+          <div className="flex">
+            <input 
+              type="email" 
+              placeholder="Enter your email" 
+              className="flex-grow px-4 py-2 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-r-lg font-medium transition-colors">
+              Subscribe
+            </button>
+          </div>
         </div>
         
         <footer className="mt-12 pt-8 border-t border-gray-200">

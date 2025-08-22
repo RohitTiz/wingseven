@@ -1,3 +1,4 @@
+// components/BlogCard.js
 import React from 'react';
 
 const BlogCard = ({ article, categories, isFeatured = false }) => {
@@ -35,7 +36,7 @@ const BlogCard = ({ article, categories, isFeatured = false }) => {
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-sm font-bold text-white">
-                  {article.author.split(' ').map(n => n[0]).join('')}
+                  {article.authorInitials}
                 </div>
                 <div className="ml-3">
                   <div className="font-semibold text-gray-800">{article.author}</div>
@@ -97,7 +98,7 @@ const BlogCard = ({ article, categories, isFeatured = false }) => {
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center text-xs font-bold text-white">
-                  {article.author.split(' ').map(n => n[0]).join('')}
+                  {article.authorInitials}
                 </div>
                 <div className="ml-2">
                   <div className="text-sm font-semibold text-gray-800">{article.author}</div>
