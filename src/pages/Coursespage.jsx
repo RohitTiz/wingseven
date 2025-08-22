@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
 import CourseCard from '../components/CourseCard';
-
 import courses from '../data/courses.json';
-
 import Footer from '../components/Footer';
 import ChatWidget from '../components/ChatWidget';
 import AuthSection from '../components/AuthSection';
 import FreeCourseSection from '../components/FreeCourseSection';
 import BestWorkshopSection from '../components/BestWorkshopSection';
 import InternshipSection from '../components/InternshipSection';
-
-
-
 
 // Icons
 const ChevronDownIcon = (props) => (
@@ -116,13 +111,17 @@ const CoursePage = () => {
 
             {/* Filters */}
             <div className="mb-8 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-              {/* Category Buttons */}
-              <div className="flex flex-wrap gap-2 lg:ml-[50px]">
-                {categories.map(category => (
+              {/* Category Buttons - Aligned to left with All button at start */}
+              <div className="flex flex-wrap gap-2 w-full lg:w-auto justify-center lg:justify-start">
+                {categories.map((category, index) => (
                   <button
                     key={category}
                     onClick={() => setActiveFilter(category)}
-                    className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    className={`px-6 py-2 text-sm font-medium transition-all duration-300 ${
+                      index === 0 
+                        ? 'rounded-lg' // Less rounded for the "All" button
+                        : 'rounded-full' // More rounded for other buttons
+                    } ${
                       activeFilter === category
                         ? 'bg-blue-600 text-white shadow-md'
                         : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
@@ -133,8 +132,8 @@ const CoursePage = () => {
                 ))}
               </div>
 
-              {/* Type Dropdown */}
-              <div className="relative lg:mr-[50px]">
+              {/* Type Dropdown - Aligned to right */}
+              <div className="relative w-full lg:w-auto flex justify-center lg:justify-end">
                 <button
                   onClick={() => setShowTypeDropdown(!showTypeDropdown)}
                   className="flex items-center space-x-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition"
@@ -188,8 +187,8 @@ const CoursePage = () => {
               </div>
             )}
 
-            {/* CTA Button */}
-            <div className="text-center">
+            {/* CTA Button - Aligned to right */}
+            <div className="text-right">
               <button className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition shadow-md">
                 Explore All Courses
               </button>
@@ -202,9 +201,6 @@ const CoursePage = () => {
       <BestWorkshopSection/>
       <InternshipSection/>
       
-      
-      
-
       <Footer />
       <ChatWidget />
     </>
