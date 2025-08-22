@@ -9,6 +9,7 @@ import CourseCard from './components/CourseCard';
 import EnrollNow from './components/EnrollNow';
 import CourseDetails from './components/CourseDetails';
 import Checkout from './components/Checkout';
+import AuthSection from './components/AuthSection';
 
 // Dashboard components
 import DashboardLayout from './layout/dashboard';
@@ -29,6 +30,7 @@ import AdminAnalytics from './admin/pages/Analytics';
 const App = () => {
   return (
     <div className="app-container">
+      
       <Routes>
         {/* Main Website Routes */}
         <Route path="/" element={<HomePagee />} />
@@ -69,6 +71,9 @@ const App = () => {
 // 404 Component
 const NotFound = () => {
   return (
+    <>
+    
+
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-4xl font-bold text-gray-800">404 - Page Not Found</h1>
       <p className="mt-4 text-lg text-gray-600">
@@ -81,6 +86,7 @@ const NotFound = () => {
         Return Home
       </a>
     </div>
+    </>
   );
 };
 

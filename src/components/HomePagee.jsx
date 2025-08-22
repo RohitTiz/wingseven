@@ -1,6 +1,6 @@
+// HomePagee.jsx
 import React from 'react';
 import HeroSection from '../components/HeroSection.jsx';
-// import FeatureSection from '../components/FeatureSection.jsx';
 import FacultySection from '../components/FacultySection.jsx';
 import TestimonialSection from '../components/TestimonialSection.jsx';
 import CourseSection from '../components/CourseSection.jsx';
@@ -21,25 +21,22 @@ const HomePagee = () => {
   return (
     <>
       <AuthSection />
-      <HeroSection />
-      {/* <FeatureSection /> */}
-      <MetricsSection />
-      <CourseSection />
-      <FreeCourseSection/>
-      <FacultySection />
-      <TestimonialSection />
-      <PartnerLogos />
-      <CourseHighlights/>
-      <WhyJoinSection />
-      <CertificatePreview/>
-      <FAQSection />
-      <ContactUs />
-      <ChatWidget />
-      {/* 
-        The error is coming from inside Footer.jsx
-        You need to modify the <style jsx> tag there
-      */}
-      <Footer />
+      <div style={{ paddingTop: '80px' }}>
+        <HeroSection />
+        <MetricsSection />
+        <CourseSection />
+        <FreeCourseSection/>
+        <FacultySection />
+        <TestimonialSection />
+        <PartnerLogos />
+        <CourseHighlights/>
+        <WhyJoinSection />
+        <CertificatePreview/>
+        <FAQSection />
+        <ContactUs />
+        <ChatWidget />
+        <Footer />
+      </div>
     </>
   );
 };
