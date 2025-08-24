@@ -126,7 +126,7 @@ function BlogPage() {
             {/* Logo/Brand */}
             <div className="mb-8 md:mb-12">
               <div className="inline-block">
-                <h1 className="text-5xl sm:text-6xl md:text-7xl font-serif font-normal tracking-tight mb-2">
+                <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-serif font-normal tracking-tight mb-2">
                   <span className="text-gray-900">Code</span>
                   <span className="text-gray-600">Brain</span>
                 </h1>
@@ -135,7 +135,7 @@ function BlogPage() {
             </div>
 
             {/* Tagline */}
-            <p className="text-lg sm:text-xl text-gray-600 mb-8 md:mb-12 font-light tracking-normal max-w-2xl mx-auto leading-relaxed font-sans">
+            <p className="text-xl sm:text-2xl text-gray-600 mb-8 md:mb-12 font-light tracking-normal max-w-2xl mx-auto leading-relaxed font-sans">
               Where developers come to 
               <span className="text-gray-900 font-medium"> think different</span>
             </p>
