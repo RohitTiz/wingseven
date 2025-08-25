@@ -1,15 +1,13 @@
 // pages/Blog.jsx
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import AuthSection from '../components/AuthSection';
 import BlogCard from '../components/BlogCard';
-import BlogArticle from '../components/BlogArticle';
 import blogData from '../data/blogdata';
-import blogArticleData from '../data/blogarticledata';
 
 function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedArticle, setSelectedArticle] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
 
   // Check if device is mobile
@@ -89,31 +87,6 @@ function BlogPage() {
     </div>
   );
 
-  // If an article is selected, show the article view
-  if (selectedArticle) {
-    const article = blogArticleData.articles.find(a => a.id === selectedArticle);
-    return (
-      <>
-        <AuthSection />
-        <div className="min-h-screen bg-white py-4 md:py-8">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <button 
-              onClick={() => setSelectedArticle(null)}
-              className="mb-6 md:mb-8 flex items-center text-gray-600 hover:text-gray-900 transition-colors text-sm font-light"
-            >
-              <svg className="w-4 h-4 md:w-5 md:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-              </svg>
-              Back to all articles
-            </button>
-            {article && <BlogArticle article={article} />}
-          </div>
-        </div>
-      </>
-    );
-  }
-
-  // Otherwise, show the blog listing
   return (
     <>
       <AuthSection />
@@ -248,9 +221,9 @@ function BlogPage() {
                     
                     <div className="grid grid-cols-1 gap-6">
                       {featuredArticles.map((article) => (
-                        <div key={article.id} onClick={() => setSelectedArticle(article.id)} className="cursor-pointer">
+                        <Link key={article.id} to={`/specializations/${article.id}`} className="cursor-pointer">
                           <BlogCard article={article} categories={categories} isFeatured={true} />
-                        </div>
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -278,9 +251,9 @@ function BlogPage() {
                   ) : (
                     <div className="grid gap-8">
                       {filteredArticles.map((article) => (
-                        <div key={article.id} onClick={() => setSelectedArticle(article.id)} className="cursor-pointer">
+                        <Link key={article.id} to={`/specializations/${article.id}`} className="cursor-pointer">
                           <BlogCard article={article} categories={categories} />
-                        </div>
+                        </Link>
                       ))}
                     </div>
                   )}

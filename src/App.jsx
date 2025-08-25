@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import HomePagee from "./components/HomePagee";
 import AboutPage from "./pages/AboutPage";
 import Coursespage from "./pages/Coursespage";
+import BlogArticlePage from './pages/BlogArticlePage';
 import BlogPage from './pages/Blogpa';
 
 import CourseCard from './components/CourseCard';
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="/" element={<HomePagee />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/Course" element={<Coursespage />} />
+        <Route path="/specializations/:id" element={<BlogArticlePage />} />
         <Route path="/specializations" element={<BlogPage />} />
         <Route path="/courses" element={<CourseCard />} />
         <Route path="/enroll-now" element={<EnrollNow />} />
