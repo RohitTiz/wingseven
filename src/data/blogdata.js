@@ -30,7 +30,7 @@ const blogData = {
       gradient: "from-blue-100 via-purple-100 to-pink-100",
       views: "12.8k",
       likes: "892",
-      featured: false,
+      featured: true,
       tags: ["Neural Networks", "Deep Learning", "AGI"]
     },
     {
