@@ -14,8 +14,8 @@ const Footer = () => {
           </p>
           <div className="text-[#ccc] text-sm space-y-1">
             <p>📧 contact@codebrain.com</p>
-            <p>📞 +1 (555) 123-4567</p>
-            <p>📍 123 Tech Street, Silicon Valley, CA 94301</p>
+            <p>📞 +91 (555) 123-4567</p>
+            <p>📍 123 noida,gataum budh nagar, up 94301</p>
           </div>
         </div>
 
