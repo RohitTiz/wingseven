@@ -58,11 +58,11 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
         </button>
 
         <nav className={`${isMobile ? (menuOpen ? 'flex' : 'hidden') : 'flex'} ${isMobile ? 'flex-col items-start mt-2.5 w-full' : 'flex-row items-center'} gap-5 text-base font-semibold`}>
-          <Link to="/" className="no-underline text-blue-900 hover:text-blue-700">Home</Link>
-          <Link to="/course" className="no-underline text-blue-900 hover:text-blue-700">Courses</Link>
-          <Link to="/specializations" className="no-underline text-blue-900 hover:text-blue-700">Blogs</Link>
-          <a href="#contact" className="no-underline text-blue-900 hover:text-blue-700">Contact Us</a>
-          <Link to="/about" className="no-underline text-blue-900 hover:text-blue-700">About Us</Link>
+          <Link to="/" className="no-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 relative">Home</Link>
+          <Link to="/course" className="no-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 relative">Courses</Link>
+          <Link to="/specializations" className="nno-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 relative">Blogs</Link>
+          <a href="#contact" className="no-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 relative">Contact Us</a>
+          <Link to="/about" className="no-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 relative">About Us</Link>
         </nav>
 
         {!isMobile && (
@@ -122,19 +122,20 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
           <button className="bg-transparent text-blue-500 border-2 border-blue-500 rounded-lg px-4 py-2 cursor-pointer text-sm font-semibold hover:bg-blue-50 transition-colors">
             Book a Demo
           </button>
-          {userEmail ? (
-            <ProfileAvatar 
-              user={{ email: userEmail, name: userName || userEmail.split('@')[0] }} 
-              onSignOut={handleSignOut}
-            />
-          ) : (
-            <button 
-              className="bg-blue-500 text-white border-none rounded-lg px-4 py-2 cursor-pointer text-sm font-semibold hover:bg-blue-600 transition-colors" 
-              onClick={() => setShowModal(true)}
-            >
-              Signup
-            </button>
-          )}
+          // In Header.jsx, update the ProfileAvatar usage:
+{userEmail ? (
+  <ProfileAvatar 
+    user={{ email: userEmail, name: userName || userEmail.split('@')[0] }} 
+    onSignOut={onSignOut || handleSignOut} // Use passed onSignOut if available
+  />
+) : (
+  <button 
+    className="bg-blue-500 text-white border-none rounded-lg px-4 py-2 cursor-pointer text-sm font-semibold hover:bg-blue-600 transition-colors" 
+    onClick={() => setShowModal(true)}
+  >
+    Signup
+  </button>
+)}
         </div>
       )}
 

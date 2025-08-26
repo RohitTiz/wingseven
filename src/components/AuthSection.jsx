@@ -1,10 +1,44 @@
 // AuthSection.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './Header';
 
 const AuthSection = () => {
   const [userEmail, setUserEmail] = useState(null);
   const [userName, setUserName] = useState(null);
+
+  // Load user data from localStorage on component mount
+  useEffect(() => {
+    const savedUserEmail = localStorage.getItem('userEmail');
+    const savedUserName = localStorage.getItem('userName');
+    
+    if (savedUserEmail) {
+      setUserEmail(savedUserEmail);
+    }
+    
+    if (savedUserName) {
+      setUserName(savedUserName);
+    }
+  }, []);
+
+  // Handle user sign up
+  const handleSetUserEmail = (email) => {
+    setUserEmail(email);
+    localStorage.setItem('userEmail', email);
+  };
+
+  // Handle user name setting
+  const handleSetUserName = (name) => {
+    setUserName(name);
+    localStorage.setItem('userName', name);
+  };
+
+  // Handle user sign out
+  const handleSignOut = () => {
+    setUserEmail(null);
+    setUserName(null);
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userName');
+  };
 
   return (
     <div style={{ 
@@ -19,9 +53,10 @@ const AuthSection = () => {
     }}>
       <Header 
         userEmail={userEmail} 
-        setUserEmail={setUserEmail}
+        setUserEmail={handleSetUserEmail}
         userName={userName}
-        setUserName={setUserName}
+        setUserName={handleSetUserName}
+        onSignOut={handleSignOut}
       />
     </div>
   );
