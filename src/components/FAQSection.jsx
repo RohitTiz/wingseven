@@ -135,12 +135,7 @@ const FAQSection = () => {
 
       {/* Header */}
       <div className="text-center mb-12 sm:mb-16 md:mb-20">
-        <div className={`inline-flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-full text-sm font-medium mb-6 transition-all duration-700 transform ${
-          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-        }`}>
-          <QuestionIcon />
-          Need Help?
-        </div>
+        
         
         <h2 className={`font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-4 sm:mb-6 transition-all duration-700 transform ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'

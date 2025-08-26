@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CourseCard from './CourseCard';
 import courses from '../data/courses.json';
 
 const FreeCourseSection = () => {
   const [showAllCourses, setShowAllCourses] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    // Trigger animation after component mounts
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
   
   // Filter free courses from your existing data
   const freeCourses = courses.filter(course => course.isFree === true);
@@ -68,7 +78,10 @@ const FreeCourseSection = () => {
               </svg>
               
               <div className="relative z-10">
-                <h2 className="text-5xl font-extrabold text-gray-800 mb-6 leading-tight">
+                {/* Animated Heading */}
+                <h2 className={`font-bold text-3xl sm:text-4xl md:text-5xl text-gray-800 mb-6 leading-tight transition-all duration-700 transform ${
+                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                }`} style={{ transitionDelay: '200ms' }}>
                   Unlock Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600">Potential</span> with Free Learning
                 </h2>
                 

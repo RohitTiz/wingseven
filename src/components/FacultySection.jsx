@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 const FacultySection = () => {
   const facultyData = [
@@ -21,6 +21,8 @@ const FacultySection = () => {
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -40,6 +42,27 @@ const FacultySection = () => {
     return () => clearInterval(timer);
   }, [facultyData.length]);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   const getPositionClass = (index) => {
     if (isMobile) {
       return index === activeIndex ? 'center' : 'hidden';
@@ -55,20 +78,20 @@ const FacultySection = () => {
   };
 
   return (
-    <div style={{ 
+    <div ref={sectionRef} style={{ 
       padding: isMobile ? '40px 20px' : '70px 20px', 
       textAlign: 'center', 
       background: '#fff',
       overflow: 'hidden'
     }}>
-      <h2 style={{
-        fontSize: isMobile ? '1.8rem' : '2.2rem',
-        fontWeight: 'bold',
-        color: '#1b3a57',
-        marginBottom: isMobile ? '40px' : '90px'
-      }}>
-        OUR FACULTY
-      </h2>
+      {/* Enhanced Heading with Animation */}
+      <div className="text-center mb-12 sm:mb-16 md:mb-20">
+        <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-4 sm:mb-6 transition-all duration-700 transform ${
+          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+        }`} style={{ transitionDelay: '200ms' }}>
+          OUR <span className="text-blue-600">FACULTY</span>
+        </h2>
+      </div>
 
       <div style={{ 
         position: 'relative', 

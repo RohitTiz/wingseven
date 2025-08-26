@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const WhyJoinSection = () => {
+  const [isVisible, setIsVisible] = useState(false);
   const features = [
     {
       icon: '🚀',
@@ -34,6 +35,11 @@ const WhyJoinSection = () => {
     }
   ];
 
+  useEffect(() => {
+    // Trigger animation after component mounts
+    setIsVisible(true);
+  }, []);
+
   return (
     <section
       id="why-join"
@@ -50,12 +56,16 @@ const WhyJoinSection = () => {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
 
       <div className="relative z-10 max-w-7xl w-full">
-        {/* Header Section */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 mb-4">
-            Why Join Our CS Courses?
+        {/* Header Section - Updated with animation */}
+        <div className="text-center mb-12 sm:mb-16 md:mb-20">
+          <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-4 sm:mb-6 transition-all duration-700 transform ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+          }`} style={{ transitionDelay: '200ms' }}>
+            Why Join Our <span className="text-blue-600">CS Courses</span>?
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className={`text-xl text-gray-600 max-w-3xl mx-auto transition-all duration-700 transform ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+          }`} style={{ transitionDelay: '400ms' }}>
             Transform your career with the most comprehensive and industry-relevant computer science education
           </p>
         </div>
@@ -82,7 +92,10 @@ const WhyJoinSection = () => {
             {features.map((feature, index) => (
               <div 
                 key={index}
-                className="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:border-blue-300/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                className={`bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:border-blue-300/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${
+                  isVisible ? 'opacity-100' : 'opacity-0 translate-y-5'
+                }`}
+                style={{ transitionDelay: `${600 + (index * 100)}ms` }}
               >
                 <div className="text-3xl mb-3">{feature.icon}</div>
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">{feature.title}</h3>
@@ -94,7 +107,9 @@ const WhyJoinSection = () => {
 
         {/* CTA Section */}
         <div className="mt-20 text-center">
-          <button className="relative px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-100 group">
+          <button className={`relative px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-100 group ${
+            isVisible ? 'opacity-100' : 'opacity-0 translate-y-5'
+          }`} style={{ transitionDelay: '1300ms' }}>
             <span className="relative z-10 flex items-center justify-center">
               Enroll Now & Transform Your Career
               <svg xmlns="http://www.w3.org/2000/svg" className="ml-3 h-5 w-5 group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">

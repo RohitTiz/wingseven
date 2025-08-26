@@ -40,8 +40,10 @@ const CourseSection = () => {
   const [showAllCourses, setShowAllCourses] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isVisible, setIsVisible] = useState(false);
   
   const categoryContainerRef = useRef(null);
+  const sectionRef = useRef(null);
   
   const categories = ['All', 'AI/ML', 'Python', 'Java', 'Web Development'];
   
@@ -50,6 +52,28 @@ const CourseSection = () => {
     { value: 'recorded', label: 'Recorded Courses', icon: VideoIcon },
     { value: 'live', label: 'Live Courses', icon: RadioIcon },
   ];
+
+  // Intersection Observer for the heading animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
 
   const filteredCourses = courses.filter(course => {
     const categoryMatch = activeFilter === 'All' || course.category === activeFilter;
@@ -76,19 +100,15 @@ const CourseSection = () => {
   };
 
   return (
-    <section className="py-20 px-4 sm:px-6 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen">
+    <section ref={sectionRef} className="py-20 px-4 sm:px-6 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen">
       <div className="max-w-7xl mx-auto">
-        {/* Section Header - Redesigned */}
-        <div className="text-center mb-16 relative">
-          <div className="inline-block relative">
-            <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full blur-2xl opacity-70"></div>
-            <h2 className="relative text-4xl sm:text-5xl font-bold text-slate-800 mb-4 tracking-wide">
-              EXPLORE OUR COURSES
-            </h2>
-          </div>
-          {/* <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            Explore our comprehensive selection of expertly crafted courses designed to advance your career and expand your knowledge.
-          </p> */}
+        {/* Section Header - Updated with your style */}
+        <div className="text-center mb-12 sm:mb-16 md:mb-20">
+          <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-4 sm:mb-6 transition-all duration-700 transform ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+          }`} style={{ transitionDelay: '200ms' }}>
+            Explore Our <span className="text-blue-600">Courses</span>
+          </h2>
         </div>
 
         {/* Filter Controls */}

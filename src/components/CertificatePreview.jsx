@@ -4,6 +4,12 @@ const CertificatePreview = () => {
   const [selectedCert, setSelectedCert] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [particles, setParticles] = useState([]);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Set visibility for animation
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
 
   // Generate floating particles - reduced count for mobile
   useEffect(() => {
@@ -122,15 +128,13 @@ const CertificatePreview = () => {
       <div className="absolute bottom-20 left-1/4 md:left-1/2 w-40 h-40 md:w-80 md:h-80 bg-slate-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-4000"></div>
 
       <div className="relative z-10 container mx-auto px-4 md:px-6 py-12 md:py-20">
-        {/* Header Section */}
-        <div className="text-center mb-10 md:mb-16">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black bg-gradient-to-r from-slate-800 via-indigo-700 to-slate-700 bg-clip-text text-transparent mb-4 md:mb-6 leading-tight">
-            Your Digital
-            <br />
-            <span className="bg-gradient-to-r from-indigo-600 via-blue-600 to-indigo-800 bg-clip-text text-transparent">
-              Achievement
-            </span>
-          </h1>
+        {/* Header Section with Updated Styling */}
+        <div className="text-center mb-12 sm:mb-16 md:mb-20">
+          <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-4 sm:mb-6 transition-all duration-700 transform ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+          }`} style={{ transitionDelay: '200ms' }}>
+            Your Digital <span className="text-blue-600">Achievement</span>
+          </h2>
           
           <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed px-2">
             Earn industry-recognized certificates that showcase your coding mastery and unlock new career opportunities
