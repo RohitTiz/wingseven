@@ -115,7 +115,7 @@ const CourseDetails = () => {
   }
 
   return (
-    <div className="w-full min-h-screen flex flex-col">
+    <div className="w-full min-h-screen flex flex-col pt-17">
       {/* Header Section */}
       <div className="relative">
         <AuthSection />
@@ -133,7 +133,7 @@ const CourseDetails = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 w-full mx-auto pt-12 sm:pt-14 pb-16 px-4 sm:px-6">
+      <div className="flex-1 w-full mx-auto pt-16 sm:pt-14 pb-16 px-4 sm:px-6">
         <div className="w-full max-w-6xl mx-auto">
           {/* Course Header */}
           <div className="mb-6">
