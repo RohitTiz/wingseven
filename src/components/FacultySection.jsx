@@ -81,16 +81,26 @@ const FacultySection = () => {
     <div ref={sectionRef} style={{ 
       padding: isMobile ? '40px 20px' : '70px 20px', 
       textAlign: 'center', 
-      background: '#fff',
-      overflow: 'hidden'
+      background: 'linear-gradient(to bottom, #f0f9ff, #e6f3ff, #f0f9ff)',
+      overflow: 'hidden',
+      position: 'relative'
     }}>
+      {/* Background elements */}
+      <div className="absolute top-0 left-0 right-0 h-96 bg-gradient-to-b from-blue-100 to-transparent opacity-50"></div>
+      <div className="absolute top-20 right-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+      <div className="absolute top-40 left-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+      <div className="absolute bottom-20 left-20 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+
       {/* Enhanced Heading with Animation */}
-      <div className="text-center mb-12 sm:mb-16 md:mb-20">
-        <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-4 sm:mb-6 transition-all duration-700 transform ${
+      <div className="text-center mb-12 sm:mb-16 md:mb-20 relative z-10">
+        <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-blue-900 mb-4 sm:mb-6 transition-all duration-700 transform ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
         }`} style={{ transitionDelay: '200ms' }}>
           OUR <span className="text-blue-600">FACULTY</span>
         </h2>
+        <p className="text-blue-600 text-lg md:text-xl max-w-2xl mx-auto">
+          Meet our team of industry experts dedicated to your success
+        </p>
       </div>
 
       <div style={{ 
@@ -99,6 +109,7 @@ const FacultySection = () => {
         width: '100%', 
         maxWidth: '880px', 
         margin: '0 auto',
+        zIndex: 10
       }}>
         {facultyData.map((faculty, index) => {
           const position = getPositionClass(index);
@@ -149,7 +160,7 @@ const FacultySection = () => {
                   borderRadius: '50%',
                   overflow: 'hidden',
                   border: '4px solid white',
-                  boxShadow: '0 6px 18px rgba(0,0,0,0.1)',
+                  boxShadow: '0 8px 25px rgba(59, 130, 246, 0.25)',
                   margin: '0 auto',
                   transition: 'all 0.8s ease-in-out',
                 }}
@@ -168,11 +179,15 @@ const FacultySection = () => {
               {position === 'center' && (
                 <div style={{ 
                   marginTop: '20px',
-                  padding: isMobile ? '0 20px' : '0'
+                  padding: isMobile ? '0 20px' : '0',
+                  background: 'rgba(255, 255, 255, 0.8)',
+                  borderRadius: '12px',
+                  padding: '15px',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
                 }}>
                   <h3 style={{ 
                     fontWeight: 'bold', 
-                    color: '#1b3a57', 
+                    color: '#1e40af', 
                     fontSize: isMobile ? '1.1rem' : '1.32rem', 
                     margin: 0 
                   }}>
@@ -180,7 +195,7 @@ const FacultySection = () => {
                   </h3>
                   <p style={{ 
                     fontStyle: 'italic', 
-                    color: '#666', 
+                    color: '#3b82f6', 
                     fontSize: isMobile ? '0.9rem' : '1.1rem', 
                     margin: '5px 0 0' 
                   }}>
@@ -198,7 +213,9 @@ const FacultySection = () => {
           display: 'flex',
           justifyContent: 'center',
           marginTop: '20px',
-          gap: '10px'
+          gap: '10px',
+          zIndex: 10,
+          position: 'relative'
         }}>
           {facultyData.map((_, index) => (
             <button
@@ -209,15 +226,42 @@ const FacultySection = () => {
                 height: '12px',
                 borderRadius: '50%',
                 border: 'none',
-                backgroundColor: index === activeIndex ? '#1b3a57' : '#ccc',
+                backgroundColor: index === activeIndex ? '#1e40af' : '#93c5fd',
                 cursor: 'pointer',
-                padding: 0
+                padding: 0,
+                transition: 'all 0.3s ease'
               }}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
         </div>
       )}
+
+      <style jsx>{`
+        @keyframes blob {
+          0% {
+            transform: translate(0px, 0px) scale(1);
+          }
+          33% {
+            transform: translate(30px, -50px) scale(1.1);
+          }
+          66% {
+            transform: translate(-20px, 20px) scale(0.9);
+          }
+          100% {
+            transform: translate(0px, 0px) scale(1);
+          }
+        }
+        .animate-blob {
+          animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+      `}</style>
     </div>
   );
 };
