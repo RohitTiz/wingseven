@@ -81,41 +81,13 @@ function BlogArticlePage() {
                   {popularArticles.map(popularArticle => (
                     <div 
                       key={popularArticle.id} 
-                      className="cursor-pointer transform transition-transform hover:scale-[1.02]"
+                      className="cursor-pointer group"
                       onClick={() => navigate(`/blog/${popularArticle.id}`)}
                     >
-                      <div className="flex gap-4">
-                        <div className="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
-                          <span className="text-lg">
-                            {blogData.categories.find(c => c.id === popularArticle.category)?.icon}
-                          </span>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-medium text-gray-900 text-sm leading-tight line-clamp-2 mb-1">
-                            {popularArticle.title}
-                          </h4>
-                          <div className="flex items-center text-xs text-gray-500">
-                            <span>{popularArticle.publishDate}</span>
-                            <span className="mx-2">•</span>
-                            <span>{popularArticle.readTime}</span>
-                          </div>
-                          <div className="flex items-center mt-2 text-xs text-gray-500">
-                            <span className="flex items-center mr-3">
-                              <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                              </svg>
-                              {popularArticle.views}
-                            </span>
-                            <span className="flex items-center">
-                              <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
-                              </svg>
-                              {popularArticle.likes}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+                      <BlogCard 
+                        article={popularArticle} 
+                        categories={blogData.categories}
+                      />
                     </div>
                   ))}
                 </div>
@@ -148,7 +120,7 @@ function BlogArticlePage() {
               {popularArticles.map(popularArticle => (
                 <div 
                   key={popularArticle.id} 
-                  className="cursor-pointer"
+                  className="cursor-pointer group"
                   onClick={() => navigate(`/blog/${popularArticle.id}`)}
                 >
                   <BlogCard 
