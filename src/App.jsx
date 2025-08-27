@@ -1,4 +1,4 @@
-// App.js
+// App.jsx
 import React from 'react';
 import './App.css';
 import { Routes, Route } from "react-router-dom";
@@ -7,6 +7,7 @@ import AboutPage from "./pages/AboutPage";
 import Coursespage from "./pages/Coursespage";
 import BlogArticlePage from './pages/BlogArticlePage';
 import BlogPage from './pages/Blogpa';
+
 
 import CourseCard from './components/CourseCard';
 import EnrollNow from './components/EnrollNow';
@@ -30,6 +31,9 @@ import AdminUsers from './admin/pages/Users';
 import AdminEnrollments from './admin/pages/Enrollments';
 import AdminAnalytics from './admin/pages/Analytics';
 
+// Import blog data
+import blogData from './data/blogdata';
+
 const App = () => {
   return (
     <div className="app-container">
@@ -45,6 +49,8 @@ const App = () => {
         <Route path="/enroll-now" element={<EnrollNow />} />
         <Route path="/courses/:id" element={<CourseDetails />} />
         <Route path="/checkout" element={<Checkout />} />
+        
+        
 
         {/* Dashboard Routes */}
         <Route path="/dashboard" element={<DashboardLayout />}>

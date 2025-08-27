@@ -15,6 +15,7 @@ const blogData = {
       views: "5.2k",
       likes: "324",
       featured: true,
+      image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=400&h=250&fit=crop&auto=format",
       tags: ["Python", "Virtual Environment", "Development", "Dependencies", "Programming"]
     },
     {
@@ -31,7 +32,8 @@ const blogData = {
       views: "12.8k",
       likes: "892",
       featured: true,
-      tags: ["Neural Networks", "Deep Learning", "AGI"]
+      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=250&fit=crop&auto=format",
+      tags: ["Neural Networks", "Deep Learning", "AGI", "Machine Learning", "AI Research"]
     },
     {
       id: 3,
@@ -42,12 +44,13 @@ const blogData = {
       authorHandle: "@sarah_dev",
       publishDate: "1 day ago",
       readTime: "6 min",
-      category: "webdev",
+      category: "web",
       gradient: "from-amber-100 via-orange-100 to-red-100",
       views: "8.7k",
       likes: "456",
       featured: false,
-      tags: ["React", "JavaScript", "Frontend"]
+      image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=350&h=200&fit=crop&auto=format",
+      tags: ["React", "JavaScript", "Frontend", "Hooks", "Modern Web"]
     },
     {
       id: 4,
@@ -58,19 +61,90 @@ const blogData = {
       authorHandle: "@quantum_dr",
       publishDate: "3 days ago",
       readTime: "11 min",
-      category: "tech",
+      category: "blockchain",
       gradient: "from-violet-100 via-purple-100 to-fuchsia-100",
       views: "15.3k",
       likes: "1.2k",
       featured: false,
-      tags: ["Quantum Computing", "Technology", "Innovation"]
+      image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=350&h=200&fit=crop&auto=format",
+      tags: ["Quantum Computing", "Technology", "Innovation", "Future Tech", "Science"]
+    },
+    {
+      id: 5,
+      title: "Building Scalable Microservices with Node.js",
+      subtitle: "Best practices for designing and deploying microservice architectures",
+      author: "David Rodriguez",
+      authorInitials: "DR",
+      authorHandle: "@david_backend",
+      publishDate: "5 days ago",
+      readTime: "9 min",
+      category: "web",
+      gradient: "from-green-100 via-teal-100 to-blue-100",
+      views: "6.4k",
+      likes: "387",
+      featured: false,
+      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=350&h=200&fit=crop&auto=format",
+      tags: ["Node.js", "Microservices", "Architecture", "Backend", "Scalability"]
+    },
+    {
+      id: 6,
+      title: "CSS Grid vs Flexbox: When to Use What",
+      subtitle: "A comprehensive comparison of modern CSS layout techniques",
+      author: "Emily Watson",
+      authorInitials: "EW",
+      authorHandle: "@emily_css",
+      publishDate: "1 week ago",
+      readTime: "4 min",
+      category: "web",
+      gradient: "from-pink-100 via-rose-100 to-red-100",
+      views: "4.2k",
+      likes: "298",
+      featured: false,
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=350&h=200&fit=crop&auto=format",
+      tags: ["CSS", "Layout", "Grid", "Flexbox", "Frontend"]
+    },
+    {
+      id: 7,
+      title: "Introduction to Machine Learning with TensorFlow",
+      subtitle: "Get started with ML model development using Google's TensorFlow framework",
+      author: "James Park",
+      authorInitials: "JP",
+      authorHandle: "@james_ml",
+      publishDate: "1 week ago",
+      readTime: "12 min",
+      category: "ai",
+      gradient: "from-indigo-100 via-blue-100 to-cyan-100",
+      views: "9.1k",
+      likes: "643",
+      featured: false,
+      image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=350&h=200&fit=crop&auto=format",
+      tags: ["TensorFlow", "Machine Learning", "Python", "Data Science", "AI"]
+    },
+    {
+      id: 8,
+      title: "Mobile App Development with Flutter",
+      subtitle: "Building cross-platform apps with Google's UI toolkit",
+      author: "Lisa Chen",
+      authorInitials: "LC",
+      authorHandle: "@lisa_flutter",
+      publishDate: "2 weeks ago",
+      readTime: "7 min",
+      category: "mobile",
+      gradient: "from-purple-100 via-indigo-100 to-blue-100",
+      views: "7.8k",
+      likes: "512",
+      featured: false,
+      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=350&h=200&fit=crop&auto=format",
+      tags: ["Flutter", "Mobile Development", "Cross-platform", "Dart", "UI/UX"]
     }
   ],
   categories: [
-    { id: "python", name: "Python Development", icon: "🐍" },
-    { id: "ai", name: "AI/ML", icon: "🤖" },
-    { id: "webdev", name: "Web Development", icon: "💻" },
-    { id: "tech", name: "Technology", icon: "🚀" }
+    { id: "all", name: "All", icon: "◆" },
+    { id: "python", name: "Python", icon: "🐍" },
+    { id: "ai", name: "AI/ML", icon: "∞" },
+    { id: "web", name: "Web Dev", icon: "⟨/⟩" },
+    { id: "blockchain", name: "Web3", icon: "◊" },
+    { id: "mobile", name: "Mobile", icon: "◈" }
   ]
 };
 
