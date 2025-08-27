@@ -90,10 +90,10 @@ function BlogPage() {
   return (
     <>
       <AuthSection />
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white text-gray-900 overflow-hidden">
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white text-gray-900 overflow-hidden pt-30">
         
         {/* Hero Section */}
-        <div className="relative min-h-screen flex items-center justify-center pt-16 md:pt-0">
+        <div className="relative flex items-center justify-center pt-16 md:pt-0 pb-10">
           {/* Background elements */}
           <div className="absolute top-0 left-0 right-0 h-96 bg-gradient-to-b from-blue-100 to-transparent opacity-50"></div>
           <div className="absolute top-20 right-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
@@ -140,7 +140,7 @@ function BlogPage() {
             </div>
 
             {/* Categories - Hidden on mobile, replaced with dropdown */}
-            <div className="hidden lg:flex flex-wrap justify-center gap-2 mb-16">
+            <div className="hidden lg:flex flex-wrap justify-center gap-2 mb-10">
               {categories.map((category) => (
                 <button
                   key={category.id}
@@ -158,16 +158,6 @@ function BlogPage() {
             </div>
 
           </div>
-
-          {/* Scroll indicator */}
-          <div className="absolute bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-10">
-            <div className="flex flex-col items-center">
-              <span className="text-xs text-blue-500 mb-1 font-light">Explore</span>
-              <svg className="w-5 h-5 text-blue-500 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-              </svg>
-            </div>
-          </div>
         </div>
 
         {/* Mobile Category Selector */}
@@ -175,7 +165,7 @@ function BlogPage() {
 
         {/* Main Content */}
         <div className="relative">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-6 py-12 md:py-20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-6 py-8 md:py-16">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10">
               
               {/* Left Sidebar - Hidden on mobile, shown on large screens */}
@@ -313,7 +303,7 @@ function BlogPage() {
         </div>
         
         {/* Footer */}
-        <div className="border-t border-blue-200 mt-20 py-10 bg-blue-50">
+        <div className="border-t border-blue-200 mt-16 py-10 bg-blue-50">
           <div className="max-w-6xl mx-auto px-4">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="mb-4 md:mb-0">
