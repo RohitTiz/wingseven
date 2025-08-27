@@ -276,15 +276,6 @@ function BlogPage() {
               {/* Right Sidebar - Hidden on mobile, shown on large screens */}
               <div className="hidden lg:block lg:col-span-3 space-y-8">
                 
-                {/* About */}
-                <div className="bg-white rounded-xl p-5 border border-blue-100 shadow-sm">
-                  <h3 className="font-serif text-lg text-blue-900 mb-4">About CodeBrain</h3>
-                  <p className="text-sm text-blue-600 mb-4 font-light">
-                    Exploring the intersection of technology, creativity, and innovation through thoughtful analysis and commentary.
-                  </p>
-                  <button className="text-xs text-blue-500 hover:text-blue-700 font-medium">Learn more →</button>
-                </div>
-                
                 <AdSpace size="small" />
                 
                 {/* Social Links */}
