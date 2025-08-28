@@ -260,7 +260,7 @@ function BlogPage() {
                       <h2 className="font-serif text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-purple-900 to-cyan-900 border-b-2 border-gradient-to-r from-blue-200 via-purple-200 to-cyan-200 pb-4">Featured Stories</h2>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                       {featuredArticles.map((article, index) => (
                         <Link key={article.id} to={`/specializations/${article.id}`} className="cursor-pointer transform hover:scale-105 transition-all duration-500" style={{ animationDelay: `${index * 0.2}s` }}>
                           <div className="group">
@@ -292,7 +292,7 @@ function BlogPage() {
                       <div className="text-lg text-blue-500 font-light">Try different keywords or categories</div>
                     </div>
                   ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                       {filteredArticles.map((article, index) => (
                         <Link key={article.id} to={`/specializations/${article.id}`} className="cursor-pointer group transform hover:scale-105 transition-all duration-500" style={{ animationDelay: `${index * 0.1}s` }}>
                           <div className="h-full">
