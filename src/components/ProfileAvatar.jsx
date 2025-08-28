@@ -29,12 +29,20 @@ const ProfileAvatar = ({
       document.addEventListener('mousedown', handleClickOutside);
       document.addEventListener('touchstart', handleClickOutside, { passive: true });
       document.addEventListener('keydown', handleEscapeKey);
+      
+      // Prevent body scroll on mobile when dropdown is open
+      if (window.innerWidth < 768) {
+        document.body.style.overflow = 'hidden';
+      }
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('touchstart', handleClickOutside);
       document.removeEventListener('keydown', handleEscapeKey);
+      
+      // Re-enable body scroll
+      document.body.style.overflow = 'unset';
     };
   }, [showDropdown]);
 
@@ -88,14 +96,14 @@ const ProfileAvatar = ({
       {showDropdown && (
         <>
           <div 
-            className="fixed inset-0 z-40 backdrop-blur-sm bg-black/10 md:hidden" 
+            className="fixed inset-0 z-40 backdrop-blur-sm bg-black/10 md:bg-transparent md:backdrop-blur-0" 
             onClick={() => setShowDropdown(false)}
             aria-hidden="true"
           />
           
           <div 
             ref={dropdownRef}
-            className="fixed bottom-0 left-0 right-0 w-full max-w-md mx-auto bg-white rounded-t-2xl shadow-2xl border border-gray-200 z-50 overflow-hidden animate-slide-up md:absolute md:bottom-auto md:top-full md:right-0 md:left-auto md:mt-2 md:rounded-xl md:animate-fade-in md:max-w-xs"
+            className="fixed bottom-0 left-0 right-0 w-full bg-white rounded-t-2xl shadow-2xl border border-gray-200 z-50 overflow-hidden animate-slide-up md:absolute md:bottom-auto md:top-full md:right-0 md:left-auto md:mt-2 md:rounded-xl md:animate-fade-in md:shadow-lg md:w-auto md:min-w-[280px]"
             role="menu"
             aria-orientation="vertical"
           >
@@ -210,15 +218,31 @@ const ProfileAvatar = ({
         @keyframes slide-up {
           from {
             transform: translateY(100%);
-          opacity: 0;
+            opacity: 0;
           }
           to {
             transform: translateY(0);
             opacity: 1;
           }
         }
+        
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+            transform: translateY(-8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
         .animate-slide-up {
           animation: slide-up 0.3s ease-out;
+        }
+        
+        .animate-fade-in {
+          animation: fade-in 0.2s ease-out;
         }
         
         /* Prevent body scroll when dropdown is open on mobile */
