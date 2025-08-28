@@ -27,11 +27,13 @@ const ProfileAvatar = ({
 
     if (showDropdown) {
       document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside, { passive: true });
       document.addEventListener('keydown', handleEscapeKey);
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
       document.removeEventListener('keydown', handleEscapeKey);
     };
   }, [showDropdown]);
@@ -77,7 +79,7 @@ const ProfileAvatar = ({
         aria-haspopup="true"
         onClick={() => setShowDropdown(!showDropdown)}
         onKeyDown={(e) => handleKeyDown(e, () => setShowDropdown(!showDropdown))}
-        className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold text-sm flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 border-2 border-white focus:outline-none focus:ring-2 focus:ring-purple-400"
+        className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold text-sm flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 border-2 border-white focus:outline-none focus:ring-2 focus:ring-purple-400 md:w-12 md:h-12"
       >
         {initials}
       </button>
@@ -86,17 +88,22 @@ const ProfileAvatar = ({
       {showDropdown && (
         <>
           <div 
-            className="fixed inset-0 z-40 backdrop-blur-sm bg-black/10" 
+            className="fixed inset-0 z-40 backdrop-blur-sm bg-black/10 md:hidden" 
             onClick={() => setShowDropdown(false)}
             aria-hidden="true"
           />
           
           <div 
             ref={dropdownRef}
-            className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-lg border border-gray-200 z-50 overflow-hidden animate-fade-in"
+            className="fixed bottom-0 left-0 right-0 w-full max-w-md mx-auto bg-white rounded-t-2xl shadow-2xl border border-gray-200 z-50 overflow-hidden animate-slide-up md:absolute md:bottom-auto md:top-full md:right-0 md:left-auto md:mt-2 md:rounded-xl md:animate-fade-in md:max-w-xs"
             role="menu"
             aria-orientation="vertical"
           >
+            {/* Close button for mobile */}
+            <div className="flex justify-center py-2 md:hidden">
+              <div className="w-10 h-1 bg-gray-300 rounded-full"></div>
+            </div>
+
             {/* User Info Section */}
             <div className="p-4 bg-gray-50 border-b border-gray-200">
               <div className="flex items-center gap-3">
@@ -119,7 +126,7 @@ const ProfileAvatar = ({
               <button 
                 onClick={handleDashboardClick}
                 onKeyDown={(e) => handleKeyDown(e, handleDashboardClick)}
-                className="w-full px-4 py-3 text-left text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors focus:outline-none focus:bg-gray-100"
+                className="w-full px-4 py-3 text-left text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors focus:outline-none focus:bg-gray-100 active:bg-gray-100"
                 role="menuitem"
                 tabIndex={0}
               >
@@ -130,7 +137,7 @@ const ProfileAvatar = ({
               </button>
               
               <button 
-                className="w-full px-4 py-3 text-left text-blue-600 hover:bg-gray-50 flex items-center gap-3 transition-colors focus:outline-none focus:bg-gray-100"
+                className="w-full px-4 py-3 text-left text-blue-600 hover:bg-gray-50 flex items-center gap-3 transition-colors focus:outline-none focus:bg-gray-100 active:bg-gray-100"
                 role="menuitem"
                 tabIndex={0}
               >
@@ -146,7 +153,7 @@ const ProfileAvatar = ({
             <div className="px-4 py-3 border-t border-gray-200">
               <div className="flex items-center justify-between gap-2 text-xs">
                 <button 
-                  className="flex items-center gap-2 text-gray-600 hover:text-gray-800"
+                  className="flex items-center gap-2 text-gray-600 hover:text-gray-800 active:text-gray-900 p-2 rounded-lg active:bg-gray-100"
                   tabIndex={0}
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -156,7 +163,7 @@ const ProfileAvatar = ({
                 </button>
                 
                 <button 
-                  className="flex items-center gap-2 text-gray-600 hover:text-gray-800"
+                  className="flex items-center gap-2 text-gray-600 hover:text-gray-800 active:text-gray-900 p-2 rounded-lg active:bg-gray-100"
                   tabIndex={0}
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -166,7 +173,7 @@ const ProfileAvatar = ({
                 </button>
                 
                 <button 
-                  className="flex items-center gap-2 text-gray-600 hover:text-gray-800"
+                  className="flex items-center gap-2 text-gray-600 hover:text-gray-800 active:text-gray-900 p-2 rounded-lg active:bg-gray-100"
                   tabIndex={0}
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -182,7 +189,7 @@ const ProfileAvatar = ({
               <button 
                 onClick={onSignOut}
                 onKeyDown={(e) => handleKeyDown(e, onSignOut)}
-                className="w-full px-4 py-3 text-left text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors focus:outline-none focus:bg-red-100"
+                className="w-full px-4 py-3 text-left text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors focus:outline-none focus:bg-red-100 active:bg-red-100"
                 role="menuitem"
                 tabIndex={0}
               >
@@ -192,9 +199,35 @@ const ProfileAvatar = ({
                 <span className="text-sm font-medium">Sign Out</span>
               </button>
             </div>
+            
+            {/* Extra padding for mobile bottom bar */}
+            <div className="h-4 md:hidden"></div>
           </div>
         </>
       )}
+      
+      <style jsx>{`
+        @keyframes slide-up {
+          from {
+            transform: translateY(100%);
+          opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+        .animate-slide-up {
+          animation: slide-up 0.3s ease-out;
+        }
+        
+        /* Prevent body scroll when dropdown is open on mobile */
+        @media (max-width: 767px) {
+          body:has(.fixed.inset-0.z-40.backdrop-blur-sm) {
+            overflow: hidden;
+          }
+        }
+      `}</style>
     </div>
   );
 };
