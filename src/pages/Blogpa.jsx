@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import AuthSection from '../components/AuthSection';
 import BlogCard from '../components/BlogCard';
 import blogData from '../data/blogdata';
+import Footer from '../components/Footer';
 
 function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -326,21 +327,7 @@ function BlogPage() {
         </div>
         
         {/* Enhanced Footer */}
-        <div className="border-t-2 border-blue-200/50 mt-20 py-12 bg-gradient-to-br from-blue-100/50 via-purple-100/50 to-cyan-100/50 backdrop-blur-sm">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <div className="mb-6 md:mb-0">
-                <span className="font-serif text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-purple-900 text-2xl">CodeBrain</span>
-                <p className="text-sm text-blue-600 font-medium mt-2">© {new Date().getFullYear()} All rights reserved</p>
-              </div>
-              <div className="flex space-x-8">
-                <a href="#" className="text-sm text-blue-600 hover:text-purple-800 font-medium transition-colors duration-300">Privacy</a>
-                <a href="#" className="text-sm text-blue-600 hover:text-purple-800 font-medium transition-colors duration-300">Terms</a>
-                <a href="#" className="text-sm text-blue-600 hover:text-purple-800 font-medium transition-colors duration-300">Contact</a>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Footer />
       </div>
 
       <style jsx>{`

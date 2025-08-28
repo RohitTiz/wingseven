@@ -7,6 +7,8 @@ import AboutPage from "./pages/AboutPage";
 import Coursespage from "./pages/Coursespage";
 import BlogArticlePage from './pages/BlogArticlePage';
 import BlogPage from './pages/Blogpa';
+import Testimon from './pages/Testimon';
+
 
 
 import CourseCard from './components/CourseCard';
@@ -45,6 +47,7 @@ const App = () => {
         <Route path="/Course" element={<Coursespage />} />
         <Route path="/specializations/:id" element={<BlogArticlePage />} />
         <Route path="/specializations" element={<BlogPage />} />
+        <Route path="/testimonials" element={<Testimon />} /> 
         <Route path="/courses" element={<CourseCard />} />
         <Route path="/enroll-now" element={<EnrollNow />} />
         <Route path="/courses/:id" element={<CourseDetails />} />
