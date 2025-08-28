@@ -4,8 +4,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import AuthSection from '../components/AuthSection';
 import BlogArticle from '../components/BlogArticle';
 import BlogCard from '../components/BlogCard';
+import ReviewSection from '../components/ReviewSection';
 import blogArticleData from '../data/blogarticledata';
 import blogData from '../data/blogdata';
+import Footer from '../components/Footer';
 
 function BlogArticlePage() {
   const { id } = useParams();
@@ -47,6 +49,7 @@ function BlogArticlePage() {
             </div>
           </div>
         </div>
+        <Footer />
       </>
     );
   }
@@ -70,6 +73,11 @@ function BlogArticlePage() {
             {/* Main Article Content - 2/3 width on large screens */}
             <div className="w-full lg:w-2/3 -mt-[49px]">
               <BlogArticle article={article} />
+              
+              {/* Review Section */}
+              <div className="mt-12">
+                <ReviewSection articleId={articleId} />
+              </div>
             </div>
             
             {/* Popular Articles Section - 1/3 width on large screens */}
@@ -132,6 +140,7 @@ function BlogArticlePage() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
