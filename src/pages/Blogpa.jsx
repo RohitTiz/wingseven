@@ -5,6 +5,7 @@ import AuthSection from '../components/AuthSection';
 import BlogCard from '../components/BlogCard';
 import blogData from '../data/blogdata';
 import Footer from '../components/Footer';
+import BlogFeaturedSection from '../components/BlogFeaturedSection';
 
 function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -108,7 +109,7 @@ function BlogPage() {
   return (
     <>
       <AuthSection />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-cyan-50 text-gray-900 overflow-hidden pt-17 relative">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-cyan-50 text-gray-900 overflow-hidden pt- -20 relative">
         
         {/* Enhanced Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -123,9 +124,9 @@ function BlogPage() {
           <div className="absolute bottom-1/4 right-1/3 w-3 h-3 bg-cyan-400 rounded-full animate-bounce"></div>
         </div>
         
-        {/* Hero Section with Parallax Background */}
-        <div className="relative flex items-center justify-center pt-20 md:pt-8 pb-12 overflow-hidden">
-          {/* Parallax Background Image */}
+        {/* Hero Section with Parallax Background - MODIFIED */}
+        <div className="relative pb-12 overflow-hidden">
+          {/* Parallax Background Image - MODIFIED to touch top */}
           <div 
             className="absolute inset-0 bg-fixed bg-cover bg-center z-0"
             style={{
@@ -137,7 +138,8 @@ function BlogPage() {
             <div className="absolute inset-0 bg-gradient-to-b from-blue-900/70 via-purple-900/60 to-cyan-900/70"></div>
           </div>
           
-          <div className="text-center max-w-5xl mx-auto px-4 md:px-6 relative z-10">
+          {/* Text container with adjusted padding to maintain position - MODIFIED */}
+          <div className="text-center max-w-5xl mx-auto px-4 md:px-6 relative z-10 pt-40 md:pt-32">
             
             {/* Enhanced Logo/Brand with smaller font size */}
             <div className="mb-10 md:mb-12">
@@ -352,6 +354,7 @@ function BlogPage() {
             </div>
           </div>
         </div>
+        <BlogFeaturedSection/>
         
         {/* Enhanced Footer */}
         <Footer />
