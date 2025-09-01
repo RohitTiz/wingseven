@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const FAQSection = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
-  const answerRef = useRef(null);
 
   const faqs = [
     {
@@ -52,7 +51,7 @@ const FAQSection = () => {
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.1 } // Reduced threshold for mobile
+      { threshold: 0.1 }
     );
 
     if (sectionRef.current) {
@@ -61,15 +60,6 @@ const FAQSection = () => {
 
     return () => observer.disconnect();
   }, []);
-
-  useEffect(() => {
-    if (answerRef.current) {
-      answerRef.current.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
-  }, [activeIndex]);
 
   // Simple SVG icons as components
   const QuestionIcon = ({ color = 'currentColor' }) => (
@@ -121,6 +111,10 @@ const FAQSection = () => {
     </svg>
   );
 
+  const toggleQuestion = (index) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
+
   return (
     <section 
       ref={sectionRef}
@@ -148,77 +142,68 @@ const FAQSection = () => {
         </p>
       </div>
 
-      <div className={`max-w-7xl mx-auto flex flex-col gap-6 transition-all duration-700 transform ${
+      <div className={`max-w-7xl mx-auto transition-all duration-700 transform ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
       }`} style={{ transitionDelay: '600ms' }}>
-        {/* Question list */}
+        {/* FAQ Items */}
         <div className="w-full bg-white rounded-xl sm:rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
           {faqs.map((faq, index) => (
-            <div
-              key={index}
-              onClick={() => setActiveIndex(index)}
-              className={`flex items-center px-4 py-4 sm:px-6 sm:py-5 cursor-pointer border-b border-gray-100 transition-all duration-300 ${
-                activeIndex === index
-                  ? 'bg-gray-50 border-l-4 border-l-blue-500'
-                  : 'hover:bg-gray-50'
-              }`}
-            >
-              <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg ${faq.bgColor} flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0`}>
-                {index % 2 === 0 ? (
-                  <ZapIcon color={faq.textColor} />
-                ) : (
-                  <SparkleIcon color={faq.textColor} />
-                )}
-              </div>
-              <span
-                className={`flex-1 text-sm sm:text-base font-medium ${
+            <div key={index} className="border-b border-gray-100 last:border-b-0">
+              {/* Question */}
+              <div
+                onClick={() => toggleQuestion(index)}
+                className={`flex items-center px-4 py-4 sm:px-6 sm:py-5 cursor-pointer transition-all duration-300 ${
                   activeIndex === index
-                    ? 'text-gray-900'
-                    : 'text-gray-700'
+                    ? 'bg-gray-50 border-l-4 border-l-blue-500'
+                    : 'hover:bg-gray-50'
                 }`}
               >
-                {faq.question}
-              </span>
-              <ChevronDown 
-                color={activeIndex === index ? 'currentColor' : '#9CA3AF'}
-                className={`transition-transform duration-300 flex-shrink-0 ${
-                  activeIndex === index ? 'rotate-180' : ''
-                }`}
-              />
+                <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg ${faq.bgColor} flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0`}>
+                  {index % 2 === 0 ? (
+                    <ZapIcon color={faq.textColor} />
+                  ) : (
+                    <SparkleIcon color={faq.textColor} />
+                  )}
+                </div>
+                <span
+                  className={`flex-1 text-sm sm:text-base font-medium ${
+                    activeIndex === index
+                      ? 'text-gray-900'
+                      : 'text-gray-700'
+                  }`}
+                >
+                  {faq.question}
+                </span>
+                <ChevronDown 
+                  color={activeIndex === index ? 'currentColor' : '#9CA3AF'}
+                  className={`transition-transform duration-300 flex-shrink-0 ${
+                    activeIndex === index ? 'rotate-180' : ''
+                  }`}
+                />
+              </div>
+              
+              {/* Answer - appears directly below the question */}
+              <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                activeIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+              }`}>
+                <div className="px-4 pb-4 sm:px-6 sm:pb-5 md:px-8 md:pb-6">
+                  <div className="pt-2 border-t border-gray-100">
+                    <p className="text-gray-600 mb-4 sm:mb-5 md:mb-6">{faq.answer}</p>
+                    
+                    {/* Additional content example */}
+                    <div className="mt-4 sm:mt-5 bg-gradient-to-r from-blue-50 to-white p-4 sm:p-5 md:p-6 rounded-lg border border-blue-100">
+                      <h5 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">Related Information</h5>
+                      <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">Learn more about our payment solutions in our documentation center.</p>
+                      <button className="group inline-flex items-center gap-1 sm:gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm sm:text-base">
+                        View Documentation
+                        <ArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
-        </div>
-
-        {/* Answer display with scroll effect */}
-        <div 
-          ref={answerRef}
-          className="w-full bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 shadow-sm overflow-y-auto max-h-[400px] md:max-h-[500px] scrollbar-hide"
-        >
-          <div className="sticky top-0 z-10 bg-white pb-3 sm:pb-4">
-            <div className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg sm:rounded-xl ${faqs[activeIndex].bgColor} flex items-center justify-center mb-4 sm:mb-5 md:mb-6`}>
-              {activeIndex % 2 === 0 ? (
-                <ZapIcon color={faqs[activeIndex].textColor} />
-              ) : (
-                <SparkleIcon color={faqs[activeIndex].textColor} />
-              )}
-            </div>
-            <h4 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">
-              {faqs[activeIndex].question}
-            </h4>
-          </div>
-          <div className="prose prose-sm sm:prose-base md:prose-lg text-gray-600">
-            <p className="mb-4 sm:mb-5 md:mb-6">{faqs[activeIndex].answer}</p>
-            
-            {/* Additional content example */}
-            <div className="mt-6 sm:mt-8 bg-gradient-to-r from-blue-50 to-white p-4 sm:p-5 md:p-6 rounded-lg border border-blue-100">
-              <h5 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">Related Information</h5>
-              <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">Learn more about our payment solutions in our documentation center.</p>
-              <button className="group inline-flex items-center gap-1 sm:gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm sm:text-base">
-                View Documentation
-                <ArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
-              </button>
-            </div>
-          </div>
         </div>
       </div>
 
