@@ -112,7 +112,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="w-full bg-gradient-to-br from-white to-blue-50 border-b border-gray-100 flex flex-col lg:flex-row justify-between items-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-8 sm:py-12 md:py-14 lg:py-16 xl:py-20 box-border gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 overflow-hidden">
+    <section className="w-full bg-gradient-to-br from-white to-blue-50 border-b border-gray-100 flex flex-col lg:flex-row justify-between items-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-8 sm:py-12 md:py-14 lg:py-16 xl:py-20 box-border gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 overflow-hidden -mt-[20px]">
       {/* Left Section - Text Content */}
       <div className="w-full lg:flex-1 flex flex-col justify-center order-2 lg:order-1">
         {/* Text container with fixed height to prevent layout shift */}

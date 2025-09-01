@@ -21,7 +21,7 @@ const HomePagee = () => {
   return (
     <>
       <AuthSection />
-      <div style={{ paddingTop: '80px' }}>
+      <div style={{ paddingTop: '0px' }}>
         <HeroSection />
         <MetricsSection />
         <CourseSection />
