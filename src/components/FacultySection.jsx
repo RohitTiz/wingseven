@@ -15,7 +15,7 @@ const FacultySection = () => {
     {
       name: 'PRIYA MAM',
       image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300',
-      role: 'Web Development Specialist',
+      role: 'Web Specialist',
     },
   ];
 
@@ -23,6 +23,7 @@ const FacultySection = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -35,11 +36,21 @@ const FacultySection = () => {
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    // Clear any existing interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    
+    // Set new interval
+    intervalRef.current = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % facultyData.length);
     }, 3000);
 
-    return () => clearInterval(timer);
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
   }, [facultyData.length]);
 
   useEffect(() => {
@@ -47,6 +58,8 @@ const FacultySection = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+        } else {
+          setIsVisible(false);
         }
       },
       { threshold: 0.1 }
@@ -77,9 +90,20 @@ const FacultySection = () => {
     return 'hidden';
   };
 
+  const handleDotClick = (index) => {
+    setActiveIndex(index);
+    // Reset the auto-rotation timer
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    intervalRef.current = setInterval(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % facultyData.length);
+    }, 3000);
+  };
+
   return (
-    <div ref={sectionRef} style={{ 
-      padding: isMobile ? '40px 20px' : '70px 20px', 
+    <div ref={sectionRef} className="faculty-section" style={{ 
+      padding: isMobile ? '3rem 1.25rem' : '5rem 1.25rem', 
       textAlign: 'center', 
       background: 'linear-gradient(to bottom, #f0f9ff, #e6f3ff, #f0f9ff)',
       overflow: 'hidden',
@@ -92,20 +116,18 @@ const FacultySection = () => {
       <div className="absolute bottom-20 left-20 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
 
       {/* Enhanced Heading with Animation */}
-      <div className="text-center mb-12 sm:mb-16 md:mb-20 relative z-10">
-        <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-blue-900 mb-4 sm:mb-6 transition-all duration-700 transform ${
+      <div className="text-center mb-8 sm:mb-12 md:mb-16 relative z-10">
+        <h2 className={`font-bold text-3xl sm:text-4xl md:text-5xl text-blue-900 mb-4 transition-all duration-700 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
         }`} style={{ transitionDelay: '200ms' }}>
           OUR <span className="text-blue-600">FACULTY</span>
         </h2>
-        <p className="text-blue-600 text-lg md:text-xl max-w-2xl mx-auto">
-          Meet our team of industry experts dedicated to your success
-        </p>
+        {/* Removed the paragraph with the text "Meet our team of industry experts dedicated to your success" */}
       </div>
 
-      <div style={{ 
+      <div className="faculty-container" style={{ 
         position: 'relative', 
-        height: isMobile ? '300px' : '350px', 
+        height: isMobile ? '380px' : '420px', 
         width: '100%', 
         maxWidth: '880px', 
         margin: '0 auto',
@@ -116,43 +138,52 @@ const FacultySection = () => {
 
           let containerStyle = {
             position: 'absolute',
-            top: '0',
+            top: '50%',
             left: '50%',
-            transform: 'translateX(-50%)',
-            transition: 'all 0.8s ease-in-out',
+            transform: 'translate(-50%, -50%)',
+            transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
             opacity: 0,
             zIndex: 0,
+            width: '100%'
           };
 
           if (position === 'left') {
             containerStyle = {
               ...containerStyle,
-              transform: 'translateX(-190%) scale(0.88)',
-              opacity: 1,
+              transform: isMobile ? 'translate(-180%, -50%) scale(0.85)' : 'translate(-150%, -50%) scale(0.8)',
+              opacity: 0.8,
               zIndex: 1,
             };
           } else if (position === 'center') {
             containerStyle = {
               ...containerStyle,
-              transform: 'translateX(-50%) scale(1.4)',
+              transform: 'translate(-50%, -50%) scale(1)',
               opacity: 1,
               zIndex: 2,
             };
           } else if (position === 'right') {
             containerStyle = {
               ...containerStyle,
-              transform: 'translateX(90%) scale(0.88)',
-              opacity: 1,
+              transform: isMobile ? 'translate(80%, -50%) scale(0.85)' : 'translate(50%, -50%) scale(0.8)',
+              opacity: 0.8,
               zIndex: 1,
+            };
+          } else if (position === 'hidden') {
+            containerStyle = {
+              ...containerStyle,
+              opacity: 0,
+              zIndex: 0,
+              pointerEvents: 'none'
             };
           }
 
+          // Increased the center image size in desktop view
           const imageSize = position === 'center' 
-            ? (isMobile ? '160px' : '208px') 
-            : (isMobile ? '120px' : '176px');
+            ? (isMobile ? '180px' : '240px')  // Increased from 200px to 240px
+            : (isMobile ? '120px' : '140px'); // Slightly reduced side images for better contrast
 
           return (
-            <div key={index} style={containerStyle}>
+            <div key={index} style={containerStyle} className="faculty-card">
               <div
                 style={{
                   width: imageSize,
@@ -160,10 +191,11 @@ const FacultySection = () => {
                   borderRadius: '50%',
                   overflow: 'hidden',
                   border: '4px solid white',
-                  boxShadow: '0 8px 25px rgba(59, 130, 246, 0.25)',
+                  boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)',
                   margin: '0 auto',
-                  transition: 'all 0.8s ease-in-out',
+                  transition: 'all 0.6s ease-in-out',
                 }}
+                className="faculty-image-container"
               >
                 <img
                   src={faculty.image}
@@ -176,66 +208,72 @@ const FacultySection = () => {
                 />
               </div>
 
-              {position === 'center' && (
-                <div style={{ 
-                  marginTop: '20px',
-                  padding: isMobile ? '0 20px' : '0',
-                  background: 'rgba(255, 255, 255, 0.8)',
-                  borderRadius: '12px',
-                  padding: '15px',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+              <div style={{ 
+                marginTop: '1.5rem',
+                padding: isMobile ? '0 1rem' : '0',
+                background: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '16px',
+                padding: '1.25rem',
+                boxShadow: '0 8px 20px rgba(0, 0, 0, 0.08)',
+                transition: 'all 0.6s ease-in-out',
+                maxWidth: '280px',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                opacity: position === 'center' ? 1 : 0,
+                transform: position === 'center' ? 'translateY(0)' : 'translateY(20px)'
+              }}>
+                <h3 style={{ 
+                  fontWeight: '700', 
+                  color: '#1e40af', 
+                  fontSize: isMobile ? '1.1rem' : '1.35rem', 
+                  margin: '0 0 0.5rem',
+                  lineHeight: '1.3'
                 }}>
-                  <h3 style={{ 
-                    fontWeight: 'bold', 
-                    color: '#1e40af', 
-                    fontSize: isMobile ? '1.1rem' : '1.32rem', 
-                    margin: 0 
-                  }}>
-                    {faculty.name}
-                  </h3>
-                  <p style={{ 
-                    fontStyle: 'italic', 
-                    color: '#3b82f6', 
-                    fontSize: isMobile ? '0.9rem' : '1.1rem', 
-                    margin: '5px 0 0' 
-                  }}>
-                    {faculty.role}
-                  </p>
-                </div>
-              )}
+                  {faculty.name}
+                </h3>
+                <p style={{ 
+                  fontStyle: 'italic', 
+                  color: '#3b82f6', 
+                  fontSize: isMobile ? '0.9rem' : '1.05rem', 
+                  margin: '0',
+                  lineHeight: '1.4'
+                }}>
+                  {faculty.role}
+                </p>
+              </div>
             </div>
           );
         })}
       </div>
 
-      {isMobile && (
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: '20px',
-          gap: '10px',
-          zIndex: 10,
-          position: 'relative'
-        }}>
-          {facultyData.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setActiveIndex(index)}
-              style={{
-                width: '12px',
-                height: '12px',
-                borderRadius: '50%',
-                border: 'none',
-                backgroundColor: index === activeIndex ? '#1e40af' : '#93c5fd',
-                cursor: 'pointer',
-                padding: 0,
-                transition: 'all 0.3s ease'
-              }}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
-      )}
+      {/* Dots indicator - always visible but styled differently for mobile/desktop */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: isMobile ? '2rem' : '2.5rem',
+        gap: '0.75rem',
+        zIndex: 10,
+        position: 'relative'
+      }}>
+        {facultyData.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => handleDotClick(index)}
+            style={{
+              width: isMobile ? '12px' : '14px',
+              height: isMobile ? '12px' : '14px',
+              borderRadius: '50%',
+              border: 'none',
+              backgroundColor: index === activeIndex ? '#1e40af' : '#bfdbfe',
+              cursor: 'pointer',
+              padding: 0,
+              transition: 'all 0.3s ease',
+              transform: index === activeIndex ? 'scale(1.2)' : 'scale(1)'
+            }}
+            aria-label={`View ${facultyData[index].name}`}
+          />
+        ))}
+      </div>
 
       <style jsx>{`
         @keyframes blob {
@@ -260,6 +298,18 @@ const FacultySection = () => {
         }
         .animation-delay-4000 {
           animation-delay: 4s;
+        }
+        
+        @media (max-width: 768px) {
+          .faculty-container {
+            height: 380px !important;
+          }
+        }
+        
+        @media (min-width: 769px) {
+          .faculty-card {
+            width: 33.333% !important;
+          }
         }
       `}</style>
     </div>
