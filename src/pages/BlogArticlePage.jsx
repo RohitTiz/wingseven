@@ -6,7 +6,6 @@ import BlogArticle from '../components/BlogArticle';
 import BlogCard from '../components/BlogCard';
 import ReviewSection from '../components/ReviewSection';
 import blogArticleData from '../data/blogarticledata';
-import blogData from '../data/blogdata';
 import Footer from '../components/Footer';
 
 function BlogArticlePage() {
@@ -15,8 +14,8 @@ function BlogArticlePage() {
   const articleId = parseInt(id);
   const article = blogArticleData.articles.find(a => a.id === articleId);
   
-  // Get popular articles (excluding the current article)
-  const popularArticles = blogData.articles
+  // Get popular articles from the same data source (excluding the current article)
+  const popularArticles = blogArticleData.articles
     .filter(a => a.id !== articleId)
     .sort((a, b) => {
       // Sort by views (convert "5.2k" to 5200 for comparison)
@@ -93,7 +92,7 @@ function BlogArticlePage() {
                     >
                       <BlogCard 
                         article={popularArticle} 
-                        categories={blogData.categories}
+                        // Remove the categories prop since your data doesn't have it
                       />
                     </div>
                   ))}
@@ -132,7 +131,7 @@ function BlogArticlePage() {
                 >
                   <BlogCard 
                     article={popularArticle} 
-                    categories={blogData.categories}
+                    // Remove the categories prop since your data doesn't have it
                   />
                 </div>
               ))}

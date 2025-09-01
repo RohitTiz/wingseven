@@ -5,7 +5,7 @@ import AuthSection from '../components/AuthSection';
 import BlogCard from '../components/BlogCard';
 import blogData from '../data/blogdata';
 import Footer from '../components/Footer';
-import BlogFeaturedSection from '../components/BlogFeaturedSection';
+// import BlogFeaturedSection from '../components/BlogFeaturedSection';
 
 function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -354,7 +354,7 @@ function BlogPage() {
             </div>
           </div>
         </div>
-        <BlogFeaturedSection/>
+        {/* <BlogFeaturedSection/> */}
         
         {/* Enhanced Footer */}
         <Footer />
