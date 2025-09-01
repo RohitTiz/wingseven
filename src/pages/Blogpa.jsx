@@ -80,8 +80,8 @@ function BlogPage() {
         <p className="text-sm font-medium text-gray-800 truncate group-hover:text-blue-700 transition-colors font-sans">
           {title}
         </p>
-        <p className="text-xs text-purple-600 font-medium flex items-center gap-1">
-          <span className="w-1 h-1 bg-purple-400 rounded-full"></span>
+        <p className="text-xs text-black font-medium flex items-center gap-1">
+          <span className="w-1 h-1 bg-gray-600 rounded-full"></span>
           {category} • {views} views
         </p>
       </div>
@@ -126,16 +126,16 @@ function BlogPage() {
         
         {/* Hero Section with Parallax Background - MODIFIED */}
         <div className="relative pb-12 overflow-hidden">
-          {/* Parallax Background Image - MODIFIED to touch top */}
+          {/* Parallax Background Image - UPDATED with cooler tech background */}
           <div 
             className="absolute inset-0 bg-fixed bg-cover bg-center z-0"
             style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80')`,
+              backgroundImage: `url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')`,
               transform: `translateY(${scrollY * 0.5}px)`,
               transition: 'transform 0.1s ease-out'
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-blue-900/70 via-purple-900/60 to-cyan-900/70"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-900/80 via-purple-900/70 to-cyan-900/80 backdrop-blur-[1px]"></div>
           </div>
           
           {/* Text container with adjusted padding to maintain position - MODIFIED */}
@@ -168,7 +168,7 @@ function BlogPage() {
                   placeholder="Search for inspiration..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="relative w-full h-14 md:h-16 bg-white/90 backdrop-blur-sm border-2 border-blue-200/70 rounded-2xl pl-6 md:pl-8 pr-14 md:pr-16 text-base placeholder-purple-400 focus:outline-none focus:ring-4 focus:ring-blue-300/50 focus:border-blue-400 transition-all duration-300 font-medium shadow-2xl hover:bg-white/95"
+                  className="relative w-full h-14 md:h-16 bg-white/90 backdrop-blur-sm border-2 border-blue-200/70 rounded-2xl pl-6 md:pl-8 pr-14 md:pr-16 text-base placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-blue-300/50 focus:border-blue-400 transition-all duration-300 font-medium shadow-2xl hover:bg-white/95"
                 />
                 <div className="absolute right-4 md:right-5 top-1/2 transform -translate-y-1/2">
                   <div className="w-7 h-7 md:w-8 md:h-8 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 rounded-xl flex items-center justify-center cursor-pointer shadow-lg hover:shadow-2xl transform hover:scale-110 transition-all duration-300 hover:rotate-12">
@@ -189,7 +189,7 @@ function BlogPage() {
                   className={`group relative px-6 py-3 rounded-xl transition-all duration-500 font-medium text-sm transform hover:scale-105 hover:-translate-y-0.5 ${
                     selectedCategory === category.id
                       ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 text-white shadow-xl'
-                      : 'bg-white/90 backdrop-blur-sm text-blue-700 hover:bg-white hover:text-purple-900 border-2 border-blue-200/50 hover:border-purple-300 shadow-lg hover:shadow-xl'
+                      : 'bg-white/90 backdrop-blur-sm text-gray-800 hover:bg-white hover:text-gray-900 border-2 border-blue-200/50 hover:border-gray-300 shadow-lg hover:shadow-xl'
                   }`}
                   style={{
                     animationDelay: `${index * 0.1}s`
@@ -221,7 +221,7 @@ function BlogPage() {
                 {/* Enhanced Trending */}
                 <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 border-2 border-blue-200/50 shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-2">
                   <div className="flex items-center mb-6">
-                    <h3 className="font-serif text-xl text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-purple-900">Trending Now</h3>
+                    <h3 className="font-serif text-xl text-gray-900">Trending Now</h3>
                     <div className="ml-3 w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse shadow-lg"></div>
                   </div>
                   <div className="space-y-5">
@@ -237,8 +237,8 @@ function BlogPage() {
                 {/* Enhanced Newsletter */}
                 <div className="bg-gradient-to-br from-blue-50/80 via-purple-50/80 to-cyan-50/80 backdrop-blur-sm rounded-3xl p-6 border-2 border-blue-200/50 shadow-2xl hover:shadow-3xl transition-all duration-500">
                   <div className="text-center">
-                    <h3 className="font-serif text-xl text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-purple-900 mb-4">Stay Informed</h3>
-                    <p className="text-base text-purple-600 mb-6 font-medium">Get the latest tech insights delivered weekly</p>
+                    <h3 className="font-serif text-xl text-gray-900 mb-4">Stay Informed</h3>
+                    <p className="text-base text-gray-700 mb-6 font-medium">Get the latest tech insights delivered weekly</p>
                     
                     <input 
                       type="email" 
@@ -259,7 +259,7 @@ function BlogPage() {
                 {selectedCategory === 'all' && featuredArticles.length > 0 && (
                   <div className="mb-20">
                     <div className="mb-10">
-                      <h2 className="font-serif text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-purple-900 to-cyan-900 border-b-2 border-gradient-to-r from-blue-200 via-purple-200 to-cyan-200 pb-4">Featured Stories</h2>
+                      <h2 className="font-serif text-3xl text-gray-900 border-b-2 border-gradient-to-r from-blue-200 via-purple-200 to-cyan-200 pb-4">Featured Stories</h2>
                     </div>
                     
                     {/* CHANGED: grid-cols-1 md:grid-cols-2 (was md:grid-cols-3) */}
@@ -283,7 +283,7 @@ function BlogPage() {
                 {/* Enhanced Regular Articles */}
                 <div className="space-y-12">
                   <div className="mb-10">
-                    <h2 className="font-serif text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-purple-900 to-cyan-900 border-b-2 border-gradient-to-r from-blue-200 via-purple-200 to-cyan-200 pb-4">
+                    <h2 className="font-serif text-3xl text-gray-900 border-b-2 border-gradient-to-r from-blue-200 via-purple-200 to-cyan-200 pb-4">
                       {selectedCategory === 'all' ? 'Latest Articles' : categories.find(c => c.id === selectedCategory)?.name}
                     </h2>
                   </div>
@@ -291,8 +291,8 @@ function BlogPage() {
                   {filteredArticles.length === 0 ? (
                     <div className="text-center py-20">
                       <div className="text-6xl mb-6 animate-bounce">🔍</div>
-                      <div className="text-2xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 font-medium mb-2">No articles match your search</div>
-                      <div className="text-lg text-blue-500 font-light">Try different keywords or categories</div>
+                      <div className="text-2xl text-gray-800 font-medium mb-2">No articles match your search</div>
+                      <div className="text-lg text-gray-600 font-light">Try different keywords or categories</div>
                     </div>
                   ) : (
                     // CHANGED: grid-cols-1 md:grid-cols-2 (was md:grid-cols-3)
@@ -310,7 +310,7 @@ function BlogPage() {
 
                 {/* Enhanced Load More */}
                 <div className="text-center mt-20">
-                  <button className="px-12 py-4 bg-white/80 backdrop-blur-sm border-2 border-blue-200/50 rounded-2xl font-bold text-blue-700 hover:bg-gradient-to-r hover:from-blue-600 hover:via-purple-600 hover:to-cyan-600 hover:text-white transition-all duration-500 text-base shadow-xl hover:shadow-2xl transform hover:scale-105 hover:-translate-y-1">
+                  <button className="px-12 py-4 bg-white/80 backdrop-blur-sm border-2 border-blue-200/50 rounded-2xl font-bold text-gray-800 hover:bg-gradient-to-r hover:from-blue-600 hover:via-purple-600 hover:to-cyan-600 hover:text-white transition-all duration-500 text-base shadow-xl hover:shadow-2xl transform hover:scale-105 hover:-translate-y-1">
                     Load More Stories
                   </button>
                 </div>
@@ -323,7 +323,7 @@ function BlogPage() {
                 
                 {/* Enhanced Social Links */}
                 <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 border-2 border-blue-200/50 shadow-2xl hover:shadow-3xl transition-all duration-500">
-                  <h3 className="font-serif text-xl text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-purple-900 mb-5">Connect With Us</h3>
+                  <h3 className="font-serif text-xl text-gray-900 mb-5">Connect With Us</h3>
                   <div className="space-y-4">
                     {[
                       { name: 'Twitter', handle: '@codebrain' },
@@ -332,8 +332,8 @@ function BlogPage() {
                       { name: 'Instagram', handle: '@codebrain' }
                     ].map((social, index) => (
                       <div key={index} className="flex items-center justify-between p-3 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 cursor-pointer transition-all duration-300 transform hover:scale-105 border border-transparent hover:border-blue-200/50">
-                        <span className="text-base text-blue-700 font-medium">{social.name}</span>
-                        <span className="text-sm text-purple-500 font-light">{social.handle}</span>
+                        <span className="text-base text-gray-800 font-medium">{social.name}</span>
+                        <span className="text-sm text-gray-600 font-light">{social.handle}</span>
                       </div>
                     ))}
                   </div>
@@ -341,10 +341,10 @@ function BlogPage() {
                 
                 {/* Enhanced Tags */}
                 <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 border-2 border-blue-200/50 shadow-2xl hover:shadow-3xl transition-all duration-500">
-                  <h3 className="font-serif text-xl text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-purple-900 mb-5">Popular Tags</h3>
+                  <h3 className="font-serif text-xl text-gray-900 mb-5">Popular Tags</h3>
                   <div className="flex flex-wrap gap-3">
                     {['React', 'AI', 'JavaScript', 'Blockchain', 'Startups', 'Design', 'Python', 'CSS'].map((tag, i) => (
-                      <span key={i} className="px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-medium hover:from-blue-200 hover:to-purple-200 cursor-pointer transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 shadow-lg hover:shadow-xl border border-blue-200/50">
+                      <span key={i} className="px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 text-gray-800 rounded-full text-sm font-medium hover:from-blue-200 hover:to-purple-200 cursor-pointer transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 shadow-lg hover:shadow-xl border border-blue-200/50">
                         {tag}
                       </span>
                     ))}

@@ -9,8 +9,6 @@ import BlogArticlePage from './pages/BlogArticlePage';
 import BlogPage from './pages/Blogpa';
 import Testimon from './pages/Testimon';
 
-
-
 import CourseCard from './components/CourseCard';
 import EnrollNow from './components/EnrollNow';
 import CourseDetails from './components/CourseDetails';
@@ -24,6 +22,7 @@ import { Questions } from './pagesdash/Questions';
 import { CoursePage } from './pagesdash/CoursePage';
 import Certificate from './pagesdash/Certificate';
 import QuizResultHistory from './pagesdash/QuizResultHistory';
+import DashPanel from './pagesdash/DashPanel'; // Add this import
 
 // Admin components
 import AdminLayout from './admin/layout/AdminLayout';
@@ -57,7 +56,8 @@ const App = () => {
 
         {/* Dashboard Routes */}
         <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<StudyMaterials />} />
+          <Route index element={<DashPanel />} /> {/* Set DashPanel as default dashboard page */}
+          <Route path="overview" element={<DashPanel />} /> {/* Optional: explicit route */}
           <Route path="study-materials" element={<StudyMaterials />} />
           <Route path="certificate" element={<Certificate />} />
           <Route path="questions" element={<Questions />} />

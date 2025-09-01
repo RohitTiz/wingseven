@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const menuItems = [
-  { label: "Dashboard", icon: DashboardIcon, path: "/dashboard/quizresult" },
+  { label: "Dashboard", icon: DashboardIcon, path: "/dashboard" },
   { label: "Study Materials", icon: BookIcon, path: "/dashboard/study-materials" },
   { label: "Courses", icon: CoursesIcon, path: "/dashboard/courses" },
   { label: "Code Challenges", icon: CodeIcon, path: "/dashboard/questions" },
