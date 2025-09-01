@@ -5,7 +5,6 @@ const HeroSection = () => {
   const navigate = useNavigate();
   const button1Ref = useRef(null);
   const button2Ref = useRef(null);
-  const textContainerRef = useRef(null);
 
   const courses = [
     "Java", 
@@ -23,15 +22,6 @@ const HeroSection = () => {
   const [currentCourseIndex, setCurrentCourseIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [typingPhase, setTypingPhase] = useState('typing');
-  const [containerHeight, setContainerHeight] = useState('auto');
-
-  // Set fixed height for text container to prevent layout shift
-  useEffect(() => {
-    if (textContainerRef.current) {
-      const height = textContainerRef.current.offsetHeight;
-      setContainerHeight(`${height}px`);
-    }
-  }, []);
 
   // Button hover effects
   const handleMouseEnter = (buttonRef) => {
@@ -114,21 +104,21 @@ const HeroSection = () => {
   return (
     <section className="w-full bg-gradient-to-br from-white to-blue-50 border-b border-gray-100 flex flex-col lg:flex-row justify-between items-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-8 sm:py-12 md:py-14 lg:py-16 xl:py-20 box-border gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 overflow-hidden -mt-[20px]">
       {/* Left Section - Text Content */}
-      <div className="w-full lg:flex-1 flex flex-col justify-center order-2 lg:order-1">
-        {/* Text container with fixed height to prevent layout shift */}
-        <div ref={textContainerRef} style={{ height: containerHeight }} className="transition-height duration-300">
+      <div className="w-full lg:flex-1 flex flex-col justify-center order-1 lg:order-1">
+        {/* Text container with proper line spacing */}
+        <div className="mb-4 sm:mb-5 md:mb-6">
           {/* First line - Static text */}
           <div className="font-inter font-bold text-3xl xs:text-4xl sm:text-[2.5rem] md:text-5xl lg:text-[3rem] xl:text-[3.5rem] text-gray-900 m-0 leading-tight">
             Find Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-pink-600">Ideal</span>
           </div>
           
           {/* Second line - Only the changing text with smooth transition */}
-          <div className="font-inter font-bold text-3xl xs:text-4xl sm:text-[2.5rem] md:text-5xl lg:text-[3rem] xl:text-[3.5rem] text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-700 m-0 leading-tight min-h-[1.2em] flex items-end">
+          <div className="font-inter font-bold text-3xl xs:text-4xl sm:text-[2.5rem] md:text-5xl lg:text-[3rem] xl:text-[3.5rem] text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-700 m-0 leading-tight min-h-[1.2em] flex items-center">
             {displayText}
           </div>
           
           {/* Third line - Static text */}
-          <div className="font-inter font-bold text-3xl xs:text-4xl sm:text-[2.5rem] md:text-5xl lg:text-[3rem] xl:text-[3.5rem] text-gray-900 mb-4 sm:mb-5 md:mb-6 leading-tight">
+          <div className="font-inter font-bold text-3xl xs:text-4xl sm:text-[2.5rem] md:text-5xl lg:text-[3rem] xl:text-[3.5rem] text-gray-900 m-0 leading-tight">
             Course, Build Skills
           </div>
         </div>
@@ -191,7 +181,7 @@ const HeroSection = () => {
       </div>
 
       {/* Right Section - Image */}
-      <div className="w-full lg:flex-1 flex flex-col items-center relative order-1 lg:order-2 mb-6 sm:mb-8 md:mb-10 lg:mb-0">
+      <div className="w-full lg:flex-1 flex flex-col items-center relative order-2 lg:order-2 mb-6 sm:mb-8 md:mb-10 lg:mb-0">
         <div className="relative">
           <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-2xl blur-lg opacity-70 z-0"></div>
           <img 
@@ -202,7 +192,7 @@ const HeroSection = () => {
           />
         </div>
         
-        {/* Decorative elements - Removed the 20% off sign as requested */}
+        {/* Decorative elements */}
         <div className="hidden sm:block absolute top-0 left-0 w-full h-full pointer-events-none z-20">
           <div className="absolute top-[-5%] left-[45%] w-[80px] sm:w-[100px] md:w-[120px] lg:w-[140px] xl:w-[160px] animate-float" style={{ animationDuration: '3.5s' }}>
             <div className="bg-white p-2 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center">
