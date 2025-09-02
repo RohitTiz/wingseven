@@ -80,7 +80,7 @@ const DashPanel = () => {
       {/* Tabs */}
       <div className="mb-6">
         <div className="flex space-x-4 border-b border-gray-200">
-          {['overview', 'courses', 'assessments', 'progress'].map((tab) => (
+          {['overview', 'course schedule'].map((tab) => (
             <button
               key={tab}
               className={`px-4 py-2 font-medium capitalize ${

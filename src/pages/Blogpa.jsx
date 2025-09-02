@@ -71,24 +71,6 @@ function BlogPage() {
     </div>
   );
 
-  const TrendingCard = ({ rank, title, category, views }) => (
-    <div className="group flex items-center space-x-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-500 cursor-pointer transform hover:scale-105 hover:shadow-lg border border-transparent hover:border-blue-200/50">
-      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 flex items-center justify-center text-sm font-bold text-white font-sans shadow-lg group-hover:rotate-12 transition-transform duration-300">
-        {rank}
-      </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-gray-800 truncate group-hover:text-blue-700 transition-colors font-sans">
-          {title}
-        </p>
-        <p className="text-xs text-black font-medium flex items-center gap-1">
-          <span className="w-1 h-1 bg-gray-600 rounded-full"></span>
-          {category} • {views} views
-        </p>
-      </div>
-      <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-600 rounded-full opacity-70 group-hover:opacity-100 transition-opacity animate-pulse"></div>
-    </div>
-  );
-
   // Mobile category selector
   const MobileCategorySelector = () => (
     <div className="lg:hidden mb-8 px-4">
@@ -215,10 +197,9 @@ function BlogPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-20">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-12">
               
-              {/* Enhanced Left Sidebar */}
+              {/* Enhanced Left Sidebar - COMMENTED OUT */}
               <div className="hidden lg:block lg:col-span-3 space-y-10">
-                
-                {/* Enhanced Trending */}
+                {/*
                 <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 border-2 border-blue-200/50 shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-2">
                   <div className="flex items-center mb-6">
                     <h3 className="font-serif text-xl text-gray-900">Trending Now</h3>
@@ -234,7 +215,6 @@ function BlogPage() {
 
                 <AdSpace size="small" />
                 
-                {/* Enhanced Newsletter */}
                 <div className="bg-gradient-to-br from-blue-50/80 via-purple-50/80 to-cyan-50/80 backdrop-blur-sm rounded-3xl p-6 border-2 border-blue-200/50 shadow-2xl hover:shadow-3xl transition-all duration-500">
                   <div className="text-center">
                     <h3 className="font-serif text-xl text-gray-900 mb-4">Stay Informed</h3>
@@ -250,6 +230,7 @@ function BlogPage() {
                     </button>
                   </div>
                 </div>
+                */}
               </div>
 
               {/* Enhanced Main Content */}
@@ -262,8 +243,8 @@ function BlogPage() {
                       <h2 className="font-serif text-3xl text-gray-900 border-b-2 border-gradient-to-r from-blue-200 via-purple-200 to-cyan-200 pb-4">Featured Stories</h2>
                     </div>
                     
-                    {/* CHANGED: grid-cols-1 md:grid-cols-2 (was md:grid-cols-3) */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* CHANGED: Increased gap from gap-8 to gap-12 for more margin between cards */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                       {featuredArticles.map((article, index) => (
                         <Link key={article.id} to={`/specializations/${article.id}`} className="cursor-pointer transform hover:scale-105 transition-all duration-500" style={{ animationDelay: `${index * 0.2}s` }}>
                           <div className="group">
@@ -295,8 +276,8 @@ function BlogPage() {
                       <div className="text-lg text-gray-600 font-light">Try different keywords or categories</div>
                     </div>
                   ) : (
-                    // CHANGED: grid-cols-1 md:grid-cols-2 (was md:grid-cols-3)
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    // CHANGED: Increased gap from gap-8 to gap-12 for more margin between cards
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                       {filteredArticles.map((article, index) => (
                         <Link key={article.id} to={`/specializations/${article.id}`} className="cursor-pointer group transform hover:scale-105 transition-all duration-500" style={{ animationDelay: `${index * 0.1}s` }}>
                           <div className="h-full">
@@ -316,12 +297,11 @@ function BlogPage() {
                 </div>
               </div>
 
-              {/* Enhanced Right Sidebar */}
+              {/* Enhanced Right Sidebar - COMMENTED OUT */}
               <div className="hidden lg:block lg:col-span-3 space-y-10">
-                
+                {/*
                 <AdSpace size="small" />
                 
-                {/* Enhanced Social Links */}
                 <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 border-2 border-blue-200/50 shadow-2xl hover:shadow-3xl transition-all duration-500">
                   <h3 className="font-serif text-xl text-gray-900 mb-5">Connect With Us</h3>
                   <div className="space-y-4">
@@ -339,7 +319,6 @@ function BlogPage() {
                   </div>
                 </div>
                 
-                {/* Enhanced Tags */}
                 <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 border-2 border-blue-200/50 shadow-2xl hover:shadow-3xl transition-all duration-500">
                   <h3 className="font-serif text-xl text-gray-900 mb-5">Popular Tags</h3>
                   <div className="flex flex-wrap gap-3">
@@ -350,6 +329,7 @@ function BlogPage() {
                     ))}
                   </div>
                 </div>
+                */}
               </div>
             </div>
           </div>
