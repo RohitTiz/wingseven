@@ -1,17 +1,19 @@
+// componentsdash/courseContent.jsx
 import React, { useState } from 'react';
 
-const CourseContent = () => {
+const CourseContent = ({ courseContent }) => {
   const [openIndex, setOpenIndex] = useState(0);
 
-  const courseSections = [
+  // Default content if no courseContent is provided
+  const defaultContent = [
     {
       title: "01: Intro",
       duration: "22 min",
       lectures: [
         { title: "Introduction", duration: "2 min" },
-        { title: "What is Figma?", duration: "5 min" },
-        { title: "Understanding Figma", duration: "12 min" },
-        { title: "UI tour", duration: "3 min" }
+        { title: "What is this about?", duration: "5 min" },
+        { title: "Understanding the basics", duration: "12 min" },
+        { title: "Interface tour", duration: "3 min" }
       ]
     },
     {
@@ -30,12 +32,12 @@ const CourseContent = () => {
       lectures: []
     },
     {
-      title: "05: Component in Figma",
+      title: "05: Components",
       duration: "11.12 min",
       lectures: []
     },
     {
-      title: "06: Styles in Figma",
+      title: "06: Styles",
       duration: "41 min",
       lectures: []
     },
@@ -46,6 +48,8 @@ const CourseContent = () => {
     }
   ];
 
+  const contentToUse = courseContent || defaultContent;
+
   const handleToggle = (idx) => {
     setOpenIndex(openIndex === idx ? null : idx);
   };
@@ -53,7 +57,7 @@ const CourseContent = () => {
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 w-full">
       <div className="text-lg font-bold mb-4">Course content</div>
-      {courseSections.map((section, idx) => (
+      {contentToUse.map((section, idx) => (
         <div key={idx} className="mb-2 border-b last:border-b-0">
           <button
             className={`w-full grid grid-cols-[1fr_minmax(60px,110px)_32px] items-center py-3 text-left transition-colors group`}
@@ -74,7 +78,7 @@ const CourseContent = () => {
               </svg>
             </span>
           </button>
-          {openIndex === idx && section.lectures.length > 0 && (
+          {openIndex === idx && section.lectures && section.lectures.length > 0 && (
             <div className="pt-2 pb-2 flex flex-col gap-2">
               {section.lectures.map((lec, lidx) => (
                 <div
