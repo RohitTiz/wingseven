@@ -9,7 +9,7 @@ const DashHeader = ({ showActions, courseTitle }) => {
           <h1 className="text-xl font-semibold text-gray-800">
             {courseTitle || "My Dashboard"}
           </h1>
-          <p className="text-sm text-gray-500">Welcome back! Here's your progress.</p>
+          <p className="text-sm text-gray-500">Welcome back! Here's your progressss.</p>
         </div>
         
         {showActions && (

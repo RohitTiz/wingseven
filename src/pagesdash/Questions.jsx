@@ -1,124 +1,179 @@
-import React, { useState } from 'react';
-import { questions } from '../dummydata/dummydata';
-import Header from '../componentsdash/DashHeader';
-import QuizResult from '../componentsdash/QuizResult';
-import { useNavigate } from 'react-router-dom';
-
-const optionLetter = ['A', 'B', 'C', 'D'];
+// pagesdash/Questions.jsx
+import React, { useState, useEffect } from 'react';
+import { quizData } from '../data/quizData';
+import QuizCard from '../componentsdash/QuizCard';
+import Quiz from '../componentsdash/Quiz';
 
 export const Questions = () => {
-  const [current, setCurrent] = useState(0);
-  const [selected, setSelected] = useState(null);
-  const [answers, setAnswers] = useState([]);
-  const [showResult, setShowResult] = useState(false);
-  const navigate = useNavigate();
+  const [selectedQuiz, setSelectedQuiz] = useState(null);
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [filter, setFilter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [completedQuizzes, setCompletedQuizzes] = useState([]);
 
-  const isFirst = current === 0;
-  const isLast = current === questions.length - 1;
+  // Load completed quizzes from localStorage on component mount
+  useEffect(() => {
+    const savedCompletedQuizzes = localStorage.getItem('completedQuizzes');
+    if (savedCompletedQuizzes) {
+      setCompletedQuizzes(JSON.parse(savedCompletedQuizzes));
+    }
+  }, []);
 
-  const handleOptionClick = (idx) => setSelected(idx);
-  const handleNext = () => {
-    setAnswers((prev) => {
-      const updated = [...prev];
-      updated[current] = selected;
-      return updated;
-    });
-    setCurrent((c) => c + 1);
-    setSelected(answers[current + 1] ?? null);
-  };
-  const handlePrev = () => {
-    setAnswers((prev) => {
-      const updated = [...prev];
-      updated[current] = selected;
-      return updated;
-    });
-    setCurrent((c) => c - 1);
-    setSelected(answers[current - 1] ?? null);
-  };
-  const handleSubmit = () => {
-    setAnswers((prev) => {
-      const updated = [...prev];
-      updated[current] = selected;
-      return updated;
-    });
-    setShowResult(true);
+  const handleQuizSelect = (quiz) => {
+    setSelectedQuiz(quiz);
+    setShowQuiz(true);
   };
 
-  const score = answers.filter((ans, idx) => ans === questions[idx].answer).length;
+  const handleBackToQuizzes = () => {
+    setShowQuiz(false);
+    setSelectedQuiz(null);
+  };
+
+  const handleQuizComplete = (quizId, score, total) => {
+    const newCompletedQuiz = {
+      id: quizId,
+      score,
+      total,
+      completedAt: new Date().toISOString()
+    };
+    
+    const updatedCompletedQuizzes = [...completedQuizzes.filter(q => q.id !== quizId), newCompletedQuiz];
+    setCompletedQuizzes(updatedCompletedQuizzes);
+    localStorage.setItem('completedQuizzes', JSON.stringify(updatedCompletedQuizzes));
+  };
+
+  // Filter quizzes based on selected filter and search term
+  const filteredQuizzes = quizData.filter(quiz => {
+    const isCompleted = completedQuizzes.some(q => q.id === quiz.id);
+    
+    const matchesFilter = filter === 'all' || 
+                         (filter === 'completed' && isCompleted) ||
+                         (filter === 'not-completed' && !isCompleted) ||
+                         quiz.difficulty.toLowerCase() === filter;
+    
+    const matchesSearch = quiz.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         quiz.description.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    return matchesFilter && matchesSearch;
+  });
+
+  if (showQuiz && selectedQuiz) {
+    return (
+      <Quiz 
+        quiz={selectedQuiz} 
+        onBack={handleBackToQuizzes}
+        onComplete={handleQuizComplete}
+      />
+    );
+  }
 
   return (
-    <>
-      <Header/>
-      <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        {showResult ? (
-          <QuizResult
-            score={score}
-            total={questions.length}
-            userName="Rakshit Jain"
-            onBack={() => {
-              setCurrent(0);
-              setSelected(null);
-              setAnswers([]);
-              setShowResult(false);
-            }}
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-6 text-gray-800">Available Quizzes</h1>
+      
+      {/* Filter and Search Controls */}
+      <div className="mb-6 flex flex-col md:flex-row gap-4 items-start md:items-center">
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => setFilter('all')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium ${
+              filter === 'all' ? 'bg-[#7C3AED] text-white' : 'bg-gray-200 text-gray-700'
+            }`}
+          >
+            All Quizzes
+          </button>
+          <button
+            onClick={() => setFilter('completed')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium ${
+              filter === 'completed' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700'
+            }`}
+          >
+            Completed
+          </button>
+          <button
+            onClick={() => setFilter('not-completed')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium ${
+              filter === 'not-completed' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
+            }`}
+          >
+            Not Completed
+          </button>
+          <button
+            onClick={() => setFilter('easy')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium ${
+              filter === 'easy' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700'
+            }`}
+          >
+            Easy
+          </button>
+          <button
+            onClick={() => setFilter('medium')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium ${
+              filter === 'medium' ? 'bg-yellow-500 text-white' : 'bg-gray-200 text-gray-700'
+            }`}
+          >
+            Medium
+          </button>
+          <button
+            onClick={() => setFilter('hard')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium ${
+              filter === 'hard' ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-700'
+            }`}
+          >
+            Hard
+          </button>
+        </div>
+        
+        <div className="flex-1 md:max-w-xs">
+          <input
+            type="text"
+            placeholder="Search quizzes..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
           />
-        ) : (
-          <>
-            <div className="text-2xl font-bold mb-2 text-center">Question {current + 1}/{questions.length}</div>
-            <div className="text-lg text-center mb-6 max-w-2xl font-medium text-gray-700">
-              {questions[current].question}
-            </div>
-            <div className="flex flex-col gap-4 w-full max-w-xl">
-              {questions[current].options.map((opt, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => handleOptionClick(idx)}
-                  className={`flex items-center gap-4 px-6 py-3 rounded-xl shadow transition-all text-left
-                    ${selected === idx ? 'bg-[#653DDE] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'}
-                    font-medium text-base border-2
-                    ${selected === idx ? 'border-[#653DDE]' : 'border-transparent'}
-                  `}
-                >
-                  <span className={`w-8 h-8 flex items-center justify-center rounded-full text-lg font-bold
-                    ${selected === idx ? 'bg-white text-[#653DDE]' : 'bg-[#653DDE] text-[#ffffff]'}
-                  `}>
-                    {optionLetter[idx]}
-                  </span>
-                  {opt}
-                </button>
-              ))}
-            </div>
-            <div className="flex gap-4 mt-8">
-              {!isFirst && (
-                <button
-                  onClick={handlePrev}
-                  className="px-6 py-2 rounded-lg bg-gray-100 text-gray-700 font-semibold shadow hover:bg-gray-200"
-                >
-                  Previous
-                </button>
-              )}
-              {!isLast && (
-                <button
-                  onClick={handleNext}
-                  className="px-6 py-2 rounded-lg bg-[#7C3AED] text-white font-semibold shadow hover:bg-[#6D28D9]"
-                  disabled={selected === null}
-                >
-                  Next
-                </button>
-              )}
-              {isLast && (
-                <button
-                  onClick={handleSubmit}
-                  className="px-6 py-2 rounded-lg bg-[#7C3AED] text-white font-semibold shadow hover:bg-[#6D28D9]"
-                  disabled={selected === null}
-                >
-                  Submit
-                </button>
-              )}
-            </div>
-          </>
-        )}
+        </div>
       </div>
-    </>
+      
+      {/* Results Count */}
+      <div className="mb-4 text-sm text-gray-600">
+        Showing {filteredQuizzes.length} of {quizData.length} quizzes
+        {completedQuizzes.length > 0 && ` • ${completedQuizzes.length} completed`}
+      </div>
+      
+      {/* Quizzes Grid */}
+      {filteredQuizzes.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredQuizzes.map(quiz => {
+            const isCompleted = completedQuizzes.some(q => q.id === quiz.id);
+            const quizResult = completedQuizzes.find(q => q.id === quiz.id);
+            
+            return (
+              <QuizCard 
+                key={quiz.id} 
+                quiz={quiz} 
+                onClick={() => handleQuizSelect(quiz)}
+                isCompleted={isCompleted}
+                score={quizResult ? quizResult.score : null}
+                total={quizResult ? quizResult.total : null}
+              />
+            );
+          })}
+        </div>
+      ) : (
+        <div className="text-center py-12 text-gray-500">
+          <p className="text-lg">No quizzes found matching your criteria.</p>
+          <button
+            onClick={() => {
+              setFilter('all');
+              setSearchTerm('');
+            }}
+            className="mt-4 px-6 py-2 bg-[#7C3AED] text-white rounded-lg hover:bg-[#6D28D9]"
+          >
+            Clear Filters
+          </button>
+        </div>
+      )}
+    </div>
   );
 };

@@ -12,12 +12,19 @@ const InsideCourse = () => {
   const [selectedSection, setSelectedSection] = useState(null);
   const [isMobileView, setIsMobileView] = useState(false);
   const [showContentPanel, setShowContentPanel] = useState(false);
+  const [containerHeight, setContainerHeight] = useState('100vh');
   const course = coursesData.find(c => c.id === parseInt(id));
 
   // Check screen size and set mobile view state
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobileView(window.innerWidth < 768);
+      const mobile = window.innerWidth < 768;
+      setIsMobileView(mobile);
+      
+      // Calculate available height (subtract header height)
+      const headerHeight = document.querySelector('header')?.offsetHeight || 0;
+      const availableHeight = window.innerHeight - headerHeight - 32; // 32px for padding
+      setContainerHeight(`${availableHeight}px`);
     };
     
     checkScreenSize();
@@ -70,15 +77,22 @@ const InsideCourse = () => {
         </button>
       )}
       
-      <div className="flex flex-col md:flex-row gap-4 p-4 bg-[#F6F8FA] min-h-screen">
+      <div 
+        className="flex flex-col md:flex-row gap-4 p-4 bg-[#F6F8FA]"
+        style={{ height: containerHeight }}
+      >
         {/* Main content area */}
-        <div className="flex-1 w-full md:max-w-2xl mx-auto md:mx-0">
-          <VideoContent course={course} selectedVideo={selectedVideo} />
-          <MoreInfo 
-            course={course} 
-            selectedVideo={selectedVideo} 
-            selectedSection={selectedSection} 
-          />
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <div className="flex-1 overflow-hidden">
+            <VideoContent course={course} selectedVideo={selectedVideo} />
+          </div>
+          <div className="flex-1 overflow-auto">
+            <MoreInfo 
+              course={course} 
+              selectedVideo={selectedVideo} 
+              selectedSection={selectedSection} 
+            />
+          </div>
         </div>
         
         {/* Course content panel */}
@@ -86,7 +100,7 @@ const InsideCourse = () => {
           ${isMobileView ? 
             `fixed inset-0 z-30 bg-white transform transition-transform duration-300 ease-in-out ${showContentPanel ? 'translate-x-0' : 'translate-x-full'}` 
             : 'w-full md:w-[400px] lg:w-[500px] xl:w-[600px] static'} 
-          flex-shrink-0 mx-auto md:mx-0 md:overflow-y-auto
+          flex-shrink-0 mx-auto md:mx-0 overflow-y-auto
         `}>
           {/* Close button for mobile */}
           {isMobileView && (
