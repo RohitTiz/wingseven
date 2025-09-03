@@ -8,7 +8,8 @@ export const coursesData = [
     reviews: 1250,
     price: 49.99,
     originalPrice: 89.99,
-    thumbnail: "https://via.placeholder.com/300x200/4C51BF/FFFFFF?text=Figma+Course",
+    thumbnail: "https://images.unsplash.com/photo-1648854006531-361649aa182c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+
     category: "Design",
     level: "Beginner",
     duration: "12 hours",
@@ -236,7 +237,7 @@ export const coursesData = [
     reviews: 980,
     price: 79.99,
     originalPrice: 129.99,
-    thumbnail: "https://via.placeholder.com/300x200/4C51BF/FFFFFF?text=React+Course",
+        thumbnail: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     category: "Development",
     level: "Advanced",
     duration: "24 hours",

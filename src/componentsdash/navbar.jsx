@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Navbar = ({ onSidebarToggle }) => {
+  const [cartItems, setCartItems] = useState(3);
+  const [notifications, setNotifications] = useState(5);
+
   return (
-    <header className="flex items-center justify-between px-4 py-2 bg-white border-b h-16">
+    <header className="flex items-center justify-between px-3 py-2 bg-white border-b h-14 sm:h-16 sm:px-6 md:px-8 lg:px-10">
       {/* Breadcrumb and sidebar toggle */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 flex-1 min-w-0">
         {/* Hamburger icon for mobile */}
         <button
-          className="sm:hidden p-2 rounded-full hover:bg-gray-100 transition mr-2"
+          className="p-2 rounded-full hover:bg-gray-100 transition sm:hidden"
           onClick={onSidebarToggle}
           aria-label="Open sidebar"
         >
@@ -24,40 +27,64 @@ const Navbar = ({ onSidebarToggle }) => {
             />
           </svg>
         </button>
-        <nav className="flex items-center text-gray-400 text-sm gap-1">
-          <span className="flex items-center gap-1 text-gray-500">
+        
+        {/* Breadcrumb - responsive text handling */}
+        <nav className="flex items-center text-gray-400 text-xs sm:text-sm gap-1 flex-nowrap overflow-hidden">
+          <span className="text-gray-500 whitespace-nowrap truncate">
             Courses
           </span>
-          <span>/</span>
-          <span>UIUX Design</span>
-          <span>/</span>
-          <span className="text-gray-500">Figma from A to Z</span>
+          <span className="hidden xs:inline">/</span>
+          <span className="hidden xs:inline whitespace-nowrap truncate">UIUX Design</span>
+          <span className="xs:hidden text-gray-500 whitespace-nowrap">...</span>
+          <span className="hidden xs:inline">/</span>
+          <span className="text-gray-500 whitespace-nowrap truncate">Figma from A to Z</span>
         </nav>
       </div>
-      {/* Right icons */}
-      <div className="flex items-center gap-6">
-        <button className="relative">
+      
+      {/* Right icons with cart and notification */}
+      <div className="flex items-center gap-2 sm:gap-3 md:gap-4 lg:gap-5 flex-shrink-0">
+        {/* Cart icon with badge */}
+        <button className="relative p-2 group">
           <svg
-            className="w-5 h-5 text-gray-500"
-            fill="currentColor"
-            viewBox="0 0 20 20"
+            className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500 group-hover:text-blue-600 transition-colors"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
+          {cartItems > 0 && (
+            <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+              {cartItems}
+            </span>
+          )}
         </button>
-        <button className="relative">
+        
+        {/* Notification icon with badge */}
+        <button className="relative p-2 group">
           <svg
-            className="w-5 h-5 text-gray-500"
-            fill="currentColor"
-            viewBox="0 0 20 20"
+            className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500 group-hover:text-blue-600 transition-colors"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
           </svg>
-          <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+          {notifications > 0 && (
+            <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+              {notifications}
+            </span>
+          )}
         </button>
+        
+        {/* User profile (visible on larger screens) */}
+        <div className="hidden md:flex items-center ml-2 cursor-pointer p-1 rounded-lg hover:bg-gray-100">
+          <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium">
+            U
+          </div>
+        </div>
       </div>
     </header>
   );
