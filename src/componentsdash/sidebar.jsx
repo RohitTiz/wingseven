@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const menuItems = [
   { label: "Dashboard", icon: DashboardIcon, path: "/dashboard" },
@@ -12,8 +12,14 @@ const menuItems = [
 
 const Sidebar = ({ open, setOpen, isMobile }) => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const handleMenuClick = () => {
+    if (isMobile && setOpen) setOpen(false);
+  };
+
+  const handleLogoClick = () => {
+    navigate("/");
     if (isMobile && setOpen) setOpen(false);
   };
 
@@ -26,7 +32,10 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
     >
       {/* Logo */}
       <div className="flex flex-col px-6 pt-8">
-        <div className="flex items-center gap-3">
+        <div 
+          className="flex items-center gap-3 cursor-pointer"
+          onClick={handleLogoClick}
+        >
           <div className="bg-purple-500 rounded-lg w-10 h-10 flex items-center justify-center">
             <span className="text-white text-2xl font-bold">C</span>
           </div>
