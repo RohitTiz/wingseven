@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useProfile } from '../context/ProfileContext'; // Import the profile context
 
 const ProfileAvatar = ({ 
-  user = { name: 'User', email: 'user@example.com' }, 
   onSignOut = () => console.log('Signing out...'),
   onDashboardClick = null
 }) => {
@@ -10,6 +10,7 @@ const ProfileAvatar = ({
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
+  const { profile } = useProfile(); // Get profile data from context
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -73,9 +74,10 @@ const ProfileAvatar = ({
     }
   };
 
-  const userName = user?.name || user?.email?.split('@')[0] || 'User';
-  const userEmail = user?.email || 'No email';
-  const initials = getInitials(user?.name || user?.email?.split('@')[0]);
+  // Use profile data from context instead of props
+  const userName = profile?.name || 'User';
+  const userEmail = profile?.email || 'user@example.com';
+  const initials = getInitials(userName);
 
   return (
     <div className="relative">
@@ -89,7 +91,15 @@ const ProfileAvatar = ({
         onKeyDown={(e) => handleKeyDown(e, () => setShowDropdown(!showDropdown))}
         className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold text-sm flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 border-2 border-white focus:outline-none focus:ring-2 focus:ring-purple-400 md:w-12 md:h-12"
       >
-        {initials}
+        {profile?.profileImage ? (
+          <img 
+            src={profile.profileImage} 
+            alt={userName}
+            className="w-full h-full rounded-full object-cover"
+          />
+        ) : (
+          initials
+        )}
       </button>
 
       {/* Dropdown Overlay and Content */}
@@ -115,8 +125,16 @@ const ProfileAvatar = ({
             {/* User Info Section */}
             <div className="p-4 bg-gray-50 border-b border-gray-200">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold text-lg flex items-center justify-center shrink-0">
-                  {initials}
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold text-lg flex items-center justify-center shrink-0 overflow-hidden">
+                  {profile?.profileImage ? (
+                    <img 
+                      src={profile.profileImage} 
+                      alt={userName}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    initials
+                  )}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="font-semibold text-gray-900 truncate" title={userName}>
