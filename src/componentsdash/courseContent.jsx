@@ -41,10 +41,10 @@ const CourseContent = ({ courseContent, onVideoSelect }) => {
   const progressPercentage = totalLectures > 0 ? 
     Math.round((completedCount / totalLectures) * 100) : 0;
 
-  // Handle video selection
-  const handleVideoClick = (lecture) => {
+  // Handle video selection with section information
+  const handleVideoClick = (lecture, section) => {
     if (onVideoSelect) {
-      onVideoSelect(lecture);
+      onVideoSelect(lecture, section);
     }
   };
 
@@ -147,7 +147,7 @@ const CourseContent = ({ courseContent, onVideoSelect }) => {
                       <div
                         key={lidx}
                         className="grid grid-cols-[auto,1fr,auto,auto] items-center bg-white rounded-lg px-4 py-3 shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer"
-                        onClick={() => handleVideoClick(lec)}
+                        onClick={() => handleVideoClick(lec, section)}
                       >
                         <div className="w-8 flex justify-center">
                           {isCompleted ? (
