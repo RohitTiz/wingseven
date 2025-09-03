@@ -1,21 +1,27 @@
 // componentsdash/videoContent.jsx
-import React from 'react';
+import React, { useState } from 'react';
 
-const VideoContent = ({ course }) => {
+const VideoContent = ({ course, selectedVideo, onVideoSelect }) => {
+  // Default video if none is selected
+  const defaultVideoUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ";
+  
+  // Get the video URL from the selected video or use default
+  const videoUrl = selectedVideo?.videoUrl || defaultVideoUrl;
+  
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
       <div className="aspect-w-16 aspect-h-9 bg-gray-800 rounded-lg mb-4">
         <iframe
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-          title="Course video"
+          src={videoUrl}
+          title={selectedVideo?.title || "Course video"}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
-          className="w-full h-full rounded-lg"
+          className="w-full h-96 rounded-lg" // Increased height to 96 (h-96)
         ></iframe>
       </div>
       <h1 className="text-2xl font-bold mb-2">{course?.title || "Course Title"}</h1>
       <p className="text-gray-600 mb-4">
-        {course?.description || "Course description will appear here."}
+        {selectedVideo?.description || course?.description || "Course description will appear here."}
       </p>
       <div className="flex items-center space-x-4">
         <div className="flex items-center">
