@@ -22,7 +22,9 @@ import { Questions } from './pagesdash/Questions';
 import { CoursePage } from './pagesdash/CoursePage';
 import Certificate from './pagesdash/Certificate';
 import QuizResultHistory from './pagesdash/QuizResultHistory';
-import DashPanel from './pagesdash/DashPanel'; // Add this import
+import DashPanel from './pagesdash/DashPanel';
+import InsideCourse from './pagesdash/InsideCourse'; // Add this import
+import CourseCards from './componentsdash/CourseCards'; // Add this import
 
 // Admin components
 import AdminLayout from './admin/layout/AdminLayout';
@@ -61,7 +63,8 @@ const App = () => {
           <Route path="study-materials" element={<StudyMaterials />} />
           <Route path="certificate" element={<Certificate />} />
           <Route path="questions" element={<Questions />} />
-          <Route path="courses" element={<CoursePage />} />
+          <Route path="courses" element={<CourseCards />} /> {/* Updated to show course cards */}
+          <Route path="courses/:id" element={<InsideCourse />} /> {/* New route for individual course */}
           <Route path="quizresult" element={<QuizResultHistory />} />
         </Route>
 

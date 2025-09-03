@@ -1,7 +1,7 @@
 import React from 'react'
 import VideoContent from '../componentsdash/videoContent'
 import MoreInfo from '../componentsdash/moreInfo'
-import CourseContent from '../componentsdash/courseContent '
+import CourseContent from '../componentsdash/courseContent'
 import Header from '../componentsdash/DashHeader'
 
 export const CoursePage = () => {
