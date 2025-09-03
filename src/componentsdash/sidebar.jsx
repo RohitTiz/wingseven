@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useProfile } from "../context/ProfileContext";
 
 const menuItems = [
   { label: "Dashboard", icon: DashboardIcon, path: "/dashboard" },
@@ -13,6 +14,31 @@ const menuItems = [
 const Sidebar = ({ open, setOpen, isMobile }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { profile } = useProfile();
+  const [currentProfile, setCurrentProfile] = useState(profile);
+
+  // Update local state when profile changes
+  useEffect(() => {
+    setCurrentProfile(profile);
+  }, [profile]);
+
+  // Listen for profile updates
+  useEffect(() => {
+    const handleProfileUpdate = () => {
+      const savedProfile = localStorage.getItem('userProfile');
+      if (savedProfile) {
+        setCurrentProfile(JSON.parse(savedProfile));
+      }
+    };
+
+    window.addEventListener('profileUpdated', handleProfileUpdate);
+    window.addEventListener('storage', handleProfileUpdate);
+    
+    return () => {
+      window.removeEventListener('profileUpdated', handleProfileUpdate);
+      window.removeEventListener('storage', handleProfileUpdate);
+    };
+  }, []);
 
   const handleMenuClick = () => {
     if (isMobile && setOpen) setOpen(false);
@@ -20,6 +46,11 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
 
   const handleLogoClick = () => {
     navigate("/");
+    if (isMobile && setOpen) setOpen(false);
+  };
+
+  const handleProfileClick = () => {
+    navigate("/dashboard/edit-profile");
     if (isMobile && setOpen) setOpen(false);
   };
 
@@ -49,13 +80,16 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
 
       {/* Profile */}
       {open && (
-        <div className="flex items-center gap-3 px-6 py-4 border-b border-gray-200">
+        <div 
+          className="flex items-center gap-3 px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
+          onClick={handleProfileClick}
+        >
           <img
-            src="https://randomuser.me/api/portraits/men/32.jpg"
+            src={currentProfile.profileImage}
             alt="Profile"
-            className="w-10 h-10 rounded-full"
+            className="w-10 h-10 rounded-full object-cover"
           />
-          <span className="text-gray-800 font-medium flex-1">Scott M.</span>
+          <span className="text-gray-800 font-medium flex-1">{currentProfile.name}</span>
         </div>
       )}
 

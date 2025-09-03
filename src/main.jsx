@@ -4,13 +4,16 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
 import './index.css';
 import './App.css';
+import { ProfileProvider } from './context/ProfileContext'; // Add this import
 
 const root = createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter> {/* This is the ONLY Router in your app */}
-      <App />
+    <BrowserRouter>
+      <ProfileProvider> {/* Wrap your App with ProfileProvider */}
+        <App />
+      </ProfileProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
