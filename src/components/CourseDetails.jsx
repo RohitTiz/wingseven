@@ -4,10 +4,12 @@ import CoursesData from './CoursesData';
 import AuthSection from './AuthSection';
 import Footer from './Footer';
 import CourseCard from './CourseCard';
+import { useCart } from '../context/CartContext'; // Cart context import
 
 const CourseDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { addToCart } = useCart(); // Get addToCart function from context
   const course = CoursesData.find(c => c.id === Number(id));
   const [expandedSections, setExpandedSections] = useState({});
   const [showAllContent, setShowAllContent] = useState(false);
@@ -42,6 +44,16 @@ const CourseDetails = () => {
   };
 
   const handleAddToCart = () => {
+    // Make sure we're passing all required properties including the image
+    const cartCourse = {
+      id: course.id,
+      title: course.title,
+      instructor: course.instructor,
+      price: course.price,
+      image: course.image, // Make sure this is included
+      // Add any other properties you need in the cart
+    };
+    addToCart(cartCourse);
     alert(`${course.title} has been added to your cart!`);
   };
 
@@ -473,8 +485,11 @@ const CourseDetails = () => {
                           </button>
                         </div>
                       ) : (
-                        <button >
-                          
+                        <button 
+                          onClick={handleApplyCoupon}
+                          className="w-full border border-gray-300 rounded-lg py-2 text-sm font-medium hover:bg-gray-50 transition-colors"
+                        >
+                          Apply Coupon
                         </button>
                       )}
                     </div>

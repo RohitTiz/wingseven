@@ -1,8 +1,17 @@
+// componentsdash/Navbar.jsx
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 const Navbar = ({ onSidebarToggle }) => {
-  const [cartItems, setCartItems] = useState(3);
+  const navigate = useNavigate();
+  const { getCartItemsCount } = useCart();
   const [notifications, setNotifications] = useState(5);
+  const cartItems = getCartItemsCount();
+
+  const handleCartClick = () => {
+    navigate('/dashboard/cart');
+  };
 
   return (
     <header className="flex items-center justify-between px-3 py-2 bg-white border-b h-14 sm:h-16 sm:px-6 md:px-8 lg:px-10">
@@ -44,7 +53,10 @@ const Navbar = ({ onSidebarToggle }) => {
       {/* Right icons with cart and notification */}
       <div className="flex items-center gap-2 sm:gap-3 md:gap-4 lg:gap-5 flex-shrink-0">
         {/* Cart icon with badge */}
-        <button className="relative p-2 group">
+        <button 
+          onClick={handleCartClick}
+          className="relative p-2 group hover:bg-gray-100 rounded-full transition-colors"
+        >
           <svg
             className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500 group-hover:text-blue-600 transition-colors"
             fill="none"
@@ -55,14 +67,14 @@ const Navbar = ({ onSidebarToggle }) => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
           {cartItems > 0 && (
-            <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+            <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center animate-bounce">
               {cartItems}
             </span>
           )}
         </button>
         
         {/* Notification icon with badge */}
-        <button className="relative p-2 group">
+        <button className="relative p-2 group hover:bg-gray-100 rounded-full transition-colors">
           <svg
             className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500 group-hover:text-blue-600 transition-colors"
             fill="none"
@@ -81,9 +93,7 @@ const Navbar = ({ onSidebarToggle }) => {
         
         {/* User profile (visible on larger screens) */}
         <div className="hidden md:flex items-center ml-2 cursor-pointer p-1 rounded-lg hover:bg-gray-100">
-          <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium">
-            U
-          </div>
+          {/* User profile content would go here */}
         </div>
       </div>
     </header>
