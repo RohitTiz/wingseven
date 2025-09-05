@@ -9,48 +9,31 @@ import InternshipSection from '../components/InternshipSection';
 
 const CoursePage = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [headerHeight, setHeaderHeight] = useState(0);
-  const headerRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Get the header height to adjust content padding
-    const updateHeaderHeight = () => {
-      const header = document.querySelector('header');
-      if (header) {
-        setHeaderHeight(header.offsetHeight);
-      }
-    };
-
-    updateHeaderHeight();
-    window.addEventListener('resize', updateHeaderHeight);
-    
-    return () => {
-      window.removeEventListener('resize', updateHeaderHeight);
-    };
+    setIsVisible(true);
   }, []);
 
   return (
     <>
       <AuthSection />
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-        {/* Hero Section with padding to account for fixed header */}
-        <div
-          className="relative bg-fixed bg-cover bg-center flex items-center justify-center pt-0" // Added pt-16 for top padding
-          style={{
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 overflow-hidden">
+        {/* Hero Section with Parallax Background - Fixed to match AboutPage */}
+        <section className="relative py-20 md:py-32 overflow-hidden bg-fixed bg-center bg-cover" 
+          style={{ 
             backgroundImage: `url('https://images.unsplash.com/photo-1449157291145-7efd050a4d0e?w=600&auto=format&fit=crop&q=60')`,
-            height: `calc(54vh - ${headerHeight}px)`, // Adjust height based on header
-            marginTop: `${headerHeight}px`, // Push down by header height
-          }}
-        >
-          <div className="absolute inset-0 bg-black/60"></div>
-          <div className="relative text-center text-white px-4">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+            minHeight: '50vh'
+          }}>
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-indigo-900/80"></div>
+          <div className="container mx-auto px-4 text-center relative z-10">
+            <h1 className={`text-4xl md:text-6xl font-bold mb-6 text-white transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               Our Courses
             </h1>
-            <p className="text-xl md:text-2xl max-w-3xl mx-auto mb-8">
+            <p className={`text-xl md:text-2xl max-w-3xl mx-auto text-blue-100 transition-all duration-1000 delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} font-light`}>
               Transform your career with industry-leading courses designed by experts.
             </p>
-            <div className="max-w-md mx-auto relative">
+            <div className={`mt-10 max-w-md mx-auto relative transition-all duration-1000 delay-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">🔍</span>
               <input
                 type="text"
@@ -61,7 +44,7 @@ const CoursePage = () => {
               />
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Use the CourseSection component */}
         <CourseSection />

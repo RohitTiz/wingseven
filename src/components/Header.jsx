@@ -37,7 +37,23 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
-    // You can add theme switching logic here if needed
+  };
+
+  // Function to handle Contact Us navigation
+  const handleContactClick = (e) => {
+    // If we're not on the homepage, navigate to homepage first
+    if (location.pathname !== '/') {
+      // Use React Router navigation to go to homepage
+      // The actual navigation will be handled by the Link component
+      return; // Let the Link handle navigation
+    }
+    
+    // If we're already on homepage, scroll to contact section
+    e.preventDefault();
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -62,7 +78,16 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
           <Link to="/course" className="no-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 py-2 px-1">Courses</Link>
           <Link to="/specializations" className="no-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 py-2 px-1">Blogs</Link>
           <Link to="/testimonials" className="no-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 py-2 px-1">Testimonials</Link>
-          <a href="contact" className="no-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 py-2 px-1">Contact Us</a>
+          
+          {/* Updated Contact Us link */}
+          <Link 
+            to="/#contact" 
+            onClick={handleContactClick}
+            className="no-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 py-2 px-1"
+          >
+            Contact Us
+          </Link>
+          
           <Link to="/about" className="no-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 py-2 px-1">About Us</Link>
         </nav>
 

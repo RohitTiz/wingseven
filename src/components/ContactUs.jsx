@@ -1,6 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const ContactUs = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Check if URL has hash for contact section
+    if (location.hash === '#contact') {
+      // Small timeout to ensure component is rendered
+      setTimeout(() => {
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, [location]);
+
   return (
     <section
       id="contact"

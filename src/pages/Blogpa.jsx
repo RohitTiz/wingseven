@@ -9,8 +9,7 @@ function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [isMobile, setIsMobile] = useState(false);
-  const [headerHeight, setHeaderHeight] = useState(0);
-  const headerRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   // Check if device is mobile
   useEffect(() => {
@@ -26,21 +25,8 @@ function BlogPage() {
     };
   }, []);
 
-  // Get header height for hero section adjustment
   useEffect(() => {
-    const updateHeaderHeight = () => {
-      const header = document.querySelector('header');
-      if (header) {
-        setHeaderHeight(header.offsetHeight);
-      }
-    };
-
-    updateHeaderHeight();
-    window.addEventListener('resize', updateHeaderHeight);
-    
-    return () => {
-      window.removeEventListener('resize', updateHeaderHeight);
-    };
+    setIsVisible(true);
   }, []);
 
   const categories = [
@@ -82,24 +68,21 @@ function BlogPage() {
     <>
       <AuthSection />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-gray-900 overflow-hidden">
-        {/* Hero Section */}
-        <div
-          className="relative bg-fixed bg-cover bg-center flex items-center justify-center pt-0"
-          style={{
+        {/* Hero Section with Parallax Background - Fixed to match AboutPage */}
+        <section className="relative py-20 md:py-32 overflow-hidden bg-fixed bg-center bg-cover" 
+          style={{ 
             backgroundImage: `url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')`,
-            height: `calc(54vh - ${headerHeight}px)`,
-            marginTop: `${headerHeight}px`,
-          }}
-        >
-          <div className="absolute inset-0 bg-black/60"></div>
-          <div className="relative text-center text-white px-4">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+            minHeight: '50vh'
+          }}>
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-indigo-900/80"></div>
+          <div className="container mx-auto px-4 text-center relative z-10">
+            <h1 className={`text-4xl md:text-6xl font-bold mb-6 text-white transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               Our Blog
             </h1>
-            <p className="text-xl md:text-2xl max-w-3xl mx-auto mb-8">
+            <p className={`text-xl md:text-2xl max-w-3xl mx-auto text-blue-100 transition-all duration-1000 delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} font-light`}>
               Discover insights, tutorials, and updates from the world of tech.
             </p>
-            <div className="max-w-md mx-auto relative">
+            <div className={`mt-10 max-w-md mx-auto relative transition-all duration-1000 delay-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">🔍</span>
               <input
                 type="text"
@@ -110,7 +93,7 @@ function BlogPage() {
               />
             </div>
           </div>
-        </div>
+        </section>
 
         <div className="relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12">
