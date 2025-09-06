@@ -18,8 +18,6 @@ export const StudyMaterials = () => {
     // Select the appropriate content based on active tab
     if (activeTab === 'books') {
       content = [...dummyBooks];
-    } else if (activeTab === 'videos') {
-      content = [...dummyVideos];
     } else if (activeTab === 'audiobooks') {
       content = [...dummyAudiobooks];
     }
@@ -94,15 +92,6 @@ export const StudyMaterials = () => {
           <div className="absolute top-3 left-3 bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
             {item.category || 'Uncategorized'}
           </div>
-          {activeTab === 'videos' && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="bg-white bg-opacity-80 rounded-full p-3">
-                <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                </svg>
-              </div>
-            </div>
-          )}
           {activeTab === 'audiobooks' && (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="bg-white bg-opacity-80 rounded-full p-3">
@@ -145,22 +134,12 @@ export const StudyMaterials = () => {
               </div>
               
               <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center">
-                {activeTab === 'videos' ? (
-                  <>
-                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    WATCH
-                  </>
-                ) : (
-                  <>
-                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                    {activeTab === 'audiobooks' ? 'LISTEN' : 'DOWNLOAD'}
-                  </>
-                )}
+                <>
+                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  {activeTab === 'audiobooks' ? 'LISTEN' : 'DOWNLOAD'}
+                </>
               </button>
             </div>
           </div>
@@ -175,7 +154,7 @@ export const StudyMaterials = () => {
       <div className="mb-10 text-center">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">Study Materials</h1>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-          Access our comprehensive collection of books, videos, and audiobooks to enhance your learning experience.
+          Access our comprehensive collection of books and audiobooks to enhance your learning experience.
         </p>
       </div>
 
@@ -230,7 +209,7 @@ export const StudyMaterials = () => {
       {/* Content Tabs */}
       <div className="border-b border-gray-200 mb-8">
         <nav className="flex space-x-8">
-          {['books', 'videos', 'audiobooks'].map(tab => (
+          {['books', 'audiobooks'].map(tab => (
             <button
               key={tab}
               className={`py-4 px-1 text-lg font-medium border-b-2 transition-colors ${activeTab === tab ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
@@ -309,7 +288,7 @@ export const StudyMaterials = () => {
                     )}
                   </div>
                   <button className="mt-3 text-blue-600 hover:text-blue-800 text-sm font-medium">
-                    {activeTab === 'videos' ? 'Watch now' : activeTab === 'audiobooks' ? 'Listen now' : 'Download now'} &rarr;
+                    {activeTab === 'audiobooks' ? 'Listen now' : 'Download now'} &rarr;
                   </button>
                 </div>
               </div>
@@ -321,7 +300,7 @@ export const StudyMaterials = () => {
       {/* Newsletter Section */}
       <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl p-8 text-center text-white mb-12">
         <h2 className="text-2xl font-bold mb-4">Never Miss New Resources</h2>
-        <p className="mb-6 max-w-2xl mx-auto">Join our newsletter and get notified about the latest books, videos, and learning materials.</p>
+        <p className="mb-6 max-w-2xl mx-auto">Join our newsletter and get notified about the latest books and learning materials.</p>
         <div className="flex flex-col sm:flex-row max-w-md mx-auto gap-2">
           <input
             type="email"

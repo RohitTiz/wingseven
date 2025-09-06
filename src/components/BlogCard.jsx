@@ -1,25 +1,29 @@
+// components/BlogCard.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function BlogCard({ article, categories, isFeatured = false }) {
+function BlogCard({ article, categories = [], isFeatured = false }) {
   const navigate = useNavigate();
-  const category = categories.find(cat => cat.id === article.category);
+  
+  // Safely find category with fallback
+  const category = categories?.find(cat => cat.id === article.category) || 
+                   { name: article.category || 'Uncategorized' };
   
   // Handle click navigation
   const handleBlogClick = () => {
-    navigate(`/blog/${article.id}`);
+    navigate(`/specializations/${article.id}`);
   };
 
   const handleImageClick = (e) => {
     e.stopPropagation();
-    navigate(`/blog/${article.id}`);
+    navigate(`/specializations/${article.id}`);
   };
 
   return (
     <div 
       className="bg-white rounded-xl shadow-2xl overflow-hidden hover:shadow-3xl hover:scale-105 transition-all duration-300 border border-gray-200 flex flex-col h-full w-full max-w-[31.68rem] mx-auto"
       onClick={handleBlogClick}
-      style={{ width: '120%' }} // 20% wider
+      style={{ width: '120%' }}
     >
       {/* Image Section - now clickable */}
       <div 
@@ -36,7 +40,7 @@ function BlogCard({ article, categories, isFeatured = false }) {
         <div className="absolute top-6 right-6">
           <div className="relative">
             <span className="px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-lg bg-blue-500 text-white">
-              {category?.name || 'Uncategorized'}
+              {category.name}
             </span>
           </div>
         </div>
@@ -74,7 +78,7 @@ function BlogCard({ article, categories, isFeatured = false }) {
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"/>
               </svg>
-              <span>{article.date}</span>
+              <span>{article.date || article.publishDate}</span>
             </div>
           </div>
           
