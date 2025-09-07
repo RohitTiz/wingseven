@@ -1,119 +1,240 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import BlogCard from './BlogCard';
+import React, { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import AuthSection from '../components/AuthSection';
+import Footer from '../components/Footer';
+import blogArticleData from '../data/blogarticledata';
 
-const BlogFeaturedSection = ({ featuredArticles, categories }) => {
+function BlogArticle() {
+  const { id } = useParams();
+  const [article, setArticle] = useState(null);
+  const [relatedArticles, setRelatedArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Find the article by ID
+    const foundArticle = blogArticleData.articles.find(
+      article => article.id === parseInt(id)
+    );
+    
+    setArticle(foundArticle);
+    
+    // Find related articles (excluding the current one)
+    if (foundArticle) {
+      const related = blogArticleData.articles
+        .filter(a => a.id !== parseInt(id))
+        .slice(0, 3);
+      setRelatedArticles(related);
+    }
+    
+    setIsLoading(false);
+  }, [id]);
+
+  if (isLoading) {
+    return (
+      <>
+        <AuthSection />
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="mt-4 text-lg text-gray-600">Loading article...</p>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  if (!article) {
+    return (
+      <>
+        <AuthSection />
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-800 mb-4">Article Not Found</h1>
+            <p className="text-lg text-gray-600 mb-8">The article you're looking for doesn't exist.</p>
+            <Link 
+              to="/blog" 
+              className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all duration-300 shadow-md hover:shadow-lg"
+            >
+              Back to Blog
+            </Link>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
-    <section className="py-16 px-4 sm:px-6 bg-white border-t border-gray-200 relative overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-72 h-72 bg-green-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
-      <div className="absolute top-0 right-0 w-72 h-72 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
-      <div className="absolute -bottom-8 left-20 w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000"></div>
-      
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col lg:flex-row gap-12 items-center justify-center">
-          {/* Left side - Heading and decorative content */}
-          <div className="lg:w-2/5 relative">
-            <div className="relative p-8 bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-xl border border-gray-100">
-              {/* Curvy line elements */}
-              <div className="absolute -top-4 -left-4 w-24 h-24 rounded-tr-full bg-green-500 opacity-20"></div>
-              <div className="absolute -bottom-4 -right-4 w-32 h-32 rounded-tl-full bg-blue-500 opacity-20"></div>
-              
-              <svg className="absolute top-8 right-8 w-16 h-16 text-green-400 opacity-30" viewBox="0 0 100 100">
-                <path d="M20,20 Q40,5 50,30 T90,30" stroke="currentColor" strokeWidth="2" fill="none" />
-                <path d="M10,50 Q30,35 40,60 T80,60" stroke="currentColor" strokeWidth="2" fill="none" />
-                <path d="M30,80 Q50,65 60,90 T100,90" stroke="currentColor" strokeWidth="2" fill="none" />
-              </svg>
-              
-              <div className="relative z-10">
-                {/* Animated Heading */}
-                <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl text-gray-800 mb-6 leading-tight">
-                  Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600">Articles</span>
-                </h2>
-                
-                <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                  Discover our most popular and insightful articles. These handpicked stories represent the best of what CodeBrain has to offer.
-                </p>
-                
-                <div className="space-y-4">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
-                      <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                      </svg>
-                    </div>
-                    <p className="text-gray-700 font-medium">Expert insights and analysis</p>
-                  </div>
-                  
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                      <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
-                      </svg>
-                    </div>
-                    <p className="text-gray-700 font-medium">In-depth technical tutorials</p>
-                  </div>
-                  
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
-                      <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                      </svg>
-                    </div>
-                    <p className="text-gray-700 font-medium">Community favorites</p>
-                  </div>
+    <>
+      <AuthSection />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-gray-900">
+        {/* Article Header */}
+        <section className="relative py-16 md:py-24 overflow-hidden bg-white">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8">
+              <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">
+                {article.category}
+              </span>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                {article.title}
+              </h1>
+              <div className="flex items-center justify-center space-x-4 text-gray-600 mb-6">
+                <span>{article.publishDate}</span>
+                <span>•</span>
+                <span>{article.readTime} read</span>
+              </div>
+              <div className="flex items-center justify-center">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                  <span className="text-blue-700 font-bold">{article.authorInitials}</span>
                 </div>
-                
-                <Link to="/specializations" className="inline-block mt-8 px-8 py-4 bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                  Explore All Articles
-                </Link>
+                <div>
+                  <p className="font-medium text-gray-900">{article.author}</p>
+                  <p className="text-sm text-gray-600">{article.authorBio}</p>
+                </div>
               </div>
             </div>
           </div>
-          
-          {/* Right side - Featured articles */}
-          <div className="lg:w-3/5">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
-              {featuredArticles && featuredArticles.slice(0, 2).map((article) => (
-                <div key={article.id} className="flex justify-center">
-                  <Link to={`/specializations/${article.id}`} className="cursor-pointer transform hover:scale-105 transition-all duration-500 w-full">
-                    <BlogCard article={article} categories={categories} isFeatured={true} />
-                  </Link>
+        </section>
+
+        {/* Article Content */}
+        <section className="py-12 bg-white">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="prose prose-lg max-w-none">
+              {article.content.map((item, index) => {
+                switch (item.type) {
+                  case 'paragraph':
+                    return <p key={index} className="mb-6 text-gray-700 leading-relaxed">{item.text}</p>;
+                  case 'heading':
+                    return <h2 key={index} className="text-2xl md:text-3xl font-bold text-gray-900 mt-12 mb-6">{item.text}</h2>;
+                  case 'subheading':
+                    return <h3 key={index} className="text-xl md:text-2xl font-semibold text-gray-800 mt-10 mb-4">{item.text}</h3>;
+                  case 'image':
+                    return (
+                      <div key={index} className="my-8">
+                        <img 
+                          src={item.src} 
+                          alt="" 
+                          className="w-full h-auto rounded-xl shadow-md"
+                        />
+                      </div>
+                    );
+                  case 'code':
+                    return (
+                      <pre key={index} className="bg-gray-800 text-gray-100 p-6 rounded-xl my-8 overflow-x-auto">
+                        <code>{item.text}</code>
+                      </pre>
+                    );
+                  case 'list':
+                    return (
+                      <ul key={index} className="list-disc pl-6 mb-6 text-gray-700">
+                        {item.items.map((listItem, listIndex) => (
+                          <li key={listIndex} className="mb-2">{listItem}</li>
+                        ))}
+                      </ul>
+                    );
+                  default:
+                    return null;
+                }
+              })}
+            </div>
+
+            {/* Key Takeaways */}
+            <div className="bg-blue-50 rounded-2xl p-8 my-16 border border-blue-100">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                <svg className="w-6 h-6 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Key Takeaways
+              </h3>
+              <ul className="space-y-4">
+                {article.keyTakeaways.map((takeaway, index) => (
+                  <li key={index} className="flex items-start">
+                    <svg className="w-5 h-5 text-green-500 mt-1 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span className="text-gray-700">{takeaway}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Tags */}
+            <div className="flex flex-wrap gap-3 mb-12">
+              {article.tags.map((tag, index) => (
+                <span 
+                  key={index}
+                  className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+
+            {/* Author Bio */}
+            <div className="bg-gray-50 rounded-2xl p-8 mb-16">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">About the Author</h3>
+              <div className="flex items-start">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mr-6 flex-shrink-0">
+                  <span className="text-blue-700 font-bold text-xl">{article.authorInitials}</span>
+                </div>
+                <div>
+                  <p className="font-medium text-gray-900 text-lg">{article.author}</p>
+                  <p className="text-gray-600 mb-4">{article.authorBio}</p>
+                  <p className="text-sm text-gray-500">{article.followers}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Related Articles */}
+        <section className="py-16 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Related Articles</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {relatedArticles.map(relatedArticle => (
+                <div key={relatedArticle.id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <div className="p-6">
+                    <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium mb-4">
+                      {relatedArticle.category}
+                    </span>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
+                      {relatedArticle.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4 text-sm">{relatedArticle.publishDate}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-500">{relatedArticle.readTime} read</span>
+                      <Link 
+                        to={`/blog/${relatedArticle.id}`}
+                        className="text-blue-600 hover:text-blue-800 font-medium text-sm flex items-center"
+                      >
+                        Read more
+                        <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
+            <div className="text-center mt-12">
+              <Link 
+                to="/blog"
+                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all duration-300 shadow-md hover:shadow-lg"
+              >
+                View All Articles
+                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+              </Link>
+            </div>
           </div>
-        </div>
-      </div>
-      
-      {/* Add custom animation styles */}
-      <style jsx>{`
-        @keyframes blob {
-          0% {
-            transform: translate(0px, 0px) scale(1);
-          }
-          33% {
-            transform: translate(30px, -50px) scale(1.1);
-          }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
-          }
-          100% {
-            transform: translate(0px, 0px) scale(1);
-          }
-        }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-      `}</style>
-    </section>
-  );
-};
+        </section>
 
-export default BlogFeaturedSection;
+        <Footer />
+      </div>
+    </>
+  );
+}
+
+export default BlogArticle;

@@ -7,8 +7,8 @@ const menuItems = [
   { label: "Study Materials", icon: BookIcon, path: "/dashboard/study-materials" },
   { label: "Courses", icon: CoursesIcon, path: "/dashboard/courses" },
   { label: "Code Challenges", icon: CodeIcon, path: "/dashboard/questions" },
-  { label: "Community", icon: CommunityIcon, path: "/dashboard/community" },
-  { label: "Certificate", icon: CertificateIcon, path: "/dashboard/certificate" },
+  // { label: "Community", icon: CommunityIcon, path: "/dashboard/community" },
+  // { label: "Certificate", icon: CertificateIcon, path: "/dashboard/certificate" },
 ];
 
 const Sidebar = ({ open, setOpen, isMobile }) => {

@@ -106,7 +106,7 @@ const HeroSection = () => {
       {/* Main container to center everything */}
       <div className="w-full max-w-[1200px] flex flex-col lg:flex-row justify-between items-center">
         {/* Left Section - Text Content */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center order-1 lg:order-1 items-center lg:items-start text-center lg:text-left">
+        <div className="w-full lg:w-1/2 flex flex-col justify-center order-1 lg:order-1 items-center lg:items-start text-center lg:text-left lg:mr-[50px]"> {/* Added 50px margin-right */}
           {/* Text container with proper line spacing */}
           <div className="mb-4 sm:mb-5 md:mb-6">
             {/* First line - Static text */}
@@ -183,7 +183,7 @@ const HeroSection = () => {
         </div>
 
         {/* Right Section - Image */}
-        <div className="w-full lg:w-1/2 flex flex-col items-center justify-center relative order-2 lg:order-2 mb-6 sm:mb-8 md:mb-10 lg:mb-0">
+        <div className="w-full lg:w-1/2 flex flex-col items-center justify-center relative order-2 lg:order-2 mb-6 sm:mb-8 md:mb-10 lg:mb-0"> {/* Removed margin-left as it's not needed with the gap property */}
           <div className="relative">
             <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-2xl blur-lg opacity-70 z-0"></div>
             <img 
