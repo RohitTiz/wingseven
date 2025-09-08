@@ -81,12 +81,12 @@ const InsideCourse = () => {
         className="flex flex-col md:flex-row gap-4 p-4 bg-[#F6F8FA]"
         style={{ height: containerHeight }}
       >
-        {/* Main content area */}
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 overflow-hidden">
+        {/* Main content area - increased width for video */}
+        <div className="flex-1 flex flex-col overflow-hidden md:w-[70%]">
+          <div className="flex-1 overflow-hidden" style={{ height: '70%' }}>
             <VideoContent course={course} selectedVideo={selectedVideo} />
           </div>
-          <div className="flex-1 overflow-auto">
+          <div className="flex-1 overflow-auto" style={{ height: '30%' }}>
             <MoreInfo 
               course={course} 
               selectedVideo={selectedVideo} 
@@ -95,11 +95,11 @@ const InsideCourse = () => {
           </div>
         </div>
         
-        {/* Course content panel */}
+        {/* Course content panel - moved to right side */}
         <div className={`
           ${isMobileView ? 
             `fixed inset-0 z-30 bg-white transform transition-transform duration-300 ease-in-out ${showContentPanel ? 'translate-x-0' : 'translate-x-full'}` 
-            : 'w-full md:w-[400px] lg:w-[500px] xl:w-[600px] static'} 
+            : 'w-full md:w-[30%] static'} 
           flex-shrink-0 mx-auto md:mx-0 overflow-y-auto
         `}>
           {/* Close button for mobile */}
