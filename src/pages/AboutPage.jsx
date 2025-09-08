@@ -290,26 +290,64 @@ const AboutPage = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-16 bg-gradient-to-r from-blue-600 to-indigo-700 text-white text-center relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full opacity-10">
-            <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full -translate-x-32 -translate-y-32"></div>
-            <div className="absolute bottom-0 right-0 w-64 h-64 bg-white rounded-full translate-x-32 translate-y-32"></div>
+        {/* CTA Banner Section - Clean and Elegant */}
+<section className="py-8 bg-white relative">
+  <div className="container mx-auto px-4">
+    <div className="relative bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg overflow-visible min-h-[280px]">
+      
+      {/* Main content container */}
+      <div className="flex flex-col md:flex-row items-end justify-between p-6 md:p-8 relative z-10 h-full">
+        
+        {/* Left side - Student image that extends above banner */}
+        <div className="md:flex-shrink-0 md:mr-6 mb-4 md:mb-0 relative flex items-end" style={{ height: '320px' }}>
+          {/* Image container */}
+          <div className="relative h-full flex items-end" style={{ width: '220px' }}>
+            <img 
+              src="/aboutus/girl.png" 
+              alt="Student learning" 
+              className="w-full object-contain"
+              style={{ 
+                height: '150%',
+                filter: 'drop-shadow(0 12px 10px rgba(0, 0, 0, 0.2))',
+                transform: 'translateY(7%)',
+                alignSelf: 'flex-end',
+                maxWidth: 'none'
+              }}
+            />
           </div>
+        </div>
+
+        {/* Center content */}
+        <div className="flex-1 text-white text-center md:text-left pb-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3 leading-tight">
+            Ready to Start Your <span className="text-blue-100">Coding Journey</span>?
+          </h2>
+          <p className="text-base md:text-lg mb-4 opacity-95 max-w-2xl">
+            Join our community of 50,000+ learners transforming their careers through our platform!
+          </p>
           
-          <div className="container mx-auto px-4 relative z-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Start Learning?</h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">Join thousands of learners who are transforming their careers through our platform.</p>
-            <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-              <button className="bg-white text-blue-600 font-semibold py-3 px-8 rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
-                Explore Courses
-              </button>
-              <button className="bg-transparent border-2 border-white text-white font-semibold py-3 px-8 rounded-full hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-1">
-                Learn More
-              </button>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+            <button className="bg-white text-indigo-600 font-semibold py-3 px-6 rounded-full hover:bg-gray-50 transition-all duration-300 transform hover:-translate-y-0.5 shadow-md text-base">
+              Get Started Now
+            </button>
+            <button className="bg-transparent border border-white text-white font-medium py-3 px-6 rounded-full hover:bg-white/10 transition-all duration-300 text-base">
+              Explore Courses
+            </button>
           </div>
-        </section>
+        </div>
+
+        {/* Right side - Minimal decorative element */}
+        <div className="hidden lg:flex flex-shrink-0 ml-6 items-end pb-4">
+          <div className="text-blue-200 opacity-80">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 3L1 9L12 15L21 10.09V17H23V9L12 3ZM5 13.18V17.18L12 21L19 17.18V13.18L12 15.18L5 13.18Z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
       </div>
 
       <style jsx global>{`
@@ -346,6 +384,33 @@ const AboutPage = () => {
         .btn-hover-effect:hover {
           transform: translateY(-3px);
           box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Custom animations for floating elements */
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+        
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Gradient text effect */
+        .gradient-text {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        
+        /* Custom shadow effects */
+        .shadow-custom {
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .shadow-custom-hover:hover {
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
         }
       `}</style>
       <Footer/>
