@@ -1,20 +1,73 @@
-// componentsdash/courseContent.jsx
 import React, { useState } from 'react';
 
 const CourseContent = ({ courseContent, onVideoSelect }) => {
   const [openIndex, setOpenIndex] = useState(0);
   const [completedLectures, setCompletedLectures] = useState({});
 
-  // Default content if no courseContent is provided
+  // Default content matching your design
   const defaultContent = [
     {
-      title: "01: Introduction to the Course",
-      duration: "22 min",
+      title: "01: Intro",
+      duration: "22min",
       lectures: [
-        { title: "Welcome and Course Overview", duration: "2 min", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-        { title: "What You Will Learn", duration: "5 min", videoUrl: "https://www.youtube.com/embed/d1YE-rHtT0o" },
-        { title: "Understanding the Fundamentals", duration: "12 min", videoUrl: "https://www.youtube.com/embed/jNQXAC9IVRw" },
-        { title: "Course Resources & Interface Tour", duration: "3 min", videoUrl: "https://www.youtube.com/embed/W8hHlS25l2M" }
+        { title: "Introduction", duration: "2 min", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+        { title: "What is Figma?", duration: "5 min", videoUrl: "https://www.youtube.com/embed/d1YE-rHtT0o" },
+        { title: "Understanding Figma", duration: "12 min", videoUrl: "https://www.youtube.com/embed/jNQXAC9IVRw" },
+        { title: "UI tour", duration: "3 min", videoUrl: "https://www.youtube.com/embed/W8hHlS25l2M" }
+      ]
+    },
+    {
+      title: "02: Intermediate Level Stuff",
+      duration: "1h 20min",
+      lectures: [
+        { title: "Getting Started with Components", duration: "15 min", videoUrl: "https://www.youtube.com/embed/example1" },
+        { title: "Working with Frames", duration: "18 min", videoUrl: "https://www.youtube.com/embed/example2" },
+        { title: "Auto Layout Deep Dive", duration: "22 min", videoUrl: "https://www.youtube.com/embed/example3" },
+        { title: "Design Systems Basics", duration: "25 min", videoUrl: "https://www.youtube.com/embed/example4" }
+      ]
+    },
+    {
+      title: "03: Advanced Stuff",
+      duration: "36min",
+      lectures: [
+        { title: "Advanced Prototyping", duration: "20 min", videoUrl: "https://www.youtube.com/embed/example5" },
+        { title: "Interactive Components", duration: "16 min", videoUrl: "https://www.youtube.com/embed/example6" }
+      ]
+    },
+    {
+      title: "04: Imports & Graphics",
+      duration: "40min",
+      lectures: [
+        { title: "Importing Assets", duration: "12 min", videoUrl: "https://www.youtube.com/embed/example7" },
+        { title: "Working with Images", duration: "15 min", videoUrl: "https://www.youtube.com/embed/example8" },
+        { title: "Vector Graphics", duration: "13 min", videoUrl: "https://www.youtube.com/embed/example9" }
+      ]
+    },
+    {
+      title: "05: Component in Figma",
+      duration: "1h 12min",
+      lectures: [
+        { title: "Creating Components", duration: "18 min", videoUrl: "https://www.youtube.com/embed/example10" },
+        { title: "Component Variants", duration: "22 min", videoUrl: "https://www.youtube.com/embed/example11" },
+        { title: "Component Properties", duration: "16 min", videoUrl: "https://www.youtube.com/embed/example12" },
+        { title: "Component Libraries", duration: "16 min", videoUrl: "https://www.youtube.com/embed/example13" }
+      ]
+    },
+    {
+      title: "06: Styles in Figma",
+      duration: "41min",
+      lectures: [
+        { title: "Text Styles", duration: "15 min", videoUrl: "https://www.youtube.com/embed/example14" },
+        { title: "Color Styles", duration: "12 min", videoUrl: "https://www.youtube.com/embed/example15" },
+        { title: "Effect Styles", duration: "14 min", videoUrl: "https://www.youtube.com/embed/example16" }
+      ]
+    },
+    {
+      title: "07: Summary",
+      duration: "8min",
+      lectures: [
+        { title: "Course Recap", duration: "5 min", videoUrl: "https://www.youtube.com/embed/example17" },
+        { title: "Next Steps", duration: "3 min", videoUrl: "https://www.youtube.com/embed/example18" }
       ]
     }
   ];
@@ -49,180 +102,146 @@ const CourseContent = ({ courseContent, onVideoSelect }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg md:rounded-2xl shadow-md md:shadow-xl p-4 md:p-8 w-full max-w-4xl mx-auto">
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4 md:mb-6">
-        <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2 md:mb-0">Course Content</h2>
-        <div className="flex items-center">
-          <span className="text-xs md:text-sm font-medium text-gray-600 mr-2">Progress: {progressPercentage}%</span>
-          <div className="w-24 md:w-32 bg-gray-200 rounded-full h-2 md:h-2.5">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-100 w-full max-w-md mx-auto">
+      {/* Header */}
+      <div className="p-4 border-b border-gray-100">
+        <h2 className="text-lg font-semibold text-gray-900 mb-3">Course content</h2>
+        
+        {/* Progress section */}
+        <div className="mb-3">
+          <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
+            <span>{progressPercentage}% complete</span>
+            <span>{completedCount}/{totalLectures}</span>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2">
             <div 
-              className="bg-purple-600 h-2 md:h-2.5 rounded-full" 
+              className="bg-blue-500 h-2 rounded-full transition-all duration-300" 
               style={{ width: `${progressPercentage}%` }}
             ></div>
           </div>
         </div>
-      </div>
-      
-      <div className="mb-4 md:mb-6 p-3 md:p-4 bg-purple-50 rounded-lg border border-purple-100">
-        <div className="flex items-start md:items-center">
-          <div className="flex-shrink-0 p-1.5 md:p-2 bg-purple-100 rounded-lg mr-3 mt-0.5 md:mt-0">
-            <svg className="w-4 h-4 md:w-5 md:h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-          </div>
-          <div>
-            <p className="text-xs md:text-sm font-medium text-gray-900">{contentToUse.length} sections • {totalLectures} lectures • Total length: 4h 26m</p>
-            <p className="text-xs text-gray-600 mt-0.5">Expand each section to access lectures and mark them as complete</p>
-          </div>
+        
+        {/* Course stats */}
+        <div className="text-sm text-gray-500">
+          <span>{contentToUse.length} sections</span>
+          <span className="mx-2">•</span>
+          <span>{totalLectures} lectures</span>
+          <span className="mx-2">•</span>
+          <span>4h 26m total length</span>
         </div>
       </div>
 
-      {contentToUse.map((section, idx) => {
-        const sectionLecturesCount = section.lectures.length;
-        const completedSectionLectures = section.lectures.filter((_, lidx) => 
-          completedLectures[`${idx}-${lidx}`]
-        ).length;
-        const sectionProgress = sectionLecturesCount > 0 ? 
-          Math.round((completedSectionLectures / sectionLecturesCount) * 100) : 0;
-        
-        return (
-          <div key={idx} className="mb-3 md:mb-4 border border-gray-200 rounded-lg md:rounded-xl overflow-hidden last:mb-0">
-            <button
-              className={`w-full grid grid-cols-[1fr,auto] md:grid-cols-[1fr,auto,auto] items-center py-3 md:py-4 px-3 md:px-5 text-left transition-colors group hover:bg-gray-50 ${openIndex === idx ? 'bg-gray-50' : ''}`}
-              onClick={() => handleToggle(idx)}
-            >
-              <div className="flex items-center">
-                <span className={`font-bold text-base md:text-lg ${openIndex === idx ? 'text-purple-700' : 'text-gray-900'}`}>
-                  {section.title}
-                </span>
-                {sectionLecturesCount > 0 && (
-                  <span className="ml-2 md:ml-3 text-xs px-1.5 py-0.5 md:px-2 bg-gray-100 text-gray-600 rounded-full">
-                    {sectionLecturesCount}
-                  </span>
-                )}
-              </div>
-              
-              <div className="flex items-center ml-2 md:mx-4">
-                {sectionLecturesCount > 0 && (
-                  <div className="hidden md:flex items-center mr-4">
-                    <span className="text-xs font-medium text-gray-600 mr-2">{sectionProgress}%</span>
-                    <div className="w-16 bg-gray-200 rounded-full h-1.5">
-                      <div 
-                        className="bg-green-500 h-1.5 rounded-full" 
-                        style={{ width: `${sectionProgress}%` }}
-                      ></div>
-                    </div>
+      {/* Course sections */}
+      <div className="divide-y divide-gray-100">
+        {contentToUse.map((section, idx) => {
+          const sectionLecturesCount = section.lectures.length;
+          const completedSectionLectures = section.lectures.filter((_, lidx) => 
+            completedLectures[`${idx}-${lidx}`]
+          ).length;
+          const sectionProgress = sectionLecturesCount > 0 ? 
+            Math.round((completedSectionLectures / sectionLecturesCount) * 100) : 0;
+          
+          return (
+            <div key={idx} className="bg-white">
+              {/* Section header */}
+              <button
+                className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-150 focus:outline-none focus:bg-gray-50"
+                onClick={() => handleToggle(idx)}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center flex-1">
+                    <h3 className="font-medium text-gray-900 text-sm">
+                      {section.title}
+                    </h3>
+                    <span className="ml-auto text-xs text-gray-500 mr-3">
+                      {section.duration}
+                    </span>
                   </div>
-                )}
-                <span className="text-xs md:text-sm font-medium text-gray-600 whitespace-nowrap">
-                  {section.duration}
-                </span>
-              </div>
-              
-              <span className="flex justify-end md:ml-2">
-                <svg
-                  className={`w-4 h-4 md:w-5 md:h-5 transition-transform ${openIndex === idx ? 'rotate-180 text-purple-600' : 'text-gray-400 group-hover:text-gray-600'}`}
-                  fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </span>
-            </button>
-            
-            {openIndex === idx && section.lectures && section.lectures.length > 0 && (
-              <div className="px-3 md:px-5 pt-1 pb-3 md:pb-4 bg-gray-50">
-                <div className="py-2 md:py-3 grid grid-cols-[auto,1fr,auto] md:grid-cols-[auto,1fr,auto,auto] items-center text-xs font-medium text-gray-500 border-b border-gray-200">
-                  <span className="w-6 md:w-8 text-center">Status</span>
-                  <span>Lecture title</span>
-                  <span className="text-center ml-2 md:mx-4">Duration</span>
-                  <span className="hidden md:block w-20 text-center">Action</span>
+                  
+                  <svg
+                    className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
+                      openIndex === idx ? 'transform rotate-180' : ''
+                    }`}
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
                 </div>
-                
-                <div className="flex flex-col gap-1.5 md:gap-2 mt-1.5 md:mt-2">
-                  {section.lectures.map((lec, lidx) => {
+              </button>
+              
+              {/* Section content */}
+              {openIndex === idx && section.lectures && section.lectures.length > 0 && (
+                <div className="bg-gray-50">
+                  {section.lectures.map((lecture, lidx) => {
                     const lectureKey = `${idx}-${lidx}`;
                     const isCompleted = completedLectures[lectureKey];
                     
                     return (
                       <div
                         key={lidx}
-                        className="grid grid-cols-[auto,1fr,auto] md:grid-cols-[auto,1fr,auto,auto] items-center bg-white rounded-lg px-2 md:px-4 py-2 md:py-3 shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer"
-                        onClick={() => handleVideoClick(lec, section)}
+                        className="px-4 py-3 border-t border-gray-100 hover:bg-gray-100 cursor-pointer transition-colors duration-150"
+                        onClick={() => handleVideoClick(lecture, section)}
                       >
-                        <div className="w-6 md:w-8 flex justify-center">
-                          {isCompleted ? (
-                            <div className="p-0.5 md:p-1 bg-green-100 rounded-full">
-                              <svg className="w-3.5 h-3.5 md:w-4 md:h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
-                              </svg>
-                            </div>
-                          ) : (
-                            <div className="p-0.5 md:p-1 bg-gray-100 rounded-full">
-                              <svg className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
-                              </svg>
-                            </div>
-                          )}
-                        </div>
-                        
-                        <div className="flex items-center ml-1 md:ml-2 truncate">
-                          <span className="mr-2 md:mr-3 flex items-center justify-center text-purple-600">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                              <polygon points="6 4 20 12 6 20 6 4" />
+                        <div className="flex items-center">
+                          {/* Play icon */}
+                          <div className="flex-shrink-0 mr-3">
+                            <svg 
+                              className="w-4 h-4 text-gray-600" 
+                              fill="currentColor" 
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M8 5v14l11-7z"/>
                             </svg>
-                          </span>
-                          <span className={`text-sm font-medium truncate ${isCompleted ? 'text-gray-500 line-through' : 'text-gray-800'}`}>
-                            {lec.title}
-                          </span>
+                          </div>
+                          
+                          {/* Lecture title */}
+                          <div className="flex-1 min-w-0">
+                            <p className={`text-sm font-medium truncate ${
+                              isCompleted ? 'text-gray-500 line-through' : 'text-gray-900'
+                            }`}>
+                              {lecture.title}
+                            </p>
+                          </div>
+                          
+                          {/* Duration */}
+                          <div className="flex-shrink-0 ml-3">
+                            <span className="text-xs text-gray-500">
+                              {lecture.duration}
+                            </span>
+                          </div>
+                          
+                          {/* Completion status */}
+                          <div className="flex-shrink-0 ml-3">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleLectureCompletion(idx, lidx);
+                              }}
+                              className="focus:outline-none"
+                            >
+                              {isCompleted ? (
+                                <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                                  <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
+                                  </svg>
+                                </div>
+                              ) : (
+                                <div className="w-5 h-5 border-2 border-gray-300 rounded-full hover:border-gray-400 transition-colors duration-150"></div>
+                              )}
+                            </button>
+                          </div>
                         </div>
-                        
-                        <span className="text-xs font-semibold text-gray-500 ml-1 md:mx-4">{lec.duration}</span>
-                        
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation(); // Prevent triggering the parent click event
-                            toggleLectureCompletion(idx, lidx);
-                          }}
-                          className={`hidden md:block text-xs font-medium px-3 py-1 rounded-full transition-colors ${
-                            isCompleted 
-                              ? 'bg-green-100 text-green-700 hover:bg-green-200' 
-                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                          }`}
-                        >
-                          {isCompleted ? 'Completed' : 'Mark as done'}
-                        </button>
-                        
-                        {/* Mobile completion button */}
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleLectureCompletion(idx, lidx);
-                          }}
-                          className="md:hidden ml-1 p-1 rounded-full transition-colors"
-                        >
-                          {isCompleted ? (
-                            <div className="p-0.5 bg-green-100 rounded-full">
-                              <svg className="w-3.5 h-3.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
-                              </svg>
-                            </div>
-                          ) : (
-                            <div className="p-0.5 bg-gray-100 rounded-full">
-                              <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
-                              </svg>
-                            </div>
-                          )}
-                        </button>
                       </div>
                     );
                   })}
                 </div>
-              </div>
-            )}
-          </div>
-        );
-      })}
+              )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

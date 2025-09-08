@@ -57,10 +57,20 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
       className={`flex flex-col h-full bg-white shadow-sm border-r border-gray-100 transition-all duration-300 ${
         open ? "w-64" : "w-15"
       } relative`}
-      style={isMobile ? { width: '100%', maxWidth: 320, minWidth: 240, height: '100vh', paddingRight: 0 } : {}}
+      style={isMobile ? { 
+        width: '100%', 
+        maxWidth: 320, 
+        minWidth: 240, 
+        height: '100vh', 
+        padding: '10px',
+        backgroundColor: 'rgba(246, 248, 250, 255)'
+      } : {
+        padding: '10px',
+        backgroundColor: 'rgba(246, 248, 250, 255)'
+      }}
     >
       {/* Logo Section */}
-      <div className="flex flex-col px-4 pt-6 pb-4 border-b border-gray-50">
+      <div className="flex flex-col px-4 pt-6 pb-4 border-b border-gray-50 bg-white rounded-lg">
         <div 
           className="flex items-center gap-3 cursor-pointer group"
           onClick={handleLogoClick}
@@ -83,7 +93,7 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
 
       {/* Profile Section */}
       {open && (
-        <div className="px-4 py-4 border-b border-gray-50">
+        <div className="px-4 py-4 border-b border-gray-50 bg-white rounded-lg mt-2">
           <div 
             className="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors group"
             onClick={handleProfileClick}
@@ -108,7 +118,7 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
       )}
 
       {/* Navigation Menu */}
-      <nav className="flex-1 px-3 py-4 space-y-1">
+      <nav className="flex-1 px-3 py-4 space-y-1 mt-2 bg-white rounded-lg">
         {menuItems.map((item) => {
           const isActive = location.pathname === item.path;
           const IconComponent = item.icon;
@@ -153,7 +163,7 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
       </nav>
 
       {/* Bottom Section */}
-      <div className="px-3 pb-4 mt-auto space-y-1">
+      <div className="px-3 pb-4 mt-auto space-y-1 bg-white rounded-lg mt-2">
         <div
           className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 cursor-pointer transition-all group relative"
           onClick={handleMenuClick}
