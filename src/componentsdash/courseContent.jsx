@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 const CourseContent = ({ courseContent, onVideoSelect }) => {
-  const [openIndex, setOpenIndex] = useState(0);
+  const [openSections, setOpenSections] = useState(new Set([0])); // Start with first section open
   const [completedLectures, setCompletedLectures] = useState({});
+  const [activeSection, setActiveSection] = useState(0); // Track active section
 
   // Default content matching your design
   const defaultContent = [
@@ -74,8 +75,27 @@ const CourseContent = ({ courseContent, onVideoSelect }) => {
 
   const contentToUse = courseContent || defaultContent;
 
-  const handleToggle = (idx) => {
-    setOpenIndex(openIndex === idx ? null : idx);
+  // Toggle section open/closed
+  const handleToggle = (idx, e) => {
+    e.stopPropagation();
+    setActiveSection(idx);
+    
+    const newOpenSections = new Set(openSections);
+    if (newOpenSections.has(idx)) {
+      newOpenSections.delete(idx);
+    } else {
+      newOpenSections.add(idx);
+    }
+    setOpenSections(newOpenSections);
+  };
+
+  // Toggle all sections open/closed
+  const toggleAllSections = () => {
+    if (openSections.size === contentToUse.length) {
+      setOpenSections(new Set());
+    } else {
+      setOpenSections(new Set(contentToUse.map((_, idx) => idx)));
+    }
   };
 
   const toggleLectureCompletion = (sectionIndex, lectureIndex) => {
@@ -105,7 +125,15 @@ const CourseContent = ({ courseContent, onVideoSelect }) => {
     <div className="bg-white rounded-lg shadow-sm border border-gray-100 w-full max-w-md mx-auto">
       {/* Header */}
       <div className="p-4 border-b border-gray-100">
-        <h2 className="text-lg font-semibold text-gray-900 mb-3">Course content</h2>
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="text-lg font-semibold text-gray-900">Course content</h2>
+          <button 
+            onClick={toggleAllSections}
+            className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+          >
+            {openSections.size === contentToUse.length ? 'Collapse all' : 'Expand all'}
+          </button>
+        </div>
         
         {/* Progress section */}
         <div className="mb-3">
@@ -142,11 +170,17 @@ const CourseContent = ({ courseContent, onVideoSelect }) => {
             Math.round((completedSectionLectures / sectionLecturesCount) * 100) : 0;
           
           return (
-            <div key={idx} className="bg-white">
+            <div 
+              key={idx} 
+              className={`bg-white transition-colors duration-150 ${activeSection === idx ? 'bg-blue-50' : ''}`}
+              onClick={() => setActiveSection(idx)}
+            >
               {/* Section header */}
               <button
-                className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-150 focus:outline-none focus:bg-gray-50"
-                onClick={() => handleToggle(idx)}
+                className={`w-full px-4 py-3 text-left transition-colors duration-150 focus:outline-none ${
+                  activeSection === idx ? 'bg-blue-50' : 'hover:bg-gray-50'
+                }`}
+                onClick={(e) => handleToggle(idx, e)}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center flex-1">
@@ -160,7 +194,7 @@ const CourseContent = ({ courseContent, onVideoSelect }) => {
                   
                   <svg
                     className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
-                      openIndex === idx ? 'transform rotate-180' : ''
+                      openSections.has(idx) ? 'transform rotate-180' : ''
                     }`}
                     fill="none" 
                     stroke="currentColor" 
@@ -169,10 +203,18 @@ const CourseContent = ({ courseContent, onVideoSelect }) => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
+                
+                {/* Section progress */}
+                <div className="mt-2 w-full bg-gray-200 rounded-full h-1.5">
+                  <div 
+                    className="bg-green-500 h-1.5 rounded-full" 
+                    style={{ width: `${sectionProgress}%` }}
+                  ></div>
+                </div>
               </button>
               
               {/* Section content */}
-              {openIndex === idx && section.lectures && section.lectures.length > 0 && (
+              {openSections.has(idx) && section.lectures && section.lectures.length > 0 && (
                 <div className="bg-gray-50">
                   {section.lectures.map((lecture, lidx) => {
                     const lectureKey = `${idx}-${lidx}`;

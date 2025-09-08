@@ -186,50 +186,7 @@ function BlogArticle() {
           </div>
         </section>
 
-        {/* Related Articles */}
-        <section className="py-16 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Related Articles</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {relatedArticles.map(relatedArticle => (
-                <div key={relatedArticle.id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <div className="p-6">
-                    <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium mb-4">
-                      {relatedArticle.category}
-                    </span>
-                    <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
-                      {relatedArticle.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4 text-sm">{relatedArticle.publishDate}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-500">{relatedArticle.readTime} read</span>
-                      <Link 
-                        to={`/blog/${relatedArticle.id}`}
-                        className="text-blue-600 hover:text-blue-800 font-medium text-sm flex items-center"
-                      >
-                        Read more
-                        <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="text-center mt-12">
-              <Link 
-                to="/blog"
-                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all duration-300 shadow-md hover:shadow-lg"
-              >
-                View All Articles
-                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                </svg>
-              </Link>
-            </div>
-          </div>
-        </section>
+        
 
         <Footer />
       </div>
