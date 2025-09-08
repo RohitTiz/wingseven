@@ -68,28 +68,28 @@ function BlogPage() {
     <>
       <AuthSection />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-gray-900 overflow-hidden">
-        {/* Hero Section with Parallax Background - Fixed to match AboutPage */}
-        <section className="relative py-20 md:py-32 overflow-hidden bg-fixed bg-center bg-cover" 
+        {/* Hero Section with Parallax Background - Adjusted to match CoursePage height */}
+        <section className="relative py-12 md:py-20 overflow-hidden bg-fixed bg-center bg-cover" 
           style={{ 
             backgroundImage: `url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')`,
-            minHeight: '50vh'
+            minHeight: '35vh' // Changed from 50vh to 35vh to match CoursePage
           }}>
           <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-indigo-900/80"></div>
-          <div className="container mx-auto px-4 text-center relative z-10">
-            <h1 className={`text-4xl md:text-6xl font-bold mb-6 text-white transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="container mx-auto px-4 text-center relative z-10 flex flex-col justify-center h-full">
+            <h1 className={`text-3xl md:text-5xl font-bold mb-4 text-white transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               Our Blog
             </h1>
-            <p className={`text-xl md:text-2xl max-w-3xl mx-auto text-blue-100 transition-all duration-1000 delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} font-light`}>
+            <p className={`text-lg md:text-xl max-w-3xl mx-auto text-blue-100 transition-all duration-1000 delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} font-light mb-6`}>
               Discover insights, tutorials, and updates from the world of tech.
             </p>
-            <div className={`mt-10 max-w-md mx-auto relative transition-all duration-1000 delay-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className={`max-w-md mx-auto relative transition-all duration-1000 delay-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">🔍</span>
               <input
                 type="text"
                 placeholder="Search blog posts..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-white/90 backdrop-blur-sm border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 shadow-lg hover:shadow-xl transition-all duration-300"
+                className="w-full pl-10 pr-4 py-3 bg-white/90 backdrop-blur-sm border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               />
             </div>
           </div>
@@ -184,28 +184,9 @@ function BlogPage() {
                 </div>
               </div>
 
-              {/* Right Sidebar - Filters */}
+              {/* Right Sidebar - Removed the duplicate filter section */}
               <div className="hidden lg:block lg:col-span-3">
-                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 border border-blue-200/50 shadow-lg sticky top-4">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Filter by Category</h3>
-                  <div className="space-y-3">
-                    {categories.map((category, index) => (
-                      <button
-                        key={category.id}
-                        onClick={() => setSelectedCategory(category.id)}
-                        className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 font-medium text-sm ${
-                          selectedCategory === category.id
-                            ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-md'
-                            : 'bg-white/80 text-gray-800 hover:bg-white hover:text-gray-900 border border-blue-200/50 hover:border-blue-300'
-                        } transform hover:scale-105 hover:-translate-y-0.5`}
-                        style={{ animationDelay: `${index * 0.1}s` }}
-                      >
-                        <span className="mr-2">{category.icon}</span>
-                        {category.name}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                {/* You can add other content here if needed, like popular posts, tags, etc. */}
               </div>
             </div>
           </div>
