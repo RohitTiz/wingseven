@@ -78,15 +78,14 @@ const InsideCourse = () => {
       )}
       
       <div 
-        className="flex flex-col md:flex-row gap-4 p-4 bg-[#F6F8FA]"
-        style={{ height: containerHeight }}
+        className="flex flex-col md:flex-row gap-4 p-4 bg-[#F6F8FA] min-h-screen"
       >
         {/* Main content area - increased width for video */}
         <div className="flex-1 flex flex-col overflow-hidden md:w-[70%]">
-          <div className="flex-1 overflow-hidden" style={{ height: '70%' }}>
+          <div className="mb-4" style={{ height: '50vh' }}>
             <VideoContent course={course} selectedVideo={selectedVideo} />
           </div>
-          <div className="flex-1 overflow-auto" style={{ height: '30%' }}>
+          <div className="flex-1">
             <MoreInfo 
               course={course} 
               selectedVideo={selectedVideo} 
