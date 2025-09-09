@@ -26,7 +26,7 @@ import DashPanel from './pagesdash/DashPanel';
 import InsideCourse from './pagesdash/InsideCourse';
 import CourseCards from './componentsdash/CourseCards';
 import EditProfile from './pagesdash/EditProfile';
-import CartPage from './pagesdash/CartPage'; // Updated import path
+import CartPage from './pagesdash/CartPage';
 
 // Admin components
 import AdminLayout from './admin/layout/AdminLayout';
@@ -40,55 +40,59 @@ import AdminAnalytics from './admin/pages/Analytics';
 import blogData from './data/blogdata';
 import { ProfileProvider } from './context/ProfileContext';
 import { CartProvider } from './context/CartContext';
+// In your App.jsx, update the import
+import { DarkModeProvider } from './context/DarkModeContext'; // This should now work // Import DarkModeProvider
 
 const App = () => {
   return (
-    <ProfileProvider>
-      <CartProvider>
-        <div className="app-container">
-          <Routes>
-            {/* Main Website Routes */}
-            <Route path="/" element={<HomePagee />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/Course" element={<Coursespage />} />
-            <Route path="/specializations/:id" element={<BlogArticlePage />} />
-            <Route path="/specializations" element={<BlogPage />} />
-            <Route path="/testimonials" element={<Testimon />} /> 
-            <Route path="/courses" element={<CourseCard />} />
-            <Route path="/enroll-now" element={<EnrollNow />} />
-            <Route path="/courses/:id" element={<CourseDetails />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/cart" element={<CartPage />} /> {/* Added CartPage route */}
-            
-            {/* Dashboard Routes */}
-            <Route path="/dashboard" element={<DashboardLayout />}>
-              <Route index element={<DashPanel />} />
-              <Route path="overview" element={<DashPanel />} />
-              <Route path="study-materials" element={<StudyMaterials />} />
-              <Route path="certificate" element={<Certificate />} />
-              <Route path="questions" element={<Questions />} />
-              <Route path="courses" element={<CourseCards />} />
-              <Route path="courses/:id" element={<InsideCourse />} />
-              <Route path="quizresult" element={<QuizResultHistory />} />
-              <Route path="edit-profile" element={<EditProfile />} />
-              <Route path="cart" element={<CartPage />} /> {/* Added cart route to dashboard */}
-            </Route>
+    <DarkModeProvider> {/* Wrap with DarkModeProvider */}
+      <ProfileProvider>
+        <CartProvider>
+          <div className="app-container">
+            <Routes>
+              {/* Main Website Routes */}
+              <Route path="/" element={<HomePagee />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/Course" element={<Coursespage />} />
+              <Route path="/specializations/:id" element={<BlogArticlePage />} />
+              <Route path="/specializations" element={<BlogPage />} />
+              <Route path="/testimonials" element={<Testimon />} /> 
+              <Route path="/courses" element={<CourseCard />} />
+              <Route path="/enroll-now" element={<EnrollNow />} />
+              <Route path="/courses/:id" element={<CourseDetails />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/cart" element={<CartPage />} />
+              
+              {/* Dashboard Routes */}
+              <Route path="/dashboard" element={<DashboardLayout />}>
+                <Route index element={<DashPanel />} />
+                <Route path="overview" element={<DashPanel />} />
+                <Route path="study-materials" element={<StudyMaterials />} />
+                <Route path="certificate" element={<Certificate />} />
+                <Route path="questions" element={<Questions />} />
+                <Route path="courses" element={<CourseCards />} />
+                <Route path="courses/:id" element={<InsideCourse />} />
+                <Route path="quizresult" element={<QuizResultHistory />} />
+                <Route path="edit-profile" element={<EditProfile />} />
+                <Route path="cart" element={<CartPage />} />
+              </Route>
 
-            {/* Admin Routes */}
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route index element={<AdminDashboard />} />
-              <Route path="courses" element={<AdminCourses />} />
-              <Route path="users" element={<AdminUsers />} />
-              <Route path="enrollments" element={<AdminEnrollments />} />
-              <Route path="analytics" element={<AdminAnalytics />} />
-            </Route>
+              {/* Admin Routes */}
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<AdminDashboard />} />
+                <Route path="courses" element={<AdminCourses />} />
+                <Route path="users" element={<AdminUsers />} />
+                <Route path="enrollments" element={<AdminEnrollments />} />
+                <Route path="analytics" element={<AdminAnalytics />} />
+              </Route>
 
-            {/* 404 Fallback */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </div>
-      </CartProvider>
-    </ProfileProvider>
+              {/* 404 Fallback */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
+        </CartProvider>
+      </ProfileProvider>
+    </DarkModeProvider>
   );
 };
 

@@ -1,4 +1,4 @@
-// DarkModeContext.js
+// context/DarkModeContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const DarkModeContext = createContext();
@@ -13,8 +13,10 @@ export const DarkModeProvider = ({ children }) => {
     localStorage.setItem('darkMode', darkMode.toString());
     if (darkMode) {
       document.body.classList.add('dark-mode');
+      document.body.classList.remove('light-mode');
     } else {
       document.body.classList.remove('dark-mode');
+      document.body.classList.add('light-mode');
     }
   }, [darkMode]);
 
@@ -29,4 +31,14 @@ export const DarkModeProvider = ({ children }) => {
   );
 };
 
-export const useDarkMode = () => useContext(DarkModeContext);
+// Export the hook correctly
+export const useDarkMode = () => {
+  const context = useContext(DarkModeContext);
+  if (!context) {
+    throw new Error('useDarkMode must be used within a DarkModeProvider');
+  }
+  return context;
+};
+
+// Export the context itself if needed elsewhere
+export default DarkModeContext;

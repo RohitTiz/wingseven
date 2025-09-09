@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const HeroSection = () => {
   const navigate = useNavigate();
   const button1Ref = useRef(null);
   const button2Ref = useRef(null);
+  const { darkMode } = useDarkMode();
 
   const courses = [
     "Java", 
@@ -27,28 +29,36 @@ const HeroSection = () => {
   const handleMouseEnter = (buttonRef) => {
     if (buttonRef.current) {
       buttonRef.current.style.transform = 'translateY(-4px)';
-      buttonRef.current.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.15)';
+      buttonRef.current.style.boxShadow = darkMode 
+        ? '0 8px 20px rgba(255, 255, 255, 0.1)'
+        : '0 8px 20px rgba(0, 0, 0, 0.15)';
     }
   };
 
   const handleMouseLeave = (buttonRef) => {
     if (buttonRef.current) {
       buttonRef.current.style.transform = 'translateY(0)';
-      buttonRef.current.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+      buttonRef.current.style.boxShadow = darkMode 
+        ? '0 4px 12px rgba(255, 255, 255, 0.05)'
+        : '0 4px 12px rgba(0, 0, 0, 0.1)';
     }
   };
 
   const handleMouseDown = (buttonRef) => {
     if (buttonRef.current) {
       buttonRef.current.style.transform = 'translateY(2px)';
-      buttonRef.current.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.1)';
+      buttonRef.current.style.boxShadow = darkMode 
+        ? '0 2px 6px rgba(255, 255, 255, 0.05)'
+        : '0 2px 6px rgba(0, 0, 0, 0.1)';
     }
   };
 
   const handleMouseUp = (buttonRef) => {
     if (buttonRef.current) {
       buttonRef.current.style.transform = 'translateY(-4px)';
-      buttonRef.current.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.15)';
+      buttonRef.current.style.boxShadow = darkMode 
+        ? '0 8px 20px rgba(255, 255, 255, 0.1)'
+        : '0 8px 20px rgba(0, 0, 0, 0.15)';
     }
   };
 
@@ -59,7 +69,7 @@ const HeroSection = () => {
 
     const typingSpeed = 100;
     const erasingSpeed = 50;
-    const pauseDuration = 1000; // Increased pause for better readability
+    const pauseDuration = 1000;
 
     switch (typingPhase) {
       case 'typing':
@@ -85,7 +95,7 @@ const HeroSection = () => {
           timeout = setTimeout(() => {
             setCurrentCourseIndex((prev) => (prev + 1) % courses.length);
             setTypingPhase('typing');
-          }, 300); // Brief pause before starting next word
+          }, 300);
         }
         break;
     }
@@ -101,16 +111,47 @@ const HeroSection = () => {
     navigate('/about');
   };
 
+  // Dynamic classes based on dark mode
+  const sectionClasses = `w-full border-b flex flex-col lg:flex-row justify-center items-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-8 sm:py-12 md:py-14 lg:py-16 xl:py-20 box-border gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 overflow-hidden -mt-[20px] ${
+    darkMode 
+      ? 'bg-gradient-to-br from-gray-900 to-gray-800 border-gray-700' 
+      : 'bg-gradient-to-br from-white to-blue-50 border-gray-100'
+  } transition-colors duration-300`;
+
+  const headingClasses = `font-inter font-bold text-3xl xs:text-4xl sm:text-[2.5rem] md:text-5xl lg:text-[3rem] xl:text-[3.5rem] m-0 leading-tight ${
+    darkMode ? 'text-white' : 'text-gray-900'
+  } transition-colors duration-300`;
+
+  const textClasses = `font-inter text-sm sm:text-base md:text-lg leading-relaxed mb-5 sm:mb-6 md:mb-8 max-w-[500px] md:max-w-[550px] lg:max-w-[600px] ${
+    darkMode ? 'text-gray-300' : 'text-gray-600'
+  } transition-colors duration-300`;
+
+  const statCardClasses = `flex flex-col p-3 rounded-lg shadow-sm border ${
+    darkMode 
+      ? 'bg-gray-800 border-gray-700 text-white' 
+      : 'bg-white border-gray-100 text-gray-900'
+  } transition-colors duration-300`;
+
+  const statSubtextClasses = `text-xs sm:text-sm md:text-base ${
+    darkMode ? 'text-gray-400' : 'text-gray-600'
+  } transition-colors duration-300`;
+
+  const decorativeElementClasses = `rounded-xl shadow-lg border flex flex-col items-center ${
+    darkMode 
+      ? 'bg-gray-800 border-gray-700' 
+      : 'bg-white border-gray-100'
+  } transition-colors duration-300`;
+
   return (
-    <section className="w-full bg-gradient-to-br from-white to-blue-50 border-b border-gray-100 flex flex-col lg:flex-row justify-center items-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-8 sm:py-12 md:py-14 lg:py-16 xl:py-20 box-border gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 overflow-hidden -mt-[20px]">
+    <section className={sectionClasses}>
       {/* Main container to center everything */}
       <div className="w-full max-w-[1200px] flex flex-col lg:flex-row justify-between items-center">
         {/* Left Section - Text Content */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center order-1 lg:order-1 items-center lg:items-start text-center lg:text-left lg:mr-[50px]"> {/* Added 50px margin-right */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-center order-1 lg:order-1 items-center lg:items-start text-center lg:text-left lg:mr-[50px]">
           {/* Text container with proper line spacing */}
           <div className="mb-4 sm:mb-5 md:mb-6">
             {/* First line - Static text */}
-            <div className="font-inter font-bold text-3xl xs:text-4xl sm:text-[2.5rem] md:text-5xl lg:text-[3rem] xl:text-[3.5rem] text-gray-900 m-0 leading-tight">
+            <div className={headingClasses}>
               Find Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-pink-600">Ideal</span>
             </div>
             
@@ -120,12 +161,12 @@ const HeroSection = () => {
             </div>
             
             {/* Third line - Static text */}
-            <div className="font-inter font-bold text-3xl xs:text-4xl sm:text-[2.5rem] md:text-5xl lg:text-[3rem] xl:text-[3.5rem] text-gray-900 m-0 leading-tight">
+            <div className={headingClasses}>
               Course, Build Skills
             </div>
           </div>
 
-          <p className="font-inter text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed mb-5 sm:mb-6 md:mb-8 max-w-[500px] md:max-w-[550px] lg:max-w-[600px]">
+          <p className={textClasses}>
             Welcome to EduAll, where learning begins for every professional and lifelong learner. 
             Master in-demand technologies with our comprehensive curriculum.
           </p>
@@ -156,7 +197,11 @@ const HeroSection = () => {
               onMouseLeave={() => handleMouseLeave(button2Ref)}
               onMouseDown={() => handleMouseDown(button2Ref)}
               onMouseUp={() => handleMouseUp(button2Ref)}
-              className="relative px-6 py-3.5 rounded-xl font-semibold text-sm md:text-base cursor-pointer transition-all duration-300 transform overflow-hidden group bg-white text-blue-600 border border-blue-200 shadow-md hover:shadow-xl hover:border-blue-300"
+              className={`relative px-6 py-3.5 rounded-xl font-semibold text-sm md:text-base cursor-pointer transition-all duration-300 transform overflow-hidden group border shadow-md hover:shadow-xl ${
+                darkMode 
+                  ? 'bg-gray-800 text-white border-gray-700 hover:border-gray-600' 
+                  : 'bg-white text-blue-600 border-blue-200 hover:border-blue-300'
+              }`}
             >
               <span className="relative z-20 flex items-center justify-center">
                 About Us
@@ -164,28 +209,34 @@ const HeroSection = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                 </svg>
               </span>
-              <span className="absolute inset-0 bg-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></span>
+              <span className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 ${
+                darkMode ? 'bg-gray-700' : 'bg-blue-50'
+              }`}></span>
             </button>
           </div>
 
           {/* Statistics Section */}
           <div className="grid grid-cols-2 gap-5 sm:gap-6 md:gap-8 max-w-[500px]">
-            <div className="flex flex-col p-3 bg-white rounded-lg shadow-sm border border-gray-100">
-              <span className="font-bold text-xl sm:text-2xl md:text-3xl text-gray-900">1500+</span>
-              <span className="text-gray-600 text-xs sm:text-sm md:text-base">Free Coding Videos</span>
+            <div className={statCardClasses}>
+              <span className="font-bold text-xl sm:text-2xl md:text-3xl">1500+</span>
+              <span className={statSubtextClasses}>Free Coding Videos</span>
             </div>
             
-            <div className="flex flex-col p-3 bg-white rounded-lg shadow-sm border border-gray-100">
-              <span className="font-bold text-xl sm:text-2xl md:text-3xl text-gray-900">Real Projects</span>
-              <span className="text-gray-600 text-xs sm:text-sm md:text-base">Java, DevOps & More</span>
+            <div className={statCardClasses}>
+              <span className="font-bold text-xl sm:text-2xl md:text-3xl">Real Projects</span>
+              <span className={statSubtextClasses}>Java, DevOps & More</span>
             </div>
           </div>
         </div>
 
         {/* Right Section - Image */}
-        <div className="w-full lg:w-1/2 flex flex-col items-center justify-center relative order-2 lg:order-2 mb-6 sm:mb-8 md:mb-10 lg:mb-0"> {/* Removed margin-left as it's not needed with the gap property */}
+        <div className="w-full lg:w-1/2 flex flex-col items-center justify-center relative order-2 lg:order-2 mb-6 sm:mb-8 md:mb-10 lg:mb-0">
           <div className="relative">
-            <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-2xl blur-lg opacity-70 z-0"></div>
+            <div className={`absolute -inset-4 rounded-2xl blur-lg opacity-70 z-0 ${
+              darkMode 
+                ? 'bg-gradient-to-r from-gray-800 to-gray-700' 
+                : 'bg-gradient-to-r from-blue-100 to-indigo-100'
+            }`}></div>
             <img 
               src="/image/main.png" 
               alt="Hero" 
@@ -197,23 +248,31 @@ const HeroSection = () => {
           {/* Decorative elements */}
           <div className="hidden sm:block absolute top-0 left-0 w-full h-full pointer-events-none z-20">
             <div className="absolute top-[-5%] left-[45%] w-[80px] sm:w-[100px] md:w-[120px] lg:w-[140px] xl:w-[160px] animate-float" style={{ animationDuration: '3.5s' }}>
-              <div className="bg-white p-2 rounded-xl shadow-lg border border-gray-100 flex flex-col items-center">
-                <span className="text-xs font-bold text-blue-600">12K+</span>
-                <span className="text-[10px] text-gray-600">Students</span>
+              <div className={decorativeElementClasses}>
+                <span className={`text-xs font-bold ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}>12K+</span>
+                <span className={`text-[10px] ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Students</span>
               </div>
             </div>
             
             <div className="absolute top-[15%] sm:top-[20%] left-[5%] w-[40px] sm:w-[50px] md:w-[70px] lg:w-[80px] xl:w-[90px] animate-float" style={{ animationDuration: '6s' }}>
-              <div className="bg-white p-1.5 rounded-full shadow-lg border border-gray-100">
-                <svg className="w-full h-full text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <div className={`p-1.5 rounded-full shadow-lg border ${
+                darkMode 
+                  ? 'bg-gray-800 border-gray-700 text-blue-400' 
+                  : 'bg-white border-gray-100 text-blue-500'
+              }`}>
+                <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                 </svg>
               </div>
             </div>
             
             <div className="absolute bottom-[5%] left-[80%] w-[20px] sm:w-[25px] md:w-[30px] lg:w-[40px] xl:w-[50px] animate-float" style={{ animationDuration: '3s' }}>
-              <div className="bg-white p-1 rounded-lg shadow-lg border border-gray-100">
-                <svg className="w-full h-full text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <div className={`p-1 rounded-lg shadow-lg border ${
+                darkMode 
+                  ? 'bg-gray-800 border-gray-700 text-blue-400' 
+                  : 'bg-white border-gray-100 text-blue-500'
+              }`}>
+                <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                 </svg>
               </div>

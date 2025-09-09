@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useDarkMode } from '../context/DarkModeContext'; // Adjust the import path as needed
 
 const LearningProcessSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [activeCard, setActiveCard] = useState(0);
   const sectionRef = useRef(null);
+  const { darkMode } = useDarkMode(); // Access dark mode state
 
   // SVG Icons (unchanged)
   const PlayIcon = () => (
@@ -59,8 +61,8 @@ const LearningProcessSection = () => {
       title: "Watch Video",
       description: "The first step to learn programming is to watch video carefully and take notes.",
       color: "from-blue-500 to-blue-600",
-      bgColor: "bg-blue-50",
-      textColor: "text-blue-600",
+      bgColor: darkMode ? "bg-blue-900/20" : "bg-blue-50",
+      textColor: darkMode ? "text-blue-300" : "text-blue-600",
       delay: 0
     },
     {
@@ -68,8 +70,8 @@ const LearningProcessSection = () => {
       title: "Write Code",
       description: "Now write every single line of code and execute it. Don't expect your code to run the first time.",
       color: "from-green-500 to-green-600",
-      bgColor: "bg-green-50",
-      textColor: "text-green-600",
+      bgColor: darkMode ? "bg-green-900/20" : "bg-green-50",
+      textColor: darkMode ? "text-green-300" : "text-green-600",
       delay: 200
     },
     {
@@ -77,8 +79,8 @@ const LearningProcessSection = () => {
       title: "Build Something",
       description: "Just learning the syntax is not enough. Take some time and build real-world projects.",
       color: "from-purple-500 to-purple-600",
-      bgColor: "bg-purple-50",
-      textColor: "text-purple-600",
+      bgColor: darkMode ? "bg-purple-900/20" : "bg-purple-50",
+      textColor: darkMode ? "text-purple-300" : "text-purple-600",
       delay: 400
     }
   ];
@@ -113,31 +115,31 @@ const LearningProcessSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="w-full bg-gradient-to-br from-gray-50 to-white py-16 sm:py-20 md:py-24 lg:py-28 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 overflow-hidden relative"
+      className={`w-full bg-gradient-to-br ${darkMode ? 'from-gray-900 to-gray-800' : 'from-gray-50 to-white'} py-16 sm:py-20 md:py-24 lg:py-28 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 overflow-hidden relative transition-colors duration-300`}
     >
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-10 left-10 w-20 h-20 bg-blue-100 rounded-full opacity-50 animate-pulse"></div>
-        <div className="absolute top-1/4 right-20 w-16 h-16 bg-green-100 rounded-full opacity-50 animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-20 left-1/4 w-12 h-12 bg-purple-100 rounded-full opacity-50 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className={`absolute top-10 left-10 w-20 h-20 ${darkMode ? 'bg-blue-900/30' : 'bg-blue-100'} rounded-full opacity-50 animate-pulse`}></div>
+        <div className={`absolute top-1/4 right-20 w-16 h-16 ${darkMode ? 'bg-green-900/30' : 'bg-green-100'} rounded-full opacity-50 animate-pulse`} style={{ animationDelay: '1s' }}></div>
+        <div className={`absolute bottom-20 left-1/4 w-12 h-12 ${darkMode ? 'bg-purple-900/30' : 'bg-purple-100'} rounded-full opacity-50 animate-pulse`} style={{ animationDelay: '2s' }}></div>
       </div>
 
       {/* Header */}
       <div className="text-center mb-12 sm:mb-16 md:mb-20">
-        <div className={`inline-flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-full text-sm font-medium mb-6 transition-all duration-700 transform ${
+        <div className={`inline-flex items-center gap-2 ${darkMode ? 'bg-blue-900/30 text-blue-300' : 'bg-blue-50 text-blue-600'} px-4 py-2 rounded-full text-sm font-medium mb-6 transition-all duration-700 transform ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
         }`}>
-          
-          
+          <BookOpenIcon />
+          Learning Process
         </div>
         
-        <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-4 sm:mb-6 transition-all duration-700 transform ${
+        <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl ${darkMode ? 'text-white' : 'text-gray-900'} mb-4 sm:mb-6 transition-all duration-700 transform ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
         }`} style={{ transitionDelay: '200ms' }}>
           How <span className="text-blue-600">Learning</span> Works
         </h2>
         
-        <p className={`font-inter text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed transition-all duration-700 transform ${
+        <p className={`font-inter text-lg sm:text-xl ${darkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto leading-relaxed transition-all duration-700 transform ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
         }`} style={{ transitionDelay: '400ms' }}>
           Follow our proven three-step approach to master programming and build amazing projects
@@ -201,7 +203,7 @@ const LearningProcessSection = () => {
                     onMouseEnter={() => setActiveCard(index)}
                   >
                     {/* Card */}
-                    <div className={`w-80 ${step.bgColor} rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 ${
+                    <div className={`w-80 ${step.bgColor} rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border ${darkMode ? 'border-gray-700' : 'border-gray-100'} ${
                       isActive ? 'ring-4 ring-blue-200 ring-opacity-50' : ''
                     }`}>
                       {/* Icon */}
@@ -215,12 +217,12 @@ const LearningProcessSection = () => {
                       <h3 className={`font-bold text-2xl ${step.textColor} mb-4 transition-colors duration-300`}>
                         {step.title}
                       </h3>
-                      <p className="text-gray-600 leading-relaxed text-base">
+                      <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} leading-relaxed text-base transition-colors duration-300`}>
                         {step.description}
                       </p>
                       
                       {/* Step Number */}
-                      <div className="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center">
+                      <div className={`absolute -top-3 -right-3 w-8 h-8 ${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-full shadow-md flex items-center justify-center transition-colors duration-300`}>
                         <span className={`text-sm font-bold ${step.textColor}`}>
                           {index + 1}
                         </span>
@@ -243,7 +245,7 @@ const LearningProcessSection = () => {
               <div key={index} className="relative">
                 {/* Connecting Line for mobile */}
                 {index < steps.length - 1 && (
-                  <div className="absolute left-8 top-20 w-0.5 h-16 bg-gradient-to-b from-gray-200 to-transparent"></div>
+                  <div className={`absolute left-8 top-20 w-0.5 h-16 bg-gradient-to-b ${darkMode ? 'from-gray-700 to-transparent' : 'from-gray-200 to-transparent'} transition-colors duration-300`}></div>
                 )}
                 
                 <div 
@@ -252,7 +254,7 @@ const LearningProcessSection = () => {
                   } ${isActive ? 'scale-105' : 'scale-100'}`}
                   style={{ transitionDelay: `${step.delay}ms` }}
                 >
-                  <div className={`${step.bgColor} rounded-2xl p-6 shadow-lg border border-gray-100 ${
+                  <div className={`${step.bgColor} rounded-2xl p-6 shadow-lg border ${darkMode ? 'border-gray-700' : 'border-gray-100'} transition-colors duration-300 ${
                     isActive ? 'ring-4 ring-blue-200 ring-opacity-50' : ''
                   }`}>
                     <div className="flex items-start gap-4">
@@ -273,7 +275,7 @@ const LearningProcessSection = () => {
                             Step {index + 1}
                           </span>
                         </div>
-                        <p className="text-gray-600 leading-relaxed text-sm">
+                        <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} leading-relaxed text-sm transition-colors duration-300`}>
                           {step.description}
                         </p>
                       </div>

@@ -1,17 +1,16 @@
+// components/Header.js
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import SignupModal from './SignupModal';
 import ProfileAvatar from './ProfileAvatar';
+// In Header.jsx
+import { useDarkMode } from '../context/DarkModeContext'; // Correct path
 
 const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, setUserName = () => {} }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [darkMode, setDarkMode] = useState(() => {
-    // Check localStorage for saved theme preference
-    const savedTheme = localStorage.getItem('darkMode');
-    return savedTheme === 'true';
-  });
+  const { darkMode, toggleDarkMode } = useDarkMode();
   const location = useLocation();
 
   useEffect(() => {
@@ -29,16 +28,6 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
     return () => document.body.classList.remove('modal-open');
   }, [showModal]);
 
-  // Apply dark mode to body and save preference
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
-    }
-    localStorage.setItem('darkMode', darkMode.toString());
-  }, [darkMode]);
-
   const handleSignUp = (email, name) => {
     setUserEmail(email);
     setUserName(name || email.split('@')[0]);
@@ -47,10 +36,6 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
   const handleSignOut = () => {
     setUserEmail(null);
     setUserName(null);
-  };
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
   };
 
   // Function to handle Contact Us navigation
