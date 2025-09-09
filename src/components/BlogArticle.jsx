@@ -188,7 +188,7 @@ function BlogArticle() {
 
         
 
-        <Footer />
+        
       </div>
     </>
   );

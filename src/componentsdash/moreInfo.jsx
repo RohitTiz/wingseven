@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
-  const [activeTab, setActiveTab] = useState('notes');
+  const [activeTab, setActiveTab] = useState('about');
   
   // Default content when no specific video is selected
   const defaultContent = {
@@ -41,6 +41,12 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
       <div className="overflow-x-auto whitespace-nowrap hide-scrollbar mb-4">
         <div className="inline-flex border-b border-gray-200 min-w-full">
           <button
+            className={`py-3 px-4 font-medium text-sm min-w-max ${activeTab === 'about' ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-500'}`}
+            onClick={() => setActiveTab('about')}
+          >
+            About
+          </button>
+          <button
             className={`py-3 px-4 font-medium text-sm min-w-max ${activeTab === 'notes' ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-500'}`}
             onClick={() => setActiveTab('notes')}
           >
@@ -64,10 +70,87 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
           >
             Schedule
           </button>
+          <button
+            className={`py-3 px-4 font-medium text-sm min-w-max ${activeTab === 'certification' ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-500'}`}
+            onClick={() => setActiveTab('certification')}
+          >
+            Certification
+          </button>
         </div>
       </div>
 
       <div className="mt-2 md:mt-4">
+        {activeTab === 'about' && (
+          <div>
+            <h3 className="font-bold text-xl mb-4 text-gray-900">About Course</h3>
+            <div className="space-y-6">
+              {/* Course Description */}
+              <div>
+                <p className="text-gray-700 text-base leading-relaxed mb-4">
+                  {course.description}
+                </p>
+                {course.type === 'live' && course.liveSchedule && (
+                  <p className="text-gray-700 text-base leading-relaxed">
+                    Perfect for developers looking to advance their React skills and learn industry best practices.
+                  </p>
+                )}
+              </div>
+
+              {/* What You'll Learn Section */}
+              <div>
+                <h4 className="font-bold text-lg mb-3 text-gray-900">What You'll Learn</h4>
+                <div className="grid gap-2">
+                  {course.whatYouLearn && course.whatYouLearn.map((item, index) => (
+                    <div key={index} className="flex items-start">
+                      <svg className="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-gray-700 text-base">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Requirements Section */}
+              {course.requirements && course.requirements.length > 0 && (
+                <div>
+                  <h4 className="font-bold text-lg mb-3 text-gray-900">Requirements</h4>
+                  <div className="grid gap-2">
+                    {course.requirements.map((requirement, index) => (
+                      <div key={index} className="flex items-start">
+                        <svg className="w-5 h-5 text-blue-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span className="text-gray-700 text-base">{requirement}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Course Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-gray-100">
+                <div className="bg-gray-50 p-4 rounded-lg text-center">
+                  <p className="text-xs text-gray-500 uppercase tracking-wide">Duration</p>
+                  <p className="font-bold text-lg text-gray-900">{course.duration}</p>
+                </div>
+                <div className="bg-gray-50 p-4 rounded-lg text-center">
+                  <p className="text-xs text-gray-500 uppercase tracking-wide">Lessons</p>
+                  <p className="font-bold text-lg text-gray-900">{course.lessons}</p>
+                </div>
+                <div className="bg-gray-50 p-4 rounded-lg text-center">
+                  <p className="text-xs text-gray-500 uppercase tracking-wide">Students</p>
+                  <p className="font-bold text-lg text-gray-900">{course.students?.toLocaleString()}</p>
+                </div>
+                <div className="bg-gray-50 p-4 rounded-lg text-center">
+                  <p className="text-xs text-gray-500 uppercase tracking-wide">Level</p>
+                  <p className="font-bold text-lg text-gray-900">{course.level}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {activeTab === 'notes' && (
           <div>
             <h3 className="font-bold text-base mb-2 md:text-lg">Lecture Notes</h3>
@@ -144,16 +227,70 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
             )}
           </div>
         )}
+
+        {activeTab === 'certification' && (
+          <div>
+            <h3 className="font-bold text-xl mb-4 text-gray-900">Certification</h3>
+            <div className="space-y-6">
+              <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-lg border border-purple-100">
+                <div className="flex items-center mb-4">
+                  <svg className="w-8 h-8 text-purple-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                  <h4 className="font-bold text-lg text-gray-900">Certificate of Completion</h4>
+                </div>
+                <p className="text-gray-700 text-base mb-4">
+                  Earn a certificate upon successful completion of this course. Our certificates are recognized by industry professionals and can be added to your LinkedIn profile or resume.
+                </p>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="bg-white p-4 rounded-lg shadow-sm">
+                    <h5 className="font-medium text-gray-900 mb-2">What's Included</h5>
+                    <ul className="text-sm text-gray-600 space-y-1">
+                      <li>• Digital certificate</li>
+                      <li>• Verification link</li>
+                      <li>• LinkedIn integration</li>
+                      <li>• Instructor signature</li>
+                    </ul>
+                  </div>
+                  <div className="bg-white p-4 rounded-lg shadow-sm">
+                    <h5 className="font-medium text-gray-900 mb-2">Requirements</h5>
+                    <ul className="text-sm text-gray-600 space-y-1">
+                      <li>• Complete all lessons</li>
+                      <li>• Pass all quizzes (80%+)</li>
+                      <li>• Submit final project</li>
+                      <li>• Course evaluation</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Progress indicator */}
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm font-medium text-gray-700">Course Progress</span>
+                  <span className="text-sm text-gray-500">0% Complete</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-purple-600 h-2 rounded-full" style={{width: '0%'}}></div>
+                </div>
+                <p className="text-xs text-gray-500 mt-2">Complete the course to unlock your certificate</p>
+              </div>
+
+              {/* Certificate preview */}
+              <div className="border-2 border-dashed border-gray-300 p-8 rounded-lg text-center">
+                <svg className="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                </svg>
+                <h5 className="font-medium text-gray-900 mb-2">Your Certificate Preview</h5>
+                <p className="text-gray-500 text-sm">Complete the course to see your personalized certificate here</p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <style jsx>{`
-        .hide-scrollbar {
-          -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;  /* Chrome, Safari and Opera */
-        }
+        /* Remove any remaining scrollbar styles if needed */
       `}</style>
     </div>
   );

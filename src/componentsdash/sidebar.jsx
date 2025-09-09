@@ -14,6 +14,7 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
   const navigate = useNavigate();
   const { profile } = useProfile();
   const [currentProfile, setCurrentProfile] = useState(profile);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   // Update local state when profile changes
   useEffect(() => {
@@ -52,10 +53,17 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
     if (isMobile && setOpen) setOpen(false);
   };
 
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
+  // For mobile, use the original open prop, for desktop use isCollapsed
+  const sidebarOpen = isMobile ? open : !isCollapsed;
+
   return (
     <div
       className={`flex flex-col h-full bg-white shadow-sm border-r border-gray-100 transition-all duration-300 ${
-        open ? "w-64" : "w-15"
+        sidebarOpen ? "w-64" : "w-16"
       } relative`}
       style={isMobile ? { 
         width: '100%', 
@@ -69,6 +77,23 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
         backgroundColor: 'rgba(246, 248, 250, 255)'
       }}
     >
+      {/* Collapse Toggle Button - Only show on desktop */}
+      {!isMobile && (
+        <button
+          onClick={toggleCollapse}
+          className="absolute -right-3 top-8 bg-white border border-gray-200 rounded-full w-6 h-6 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-200 z-10 hover:bg-gray-50"
+        >
+          <svg 
+            className={`w-3 h-3 text-gray-600 transition-transform duration-200 ${isCollapsed ? 'rotate-180' : ''}`} 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+      )}
+
       {/* Logo Section */}
       <div className="flex flex-col px-4 pt-6 pb-4 border-b border-gray-50 bg-white rounded-lg">
         <div 
@@ -78,7 +103,7 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
           <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl w-10 h-10 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
             <span className="text-white text-xl font-bold">C</span>
           </div>
-          {open && (
+          {sidebarOpen && (
             <div className="flex flex-col">
               <span className="text-lg font-bold text-gray-900">
                 Code Brain
@@ -92,7 +117,7 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
       </div>
 
       {/* Profile Section */}
-      {open && (
+      {sidebarOpen && (
         <div className="px-4 py-4 border-b border-gray-50 bg-white rounded-lg mt-2">
           <div 
             className="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors group"
@@ -145,14 +170,14 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
                 <IconComponent active={isActive} />
               </div>
               
-              {open && (
+              {sidebarOpen && (
                 <span className="text-sm font-medium flex-1">
                   {item.label}
                 </span>
               )}
               
               {/* Tooltip for collapsed state */}
-              {!open && (
+              {!sidebarOpen && (
                 <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
                   {item.label}
                 </div>
@@ -171,9 +196,9 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
           <div className="p-1.5 rounded-lg group-hover:bg-gray-100 transition-colors">
             <SettingsIcon />
           </div>
-          {open && <span className="text-sm font-medium">Settings</span>}
+          {sidebarOpen && <span className="text-sm font-medium">Settings</span>}
           
-          {!open && (
+          {!sidebarOpen && (
             <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
               Settings
             </div>
@@ -187,9 +212,9 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
           <div className="p-1.5 rounded-lg group-hover:bg-gray-100 transition-colors">
             <SupportIcon />
           </div>
-          {open && <span className="text-sm font-medium">Support</span>}
+          {sidebarOpen && <span className="text-sm font-medium">Support</span>}
           
-          {!open && (
+          {!sidebarOpen && (
             <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
               Support
             </div>
