@@ -36,7 +36,7 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
   const content = getContent();
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-4 mt-4 md:rounded-2xl md:shadow-xl md:p-6 md:mt-6">
+    <div className="bg-white rounded-xl shadow-sm p-4 md:rounded-2xl md:shadow-xl md:p-6">
       {/* Scrollable tab navigation for mobile */}
       <div className="overflow-x-auto whitespace-nowrap hide-scrollbar mb-4">
         <div className="inline-flex border-b border-gray-200 min-w-full">
@@ -288,10 +288,6 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
           </div>
         )}
       </div>
-
-      <style jsx>{`
-        /* Remove any remaining scrollbar styles if needed */
-      `}</style>
     </div>
   );
 };

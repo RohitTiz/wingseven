@@ -73,7 +73,7 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
       <div
         className={`flex flex-col h-full bg-white shadow-sm border-r border-gray-100 transition-all duration-300 ${
           isMobile 
-            ? `fixed top-0 left-0 z-50 transform ${open ? 'translate-x-0' : '-translate-x-full'} lg:relative lg:translate-x-0`
+            ? `fixed top-0 left-0 z-50 transform ${open ? 'translate-x-0' : '-translate-x-full'} w-64 lg:relative lg:translate-x-0`
             : "relative"
         } ${sidebarOpen ? "w-64" : "w-16"}`}
         style={{
@@ -82,12 +82,13 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
           overflowY: 'auto'
         }}
       >
-        {/* Collapse Toggle Button - Only show on desktop */}
+        {/* Collapse Toggle Button - Always visible on desktop */}
         {!isMobile && (
           <button
             onClick={toggleCollapse}
-            className="absolute -right-3 top-8 bg-white border border-gray-200 rounded-full w-6 h-6 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-200 z-10 hover:bg-gray-50"
+            className="absolute -right-3 top-8 bg-white border border-gray-200 rounded-full w-6 h-6 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-200 z-50 hover:bg-gray-50"
             aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            style={{ zIndex: 1000 }}
           >
             <svg 
               className={`w-3 h-3 text-gray-600 transition-transform duration-200 ${isCollapsed ? 'rotate-180' : ''}`} 
@@ -104,7 +105,7 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
         {isMobile && (
           <button
             onClick={() => setOpen(false)}
-            className="absolute top-4 right-4 p-1 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors lg:hidden"
+            className="absolute top-4 right-4 p-1 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors lg:hidden z-50"
             aria-label="Close sidebar"
           >
             <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -139,8 +140,7 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
         {sidebarOpen && (
           <div className="px-4 py-4 border-b border-gray-50 bg-white rounded-lg mt-2">
             <div 
-              className="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors group"
-              onClick={handleProfileClick}
+              className="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors group relative"
             >
               <div className="relative flex-shrink-0">
                 <img
@@ -157,9 +157,12 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
                 <p className="text-sm font-semibold text-gray-900 truncate">{currentProfile.name || "User"}</p>
                 <p className="text-xs text-gray-500 truncate">Student</p>
               </div>
-              <svg className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-              </svg>
+              <button 
+                onClick={handleProfileClick}
+                className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-md hover:bg-purple-200 transition-colors flex-shrink-0"
+              >
+                Edit
+              </button>
             </div>
           </div>
         )}
