@@ -7,7 +7,11 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    // Check localStorage for saved theme preference
+    const savedTheme = localStorage.getItem('darkMode');
+    return savedTheme === 'true';
+  });
   const location = useLocation();
 
   useEffect(() => {
@@ -24,6 +28,16 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
     document.body.classList.toggle('modal-open', showModal);
     return () => document.body.classList.remove('modal-open');
   }, [showModal]);
+
+  // Apply dark mode to body and save preference
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+    localStorage.setItem('darkMode', darkMode.toString());
+  }, [darkMode]);
 
   const handleSignUp = (email, name) => {
     setUserEmail(email);
@@ -56,46 +70,89 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
     }
   };
 
+  // Dynamic classes based on dark mode
+  const headerClasses = `${
+    darkMode 
+      ? 'bg-gray-900 border-gray-700' 
+      : 'bg-white border-gray-300'
+  } border-b font-roboto sticky top-0 z-50 w-full transition-colors duration-300`;
+
+  const logoTextClasses = `flex items-center font-semibold text-2xl ${
+    darkMode ? 'text-white' : 'text-blue-900'
+  } transition-colors duration-300`;
+
+  const menuButtonClasses = `${isMobile ? 'block' : 'hidden'} text-2xl bg-transparent border-none cursor-pointer ${
+    darkMode ? 'text-white' : 'text-blue-900'
+  } transition-colors duration-300`;
+
+  const navLinkClasses = (isActive = false) => `no-underline ${
+    darkMode 
+      ? 'text-gray-200 hover:text-white' 
+      : 'text-blue-900 hover:text-blue-800'
+  } hover:scale-105 transition-all duration-300 py-2 px-1`;
+
+  const toggleButtonClasses = `p-2 rounded-full ${
+    darkMode 
+      ? 'hover:bg-gray-700' 
+      : 'hover:bg-gray-200'
+  } transition-colors duration-300`;
+
+  const demoButtonClasses = `bg-transparent ${
+    darkMode 
+      ? 'text-blue-400 border-blue-400 hover:bg-blue-900/20' 
+      : 'text-blue-500 border-blue-500 hover:bg-blue-50'
+  } border-2 rounded-lg px-4 py-2 cursor-pointer text-sm font-semibold transition-colors duration-300`;
+
+  const signupButtonClasses = `${
+    darkMode 
+      ? 'bg-blue-600 hover:bg-blue-700' 
+      : 'bg-blue-500 hover:bg-blue-600'
+  } text-white border-none rounded-lg px-4 py-2 cursor-pointer text-sm font-semibold transition-colors duration-300`;
+
   return (
-    <header className="bg-white border-b border-gray-300 font-roboto sticky top-0 z-50 w-full">
+    <header className={headerClasses}>
       <div className="flex justify-between items-center px-6 py-3 flex-wrap">
-        <div className="flex items-center font-semibold text-2xl text-blue-900">
+        <div className={logoTextClasses}>
           <Link to="/" className="flex items-center">
-            <img src="/image/mainlogo.png" alt="Logo" className="h-12 mr-2.5" />
+            <img 
+              src="/image/mainlogo.png" 
+              alt="Logo" 
+              className={`h-12 mr-2.5 ${darkMode ? 'filter brightness-0 invert' : ''} transition-all duration-300`} 
+            />
           </Link>
         </div>
 
         <button 
           onClick={() => setMenuOpen(!menuOpen)} 
-          className={`${isMobile ? 'block' : 'hidden'} text-2xl bg-transparent border-none cursor-pointer text-blue-900`}
+          className={menuButtonClasses}
           aria-label="Toggle Menu"
         >
           ☰
         </button>
 
         <nav className={`${isMobile ? (menuOpen ? 'flex' : 'hidden') : 'flex'} ${isMobile ? 'flex-col items-start mt-2.5 w-full' : 'flex-row items-center'} gap-4 text-lg font-semibold`}>
-          <Link to="/" className="no-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 py-2 px-1">Home</Link>
-          <Link to="/course" className="no-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 py-2 px-1">Courses</Link>
-          <Link to="/specializations" className="no-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 py-2 px-1">Blogs</Link>
-          <Link to="/testimonials" className="no-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 py-2 px-1">Testimonials</Link>
+          <Link to="/" className={navLinkClasses()}>Home</Link>
+          <Link to="/course" className={navLinkClasses()}>Courses</Link>
+          <Link to="/specializations" className={navLinkClasses()}>Blogs</Link>
+          <Link to="/testimonials" className={navLinkClasses()}>Testimonials</Link>
           
           {/* Updated Contact Us link */}
           <Link 
             to="/#contact" 
             onClick={handleContactClick}
-            className="no-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 py-2 px-1"
+            className={navLinkClasses()}
           >
             Contact Us
           </Link>
           
-          <Link to="/about" className="no-underline text-blue-900 hover:text-blue-800 hover:scale-105 transition-all duration-300 py-2 px-1">About Us</Link>
+          <Link to="/about" className={navLinkClasses()}>About Us</Link>
         </nav>
 
         {!isMobile && (
           <div className="flex gap-2.5 items-center">
             <button 
               onClick={toggleDarkMode}
-              className="p-2 rounded-full hover:bg-gray-200 transition-colors"
+              className={toggleButtonClasses}
               aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
             >
               {darkMode ? (
@@ -108,17 +165,18 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
                 </svg>
               )}
             </button>
-            <button className="bg-transparent text-blue-500 border-2 border-blue-500 rounded-lg px-4 py-2 cursor-pointer text-sm font-semibold hover:bg-blue-50 transition-colors">
+            <button className={demoButtonClasses}>
               Book a Demo
             </button>
             {userEmail ? (
               <ProfileAvatar 
                 user={{ email: userEmail, name: userName || userEmail.split('@')[0] }} 
                 onSignOut={handleSignOut}
+                darkMode={darkMode}
               />
             ) : (
               <button 
-                className="bg-blue-500 text-white border-none rounded-lg px-4 py-2 cursor-pointer text-sm font-semibold hover:bg-blue-600 transition-colors" 
+                className={signupButtonClasses} 
                 onClick={() => setShowModal(true)}
               >
                 Signup
@@ -132,7 +190,7 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
         <div className="flex gap-2.5 items-center px-6 pb-3">
           <button 
             onClick={toggleDarkMode}
-            className="p-2 rounded-full hover:bg-gray-200 transition-colors"
+            className={toggleButtonClasses}
             aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
           >
             {darkMode ? (
@@ -145,17 +203,18 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
               </svg>
             )}
           </button>
-          <button className="bg-transparent text-blue-500 border-2 border-blue-500 rounded-lg px-4 py-2 cursor-pointer text-sm font-semibold hover:bg-blue-50 transition-colors">
+          <button className={demoButtonClasses}>
             Book a Demo
           </button>
           {userEmail ? (
             <ProfileAvatar 
               user={{ email: userEmail, name: userName || userEmail.split('@')[0] }} 
               onSignOut={handleSignOut}
+              darkMode={darkMode}
             />
           ) : (
             <button 
-              className="bg-blue-500 text-white border-none rounded-lg px-4 py-2 cursor-pointer text-sm font-semibold hover:bg-blue-600 transition-colors" 
+              className={signupButtonClasses} 
               onClick={() => setShowModal(true)}
             >
               Signup
@@ -164,7 +223,13 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
         </div>
       )}
 
-      {showModal && <SignupModal onClose={() => setShowModal(false)} onSignUp={handleSignUp} />}
+      {showModal && (
+        <SignupModal 
+          onClose={() => setShowModal(false)} 
+          onSignUp={handleSignUp} 
+          darkMode={darkMode}
+        />
+      )}
     </header>
   );
 };

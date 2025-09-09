@@ -75,3 +75,214 @@ img:after {
 .animate-float { animation: float 6s ease-in-out infinite; }
 .animate-float-delay { animation: float 6s ease-in-out infinite 1s; }
 .animate-float-delay-2 { animation: float 6s ease-in-out infinite 2s; }
+
+/* Improve mobile video responsiveness */
+iframe {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+/* Better touch targets for mobile */
+@media (max-width: 768px) {
+  .lecture-item {
+    min-height: 60px;
+    padding: 12px 16px;
+  }
+  
+  /* Improve tab navigation for mobile */
+  .tab-scroll-container {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  
+  .tab-scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Prevent horizontal scrolling */
+  body {
+    overflow-x: hidden;
+  }
+}
+
+
+
+
+
+
+
+/* Global Dark Mode Styles - Add these to your main CSS file (index.css or App.css) */
+
+/* Base styles for smooth transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Light mode (default) */
+body {
+  background-color: #ffffff;
+  color: #1f2937;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+  background-color: #111827;
+  color: #f9fafb;
+}
+
+/* Dark mode for main content areas */
+body.dark-mode .main-content,
+body.dark-mode .content-wrapper {
+  background-color: #111827;
+  color: #f9fafb;
+}
+
+/* Dark mode for cards and containers */
+body.dark-mode .card,
+body.dark-mode .container,
+body.dark-mode .section {
+  background-color: #1f2937;
+  border-color: #374151;
+  color: #f9fafb;
+}
+
+/* Dark mode for inputs and form elements */
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f9fafb;
+}
+
+body.dark-mode input:focus,
+body.dark-mode textarea:focus,
+body.dark-mode select:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+/* Dark mode for modals */
+body.dark-mode .modal,
+body.dark-mode .modal-content {
+  background-color: #1f2937;
+  color: #f9fafb;
+}
+
+body.dark-mode .modal-overlay {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+/* Dark mode for buttons */
+body.dark-mode .btn-secondary {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f9fafb;
+}
+
+body.dark-mode .btn-secondary:hover {
+  background-color: #4b5563;
+}
+
+/* Dark mode for borders */
+body.dark-mode hr,
+body.dark-mode .border {
+  border-color: #374151;
+}
+
+/* Dark mode for text elements */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+  color: #f9fafb;
+}
+
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode div {
+  color: #e5e7eb;
+}
+
+/* Dark mode for links */
+body.dark-mode a:not(.nav-link) {
+  color: #60a5fa;
+}
+
+body.dark-mode a:not(.nav-link):hover {
+  color: #93c5fd;
+}
+
+/* Dark mode for shadows */
+body.dark-mode .shadow,
+body.dark-mode .shadow-sm,
+body.dark-mode .shadow-md,
+body.dark-mode .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark mode for dropdown menus */
+body.dark-mode .dropdown,
+body.dark-mode .dropdown-menu {
+  background-color: #1f2937;
+  border-color: #374151;
+  color: #f9fafb;
+}
+
+body.dark-mode .dropdown-item:hover {
+  background-color: #374151;
+}
+
+/* Dark mode for tables */
+body.dark-mode table {
+  background-color: #1f2937;
+  color: #f9fafb;
+}
+
+body.dark-mode th,
+body.dark-mode td {
+  border-color: #374151;
+}
+
+body.dark-mode tbody tr:nth-child(even) {
+  background-color: #374151;
+}
+
+/* Dark mode for code blocks */
+body.dark-mode pre,
+body.dark-mode code {
+  background-color: #374151;
+  color: #f9fafb;
+  border-color: #4b5563;
+}
+
+/* Animation classes for smooth transitions */
+.theme-transition {
+  transition: all 0.3s ease;
+}
+
+/* Scrollbar dark mode */
+body.dark-mode::-webkit-scrollbar {
+  width: 12px;
+}
+
+body.dark-mode::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+body.dark-mode::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 6px;
+}
+
+body.dark-mode::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}

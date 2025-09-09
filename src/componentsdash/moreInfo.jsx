@@ -1,4 +1,3 @@
-// componentsdash/moreInfo.jsx
 import React, { useState } from 'react';
 
 const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
@@ -37,252 +36,295 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
 
   return (
     <div className="bg-white rounded-xl shadow-sm p-4 md:rounded-2xl md:shadow-xl md:p-6">
-      {/* Scrollable tab navigation for mobile */}
-      <div className="overflow-x-auto whitespace-nowrap hide-scrollbar mb-4">
-        <div className="inline-flex border-b border-gray-200 min-w-full">
+      {/* Tab Navigation */}
+      <div className="border-b border-gray-200 mb-6">
+        <div className="flex space-x-8 overflow-x-auto">
           <button
-            className={`py-3 px-4 font-medium text-sm min-w-max ${activeTab === 'about' ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-500'}`}
+            className={`py-3 px-1 font-medium text-sm whitespace-nowrap border-b-2 ${
+              activeTab === 'about' 
+                ? 'text-purple-600 border-purple-600' 
+                : 'text-gray-500 border-transparent hover:text-gray-700'
+            }`}
             onClick={() => setActiveTab('about')}
           >
-            About
+            Overview
           </button>
           <button
-            className={`py-3 px-4 font-medium text-sm min-w-max ${activeTab === 'notes' ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-500'}`}
-            onClick={() => setActiveTab('notes')}
+            className={`py-3 px-1 font-medium text-sm whitespace-nowrap border-b-2 ${
+              activeTab === 'author' 
+                ? 'text-purple-600 border-purple-600' 
+                : 'text-gray-500 border-transparent hover:text-gray-700'
+            }`}
+            onClick={() => setActiveTab('author')}
           >
-            Notes
+            Author
           </button>
           <button
-            className={`py-3 px-4 font-medium text-sm min-w-max ${activeTab === 'resources' ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-500'}`}
-            onClick={() => setActiveTab('resources')}
+            className={`py-3 px-1 font-medium text-sm whitespace-nowrap border-b-2 ${
+              activeTab === 'faq' 
+                ? 'text-purple-600 border-purple-600' 
+                : 'text-gray-500 border-transparent hover:text-gray-700'
+            }`}
+            onClick={() => setActiveTab('faq')}
           >
-            Resources
+            FAQ
           </button>
           <button
-            className={`py-3 px-4 font-medium text-sm min-w-max ${activeTab === 'quiz' ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-500'}`}
-            onClick={() => setActiveTab('quiz')}
+            className={`py-3 px-1 font-medium text-sm whitespace-nowrap border-b-2 ${
+              activeTab === 'announcements' 
+                ? 'text-purple-600 border-purple-600' 
+                : 'text-gray-500 border-transparent hover:text-gray-700'
+            }`}
+            onClick={() => setActiveTab('announcements')}
           >
-            Quiz
+            Announcements
           </button>
           <button
-            className={`py-3 px-4 font-medium text-sm min-w-max ${activeTab === 'schedule' ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-500'}`}
-            onClick={() => setActiveTab('schedule')}
+            className={`py-3 px-1 font-medium text-sm whitespace-nowrap border-b-2 ${
+              activeTab === 'reviews' 
+                ? 'text-purple-600 border-purple-600' 
+                : 'text-gray-500 border-transparent hover:text-gray-700'
+            }`}
+            onClick={() => setActiveTab('reviews')}
           >
-            Schedule
-          </button>
-          <button
-            className={`py-3 px-4 font-medium text-sm min-w-max ${activeTab === 'certification' ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-500'}`}
-            onClick={() => setActiveTab('certification')}
-          >
-            Certification
+            Reviews
           </button>
         </div>
       </div>
 
-      <div className="mt-2 md:mt-4">
+      {/* Tab Content */}
+      <div className="mt-6">
         {activeTab === 'about' && (
-          <div>
-            <h3 className="font-bold text-xl mb-4 text-gray-900">About Course</h3>
-            <div className="space-y-6">
-              {/* Course Description */}
-              <div>
-                <p className="text-gray-700 text-base leading-relaxed mb-4">
-                  {course.description}
+          <div className="space-y-8">
+            {/* About Course Section */}
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">About Course</h3>
+              <div className="text-gray-600 leading-relaxed space-y-4">
+                <p>
+                  {course?.description || "Unlock the power of Figma, the leading collaborative design tool, with our comprehensive online course. Whether you're a novice or looking to enhance your skills this course willguide you through Figma's robust features and workflows."}
                 </p>
-                {course.type === 'live' && course.liveSchedule && (
-                  <p className="text-gray-700 text-base leading-relaxed">
-                    Perfect for developers looking to advance their React skills and learn industry best practices.
-                  </p>
-                )}
+                <p>
+                  {course?.additionalDescription || "Perfect for Ui/UX designers, product managers, and anyone interested in modern design tools. Join us to elevate your design skills and boost your productivity with Figma!"}
+                </p>
               </div>
+            </div>
 
-              {/* What You'll Learn Section */}
+            {/* What You'll Learn Section */}
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">What You'll Learn</h3>
+              <div className="grid md:grid-cols-2 gap-x-8 gap-y-4">
+                <div className="flex items-start space-x-3">
+                  <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700">Setting up the environment</span>
+                </div>
+                
+                <div className="flex items-start space-x-3">
+                  <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700">Understand HTML Programming</span>
+                </div>
+
+                <div className="flex items-start space-x-3">
+                  <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700">Advanced HTML Practices</span>
+                </div>
+
+                <div className="flex items-start space-x-3">
+                  <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700">Code HTML</span>
+                </div>
+
+                <div className="flex items-start space-x-3">
+                  <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700">Build a portfolio website</span>
+                </div>
+
+                <div className="flex items-start space-x-3">
+                  <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700">Start building beautiful websites</span>
+                </div>
+
+                <div className="flex items-start space-x-3">
+                  <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-700">Responsive Designs</span>
+                </div>
+
+                {course?.whatYouLearn && course.whatYouLearn.slice(7).map((item, index) => (
+                  <div key={index + 7} className="flex items-start space-x-3">
+                    <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-gray-700">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Requirements Section */}
+            {course?.requirements && course.requirements.length > 0 && (
               <div>
-                <h4 className="font-bold text-lg mb-3 text-gray-900">What You'll Learn</h4>
-                <div className="grid gap-2">
-                  {course.whatYouLearn && course.whatYouLearn.map((item, index) => (
+                <h4 className="text-xl font-bold text-gray-900 mb-4">Requirements</h4>
+                <div className="grid gap-3">
+                  {course.requirements.map((requirement, index) => (
                     <div key={index} className="flex items-start">
-                      <svg className="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      <svg className="w-5 h-5 text-blue-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <span className="text-gray-700 text-base">{item}</span>
+                      <span className="text-gray-700">{requirement}</span>
                     </div>
                   ))}
                 </div>
               </div>
+            )}
 
-              {/* Requirements Section */}
-              {course.requirements && course.requirements.length > 0 && (
+            {/* Course Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 border-t border-gray-100">
+              <div className="bg-gray-50 p-4 rounded-lg text-center">
+                <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Duration</p>
+                <p className="font-bold text-lg text-gray-900 mt-1">{course?.duration || "8 weeks"}</p>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-lg text-center">
+                <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Lessons</p>
+                <p className="font-bold text-lg text-gray-900 mt-1">{course?.lessons || "32"}</p>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-lg text-center">
+                <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Students</p>
+                <p className="font-bold text-lg text-gray-900 mt-1">{course?.students?.toLocaleString() || "1,234"}</p>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-lg text-center">
+                <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Level</p>
+                <p className="font-bold text-lg text-gray-900 mt-1">{course?.level || "Beginner"}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'author' && (
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">About the Author</h3>
+            <div className="bg-gray-50 p-6 rounded-lg">
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
                 <div>
-                  <h4 className="font-bold text-lg mb-3 text-gray-900">Requirements</h4>
-                  <div className="grid gap-2">
-                    {course.requirements.map((requirement, index) => (
-                      <div key={index} className="flex items-start">
-                        <svg className="w-5 h-5 text-blue-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span className="text-gray-700 text-base">{requirement}</span>
-                      </div>
-                    ))}
+                  <h4 className="font-bold text-lg text-gray-900">{course?.instructor || "John Smith"}</h4>
+                  <p className="text-gray-600">Senior UI/UX Designer</p>
+                </div>
+              </div>
+              <p className="text-gray-700 leading-relaxed">
+                With over 8 years of experience in design and development, our instructor has worked with leading tech companies and has trained thousands of students worldwide.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'faq' && (
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h3>
+            <div className="space-y-4">
+              <div className="border border-gray-200 rounded-lg p-4">
+                <h4 className="font-medium text-gray-900 mb-2">How long do I have access to the course?</h4>
+                <p className="text-gray-600">You have lifetime access to the course materials once enrolled.</p>
+              </div>
+              <div className="border border-gray-200 rounded-lg p-4">
+                <h4 className="font-medium text-gray-900 mb-2">Is this course suitable for beginners?</h4>
+                <p className="text-gray-600">Yes, this course is designed for all skill levels, including complete beginners.</p>
+              </div>
+              <div className="border border-gray-200 rounded-lg p-4">
+                <h4 className="font-medium text-gray-900 mb-2">Do I get a certificate upon completion?</h4>
+                <p className="text-gray-600">Yes, you will receive a certificate of completion that you can add to your portfolio.</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'announcements' && (
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Course Announcements</h3>
+            <div className="space-y-4">
+              <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
+                <div className="flex">
+                  <div>
+                    <h4 className="font-medium text-blue-900">Course Update</h4>
+                    <p className="text-blue-700 text-sm mt-1">New lessons have been added to Section 3. Check them out!</p>
+                    <p className="text-blue-600 text-xs mt-2">Posted 2 days ago</p>
                   </div>
                 </div>
-              )}
-
-              {/* Course Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-gray-100">
-                <div className="bg-gray-50 p-4 rounded-lg text-center">
-                  <p className="text-xs text-gray-500 uppercase tracking-wide">Duration</p>
-                  <p className="font-bold text-lg text-gray-900">{course.duration}</p>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-lg text-center">
-                  <p className="text-xs text-gray-500 uppercase tracking-wide">Lessons</p>
-                  <p className="font-bold text-lg text-gray-900">{course.lessons}</p>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-lg text-center">
-                  <p className="text-xs text-gray-500 uppercase tracking-wide">Students</p>
-                  <p className="font-bold text-lg text-gray-900">{course.students?.toLocaleString()}</p>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-lg text-center">
-                  <p className="text-xs text-gray-500 uppercase tracking-wide">Level</p>
-                  <p className="font-bold text-lg text-gray-900">{course.level}</p>
+              </div>
+              <div className="bg-green-50 border-l-4 border-green-400 p-4">
+                <div className="flex">
+                  <div>
+                    <h4 className="font-medium text-green-900">Welcome!</h4>
+                    <p className="text-green-700 text-sm mt-1">Welcome to the course! We're excited to have you join us.</p>
+                    <p className="text-green-600 text-xs mt-2">Posted 1 week ago</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         )}
 
-        {activeTab === 'notes' && (
+        {activeTab === 'reviews' && (
           <div>
-            <h3 className="font-bold text-base mb-2 md:text-lg">Lecture Notes</h3>
-            <p className="text-gray-700 text-sm md:text-base">{content.notes}</p>
-          </div>
-        )}
-
-        {activeTab === 'resources' && (
-          <div>
-            <h3 className="font-bold text-base mb-2 md:text-lg">Resources</h3>
-            {content.resources.length > 0 ? (
-              <ul className="space-y-2">
-                {content.resources.map((resource, index) => (
-                  <li key={index} className="flex items-center">
-                    <svg className="w-5 h-5 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                    </svg>
-                    <a 
-                      href={resource} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-purple-600 hover:underline text-sm md:text-base truncate"
-                    >
-                      {resource.split('/').pop()}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-500 text-sm md:text-base">No resources available for this lecture.</p>
-            )}
-          </div>
-        )}
-
-        {activeTab === 'quiz' && (
-          <div>
-            <h3 className="font-bold text-base mb-2 md:text-lg">Quiz</h3>
-            {content.quiz ? (
-              <div>
-                <h4 className="font-medium mb-3 text-sm md:text-base">{content.quiz.title}</h4>
-                <button className="bg-purple-600 text-white px-4 py-3 rounded-lg w-full md:w-auto">
-                  Start Quiz
-                </button>
-              </div>
-            ) : (
-              <p className="text-gray-500 text-sm md:text-base">No quiz available for this lecture.</p>
-            )}
-          </div>
-        )}
-
-        {activeTab === 'schedule' && (
-          <div>
-            <h3 className="font-bold text-base mb-2 md:text-lg">Course Schedule</h3>
-            {course.liveSchedule ? (
-              <div className="space-y-2">
-                <p className="text-gray-700 text-sm md:text-base"><strong>Regular Schedule:</strong> {course.liveSchedule}</p>
-                <p className="text-gray-700 text-sm md:text-base"><strong>Next Session:</strong> {course.upcomingSession}</p>
-              </div>
-            ) : (
-              <div className="bg-gray-100 p-4 rounded-lg">
-                <h4 className="font-medium mb-2 text-sm md:text-base">Self-Paced Learning</h4>
-                <p className="text-gray-600 text-sm md:text-base">This is a self-paced course. You can complete it on your own schedule.</p>
-                <div className="mt-4 grid grid-cols-2 gap-3 md:gap-4">
-                  <div className="bg-white p-3 rounded-lg shadow-sm">
-                    <p className="text-xs text-gray-500 md:text-sm">Total Duration</p>
-                    <p className="font-medium text-sm md:text-base">{course.duration}</p>
-                  </div>
-                  <div className="bg-white p-3 rounded-lg shadow-sm">
-                    <p className="text-xs text-gray-500 md:text-sm">Lessons</p>
-                    <p className="font-medium text-sm md:text-base">{course.lessons}</p>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {activeTab === 'certification' && (
-          <div>
-            <h3 className="font-bold text-xl mb-4 text-gray-900">Certification</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Student Reviews</h3>
             <div className="space-y-6">
-              <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-lg border border-purple-100">
-                <div className="flex items-center mb-4">
-                  <svg className="w-8 h-8 text-purple-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                  </svg>
-                  <h4 className="font-bold text-lg text-gray-900">Certificate of Completion</h4>
+              <div className="flex space-x-4">
+                <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-purple-600 font-medium">A</span>
                 </div>
-                <p className="text-gray-700 text-base mb-4">
-                  Earn a certificate upon successful completion of this course. Our certificates are recognized by industry professionals and can be added to your LinkedIn profile or resume.
-                </p>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h5 className="font-medium text-gray-900 mb-2">What's Included</h5>
-                    <ul className="text-sm text-gray-600 space-y-1">
-                      <li>• Digital certificate</li>
-                      <li>• Verification link</li>
-                      <li>• LinkedIn integration</li>
-                      <li>• Instructor signature</li>
-                    </ul>
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <h4 className="font-medium text-gray-900">Alex Johnson</h4>
+                    <div className="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
                   </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h5 className="font-medium text-gray-900 mb-2">Requirements</h5>
-                    <ul className="text-sm text-gray-600 space-y-1">
-                      <li>• Complete all lessons</li>
-                      <li>• Pass all quizzes (80%+)</li>
-                      <li>• Submit final project</li>
-                      <li>• Course evaluation</li>
-                    </ul>
-                  </div>
+                  <p className="text-gray-600">Great course! Very comprehensive and well-structured. The instructor explains concepts clearly.</p>
+                  <p className="text-gray-400 text-sm mt-2">2 weeks ago</p>
                 </div>
               </div>
-
-              {/* Progress indicator */}
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium text-gray-700">Course Progress</span>
-                  <span className="text-sm text-gray-500">0% Complete</span>
+              
+              <div className="flex space-x-4">
+                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-blue-600 font-medium">S</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-purple-600 h-2 rounded-full" style={{width: '0%'}}></div>
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <h4 className="font-medium text-gray-900">Sarah Wilson</h4>
+                    <div className="flex text-yellow-400">
+                      {[...Array(4)].map((_, i) => (
+                        <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                      <svg className="w-4 h-4 text-gray-300" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <p className="text-gray-600">Good content overall. Could use more practical examples, but definitely worth taking.</p>
+                  <p className="text-gray-400 text-sm mt-2">1 month ago</p>
                 </div>
-                <p className="text-xs text-gray-500 mt-2">Complete the course to unlock your certificate</p>
-              </div>
-
-              {/* Certificate preview */}
-              <div className="border-2 border-dashed border-gray-300 p-8 rounded-lg text-center">
-                <svg className="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                </svg>
-                <h5 className="font-medium text-gray-900 mb-2">Your Certificate Preview</h5>
-                <p className="text-gray-500 text-sm">Complete the course to see your personalized certificate here</p>
               </div>
             </div>
           </div>

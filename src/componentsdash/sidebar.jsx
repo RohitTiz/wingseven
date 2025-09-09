@@ -9,12 +9,11 @@ const menuItems = [
   { label: "Code Challenges", icon: CodeIcon, path: "/dashboard/questions" },
 ];
 
-const Sidebar = ({ open, setOpen, isMobile }) => {
+const Sidebar = ({ open, setOpen, isMobile, isCollapsed, onToggleCollapse }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { profile } = useProfile();
   const [currentProfile, setCurrentProfile] = useState(profile);
-  const [isCollapsed, setIsCollapsed] = useState(false);
 
   // Update local state when profile changes
   useEffect(() => {
@@ -53,10 +52,6 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
     if (isMobile && setOpen) setOpen(false);
   };
 
-  const toggleCollapse = () => {
-    setIsCollapsed(!isCollapsed);
-  };
-
   // For mobile, use the original open prop, for desktop use isCollapsed
   const sidebarOpen = isMobile ? open : !isCollapsed;
 
@@ -85,7 +80,7 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
         {/* Collapse Toggle Button - Always visible on desktop */}
         {!isMobile && (
           <button
-            onClick={toggleCollapse}
+            onClick={onToggleCollapse}
             className="absolute -right-3 top-8 bg-white border border-gray-200 rounded-full w-6 h-6 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-200 z-50 hover:bg-gray-50"
             aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
             style={{ zIndex: 1000 }}

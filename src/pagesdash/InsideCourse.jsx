@@ -78,14 +78,18 @@ const InsideCourse = () => {
       )}
       
       <div 
-        className="flex flex-col md:flex-row gap-4 p-4 bg-[#F6F8FA] min-h-screen"
+        className="flex flex-col md:flex-row gap-6 p-6 bg-[#F6F8FA] min-h-screen"
+        style={{ minHeight: containerHeight }}
       >
         {/* Main content area - increased width for video */}
         <div className="flex-1 flex flex-col overflow-hidden md:w-[70%]">
-          <div className="mb-4" style={{ height: '50vh' }}>
+          {/* Video container with responsive height */}
+          <div className="h-auto md:h-[50vh] bg-white rounded-xl shadow-sm overflow-hidden">
             <VideoContent course={course} selectedVideo={selectedVideo} />
           </div>
-          <div className="flex-1">
+          
+          {/* MoreInfo section with proper margin (20px equivalent) */}
+          <div className="mt-5 flex-1"> {/* mt-5 gives 20px margin top */}
             <MoreInfo 
               course={course} 
               selectedVideo={selectedVideo} 
