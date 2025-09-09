@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 
 // Forgot Password Modal Component
 const ForgotPasswordModal = ({ onClose, onBack }) => {
@@ -174,6 +175,7 @@ const ForgotPasswordModal = ({ onClose, onBack }) => {
 
 // Enhanced Signup Modal Component
 const SignupModal = ({ onClose, onSignUp }) => {
+  const navigate = useNavigate(); // Initialize navigate for redirection
   const [activeTab, setActiveTab] = useState('signup');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -199,6 +201,14 @@ const SignupModal = ({ onClose, onSignUp }) => {
   ];
 
   const handleSignUp = () => {
+    // Check for admin credentials
+    if (email.includes('admin') && password === '1234') {
+      // Redirect to admin page
+      navigate('/admin');
+      onClose(); // Close the modal
+      return;
+    }
+
     if (activeTab === 'signup') {
       if (firstName && lastName && email && phoneNumber && password && confirmPassword && agreeToTerms) {
         if (password !== confirmPassword) {
