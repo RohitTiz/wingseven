@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const MarqueeTestimonials = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { darkMode } = useDarkMode();
   
   useEffect(() => {
     // Trigger animation after component mounts
@@ -84,21 +86,31 @@ const MarqueeTestimonials = () => {
   const duplicatedBottomRow = [...bottomRowTestimonials, ...bottomRowTestimonials];
 
   const TestimonialCard = ({ testimonial }) => (
-    <div className="flex-shrink-0 w-80 mx-4 bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+    <div className={`flex-shrink-0 w-80 mx-4 rounded-xl p-6 shadow-lg border transition-colors duration-300 hover:-translate-y-1 ${
+      darkMode 
+        ? 'bg-dark-card border-dark-border hover:shadow-xl-dark' 
+        : 'bg-light-card border-light-border hover:shadow-xl'
+    }`}>
       <div className="flex items-center mb-4">
         <div className={`w-10 h-10 rounded-full ${testimonial.color} text-white flex items-center justify-center font-bold text-sm`}>
           {testimonial.initials}
         </div>
         <div className="ml-3">
-          <h4 className="font-semibold text-gray-900 text-sm">
+          <h4 className={`font-semibold text-sm transition-colors duration-300 ${
+            darkMode ? 'text-light-text' : 'text-dark-text'
+          }`}>
             {testimonial.name}
           </h4>
-          <p className="text-xs text-gray-500">
+          <p className={`text-xs transition-colors duration-300 ${
+            darkMode ? 'text-gray-400' : 'text-gray-500'
+          }`}>
             {testimonial.title}
           </p>
         </div>
       </div>
-      <p className="text-gray-700 text-sm leading-relaxed line-clamp-4">
+      <p className={`text-sm leading-relaxed line-clamp-4 transition-colors duration-300 ${
+        darkMode ? 'text-gray-300' : 'text-gray-700'
+      }`}>
         "{testimonial.quote}"
       </p>
       <div className="mt-4 flex items-center text-yellow-400">
@@ -112,7 +124,11 @@ const MarqueeTestimonials = () => {
   );
 
   return (
-    <section className="w-full py-16 bg-gradient-to-br from-gray-50 to-white overflow-hidden" style={{ fontFamily: "'Inter', sans-serif" }}>
+    <section className={`w-full py-16 overflow-hidden transition-colors duration-300 ${
+      darkMode 
+        ? 'bg-gradient-to-br from-gray-900 to-gray-800' 
+        : 'bg-gradient-to-br from-gray-50 to-white'
+    }`} style={{ fontFamily: "'Inter', sans-serif" }}>
       {/* Google Font Import */}
       <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -154,17 +170,21 @@ const MarqueeTestimonials = () => {
         .marquee-container:hover .marquee-left {
           animation-play-state: paused;
         }
+        
+        .hover\:shadow-xl-dark:hover {
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        }
       `}</style>
 
       <div className="text-center mb-12 sm:mb-16 md:mb-20">
-        <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-4 sm:mb-6 transition-all duration-700 transform ${
+        <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 transition-all duration-700 transform ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-        }`} style={{ transitionDelay: '200ms' }}>
+        } ${darkMode ? 'text-light-text' : 'text-dark-text'}`} style={{ transitionDelay: '200ms' }}>
           What Our <span className="text-blue-600">Students</span> Say
         </h2>
-        <p className={`text-gray-600 text-base sm:text-lg max-w-2xl mx-auto transition-all duration-700 transform ${
+        <p className={`text-base sm:text-lg max-w-2xl mx-auto transition-all duration-700 transform ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-        }`} style={{ transitionDelay: '400ms' }}>
+        } ${darkMode ? 'text-gray-400' : 'text-gray-600'}`} style={{ transitionDelay: '400ms' }}>
           Discover inspiration and insights through recent reviews from our students
         </p>
       </div>
