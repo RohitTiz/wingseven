@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useDarkMode } from '../context/DarkModeContext';
 import CourseCard from './CourseCard';
 import courses from '../data/courses.json';
 
@@ -34,6 +35,7 @@ const RadioIcon = (props) => (
 );
 
 const CourseSection = () => {
+  const { darkMode } = useDarkMode();
   const [activeFilter, setActiveFilter] = useState('All');
   const [typeFilter, setTypeFilter] = useState('all');
   const [showTypeDropdown, setShowTypeDropdown] = useState(false);
@@ -100,13 +102,22 @@ const CourseSection = () => {
   };
 
   return (
-    <section ref={sectionRef} className="py-20 px-4 sm:px-6 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen">
+    <section 
+      ref={sectionRef} 
+      className={`py-20 px-4 sm:px-6 min-h-screen transition-colors duration-300 ${
+        darkMode 
+          ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-indigo-900' 
+          : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'
+      }`}
+    >
       <div className="max-w-7xl mx-auto">
         {/* Section Header - Updated with your style */}
         <div className="text-center mb-12 sm:mb-16 md:mb-20">
-          <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-4 sm:mb-6 transition-all duration-700 transform ${
+          <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 transition-all duration-700 transform ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-          }`} style={{ transitionDelay: '200ms' }}>
+          } ${darkMode ? 'text-light-text' : 'text-dark-text'}`} 
+          style={{ transitionDelay: '200ms' }}
+          >
             Explore Our <span className="text-blue-600">Courses</span>
           </h2>
         </div>
@@ -126,8 +137,12 @@ const CourseSection = () => {
                 >
                   {/* Magnetic Background Effect */}
                   <div 
-                    className={`absolute inset-0 bg-gradient-to-r from-blue-100 to-purple-100 rounded-2xl transition-all duration-500 ${
+                    className={`absolute inset-0 rounded-2xl transition-all duration-500 ${
                       isHovered ? 'opacity-20 scale-105' : 'opacity-0 scale-100'
+                    } ${
+                      darkMode 
+                        ? 'bg-gradient-to-r from-blue-900 to-purple-900' 
+                        : 'bg-gradient-to-r from-blue-100 to-purple-100'
                     }`}
                     style={{
                       transform: isHovered ? `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)` : 'translate(0, 0)'
@@ -147,7 +162,7 @@ const CourseSection = () => {
                           className={`relative px-6 py-3 rounded-2xl text-sm font-bold transition-all duration-500 transform overflow-hidden group ${
                             isActive
                               ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-2xl shadow-blue-500/30 scale-110'
-                              : 'bg-white/80 backdrop-blur-sm text-gray-700 border-2 border-gray-200 hover:border-blue-300 hover:shadow-lg'
+                              : `${darkMode ? 'bg-gray-800/80 text-light-text border-2 border-gray-700 hover:border-blue-500' : 'bg-white/80 text-dark-text border-2 border-gray-200 hover:border-blue-300'} backdrop-blur-sm hover:shadow-lg`
                           } ${
                             shouldShow 
                               ? 'opacity-100 translate-y-0 scale-100' 
@@ -180,10 +195,16 @@ const CourseSection = () => {
               <div className="relative">
                 <button
                   onClick={() => setShowTypeDropdown(!showTypeDropdown)}
-                  className="flex items-center space-x-3 px-6 py-4 bg-white/90 backdrop-blur-sm border-2 border-gray-200 rounded-2xl hover:border-blue-300 hover:shadow-xl transition-all duration-300 transform hover:scale-105 group"
+                  className={`flex items-center space-x-3 px-6 py-4 backdrop-blur-sm border-2 rounded-2xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 group ${
+                    darkMode 
+                      ? 'bg-gray-800/90 border-gray-700 hover:border-blue-500' 
+                      : 'bg-white/90 border-gray-200 hover:border-blue-300'
+                  }`}
                 >
                   <selectedTypeFilter.icon className="w-5 h-5 text-blue-600 group-hover:scale-110 transition-transform duration-300" />
-                  <span className="text-sm font-bold text-gray-700 tracking-wider">
+                  <span className={`text-sm font-bold tracking-wider ${
+                    darkMode ? 'text-light-text' : 'text-dark-text'
+                  }`}>
                     {selectedTypeFilter.label.toUpperCase()}
                   </span>
                   <ChevronDownIcon className={`w-5 h-5 text-blue-600 transition-all duration-300 ${
@@ -192,7 +213,11 @@ const CourseSection = () => {
                 </button>
 
                 {showTypeDropdown && (
-                  <div className="absolute top-full mt-3 w-64 bg-white/95 backdrop-blur-lg border-2 border-gray-100 rounded-2xl shadow-2xl z-20 overflow-hidden animate-in slide-in-from-top-2 duration-300">
+                  <div className={`absolute top-full mt-3 w-64 backdrop-blur-lg border-2 rounded-2xl shadow-2xl z-20 overflow-hidden animate-in slide-in-from-top-2 duration-300 ${
+                    darkMode 
+                      ? 'bg-gray-800/95 border-gray-700' 
+                      : 'bg-white/95 border-gray-100'
+                  }`}>
                     {typeFilters.map((filter, index) => (
                       <button
                         key={filter.value}
@@ -203,13 +228,19 @@ const CourseSection = () => {
                         }}
                         className={`w-full flex items-center space-x-4 px-6 py-4 text-left transition-all duration-300 transform hover:scale-[1.02] ${
                           typeFilter === filter.value 
-                            ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 border-l-4 border-blue-500' 
-                            : 'text-gray-700 hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50'
+                            ? `${darkMode 
+                                ? 'bg-gradient-to-r from-blue-900/30 to-purple-900/30 text-blue-300 border-l-4 border-blue-500' 
+                                : 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 border-l-4 border-blue-500'}`
+                            : `${darkMode 
+                                ? 'text-light-text hover:bg-gradient-to-r hover:from-gray-700/50 hover:to-blue-900/30' 
+                                : 'text-dark-text hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50'}`
                         }`}
                         style={{ animationDelay: `${index * 50}ms` }}
                       >
                         <filter.icon className={`w-5 h-5 transition-all duration-300 ${
-                          typeFilter === filter.value ? 'text-blue-600 scale-110' : 'text-gray-500'
+                          typeFilter === filter.value ? 'text-blue-600 scale-110' : (
+                            darkMode ? 'text-gray-400' : 'text-gray-500'
+                          )
                         }`} />
                         <span className="text-sm font-bold tracking-wider">{filter.label.toUpperCase()}</span>
                       </button>
@@ -231,7 +262,7 @@ const CourseSection = () => {
                 style={{ animationDelay: `${index * 150}ms` }}
               >
                 <div className="w-full max-w-[340px]">
-                  <CourseCard course={course} />
+                  <CourseCard course={course} darkMode={darkMode} />
                 </div>
               </div>
             ))}
@@ -241,13 +272,17 @@ const CourseSection = () => {
         {/* Empty State */}
         {filteredCourses.length === 0 && (
           <div className="text-center py-16 w-full animate-in fade-in duration-500">
-            <div className="text-gray-300 mb-6">
+            <div className={`mb-6 ${darkMode ? 'text-gray-600' : 'text-gray-300'}`}>
               <BookOpenIcon className="w-20 h-20 mx-auto" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-600 mb-3">
+            <h3 className={`text-2xl font-bold mb-3 ${
+              darkMode ? 'text-light-text' : 'text-dark-text'
+            }`}>
               No courses found
             </h3>
-            <p className="text-gray-500 text-lg">
+            <p className={`text-lg ${
+              darkMode ? 'text-gray-400' : 'text-gray-500'
+            }`}>
               Try adjusting your filters to discover our offerings
             </p>
           </div>
@@ -261,14 +296,18 @@ const CourseSection = () => {
                 onClick={() => setShowAllCourses(!showAllCourses)}
                 className={`relative px-10 py-4 font-bold rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-xl overflow-hidden group ${
                   showAllCourses 
-                    ? 'bg-gradient-to-r from-gray-200 to-gray-300 text-gray-700 hover:from-gray-300 hover:to-gray-400 shadow-gray-300/50' 
+                    ? `${darkMode 
+                        ? 'bg-gradient-to-r from-gray-700 to-gray-800 text-gray-300 hover:from-gray-600 hover:to-gray-700 shadow-gray-800/50' 
+                        : 'bg-gradient-to-r from-gray-200 to-gray-300 text-gray-700 hover:from-gray-300 hover:to-gray-400 shadow-gray-300/50'}`
                     : 'bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 text-white hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 shadow-blue-500/50'
                 }`}
               >
                 {/* Animated Background */}
                 <div className={`absolute inset-0 bg-gradient-to-r transition-transform duration-700 ${
                   showAllCourses
-                    ? 'from-gray-300 to-gray-400 translate-x-0'
+                    ? `${darkMode 
+                        ? 'from-gray-600 to-gray-700 translate-x-0' 
+                        : 'from-gray-300 to-gray-400 translate-x-0'}`
                     : 'from-blue-700 to-purple-700 -translate-x-full group-hover:translate-x-0'
                 }`}></div>
                 

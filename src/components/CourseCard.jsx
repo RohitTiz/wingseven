@@ -1,9 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import EnrollNowButton from './EnrollNowButton';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const CourseCard = ({ course }) => {
   const navigate = useNavigate();
+  const { darkMode } = useDarkMode();
 
   // Handle double click navigation
   const handleCourseClick = () => {
@@ -17,7 +18,11 @@ const CourseCard = ({ course }) => {
 
   return (
     <div 
-      className="bg-white rounded-xl shadow-2xl overflow-hidden hover:shadow-3xl hover:scale-105 transition-all duration-300 border border-gray-200 flex flex-col h-full w-full max-w-[26.4rem] mx-auto"
+      className={`rounded-xl shadow-2xl overflow-hidden hover:shadow-3xl hover:scale-105 transition-all duration-300 border flex flex-col h-full w-full max-w-[26.4rem] mx-auto transition-colors duration-300 ${
+        darkMode 
+          ? 'bg-dark-card border-dark-border hover:shadow-dark' 
+          : 'bg-white border-gray-200 hover:shadow-light'
+      }`}
       onDoubleClick={handleCourseClick}
     >
       {/* Image Section - now clickable */}
@@ -56,14 +61,20 @@ const CourseCard = ({ course }) => {
       </div>
 
       {/* Content Section */}
-      <div className="p-4 flex flex-col flex-grow text-gray-800">
+      <div className={`p-4 flex flex-col flex-grow transition-colors duration-300 ${
+        darkMode ? 'text-light-text' : 'text-gray-800'
+      }`}>
         {/* Course Title - Enhanced */}
-        <h3 className="font-bold text-lg mb-2 text-gray-900 leading-tight">
+        <h3 className={`font-bold text-lg mb-2 leading-tight transition-colors duration-300 ${
+          darkMode ? 'text-light-text' : 'text-gray-900'
+        }`}>
           {course.title}
         </h3>
         
         {/* Course Description */}
-        <p className="text-gray-600 text-sm mb-2 line-clamp-2 leading-relaxed">
+        <p className={`text-sm mb-2 line-clamp-2 leading-relaxed transition-colors duration-300 ${
+          darkMode ? 'text-gray-300' : 'text-gray-600'
+        }`}>
           {course.description}
         </p>
         
@@ -73,10 +84,14 @@ const CourseCard = ({ course }) => {
         {/* Course Stats */}
         <div className="flex justify-between items-center mb-2 text-sm">
           <div className="flex items-center">
-            <div className="flex items-center text-gray-500">
+            <div className={`flex items-center transition-colors duration-300 ${
+              darkMode ? 'text-gray-400' : 'text-gray-500'
+            }`}>
               {/* Optional difficulty level */}
             </div>
-            <div className="flex items-center space-x-1 text-gray-500">
+            <div className={`flex items-center space-x-1 transition-colors duration-300 ${
+              darkMode ? 'text-gray-400' : 'text-gray-500'
+            }`}>
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"/>
               </svg>
@@ -86,12 +101,18 @@ const CourseCard = ({ course }) => {
           
           <div className="flex items-center space-x-1">
             <span className="text-yellow-400 text-lg">★</span>
-            <span className="text-sm font-medium text-gray-800">{course.rating || '4.8'}</span>
+            <span className={`text-sm font-medium transition-colors duration-300 ${
+              darkMode ? 'text-light-text' : 'text-gray-800'
+            }`}>
+              {course.rating || '4.8'}
+            </span>
           </div>
         </div>
 
         {/* Divider */}
-        <div className="border-t border-gray-200 w-full mb-2"></div>
+        <div className={`border-t w-full mb-2 transition-colors duration-300 ${
+          darkMode ? 'border-dark-border' : 'border-gray-200'
+        }`}></div>
 
         {/* Price Section - Enhanced */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-2 sm:space-y-0">
@@ -101,7 +122,9 @@ const CourseCard = ({ course }) => {
                 {course.price === 0 ? 'Free' : `₹${course.price}`}
               </span>
               {course.originalPrice && course.originalPrice > course.price && (
-                <span className="text-sm text-gray-500 line-through">
+                <span className={`text-sm transition-colors duration-300 ${
+                  darkMode ? 'text-gray-400' : 'text-gray-500'
+                } line-through`}>
                   ₹{course.originalPrice}
                 </span>
               )}

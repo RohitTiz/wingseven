@@ -1,6 +1,9 @@
 import React from 'react';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const FeatureSection = () => {
+  const { darkMode } = useDarkMode();
+  
   // Array of feature objects to be displayed as cards
   const features = [
     {
@@ -26,8 +29,12 @@ const FeatureSection = () => {
   ];
 
   return (
-    <section className="w-full bg-white pt-[100px] pb-[60px] flex justify-center font-roboto">
-      <div className="mt-[-120px] flex flex-wrap justify-center items-center gap-5 w-[1160px] max-w-[95%] bg-white shadow-[0px_5px_30px_rgba(0,0,0,0.05)] rounded-xl p-[30px_20px] z-10 relative">
+    <section className={`w-full pt-[100px] pb-[60px] flex justify-center font-roboto transition-colors duration-300 ${
+      darkMode ? 'dark-bg' : 'light-bg'
+    }`}>
+      <div className={`mt-[-120px] flex flex-wrap justify-center items-center gap-5 w-[1160px] max-w-[95%] shadow-[0px_5px_30px_rgba(0,0,0,0.05)] rounded-xl p-[30px_20px] z-10 relative transition-colors duration-300 ${
+      darkMode ? 'dark-card' : 'light-card'
+    }`}>
         {features.map((feature, index) => (
           <div 
             key={index} 
@@ -41,12 +48,16 @@ const FeatureSection = () => {
             />
             
             {/* Feature title */}
-            <div className="text-xl font-semibold mb-1.5 text-gray-800">
+            <div className={`text-xl font-semibold mb-1.5 transition-colors duration-300 ${
+              darkMode ? 'light-text' : 'dark-text'
+            }`}>
               {feature.title}
             </div>
             
             {/* Feature subtitle */}
-            <div className="text-sm text-gray-600">
+            <div className={`text-sm transition-colors duration-300 ${
+              darkMode ? 'light-text' : 'dark-text'
+            }`}>
               {feature.subtitle}
             </div>
           </div>
