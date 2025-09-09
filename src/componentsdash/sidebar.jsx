@@ -61,167 +61,190 @@ const Sidebar = ({ open, setOpen, isMobile }) => {
   const sidebarOpen = isMobile ? open : !isCollapsed;
 
   return (
-    <div
-      className={`flex flex-col h-full bg-white shadow-sm border-r border-gray-100 transition-all duration-300 ${
-        sidebarOpen ? "w-64" : "w-16"
-      } relative`}
-      style={isMobile ? { 
-        width: '100%', 
-        maxWidth: 320, 
-        minWidth: 240, 
-        height: '100vh', 
-        padding: '10px',
-        backgroundColor: 'rgba(246, 248, 250, 255)'
-      } : {
-        padding: '10px',
-        backgroundColor: 'rgba(246, 248, 250, 255)'
-      }}
-    >
-      {/* Collapse Toggle Button - Only show on desktop */}
-      {!isMobile && (
-        <button
-          onClick={toggleCollapse}
-          className="absolute -right-3 top-8 bg-white border border-gray-200 rounded-full w-6 h-6 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-200 z-10 hover:bg-gray-50"
-        >
-          <svg 
-            className={`w-3 h-3 text-gray-600 transition-transform duration-200 ${isCollapsed ? 'rotate-180' : ''}`} 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-      )}
-
-      {/* Logo Section */}
-      <div className="flex flex-col px-4 pt-6 pb-4 border-b border-gray-50 bg-white rounded-lg">
+    <>
+      {/* Mobile overlay */}
+      {isMobile && open && (
         <div 
-          className="flex items-center gap-3 cursor-pointer group"
-          onClick={handleLogoClick}
-        >
-          <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl w-10 h-10 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
-            <span className="text-white text-xl font-bold">C</span>
-          </div>
-          {sidebarOpen && (
-            <div className="flex flex-col">
-              <span className="text-lg font-bold text-gray-900">
-                Code Brain
-              </span>
-              <span className="text-xs text-gray-500 -mt-1">
-                Learning Platform
-              </span>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Profile Section */}
-      {sidebarOpen && (
-        <div className="px-4 py-4 border-b border-gray-50 bg-white rounded-lg mt-2">
-          <div 
-            className="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors group"
-            onClick={handleProfileClick}
-          >
-            <div className="relative">
-              <img
-                src={currentProfile.profileImage}
-                alt="Profile"
-                className="w-10 h-10 rounded-full object-cover border-2 border-gray-100 group-hover:border-purple-200 transition-colors"
-              />
-              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-gray-900 truncate">{currentProfile.name}</p>
-              <p className="text-xs text-gray-500 truncate">Student</p>
-            </div>
-            <svg className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-          </div>
-        </div>
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setOpen(false)}
+        />
       )}
-
-      {/* Navigation Menu */}
-      <nav className="flex-1 px-3 py-4 space-y-1 mt-2 bg-white rounded-lg">
-        {menuItems.map((item) => {
-          const isActive = location.pathname === item.path;
-          const IconComponent = item.icon;
-          return (
-            <Link
-              key={item.label}
-              to={item.path}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group relative
-                ${isActive 
-                  ? "bg-purple-50 text-purple-700 shadow-sm" 
-                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                }
-              `}
-              onClick={handleMenuClick}
+      
+      <div
+        className={`flex flex-col h-full bg-white shadow-sm border-r border-gray-100 transition-all duration-300 ${
+          isMobile 
+            ? `fixed top-0 left-0 z-50 transform ${open ? 'translate-x-0' : '-translate-x-full'} lg:relative lg:translate-x-0`
+            : "relative"
+        } ${sidebarOpen ? "w-64" : "w-16"}`}
+        style={{
+          backgroundColor: 'rgba(246, 248, 250, 255)',
+          height: isMobile ? '100vh' : '100%',
+          overflowY: 'auto'
+        }}
+      >
+        {/* Collapse Toggle Button - Only show on desktop */}
+        {!isMobile && (
+          <button
+            onClick={toggleCollapse}
+            className="absolute -right-3 top-8 bg-white border border-gray-200 rounded-full w-6 h-6 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-200 z-10 hover:bg-gray-50"
+            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            <svg 
+              className={`w-3 h-3 text-gray-600 transition-transform duration-200 ${isCollapsed ? 'rotate-180' : ''}`} 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
             >
-              {/* Active indicator */}
-              {isActive && (
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-purple-600 rounded-r-full"></div>
-              )}
-              
-              <div className={`p-1.5 rounded-lg transition-colors ${
-                isActive ? "bg-purple-100" : "bg-transparent group-hover:bg-gray-100"
-              }`}>
-                <IconComponent active={isActive} />
-              </div>
-              
-              {sidebarOpen && (
-                <span className="text-sm font-medium flex-1">
-                  {item.label}
-                </span>
-              )}
-              
-              {/* Tooltip for collapsed state */}
-              {!sidebarOpen && (
-                <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
-                  {item.label}
-                </div>
-              )}
-            </Link>
-          );
-        })}
-      </nav>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+        )}
 
-      {/* Bottom Section */}
-      <div className="px-3 pb-4 mt-auto space-y-1 bg-white rounded-lg mt-2">
-        <div
-          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 cursor-pointer transition-all group relative"
-          onClick={handleMenuClick}
-        >
-          <div className="p-1.5 rounded-lg group-hover:bg-gray-100 transition-colors">
-            <SettingsIcon />
-          </div>
-          {sidebarOpen && <span className="text-sm font-medium">Settings</span>}
-          
-          {!sidebarOpen && (
-            <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
-              Settings
+        {/* Mobile close button */}
+        {isMobile && (
+          <button
+            onClick={() => setOpen(false)}
+            className="absolute top-4 right-4 p-1 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors lg:hidden"
+            aria-label="Close sidebar"
+          >
+            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        )}
+
+        {/* Logo Section */}
+        <div className="flex flex-col px-4 pt-6 pb-4 border-b border-gray-50 bg-white rounded-lg">
+          <div 
+            className="flex items-center gap-3 cursor-pointer group"
+            onClick={handleLogoClick}
+          >
+            <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl w-10 h-10 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow flex-shrink-0">
+              <span className="text-white text-xl font-bold">C</span>
             </div>
-          )}
+            {sidebarOpen && (
+              <div className="flex flex-col min-w-0">
+                <span className="text-lg font-bold text-gray-900 truncate">
+                  Code Brain
+                </span>
+                <span className="text-xs text-gray-500 -mt-1 truncate">
+                  Learning Platform
+                </span>
+              </div>
+            )}
+          </div>
         </div>
-        
-        <div
-          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 cursor-pointer transition-all group relative"
-          onClick={handleMenuClick}
-        >
-          <div className="p-1.5 rounded-lg group-hover:bg-gray-100 transition-colors">
-            <SupportIcon />
-          </div>
-          {sidebarOpen && <span className="text-sm font-medium">Support</span>}
-          
-          {!sidebarOpen && (
-            <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
-              Support
+
+        {/* Profile Section */}
+        {sidebarOpen && (
+          <div className="px-4 py-4 border-b border-gray-50 bg-white rounded-lg mt-2">
+            <div 
+              className="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors group"
+              onClick={handleProfileClick}
+            >
+              <div className="relative flex-shrink-0">
+                <img
+                  src={currentProfile.profileImage}
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full object-cover border-2 border-gray-100 group-hover:border-purple-200 transition-colors"
+                  onError={(e) => {
+                    e.target.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0QxRDFEMSI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6bTAgM2MyLjIxIDAgNCAxLjc5IDQgNHMtMS43OSA0LTQgNC00LTEuNzktNC00IDEuNzktNCA0LTR6bTAgMTcuMDJjLTMuMzMgMC02LjI4LTEuNzEtOC02LjAyIDIuMDUtMy4xNiA1LjI2LTUgOC41OC01IDMuMzIgMCA2LjUzIDEuODQgOC41OCA1LTIuMDUgMy4zMS01LjI2IDUuMDItOC41OCA1LjAyeiIvPjwvc3ZnPg==";
+                  }}
+                />
+                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-gray-900 truncate">{currentProfile.name || "User"}</p>
+                <p className="text-xs text-gray-500 truncate">Student</p>
+              </div>
+              <svg className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+              </svg>
             </div>
-          )}
+          </div>
+        )}
+
+        {/* Navigation Menu */}
+        <nav className="flex-1 px-3 py-4 space-y-1 mt-2 bg-white rounded-lg">
+          {menuItems.map((item) => {
+            const isActive = location.pathname === item.path;
+            const IconComponent = item.icon;
+            return (
+              <Link
+                key={item.label}
+                to={item.path}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group relative
+                  ${isActive 
+                    ? "bg-purple-50 text-purple-700 shadow-sm" 
+                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                  }
+                `}
+                onClick={handleMenuClick}
+              >
+                {/* Active indicator */}
+                {isActive && (
+                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-purple-600 rounded-r-full"></div>
+                )}
+                
+                <div className={`p-1.5 rounded-lg transition-colors flex-shrink-0 ${
+                  isActive ? "bg-purple-100" : "bg-transparent group-hover:bg-gray-100"
+                }`}>
+                  <IconComponent active={isActive} />
+                </div>
+                
+                {sidebarOpen && (
+                  <span className="text-sm font-medium flex-1 truncate">
+                    {item.label}
+                  </span>
+                )}
+                
+                {/* Tooltip for collapsed state */}
+                {!sidebarOpen && (
+                  <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
+                    {item.label}
+                  </div>
+                )}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Bottom Section */}
+        <div className="px-3 pb-4 mt-auto space-y-1 bg-white rounded-lg mt-2">
+          <div
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 cursor-pointer transition-all group relative"
+            onClick={handleMenuClick}
+          >
+            <div className="p-1.5 rounded-lg group-hover:bg-gray-100 transition-colors flex-shrink-0">
+              <SettingsIcon />
+            </div>
+            {sidebarOpen && <span className="text-sm font-medium truncate">Settings</span>}
+            
+            {!sidebarOpen && (
+              <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
+                Settings
+              </div>
+            )}
+          </div>
+          
+          <div
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 cursor-pointer transition-all group relative"
+            onClick={handleMenuClick}
+          >
+            <div className="p-1.5 rounded-lg group-hover:bg-gray-100 transition-colors flex-shrink-0">
+              <SupportIcon />
+            </div>
+            {sidebarOpen && <span className="text-sm font-medium truncate">Support</span>}
+            
+            {!sidebarOpen && (
+              <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
+                Support
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
