@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthSection from '../components/AuthSection';
-import BlogCard from '../components/BlogCard';
-import blogData from '../data/blogdata';
 import Footer from '../components/Footer';
+import BlogCard from '../components/BlogCard';
+import blogData from '../data/blogdata'; // Import your external data
 
+// BlogPage Component
 function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
 
-  // Check if device is mobile
   useEffect(() => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 1024);
@@ -29,14 +30,10 @@ function BlogPage() {
     setIsVisible(true);
   }, []);
 
-  const categories = [
-    { id: 'all', name: 'All', icon: '◆' },
-    { id: 'ai', name: 'AI/ML', icon: '∞' },
-    { id: 'web', name: 'Web Dev', icon: '⟨/⟩' },
-    { id: 'blockchain', name: 'Web3', icon: '◊' },
-    { id: 'mobile', name: 'Mobile', icon: '◈' }
-  ];
+  // Use categories from imported blogData
+  const categories = blogData.categories;
 
+  // Use articles from imported blogData
   const featuredArticles = blogData.articles.filter(article => article.featured);
   const articles = blogData.articles.filter(article => !article.featured);
 
@@ -46,6 +43,10 @@ function BlogPage() {
                          article.subtitle.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  const handleCardClick = (articleId) => {
+    navigate(`/specializations/${articleId}`);
+  };
 
   const MobileCategorySelector = () => (
     <div className="lg:hidden mb-8 px-4">
@@ -68,11 +69,11 @@ function BlogPage() {
     <>
       <AuthSection />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-gray-900 overflow-hidden">
-        {/* Hero Section with Parallax Background - Adjusted to match CoursePage height */}
+        {/* Hero Section */}
         <section className="relative py-12 md:py-20 overflow-hidden bg-fixed bg-center bg-cover" 
           style={{ 
             backgroundImage: `url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')`,
-            minHeight: '35vh' // Changed from 50vh to 35vh to match CoursePage
+            minHeight: '35vh'
           }}>
           <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-indigo-900/80"></div>
           <div className="container mx-auto px-4 text-center relative z-10 flex flex-col justify-center h-full">
@@ -98,9 +99,72 @@ function BlogPage() {
         <div className="relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12">
             <MobileCategorySelector />
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-              {/* Left Sidebar - Filters */}
-              <div className="hidden lg:block lg:col-span-3">
+            
+            <div className="flex flex-col lg:flex-row gap-8">
+              {/* Main Content - Centered Cards */}
+              <div className="w-full lg:w-9/12">
+                {selectedCategory === 'all' && featuredArticles.length > 0 && (
+                  <div className="mb-12">
+                    <h2 className="text-3xl font-semibold text-gray-900 mb-6">Featured Posts</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {featuredArticles.map((article, index) => (
+                        <div
+                          key={article.id}
+                          className="flex justify-center"
+                        >
+                          <div className="block w-full transform hover:scale-[1.02] transition-all duration-500"
+                            style={{ animationDelay: `${index * 0.2}s` }}>
+                            <BlogCard 
+                              article={article} 
+                              categories={categories} 
+                              isFeatured={true} 
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="mb-12">
+                  <h2 className="text-3xl font-semibold text-gray-900 mb-6">
+                    {selectedCategory === 'all' ? 'Latest Posts' : categories.find(c => c.id === selectedCategory)?.name}
+                  </h2>
+                  {filteredArticles.length === 0 ? (
+                    <div className="text-center py-20">
+                      <div className="text-6xl mb-6 animate-bounce">🔍</div>
+                      <p className="text-2xl text-gray-800 font-medium mb-2">No articles match your search</p>
+                      <p className="text-lg text-gray-600">Try different keywords or categories</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {filteredArticles.map((article, index) => (
+                        <div
+                          key={article.id}
+                          className="flex justify-center"
+                        >
+                          <div className="block w-full transform hover:scale-[1.02] transition-all duration-500"
+                            style={{ animationDelay: `${index * 0.1}s` }}>
+                            <BlogCard 
+                              article={article} 
+                              categories={categories} 
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div className="text-center mt-12">
+                  <button className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105">
+                    Load More Posts
+                  </button>
+                </div>
+              </div>
+
+              {/* Right Sidebar - Categories */}
+              <div className="w-full lg:w-3/12">
                 <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 border border-blue-200/50 shadow-lg sticky top-4">
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">Categories</h3>
                   <div className="space-y-3">
@@ -122,106 +186,33 @@ function BlogPage() {
                   </div>
                 </div>
               </div>
-
-              {/* Main Content - Centered Cards */}
-              <div className="col-span-1 lg:col-span-6">
-                {selectedCategory === 'all' && featuredArticles.length > 0 && (
-                  <div className="mb-12">
-                    <h2 className="text-3xl font-semibold text-gray-900 mb-6">Featured Posts</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                      {featuredArticles.map((article, index) => (
-                        <div
-                          key={article.id}
-                          className={`mb-6 md:mb-0 ${index % 2 === 0 ? 'md:mr-5' : 'md:ml-5'}`}
-                        >
-                          <Link
-                            to={`/specializations/${article.id}`}
-                            className="block transform hover:scale-105 transition-all duration-500"
-                            style={{ animationDelay: `${index * 0.2}s` }}
-                          >
-                            <BlogCard article={article} categories={categories} isFeatured={true} />
-                          </Link>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <div className="mb-12">
-                  <h2 className="text-3xl font-semibold text-gray-900 mb-6">
-                    {selectedCategory === 'all' ? 'Latest Posts' : categories.find(c => c.id === selectedCategory)?.name}
-                  </h2>
-                  {filteredArticles.length === 0 ? (
-                    <div className="text-center py-20">
-                      <div className="text-6xl mb-6 animate-bounce">🔍</div>
-                      <p className="text-2xl text-gray-800 font-medium mb-2">No articles match your search</p>
-                      <p className="text-lg text-gray-600">Try different keywords or categories</p>
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                      {filteredArticles.map((article, index) => (
-                        <div
-                          key={article.id}
-                          className={`mb-6 md:mb-0 ${index % 2 === 0 ? 'md:mr-5' : 'md:ml-5'}`}
-                        >
-                          <Link
-                            to={`/specializations/${article.id}`}
-                            className="block transform hover:scale-105 transition-all duration-500"
-                            style={{ animationDelay: `${index * 0.1}s` }}
-                          >
-                            <BlogCard article={article} categories={categories} />
-                          </Link>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                <div className="text-center mt-12">
-                  <button className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105">
-                    Load More Posts
-                  </button>
-                </div>
-              </div>
-
-              {/* Right Sidebar - Removed the duplicate filter section */}
-              <div className="hidden lg:block lg:col-span-3">
-                {/* You can add other content here if needed, like popular posts, tags, etc. */}
-              </div>
             </div>
           </div>
         </div>
 
-        <Footer />
-
         <style>
-{`
-  @keyframes blob {
-    0% {
-      transform: translate(0px, 0px) scale(1);
-    }
-    33% {
-      transform: translate(30px, -50px) scale(1.1);
-    }
-    66% {
-      transform: translate(-20px, 20px) scale(0.9);
-    }
-    100% {
-      transform: translate(0px, 0px) scale(1);
-    }
-  }
-  .animate-blob {
-    animation: blob 7s infinite;
-  }
-  .animation-delay-2000 {
-    animation-delay: 2s;
-  }
-  .animation-delay-4000 {
-    animation-delay: 4s;
-  }
-`}
+          {`
+            .blog-card {
+              max-width: 100%;
+              margin: 0 auto;
+            }
+            
+            @media (min-width: 1024px) {
+              .blog-card {
+                max-width: 21rem;
+              }
+            }
+            
+            .line-clamp-2 {
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+            }
+          `}
         </style>
       </div>
+      <Footer />
     </>
   );
 }

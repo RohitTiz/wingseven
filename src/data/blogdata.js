@@ -48,7 +48,7 @@ const blogData = {
       gradient: "from-amber-100 via-orange-100 to-red-100",
       views: "8.7k",
       likes: "456",
-      featured: false,
+      featured: true,
       image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=350&h=200&fit=crop&auto=format",
       tags: ["React", "JavaScript", "Frontend", "Hooks", "Modern Web"]
     },
