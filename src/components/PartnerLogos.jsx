@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const logos = [
   {
@@ -25,6 +26,7 @@ const logos = [
 
 const PartnerLogos = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { darkMode } = useDarkMode();
 
   useEffect(() => {
     // Trigger animation after component mounts
@@ -32,18 +34,24 @@ const PartnerLogos = () => {
   }, []);
 
   return (
-    <section className="relative py-20 px-4 bg-gradient-to-br from-white via-slate-100 to-slate-200 font-[Roboto,sans-serif] overflow-hidden">
+    <section className={`relative py-20 px-4 font-[Roboto,sans-serif] overflow-hidden transition-colors duration-300 ${
+      darkMode 
+        ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700' 
+        : 'bg-gradient-to-br from-white via-slate-100 to-slate-200'
+    }`}>
       {/* Heading with the requested style */}
       <div className="text-center mb-12 sm:mb-16 md:mb-20">
-        <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-4 sm:mb-6 transition-all duration-700 transform ${
+        <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 transition-all duration-700 transform ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-        }`} style={{ transitionDelay: '200ms' }}>
+        } ${darkMode ? 'text-light-text' : 'text-dark-text'}`} 
+        style={{ transitionDelay: '200ms' }}>
           Learn From The<br />
           World's <span className="text-blue-600">Leading Experts</span>
         </h2>
-        <p className={`text-lg sm:text-xl text-gray-600 transition-all duration-700 transform ${
+        <p className={`text-lg sm:text-xl transition-all duration-700 transform ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-        }`} style={{ transitionDelay: '400ms' }}>
+        } ${darkMode ? 'text-light-text' : 'text-dark-text'}`} 
+        style={{ transitionDelay: '400ms' }}>
           Our platform features knowledge from the world's top universities and companies.
         </p>
       </div>
@@ -59,7 +67,9 @@ const PartnerLogos = () => {
               key={index}
               src={logo.src}
               alt={logo.alt}
-              className="h-14 sm:h-16 object-contain drop-shadow-md"  // Removed grayscale classes
+              className={`h-14 sm:h-16 object-contain transition-colors duration-300 ${
+                darkMode ? 'drop-shadow-lg' : 'drop-shadow-md'
+              }`}
             />
           ))}
         </div>

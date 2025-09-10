@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const WhyJoinSection = () => {
+  const { darkMode } = useDarkMode();
   const [isVisible, setIsVisible] = useState(false);
   const features = [
     {
@@ -43,29 +45,43 @@ const WhyJoinSection = () => {
   return (
     <section
       id="why-join"
-      className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50 px-4 py-20 relative overflow-hidden"
+      className={`min-h-screen w-full flex items-center justify-center px-4 py-20 relative overflow-hidden transition-colors duration-300 ${
+        darkMode 
+          ? 'bg-gradient-to-br from-gray-900 to-gray-800' 
+          : 'bg-gradient-to-br from-gray-50 to-blue-50'
+      }`}
     >
       {/* Futuristic background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-10"></div>
-        <div className="absolute bottom-1/3 -right-20 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-10"></div>
-        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-teal-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-5 transform -translate-x-1/2 -translate-y-1/2"></div>
+        <div className={`absolute top-1/4 -left-20 w-96 h-96 rounded-full mix-blend-multiply filter blur-[100px] opacity-10 ${
+          darkMode ? 'bg-blue-800' : 'bg-blue-400'
+        }`}></div>
+        <div className={`absolute bottom-1/3 -right-20 w-96 h-96 rounded-full mix-blend-multiply filter blur-[100px] opacity-10 ${
+          darkMode ? 'bg-purple-800' : 'bg-purple-400'
+        }`}></div>
+        <div className={`absolute top-1/2 left-1/2 w-64 h-64 rounded-full mix-blend-multiply filter blur-[80px] opacity-5 transform -translate-x-1/2 -translate-y-1/2 ${
+          darkMode ? 'bg-teal-800' : 'bg-teal-300'
+        }`}></div>
       </div>
 
       {/* Grid lines background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div className={`absolute inset-0 bg-[size:24px_24px] ${
+        darkMode 
+          ? 'bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)]' 
+          : 'bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)]'
+      }`}></div>
 
       <div className="relative z-10 max-w-7xl w-full">
         {/* Header Section - Updated with animation */}
         <div className="text-center mb-12 sm:mb-16 md:mb-20">
-          <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-4 sm:mb-6 transition-all duration-700 transform ${
+          <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 transition-all duration-700 transform ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-          }`} style={{ transitionDelay: '200ms' }}>
+          } ${darkMode ? 'text-light-text' : 'text-dark-text'}`} style={{ transitionDelay: '200ms' }}>
             Why Join Our <span className="text-blue-600">CS Courses</span>?
           </h2>
-          <p className={`text-xl text-gray-600 max-w-3xl mx-auto transition-all duration-700 transform ${
+          <p className={`text-xl max-w-3xl mx-auto transition-all duration-700 transform ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-          }`} style={{ transitionDelay: '400ms' }}>
+          } ${darkMode ? 'text-light-text' : 'text-dark-text'}`} style={{ transitionDelay: '400ms' }}>
             Transform your career with the most comprehensive and industry-relevant computer science education
           </p>
         </div>
@@ -81,9 +97,21 @@ const WhyJoinSection = () => {
               />
               
               {/* Floating tech elements */}
-              <div className="absolute top-20 left-10 w-16 h-16 rounded-full bg-blue-500/10 backdrop-blur-sm border border-blue-300/30 animate-float"></div>
-              <div className="absolute bottom-20 right-10 w-24 h-24 rounded-lg bg-purple-500/10 backdrop-blur-sm border border-purple-300/30 animate-float-delay"></div>
-              <div className="absolute top-1/3 right-1/4 w-12 h-12 rounded-full bg-teal-500/10 backdrop-blur-sm border border-teal-300/30 animate-float-delay-2"></div>
+              <div className={`absolute top-20 left-10 w-16 h-16 rounded-full backdrop-blur-sm border animate-float ${
+                darkMode 
+                  ? 'bg-blue-700/30 border-blue-400/30' 
+                  : 'bg-blue-500/10 border-blue-300/30'
+              }`}></div>
+              <div className={`absolute bottom-20 right-10 w-24 h-24 rounded-lg backdrop-blur-sm border animate-float-delay ${
+                darkMode 
+                  ? 'bg-purple-700/30 border-purple-400/30' 
+                  : 'bg-purple-500/10 border-purple-300/30'
+              }`}></div>
+              <div className={`absolute top-1/3 right-1/4 w-12 h-12 rounded-full backdrop-blur-sm border animate-float-delay-2 ${
+                darkMode 
+                  ? 'bg-teal-700/30 border-teal-400/30' 
+                  : 'bg-teal-500/10 border-teal-300/30'
+              }`}></div>
             </div>
           </div>
 
@@ -92,14 +120,22 @@ const WhyJoinSection = () => {
             {features.map((feature, index) => (
               <div 
                 key={index}
-                className={`bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:border-blue-300/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${
+                className={`backdrop-blur-sm p-6 rounded-xl transition-all duration-300 hover:-translate-y-1 ${
                   isVisible ? 'opacity-100' : 'opacity-0 translate-y-5'
-                }`}
+                } ${
+                  darkMode 
+                    ? 'bg-dark-card border-dark-border hover:border-blue-400/50' 
+                    : 'bg-light-card border-light-border hover:border-blue-300/50'
+                } border hover:shadow-lg`}
                 style={{ transitionDelay: `${600 + (index * 100)}ms` }}
               >
                 <div className="text-3xl mb-3">{feature.icon}</div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <h3 className={`text-xl font-semibold mb-2 ${
+                  darkMode ? 'text-light-text' : 'text-dark-text'
+                }`}>{feature.title}</h3>
+                <p className={darkMode ? 'text-light-text' : 'text-dark-text'}>
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>
@@ -119,7 +155,7 @@ const WhyJoinSection = () => {
             <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-700 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity -z-10"></span>
           </button>
           
-          <div className="mt-6 text-sm text-gray-500 flex flex-wrap justify-center gap-4">
+          <div className="mt-6 text-sm flex flex-wrap justify-center gap-4">
             
           </div>
         </div>

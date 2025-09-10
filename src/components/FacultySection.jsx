@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const FacultySection = () => {
+  const { darkMode } = useDarkMode();
   const facultyData = [
     {
       name: 'ANJALI MAM',
@@ -102,25 +104,31 @@ const FacultySection = () => {
   };
 
   return (
-    <div ref={sectionRef} className="faculty-section" style={{ 
-      padding: isMobile ? '3rem 1.25rem' : '5rem 1.25rem', 
-      textAlign: 'center', 
-      background: 'linear-gradient(to bottom, #f0f9ff, #e6f3ff, #f0f9ff)',
-      overflow: 'hidden',
-      position: 'relative'
-    }}>
+    <div 
+      ref={sectionRef} 
+      className={`faculty-section transition-colors duration-300 ${darkMode ? 'dark-bg' : 'light-bg'}`}
+      style={{ 
+        padding: isMobile ? '3rem 1.25rem' : '5rem 1.25rem', 
+        textAlign: 'center', 
+        background: darkMode 
+          ? 'linear-gradient(to bottom, #1a202c, #2d3748, #1a202c)' 
+          : 'linear-gradient(to bottom, #f0f9ff, #e6f3ff, #f0f9ff)',
+        overflow: 'hidden',
+        position: 'relative'
+      }}
+    >
       {/* Background elements */}
-      <div className="absolute top-0 left-0 right-0 h-96 bg-gradient-to-b from-blue-100 to-transparent opacity-50"></div>
-      <div className="absolute top-20 right-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-      <div className="absolute top-40 left-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-      <div className="absolute bottom-20 left-20 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+      <div className={`absolute top-0 left-0 right-0 h-96 bg-gradient-to-b ${darkMode ? 'from-gray-800 to-transparent' : 'from-blue-100 to-transparent'} opacity-50`}></div>
+      <div className={`absolute top-20 right-10 w-72 h-72 ${darkMode ? 'bg-blue-900' : 'bg-blue-200'} rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob`}></div>
+      <div className={`absolute top-40 left-10 w-72 h-72 ${darkMode ? 'bg-blue-800' : 'bg-blue-300'} rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000`}></div>
+      <div className={`absolute bottom-20 left-20 w-72 h-72 ${darkMode ? 'bg-blue-700' : 'bg-blue-400'} rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000`}></div>
 
       {/* Enhanced Heading with Animation */}
       <div className="text-center mb-8 sm:mb-12 md:mb-16 relative z-10">
-        <h2 className={`font-bold text-3xl sm:text-4xl md:text-5xl text-blue-900 mb-4 transition-all duration-700 ${
+        <h2 className={`font-bold text-3xl sm:text-4xl md:text-5xl transition-all duration-700 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-        }`} style={{ transitionDelay: '200ms' }}>
-          OUR <span className="text-blue-600">FACULTY</span>
+        } ${darkMode ? 'text-blue-200' : 'text-blue-900'}`} style={{ transitionDelay: '200ms' }}>
+          OUR <span className={darkMode ? 'text-blue-400' : 'text-blue-600'}>FACULTY</span>
         </h2>
         {/* Removed the paragraph with the text "Meet our team of industry experts dedicated to your success" */}
       </div>
@@ -191,7 +199,9 @@ const FacultySection = () => {
                   borderRadius: '50%',
                   overflow: 'hidden',
                   border: '4px solid white',
-                  boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)',
+                  boxShadow: darkMode 
+                    ? '0 10px 30px rgba(96, 165, 250, 0.3)' 
+                    : '0 10px 30px rgba(59, 130, 246, 0.3)',
                   margin: '0 auto',
                   transition: 'all 0.6s ease-in-out',
                 }}
@@ -211,10 +221,12 @@ const FacultySection = () => {
               <div style={{ 
                 marginTop: '1.5rem',
                 padding: isMobile ? '0 1rem' : '0',
-                background: 'rgba(255, 255, 255, 0.95)',
+                background: darkMode ? 'rgba(45, 55, 72, 0.95)' : 'rgba(255, 255, 255, 0.95)',
                 borderRadius: '16px',
                 padding: '1.25rem',
-                boxShadow: '0 8px 20px rgba(0, 0, 0, 0.08)',
+                boxShadow: darkMode 
+                  ? '0 8px 20px rgba(0, 0, 0, 0.3)' 
+                  : '0 8px 20px rgba(0, 0, 0, 0.08)',
                 transition: 'all 0.6s ease-in-out',
                 maxWidth: '280px',
                 marginLeft: 'auto',
@@ -224,7 +236,7 @@ const FacultySection = () => {
               }}>
                 <h3 style={{ 
                   fontWeight: '700', 
-                  color: '#1e40af', 
+                  color: darkMode ? '#93c5fd' : '#1e40af', 
                   fontSize: isMobile ? '1.1rem' : '1.35rem', 
                   margin: '0 0 0.5rem',
                   lineHeight: '1.3'
@@ -233,7 +245,7 @@ const FacultySection = () => {
                 </h3>
                 <p style={{ 
                   fontStyle: 'italic', 
-                  color: '#3b82f6', 
+                  color: darkMode ? '#60a5fa' : '#3b82f6', 
                   fontSize: isMobile ? '0.9rem' : '1.05rem', 
                   margin: '0',
                   lineHeight: '1.4'
@@ -264,7 +276,9 @@ const FacultySection = () => {
               height: isMobile ? '12px' : '14px',
               borderRadius: '50%',
               border: 'none',
-              backgroundColor: index === activeIndex ? '#1e40af' : '#bfdbfe',
+              backgroundColor: index === activeIndex 
+                ? (darkMode ? '#60a5fa' : '#1e40af') 
+                : (darkMode ? '#4b5563' : '#bfdbfe'),
               cursor: 'pointer',
               padding: 0,
               transition: 'all 0.3s ease',

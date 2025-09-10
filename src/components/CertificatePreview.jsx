@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const CertificatePreview = () => {
   const [selectedCert, setSelectedCert] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [particles, setParticles] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
+  const { darkMode } = useDarkMode();
 
   // Set visibility for animation
   useEffect(() => {
@@ -105,13 +107,19 @@ const CertificatePreview = () => {
   );
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 overflow-hidden">
+    <div className={`relative min-h-screen overflow-hidden transition-colors duration-300 ${
+      darkMode 
+        ? 'bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900' 
+        : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100'
+    }`}>
       {/* Animated Background */}
       <div className="absolute inset-0">
         {particles.map((particle) => (
           <div
             key={particle.id}
-            className="absolute w-1 h-1 bg-slate-400 rounded-full opacity-20"
+            className={`absolute w-1 h-1 rounded-full opacity-20 ${
+              darkMode ? 'bg-slate-600' : 'bg-slate-400'
+            }`}
             style={{
               left: `${particle.x}%`,
               top: `${particle.y}%`,
@@ -123,20 +131,30 @@ const CertificatePreview = () => {
       </div>
 
       {/* Gradient Orbs - Reduced size for mobile */}
-      <div className="absolute top-20 left-10 md:left-20 w-40 h-40 md:w-72 md:h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
-      <div className="absolute top-40 right-10 md:right-20 w-48 h-48 md:w-96 md:h-96 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-25 animate-pulse animation-delay-2000"></div>
-      <div className="absolute bottom-20 left-1/4 md:left-1/2 w-40 h-40 md:w-80 md:h-80 bg-slate-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-4000"></div>
+      <div className={`absolute top-20 left-10 md:left-20 w-40 h-40 md:w-72 md:h-72 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse ${
+        darkMode ? 'bg-blue-900' : 'bg-blue-200'
+      }`}></div>
+      <div className={`absolute top-40 right-10 md:right-20 w-48 h-48 md:w-96 md:h-96 rounded-full mix-blend-multiply filter blur-xl opacity-25 animate-pulse animation-delay-2000 ${
+        darkMode ? 'bg-indigo-900' : 'bg-indigo-200'
+      }`}></div>
+      <div className={`absolute bottom-20 left-1/4 md:left-1/2 w-40 h-40 md:w-80 md:h-80 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-4000 ${
+        darkMode ? 'bg-slate-800' : 'bg-slate-200'
+      }`}></div>
 
       <div className="relative z-10 container mx-auto px-4 md:px-6 py-12 md:py-20">
         {/* Header Section with Updated Styling */}
         <div className="text-center mb-12 sm:mb-16 md:mb-20">
-          <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-4 sm:mb-6 transition-all duration-700 transform ${
+          <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 transition-all duration-700 transform ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+          } ${
+            darkMode ? 'text-white' : 'text-gray-900'
           }`} style={{ transitionDelay: '200ms' }}>
             Your Digital <span className="text-blue-600">Achievement</span>
           </h2>
           
-          <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed px-2">
+          <p className={`text-lg md:text-xl max-w-2xl mx-auto leading-relaxed px-2 ${
+            darkMode ? 'text-slate-400' : 'text-slate-600'
+          }`}>
             Earn industry-recognized certificates that showcase your coding mastery and unlock new career opportunities
           </p>
         </div>
@@ -150,7 +168,11 @@ const CertificatePreview = () => {
               className={`px-5 py-2.5 md:px-6 md:py-3 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 ${
                 selectedCert === index
                   ? 'bg-indigo-600 text-white shadow-2xl shadow-indigo-600/25'
-                  : 'bg-white/80 text-slate-700 border border-slate-200 hover:bg-white hover:shadow-lg'
+                  : `${
+                      darkMode 
+                        ? 'bg-slate-800/80 text-slate-300 border border-slate-700 hover:bg-slate-800 hover:shadow-lg' 
+                        : 'bg-white/80 text-slate-700 border border-slate-200 hover:bg-white hover:shadow-lg'
+                    }`
               }`}
             >
               {cert.type}
@@ -168,7 +190,11 @@ const CertificatePreview = () => {
           >
             <div className={`absolute inset-0 bg-gradient-to-r ${currentCert.color} rounded-3xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500`}></div>
             
-            <div className="relative bg-white/95 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-2xl border border-white/20 transform transition-all duration-500 group-hover:scale-105">
+            <div className={`relative backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-2xl border transform transition-all duration-500 group-hover:scale-105 ${
+              darkMode 
+                ? 'bg-slate-800/95 border-slate-700' 
+                : 'bg-white/95 border-white/20'
+            }`}>
               {/* Certificate Header */}
               <div className="flex items-center justify-between mb-4 md:mb-6">
                 <div className="flex items-center gap-3">
@@ -176,8 +202,12 @@ const CertificatePreview = () => {
                     <AwardIcon className="w-5 h-5 md:w-6 md:h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-800 text-sm md:text-base">Let's Code Brain</h3>
-                    <p className="text-xs md:text-sm text-slate-600">Certification Authority</p>
+                    <h3 className={`font-bold text-sm md:text-base ${
+                      darkMode ? 'text-slate-200' : 'text-slate-800'
+                    }`}>Let's Code Brain</h3>
+                    <p className={`text-xs md:text-sm ${
+                      darkMode ? 'text-slate-400' : 'text-slate-600'
+                    }`}>Certification Authority</p>
                   </div>
                 </div>
                 <div className="flex gap-0.5 md:gap-1">
@@ -189,13 +219,21 @@ const CertificatePreview = () => {
 
               {/* Certificate Content */}
               <div className="text-center mb-6 md:mb-8">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-black text-slate-800 mb-2">
+                <h2 className={`text-xl md:text-2xl lg:text-3xl font-black mb-2 ${
+                  darkMode ? 'text-slate-200' : 'text-slate-800'
+                }`}>
                   Certificate of Completion
                 </h2>
                 <div className="w-16 md:w-20 h-1 bg-gradient-to-r from-purple-400 to-cyan-400 mx-auto mb-4 md:mb-6"></div>
-                <p className="text-base md:text-lg text-slate-600 mb-3 md:mb-4">This certifies that</p>
-                <p className="text-lg md:text-xl lg:text-2xl font-bold text-slate-800 mb-3 md:mb-4">[Student Name]</p>
-                <p className="text-base md:text-lg text-slate-600 mb-2">has successfully completed</p>
+                <p className={`text-base md:text-lg mb-3 md:mb-4 ${
+                  darkMode ? 'text-slate-400' : 'text-slate-600'
+                }`}>This certifies that</p>
+                <p className={`text-lg md:text-xl lg:text-2xl font-bold mb-3 md:mb-4 ${
+                  darkMode ? 'text-slate-200' : 'text-slate-800'
+                }`}>[Student Name]</p>
+                <p className={`text-base md:text-lg mb-2 ${
+                  darkMode ? 'text-slate-400' : 'text-slate-600'
+                }`}>has successfully completed</p>
                 <h3 className="text-lg md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent mb-4 md:mb-6">
                   {currentCert.title}
                 </h3>
@@ -214,12 +252,18 @@ const CertificatePreview = () => {
               </div>
 
               {/* Certificate Footer */}
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center pt-4 md:pt-6 border-t border-slate-200 space-y-2 md:space-y-0">
-                <div className="text-xs md:text-sm text-slate-600">
+              <div className={`flex flex-col md:flex-row justify-between items-start md:items-center pt-4 md:pt-6 space-y-2 md:space-y-0 ${
+                darkMode ? 'border-t border-slate-700' : 'border-t border-slate-200'
+              }`}>
+                <div className={`text-xs md:text-sm ${
+                  darkMode ? 'text-slate-400' : 'text-slate-600'
+                }`}>
                   <p>Duration: {currentCert.duration}</p>
                   <p>Level: {currentCert.level}</p>
                 </div>
-                <div className="text-xs md:text-sm text-slate-600 md:text-right">
+                <div className={`text-xs md:text-sm ${
+                  darkMode ? 'text-slate-400' : 'text-slate-600'
+                } md:text-right`}>
                   <p>Issue Date: {new Date().toLocaleDateString()}</p>
                   <p>Certificate ID: #LCB{Math.random().toString(36).substr(2, 6).toUpperCase()}</p>
                 </div>
@@ -229,12 +273,20 @@ const CertificatePreview = () => {
 
           {/* Certificate Info */}
           <div className="space-y-6 md:space-y-8">
-            <div className="bg-white/90 backdrop-blur-md rounded-2xl p-4 md:p-6 border border-slate-200 shadow-lg">
+            <div className={`backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-lg border ${
+              darkMode 
+                ? 'bg-slate-800/90 border-slate-700' 
+                : 'bg-white/90 border-slate-200'
+            }`}>
               <div className="flex items-center gap-3 mb-3 md:mb-4">
                 <ZapIcon className="w-5 h-5 md:w-6 md:h-6 text-amber-500" />
-                <h3 className="text-lg md:text-xl font-bold text-slate-800">What You'll Achieve</h3>
+                <h3 className={`text-lg md:text-xl font-bold ${
+                  darkMode ? 'text-slate-200' : 'text-slate-800'
+                }`}>What You'll Achieve</h3>
               </div>
-              <ul className="space-y-2 md:space-y-3 text-sm md:text-base text-slate-700">
+              <ul className={`space-y-2 md:space-y-3 text-sm md:text-base ${
+                darkMode ? 'text-slate-300' : 'text-slate-700'
+              }`}>
                 <li className="flex items-center gap-3">
                   <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-indigo-500 rounded-full flex-shrink-0"></div>
                   Industry-recognized digital certificate
@@ -254,18 +306,30 @@ const CertificatePreview = () => {
               </ul>
             </div>
 
-            <div className="bg-white/90 backdrop-blur-md rounded-2xl p-4 md:p-6 border border-slate-200 shadow-lg">
+            <div className={`backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-lg border ${
+              darkMode 
+                ? 'bg-slate-800/90 border-slate-700' 
+                : 'bg-white/90 border-slate-200'
+            }`}>
               <div className="flex items-center gap-3 mb-3 md:mb-4">
                 <CodeIcon className="w-5 h-5 md:w-6 md:h-6 text-emerald-600" />
-                <h3 className="text-lg md:text-xl font-bold text-slate-800">Skills Mastered</h3>
+                <h3 className={`text-lg md:text-xl font-bold ${
+                  darkMode ? 'text-slate-200' : 'text-slate-800'
+                }`}>Skills Mastered</h3>
               </div>
               <div className="grid grid-cols-2 gap-2 md:gap-3">
                 {currentCert.skills.map((skill, index) => (
                   <div
                     key={index}
-                    className="bg-slate-50 rounded-lg p-2 md:p-3 text-center border border-slate-200 hover:bg-slate-100 transition-colors duration-300"
+                    className={`rounded-lg p-2 md:p-3 text-center border transition-colors duration-300 ${
+                      darkMode 
+                        ? 'bg-slate-700/50 border-slate-600 hover:bg-slate-700' 
+                        : 'bg-slate-50 border-slate-200 hover:bg-slate-100'
+                    }`}
                   >
-                    <span className="text-xs md:text-sm text-slate-700 font-medium">{skill}</span>
+                    <span className={`text-xs md:text-sm font-medium ${
+                      darkMode ? 'text-slate-300' : 'text-slate-700'
+                    }`}>{skill}</span>
                   </div>
                 ))}
               </div>
@@ -277,7 +341,11 @@ const CertificatePreview = () => {
                 <EyeIcon className="w-4 h-4 md:w-5 md:h-5" />
                 Preview Certificate
               </button>
-              <button className="flex-1 bg-white/90 backdrop-blur-md text-slate-700 py-3 md:py-4 px-4 md:px-6 rounded-2xl font-bold text-base md:text-lg border border-slate-200 hover:bg-white hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
+              <button className={`flex-1 backdrop-blur-md py-3 md:py-4 px-4 md:px-6 rounded-2xl font-bold text-base md:text-lg border transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 ${
+                darkMode 
+                  ? 'bg-slate-800/90 text-slate-300 border-slate-700 hover:bg-slate-800 hover:shadow-lg' 
+                  : 'bg-white/90 text-slate-700 border-slate-200 hover:bg-white hover:shadow-lg'
+              }`}>
                 <DownloadIcon className="w-4 h-4 md:w-5 md:h-5" />
                 Download Sample
               </button>
@@ -292,10 +360,18 @@ const CertificatePreview = () => {
             { number: "95%", label: "Career Success Rate", icon: StarIcon },
             { number: "50+", label: "Industry Partners", icon: ZapIcon }
           ].map((stat, index) => (
-            <div key={index} className="text-center bg-white/90 backdrop-blur-md rounded-2xl p-4 md:p-6 border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <div key={index} className={`text-center backdrop-blur-md rounded-2xl p-4 md:p-6 border shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 ${
+              darkMode 
+                ? 'bg-slate-800/90 border-slate-700' 
+                : 'bg-white/90 border-slate-200'
+            }`}>
               <stat.icon className="w-6 h-6 md:w-8 md:h-8 text-indigo-600 mx-auto mb-2 md:mb-3" />
-              <div className="text-xl md:text-2xl lg:text-3xl font-black text-slate-800 mb-1 md:mb-2">{stat.number}</div>
-              <div className="text-xs md:text-sm text-slate-600 font-medium">{stat.label}</div>
+              <div className={`text-xl md:text-2xl lg:text-3xl font-black mb-1 md:mb-2 ${
+                darkMode ? 'text-slate-200' : 'text-slate-800'
+              }`}>{stat.number}</div>
+              <div className={`text-xs md:text-sm font-medium ${
+                darkMode ? 'text-slate-400' : 'text-slate-600'
+              }`}>{stat.label}</div>
             </div>
           ))}
         </div>

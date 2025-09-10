@@ -1,17 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const NineSec = () => {
   const [hovered, setHovered] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
+  const { darkMode } = useDarkMode();
 
   const cards = [
     {
       title: 'Earn a Certificate',
       description: 'Get the right professional certificate program for you.',
       button: 'View Programs',
-      bgColor: 'from-blue-500/10 to-indigo-600/10',
-      hoverColor: 'from-blue-600/15 to-indigo-700/15',
+      bgColor: darkMode ? 'from-blue-700/10 to-indigo-800/10' : 'from-blue-500/10 to-indigo-600/10',
+      hoverColor: darkMode ? 'from-blue-800/15 to-indigo-900/15' : 'from-blue-600/15 to-indigo-700/15',
       image: '/secnine/left.png',
       gradient: 'bg-gradient-to-br',
       accentColor: 'bg-gradient-to-r from-blue-500 to-indigo-600',
@@ -25,8 +27,8 @@ const NineSec = () => {
       title: 'Best Rated Courses',
       description: 'Enroll now in the most popular and best rated courses.',
       button: 'View Courses',
-      bgColor: 'from-emerald-500/10 to-cyan-600/10',
-      hoverColor: 'from-emerald-600/15 to-cyan-700/15',
+      bgColor: darkMode ? 'from-emerald-700/10 to-cyan-800/10' : 'from-emerald-500/10 to-cyan-600/10',
+      hoverColor: darkMode ? 'from-emerald-800/15 to-cyan-900/15' : 'from-emerald-600/15 to-cyan-700/15',
       image: '/secnine/right.png',
       gradient: 'bg-gradient-to-bl',
       accentColor: 'bg-gradient-to-r from-emerald-500 to-cyan-600',
@@ -61,16 +63,20 @@ const NineSec = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-16 md:py-24 overflow-hidden">
+    <section ref={sectionRef} className={`relative py-16 md:py-24 overflow-hidden transition-colors duration-300 ${darkMode ? 'dark-bg' : 'light-bg'}`}>
       {/* Background with gradient and animated elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-cyan-50 z-0"></div>
+      <div className={`absolute inset-0 bg-gradient-to-br transition-colors duration-300 ${
+        darkMode ? 'from-indigo-900/20 via-gray-900 to-cyan-900/20' : 'from-indigo-50 via-white to-cyan-50'
+      } z-0`}></div>
       
       {/* Animated background elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 opacity-30">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i => (
           <div
             key={i}
-            className="absolute rounded-full bg-gradient-to-r from-blue-400/30 to-cyan-400/30"
+            className={`absolute rounded-full bg-gradient-to-r transition-colors duration-300 ${
+              darkMode ? 'from-blue-600/20 to-cyan-600/20' : 'from-blue-400/30 to-cyan-400/30'
+            }`}
             style={{
               width: `${Math.random() * 100 + 50}px`,
               height: `${Math.random() * 100 + 50}px`,
@@ -87,12 +93,13 @@ const NineSec = () => {
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 z-10">
         {/* Section header - Updated with the requested style */}
         <div className="text-center mb-12 sm:mb-16 md:mb-20">
-          <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-4 sm:mb-6 transition-all duration-700 transform ${
+          <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl transition-colors duration-300 ${
+            darkMode ? 'light-text' : 'dark-text'
+          } mb-4 sm:mb-6 transition-all duration-700 transform ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`} style={{ transitionDelay: '200ms' }}>
             Advance Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600">Career</span>
           </h2>
-          
         </div>
 
         {/* Cards grid */}
@@ -100,7 +107,9 @@ const NineSec = () => {
           {cards.map((card, idx) => (
             <div
               key={idx}
-              className={`relative rounded-3xl overflow-hidden shadow-2xl ${card.gradient} ${card.bgColor} min-h-[320px] group transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl`}
+              className={`relative rounded-3xl overflow-hidden shadow-2xl transition-colors duration-300 ${
+                darkMode ? 'dark-card' : 'light-card'
+              } ${card.gradient} ${card.bgColor} min-h-[320px] group transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl`}
               onMouseEnter={() => setHovered(idx)}
               onMouseLeave={() => setHovered(null)}
             >
@@ -133,10 +142,14 @@ const NineSec = () => {
                     {card.icon}
                   </div>
                   
-                  <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 leading-tight">
+                  <h3 className={`text-2xl sm:text-3xl font-bold transition-colors duration-300 ${
+                    darkMode ? 'light-text' : 'dark-text'
+                  } mb-4 leading-tight`}>
                     {card.title}
                   </h3>
-                  <p className="text-gray-600 mb-6 text-lg leading-relaxed max-w-xs">
+                  <p className={`transition-colors duration-300 ${
+                    darkMode ? 'text-gray-300' : 'text-gray-600'
+                  } mb-6 text-lg leading-relaxed max-w-xs`}>
                     {card.description}
                   </p>
                   <button className={`relative overflow-hidden ${card.accentColor} text-white px-6 py-3.5 rounded-xl font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 min-h-[50px] flex items-center justify-center group/btn`}>
@@ -162,14 +175,13 @@ const NineSec = () => {
 
               {/* Shine effect on hover */}
               <div className="absolute inset-0 overflow-hidden">
-                <div className={`absolute top-0 left-0 h-full w-16 bg-white opacity-0 group-hover:opacity-20 transform -skew-x-12 group-hover:left-[130%] transition-all duration-1000 ${hovered === idx ? 'left-[130%]' : '-left-20'}`}></div>
+                <div className={`absolute top-0 left-0 h-full w-16 ${
+                  darkMode ? 'bg-gray-400' : 'bg-white'
+                } opacity-0 group-hover:opacity-20 transform -skew-x-12 group-hover:left-[130%] transition-all duration-1000 ${hovered === idx ? 'left-[130%]' : '-left-20'}`}></div>
               </div>
             </div>
           ))}
         </div>
-
-        {/* Bottom CTA */}
-        
       </div>
 
       <style jsx>{`
