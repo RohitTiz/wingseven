@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CourseCard from './CourseCard';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const BestWorkshopSection = () => {
   const [showAllWorkshops, setShowAllWorkshops] = useState(false);
   const navigate = useNavigate();
+  const { darkMode } = useDarkMode();
   
   // Create workshop data directly in the component (only 3 workshops)
   const allWorkshops = [
@@ -64,7 +66,9 @@ const BestWorkshopSection = () => {
   const displayedWorkshops = showAllWorkshops ? allWorkshops : allWorkshops.slice(0, 3);
 
   return (
-    <section className="py-16 px-4 sm:px-6 bg-gray-50 border-t border-gray-200 relative overflow-hidden">
+    <section className={`py-16 px-4 sm:px-6 border-t transition-colors duration-300 ${
+      darkMode ? 'bg-dark-bg border-dark-border' : 'bg-gray-50 border-gray-200'
+    } relative overflow-hidden`}>
       {/* Decorative elements - Different style */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-yellow-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
       <div className="absolute top-0 right-0 w-64 h-64 bg-red-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
@@ -72,10 +76,14 @@ const BestWorkshopSection = () => {
       
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-extrabold text-gray-900 mb-4">
+          <h2 className={`text-4xl font-extrabold mb-4 transition-colors duration-300 ${
+            darkMode ? 'text-light-text' : 'text-gray-900'
+          }`}>
             Hands-On <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-red-500">Workshops</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className={`text-xl max-w-3xl mx-auto transition-colors duration-300 ${
+            darkMode ? 'text-light-text' : 'text-gray-600'
+          }`}>
             Learn from industry experts through immersive, practical workshops designed to boost your skills
           </p>
         </div>
@@ -96,7 +104,9 @@ const BestWorkshopSection = () => {
           
           {/* Right side - Benefits section */}
           <div className="lg:w-2/5 relative">
-            <div className="relative p-8 bg-white rounded-3xl shadow-xl border border-gray-100">
+            <div className={`relative p-8 rounded-3xl shadow-xl border transition-colors duration-300 ${
+              darkMode ? 'bg-dark-card border-dark-border' : 'bg-white border-gray-100'
+            }`}>
               {/* Decorative elements */}
               <div className="absolute -top-4 -left-4 w-20 h-20 rounded-tr-full bg-yellow-500 opacity-20"></div>
               <div className="absolute -bottom-4 -right-4 w-28 h-28 rounded-tl-full bg-red-500 opacity-20"></div>
@@ -107,7 +117,9 @@ const BestWorkshopSection = () => {
               </svg>
               
               <div className="relative z-10">
-                <h3 className="text-3xl font-bold text-gray-800 mb-6">
+                <h3 className={`text-3xl font-bold mb-6 transition-colors duration-300 ${
+                  darkMode ? 'text-light-text' : 'text-gray-800'
+                }`}>
                   Why Join Our <span className="text-yellow-600">Workshops</span>?
                 </h3>
                 
@@ -119,8 +131,12 @@ const BestWorkshopSection = () => {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-gray-700 font-medium">Live Interaction with Experts</p>
-                      <p className="text-gray-600 text-sm">Get your questions answered in real-time</p>
+                      <p className={`font-medium transition-colors duration-300 ${
+                        darkMode ? 'text-light-text' : 'text-gray-700'
+                      }`}>Live Interaction with Experts</p>
+                      <p className={`text-sm transition-colors duration-300 ${
+                        darkMode ? 'text-light-text opacity-80' : 'text-gray-600'
+                      }`}>Get your questions answered in real-time</p>
                     </div>
                   </div>
                   
@@ -131,8 +147,12 @@ const BestWorkshopSection = () => {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-gray-700 font-medium">Hands-On Projects</p>
-                      <p className="text-gray-600 text-sm">Apply concepts through practical exercises</p>
+                      <p className={`font-medium transition-colors duration-300 ${
+                        darkMode ? 'text-light-text' : 'text-gray-700'
+                      }`}>Hands-On Projects</p>
+                      <p className={`text-sm transition-colors duration-300 ${
+                        darkMode ? 'text-light-text opacity-80' : 'text-gray-600'
+                      }`}>Apply concepts through practical exercises</p>
                     </div>
                   </div>
                   
@@ -143,8 +163,12 @@ const BestWorkshopSection = () => {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-gray-700 font-medium">Networking Opportunities</p>
-                      <p className="text-gray-600 text-sm">Connect with like-minded professionals</p>
+                      <p className={`font-medium transition-colors duration-300 ${
+                        darkMode ? 'text-light-text' : 'text-gray-700'
+                      }`}>Networking Opportunities</p>
+                      <p className={`text-sm transition-colors duration-300 ${
+                        darkMode ? 'text-light-text opacity-80' : 'text-gray-600'
+                      }`}>Connect with like-minded professionals</p>
                     </div>
                   </div>
                   
@@ -155,8 +179,12 @@ const BestWorkshopSection = () => {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-gray-700 font-medium">Take-Home Resources</p>
-                      <p className="text-gray-600 text-sm">Comprehensive materials for future reference</p>
+                      <p className={`font-medium transition-colors duration-300 ${
+                        darkMode ? 'text-light-text' : 'text-gray-700'
+                      }`}>Take-Home Resources</p>
+                      <p className={`text-sm transition-colors duration-300 ${
+                        darkMode ? 'text-light-text opacity-80' : 'text-gray-600'
+                      }`}>Comprehensive materials for future reference</p>
                     </div>
                   </div>
                 </div>
@@ -171,8 +199,6 @@ const BestWorkshopSection = () => {
             </div>
           </div>
         </div>
-
-        {/* Remove the Show More/Less Button since we only have 3 workshops */}
       </div>
     </section>
   );

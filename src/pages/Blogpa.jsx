@@ -4,6 +4,7 @@ import AuthSection from '../components/AuthSection';
 import Footer from '../components/Footer';
 import BlogCard from '../components/BlogCard';
 import blogData from '../data/blogdata'; // Import your external data
+import { useDarkMode } from '../context/DarkModeContext'; // Added import
 
 // BlogPage Component
 function BlogPage() {
@@ -14,6 +15,7 @@ function BlogPage() {
   const [activeFilter, setActiveFilter] = useState('recent');
   const [showFilters, setShowFilters] = useState(true);
   const navigate = useNavigate();
+  const { darkMode } = useDarkMode(); // Added dark mode hook
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -76,12 +78,20 @@ function BlogPage() {
 
   const MobileCategorySelector = () => (
     <div className="lg:hidden mb-6 px-4">
-      <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 border border-blue-200/50 shadow-lg mb-4">
+      <div className={`backdrop-blur-sm rounded-xl p-4 border shadow-lg mb-4 transition-colors duration-300 ${
+        darkMode 
+          ? 'bg-gray-800/90 border-gray-700' 
+          : 'bg-white/90 border-blue-200/50'
+      }`}>
         <div className="flex justify-between items-center mb-3">
-          <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
+          <h3 className={`text-lg font-semibold ${
+            darkMode ? 'text-gray-100' : 'text-gray-900'
+          }`}>Filters</h3>
           <button 
             onClick={() => setShowFilters(!showFilters)}
-            className="p-1 rounded-md text-gray-500 hover:text-gray-700"
+            className={`p-1 rounded-md transition-colors duration-300 ${
+              darkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700'
+            }`}
           >
             {showFilters ? '▲' : '▼'}
           </button>
@@ -90,7 +100,9 @@ function BlogPage() {
         {showFilters && (
           <>
             <div className="mb-4">
-              <h4 className="text-sm font-medium text-gray-700 mb-2">Sort by:</h4>
+              <h4 className={`text-sm font-medium mb-2 ${
+                darkMode ? 'text-gray-300' : 'text-gray-700'
+              }`}>Sort by:</h4>
               <div className="grid grid-cols-2 gap-2">
                 {filterOptions.map((filter) => (
                   <button
@@ -98,8 +110,12 @@ function BlogPage() {
                     onClick={() => setActiveFilter(filter.id)}
                     className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                       activeFilter === filter.id
-                        ? 'bg-blue-100 text-blue-700 border border-blue-300'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        ? darkMode
+                          ? 'bg-blue-800 text-blue-100 border border-blue-600'
+                          : 'bg-blue-100 text-blue-700 border border-blue-300'
+                        : darkMode
+                          ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
                     {filter.icon} {filter.label}
@@ -109,11 +125,17 @@ function BlogPage() {
             </div>
             
             <div>
-              <h4 className="text-sm font-medium text-gray-700 mb-2">Category:</h4>
+              <h4 className={`text-sm font-medium mb-2 ${
+                darkMode ? 'text-gray-300' : 'text-gray-700'
+              }`}>Category:</h4>
               <select 
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300 ${
+                  darkMode
+                    ? 'bg-gray-700 border-gray-600 text-gray-100'
+                    : 'bg-white border-gray-300 text-gray-700'
+                }`}
               >
                 <option value="all">All Categories</option>
                 {categories.map((category) => (
@@ -132,7 +154,11 @@ function BlogPage() {
   return (
     <>
       <AuthSection />
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-gray-900 overflow-hidden">
+      <div className={`min-h-screen overflow-hidden transition-colors duration-300 ${
+        darkMode 
+          ? 'bg-gray-900 text-gray-100' 
+          : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-gray-900'
+      }`}>
         {/* Hero Section */}
         <section className="relative py-12 md:py-20 overflow-hidden bg-fixed bg-center bg-cover" 
           style={{ 
@@ -154,7 +180,11 @@ function BlogPage() {
                 placeholder="Search blog posts..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-white/90 backdrop-blur-sm border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                className={`w-full pl-10 pr-4 py-3 backdrop-blur-sm border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300 ${
+                  darkMode
+                    ? 'bg-gray-800/90 text-gray-100 placeholder-gray-400'
+                    : 'bg-white/90 text-gray-900'
+                }`}
               />
             </div>
           </div>
@@ -167,15 +197,23 @@ function BlogPage() {
             <div className="flex flex-col lg:flex-row gap-8">
               {/* Left Sidebar - Categories & Filters */}
               <div className="w-full lg:w-3/12 order-2 lg:order-1">
-                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 border border-blue-200/50 shadow-lg sticky top-4">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Categories</h3>
+                <div className={`backdrop-blur-sm rounded-xl p-6 border shadow-lg sticky top-4 transition-colors duration-300 ${
+                  darkMode
+                    ? 'bg-gray-800/90 border-gray-700'
+                    : 'bg-white/90 border-blue-200/50'
+                }`}>
+                  <h3 className={`text-xl font-semibold mb-4 ${
+                    darkMode ? 'text-gray-100' : 'text-gray-900'
+                  }`}>Categories</h3>
                   <div className="space-y-3 mb-6">
                     <button
                       onClick={() => setSelectedCategory('all')}
                       className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 font-medium text-sm ${
                         selectedCategory === 'all'
                           ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-md'
-                          : 'bg-white/80 text-gray-800 hover:bg-white hover:text-gray-900 border border-blue-200/50 hover:border-blue-300'
+                          : darkMode
+                            ? 'bg-gray-700/80 text-gray-200 hover:bg-gray-600 hover:text-white border border-gray-600 hover:border-gray-500'
+                            : 'bg-white/80 text-gray-800 hover:bg-white hover:text-gray-900 border border-blue-200/50 hover:border-blue-300'
                       } transform hover:scale-105 hover:-translate-y-0.5`}
                     >
                       🌟 All Categories
@@ -187,7 +225,9 @@ function BlogPage() {
                         className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 font-medium text-sm ${
                           selectedCategory === category.id
                             ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-md'
-                            : 'bg-white/80 text-gray-800 hover:bg-white hover:text-gray-900 border border-blue-200/50 hover:border-blue-300'
+                            : darkMode
+                              ? 'bg-gray-700/80 text-gray-200 hover:bg-gray-600 hover:text-white border border-gray-600 hover:border-gray-500'
+                              : 'bg-white/80 text-gray-800 hover:bg-white hover:text-gray-900 border border-blue-200/50 hover:border-blue-300'
                         } transform hover:scale-105 hover:-translate-y-0.5`}
                         style={{ animationDelay: `${index * 0.1}s` }}
                       >
@@ -197,12 +237,18 @@ function BlogPage() {
                     ))}
                   </div>
                   
-                  <div className="pt-4 border-t border-gray-200">
+                  <div className={`pt-4 border-t ${
+                    darkMode ? 'border-gray-700' : 'border-gray-200'
+                  }`}>
                     <div className="flex justify-between items-center mb-3">
-                      <h3 className="text-lg font-semibold text-gray-900">Filter by</h3>
+                      <h3 className={`text-lg font-semibold ${
+                        darkMode ? 'text-gray-100' : 'text-gray-900'
+                      }`}>Filter by</h3>
                       <button 
                         onClick={() => setShowFilters(!showFilters)}
-                        className="p-1 rounded-md text-gray-500 hover:text-gray-700 lg:hidden"
+                        className={`p-1 rounded-md lg:hidden transition-colors duration-300 ${
+                          darkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700'
+                        }`}
                       >
                         {showFilters ? '▲' : '▼'}
                       </button>
@@ -216,8 +262,12 @@ function BlogPage() {
                             onClick={() => setActiveFilter(filter.id)}
                             className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-300 text-sm font-medium ${
                               activeFilter === filter.id
-                                ? 'bg-blue-100 text-blue-700 border border-blue-300'
-                                : 'text-gray-700 hover:bg-gray-100'
+                                ? darkMode
+                                  ? 'bg-blue-800 text-blue-100 border border-blue-600'
+                                  : 'bg-blue-100 text-blue-700 border border-blue-300'
+                                : darkMode
+                                  ? 'text-gray-300 hover:bg-gray-700'
+                                  : 'text-gray-700 hover:bg-gray-100'
                             }`}
                           >
                             <span className="mr-2">{filter.icon}</span>
@@ -235,8 +285,14 @@ function BlogPage() {
                 {selectedCategory === 'all' && sortedFeaturedArticles.length > 0 && (
                   <div className="mb-12">
                     <div className="flex justify-between items-center mb-6">
-                      <h2 className="text-3xl font-semibold text-gray-900">Featured Posts</h2>
-                      <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                      <h2 className={`text-3xl font-semibold ${
+                        darkMode ? 'text-gray-100' : 'text-gray-900'
+                      }`}>Featured Posts</h2>
+                      <span className={`text-sm px-3 py-1 rounded-full transition-colors duration-300 ${
+                        darkMode
+                          ? 'text-gray-300 bg-gray-700'
+                          : 'text-gray-500 bg-gray-100'
+                      }`}>
                         {activeFilter === 'recent' ? 'Latest' : 
                          activeFilter === 'trending' ? 'Trending' :
                          activeFilter === 'best' ? 'Top Rated' : 'Most Read'}
@@ -264,18 +320,28 @@ function BlogPage() {
 
                 <div className="mb-12">
                   <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-3xl font-semibold text-gray-900">
+                    <h2 className={`text-3xl font-semibold ${
+                      darkMode ? 'text-gray-100' : 'text-gray-900'
+                    }`}>
                       {selectedCategory === 'all' ? 'All Posts' : categories.find(c => c.id === selectedCategory)?.name}
                     </h2>
-                    <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                    <span className={`text-sm px-3 py-1 rounded-full transition-colors duration-300 ${
+                      darkMode
+                        ? 'text-gray-300 bg-gray-700'
+                        : 'text-gray-500 bg-gray-100'
+                    }`}>
                       Sorted by: {filterOptions.find(f => f.id === activeFilter)?.label}
                     </span>
                   </div>
                   {filteredArticles.length === 0 ? (
                     <div className="text-center py-20">
                       <div className="text-6xl mb-6 animate-bounce">🔍</div>
-                      <p className="text-2xl text-gray-800 font-medium mb-2">No articles match your search</p>
-                      <p className="text-lg text-gray-600">Try different keywords or categories</p>
+                      <p className={`text-2xl font-medium mb-2 ${
+                        darkMode ? 'text-gray-200' : 'text-gray-800'
+                      }`}>No articles match your search</p>
+                      <p className={`text-lg ${
+                        darkMode ? 'text-gray-400' : 'text-gray-600'
+                      }`}>Try different keywords or categories</p>
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

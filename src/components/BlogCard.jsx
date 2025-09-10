@@ -25,8 +25,8 @@ function BlogCard({ article, categories = [], isFeatured = false }) {
     <div 
       className={`rounded-xl shadow-2xl overflow-hidden hover:shadow-3xl hover:scale-105 transition-all duration-300 border flex flex-col h-full w-full max-w-[27.65rem] mx-auto transition-colors duration-300 ${
         darkMode 
-          ? 'bg-dark-card border-dark-border hover:shadow-dark' 
-          : 'bg-white border-gray-200 hover:shadow-light'
+          ? 'bg-dark-card border-dark-border text-light-text hover:shadow-dark' 
+          : 'bg-light-card border-light-border text-dark-text hover:shadow-light'
       }`}
       onClick={handleBlogClick}
     >
@@ -62,12 +62,10 @@ function BlogCard({ article, categories = [], isFeatured = false }) {
       </div>
 
       {/* Content Section */}
-      <div className={`p-4 flex flex-col flex-grow transition-colors duration-300 ${
-        darkMode ? 'text-light-text' : 'text-gray-800'
-      }`}>
+      <div className="p-4 flex flex-col flex-grow">
         {/* Blog Title - Enhanced */}
-        <h3 className={`font-bold text-lg mb-2 leading-tight transition-colors duration-300 ${
-          darkMode ? 'text-light-text' : 'text-gray-900'
+        <h3 className={`font-bold text-lg mb-2 leading-tight ${
+          darkMode ? 'text-light-text' : 'text-dark-text'
         }`}>
           {article.title}
         </h3>
@@ -107,7 +105,7 @@ function BlogCard({ article, categories = [], isFeatured = false }) {
 
         {/* Divider */}
         <div className={`border-t w-full mb-2 transition-colors duration-300 ${
-          darkMode ? 'border-dark-border' : 'border-gray-200'
+          darkMode ? 'border-dark-border' : 'border-light-border'
         }`}></div>
 
         {/* Author Section - Enhanced */}
@@ -118,7 +116,7 @@ function BlogCard({ article, categories = [], isFeatured = false }) {
             </div>
             <div>
               <p className={`text-sm font-medium transition-colors duration-300 ${
-                darkMode ? 'text-light-text' : 'text-gray-800'
+                darkMode ? 'text-light-text' : 'text-dark-text'
               }`}>{article.author}</p>
             </div>
           </div>
