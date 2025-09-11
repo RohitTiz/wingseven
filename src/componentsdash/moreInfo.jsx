@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
+  const { darkMode } = useDarkMode();
   const [activeTab, setActiveTab] = useState('about');
   
   // Default content when no specific video is selected
@@ -35,16 +37,16 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
   const content = getContent();
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-4 md:rounded-2xl md:shadow-xl md:p-6">
+    <div className={`${darkMode ? 'dark-bg' : 'light-bg'} rounded-xl shadow-sm p-4 md:rounded-2xl md:shadow-xl md:p-6 transition-colors duration-300`}>
       {/* Tab Navigation */}
-      <div className="border-b border-gray-200 mb-6">
+      <div className={`border-b ${darkMode ? 'dark-border' : 'light-border'} mb-6`}>
         <div className="flex space-x-8 overflow-x-auto">
           <button
             className={`py-3 px-1 font-medium text-sm whitespace-nowrap border-b-2 ${
               activeTab === 'about' 
                 ? 'text-purple-600 border-purple-600' 
-                : 'text-gray-500 border-transparent hover:text-gray-700'
-            }`}
+                : `${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700'} border-transparent`
+            } transition-colors duration-300`}
             onClick={() => setActiveTab('about')}
           >
             Overview
@@ -53,8 +55,8 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
             className={`py-3 px-1 font-medium text-sm whitespace-nowrap border-b-2 ${
               activeTab === 'author' 
                 ? 'text-purple-600 border-purple-600' 
-                : 'text-gray-500 border-transparent hover:text-gray-700'
-            }`}
+                : `${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700'} border-transparent`
+            } transition-colors duration-300`}
             onClick={() => setActiveTab('author')}
           >
             Author
@@ -63,8 +65,8 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
             className={`py-3 px-1 font-medium text-sm whitespace-nowrap border-b-2 ${
               activeTab === 'faq' 
                 ? 'text-purple-600 border-purple-600' 
-                : 'text-gray-500 border-transparent hover:text-gray-700'
-            }`}
+                : `${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700'} border-transparent`
+            } transition-colors duration-300`}
             onClick={() => setActiveTab('faq')}
           >
             FAQ
@@ -73,8 +75,8 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
             className={`py-3 px-1 font-medium text-sm whitespace-nowrap border-b-2 ${
               activeTab === 'announcements' 
                 ? 'text-purple-600 border-purple-600' 
-                : 'text-gray-500 border-transparent hover:text-gray-700'
-            }`}
+                : `${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700'} border-transparent`
+            } transition-colors duration-300`}
             onClick={() => setActiveTab('announcements')}
           >
             Announcements
@@ -83,8 +85,8 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
             className={`py-3 px-1 font-medium text-sm whitespace-nowrap border-b-2 ${
               activeTab === 'reviews' 
                 ? 'text-purple-600 border-purple-600' 
-                : 'text-gray-500 border-transparent hover:text-gray-700'
-            }`}
+                : `${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700'} border-transparent`
+            } transition-colors duration-300`}
             onClick={() => setActiveTab('reviews')}
           >
             Reviews
@@ -98,8 +100,8 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
           <div className="space-y-8">
             {/* About Course Section */}
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">About Course</h3>
-              <div className="text-gray-600 leading-relaxed space-y-4">
+              <h3 className={`text-2xl font-bold ${darkMode ? 'light-text' : 'dark-text'} mb-4`}>About Course</h3>
+              <div className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} leading-relaxed space-y-4`}>
                 <p>
                   {course?.description || "Unlock the power of Figma, the leading collaborative design tool, with our comprehensive online course. Whether you're a novice or looking to enhance your skills this course willguide you through Figma's robust features and workflows."}
                 </p>
@@ -111,55 +113,55 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
 
             {/* What You'll Learn Section */}
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">What You'll Learn</h3>
+              <h3 className={`text-2xl font-bold ${darkMode ? 'light-text' : 'dark-text'} mb-6`}>What You'll Learn</h3>
               <div className="grid md:grid-cols-2 gap-x-8 gap-y-4">
                 <div className="flex items-start space-x-3">
                   <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-gray-700">Setting up the environment</span>
+                  <span className={darkMode ? 'text-gray-300' : 'text-gray-700'}>Setting up the environment</span>
                 </div>
                 
                 <div className="flex items-start space-x-3">
                   <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-gray-700">Understand HTML Programming</span>
+                  <span className={darkMode ? 'text-gray-300' : 'text-gray-700'}>Understand HTML Programming</span>
                 </div>
 
                 <div className="flex items-start space-x-3">
                   <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-gray-700">Advanced HTML Practices</span>
+                  <span className={darkMode ? 'text-gray-300' : 'text-gray-700'}>Advanced HTML Practices</span>
                 </div>
 
                 <div className="flex items-start space-x-3">
                   <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-gray-700">Code HTML</span>
+                  <span className={darkMode ? 'text-gray-300' : 'text-gray-700'}>Code HTML</span>
                 </div>
 
                 <div className="flex items-start space-x-3">
                   <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-gray-700">Build a portfolio website</span>
+                  <span className={darkMode ? 'text-gray-300' : 'text-gray-700'}>Build a portfolio website</span>
                 </div>
 
                 <div className="flex items-start space-x-3">
                   <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-gray-700">Start building beautiful websites</span>
+                  <span className={darkMode ? 'text-gray-300' : 'text-gray-700'}>Start building beautiful websites</span>
                 </div>
 
                 <div className="flex items-start space-x-3">
                   <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-gray-700">Responsive Designs</span>
+                  <span className={darkMode ? 'text-gray-300' : 'text-gray-700'}>Responsive Designs</span>
                 </div>
 
                 {course?.whatYouLearn && course.whatYouLearn.slice(7).map((item, index) => (
@@ -167,7 +169,7 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
                     <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-gray-700">{item}</span>
+                    <span className={darkMode ? 'text-gray-300' : 'text-gray-700'}>{item}</span>
                   </div>
                 ))}
               </div>
@@ -176,14 +178,14 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
             {/* Requirements Section */}
             {course?.requirements && course.requirements.length > 0 && (
               <div>
-                <h4 className="text-xl font-bold text-gray-900 mb-4">Requirements</h4>
+                <h4 className={`text-xl font-bold ${darkMode ? 'light-text' : 'dark-text'} mb-4`}>Requirements</h4>
                 <div className="grid gap-3">
                   {course.requirements.map((requirement, index) => (
                     <div key={index} className="flex items-start">
                       <svg className="w-5 h-5 text-blue-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <span className="text-gray-700">{requirement}</span>
+                      <span className={darkMode ? 'text-gray-300' : 'text-gray-700'}>{requirement}</span>
                     </div>
                   ))}
                 </div>
@@ -191,22 +193,22 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
             )}
 
             {/* Course Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 border-t border-gray-100">
-              <div className="bg-gray-50 p-4 rounded-lg text-center">
-                <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Duration</p>
-                <p className="font-bold text-lg text-gray-900 mt-1">{course?.duration || "8 weeks"}</p>
+            <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 border-t ${darkMode ? 'dark-border' : 'light-border'}`}>
+              <div className={`${darkMode ? 'dark-card' : 'light-card'} p-4 rounded-lg text-center`}>
+                <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide font-medium`}>Duration</p>
+                <p className={`font-bold text-lg ${darkMode ? 'light-text' : 'dark-text'} mt-1`}>{course?.duration || "8 weeks"}</p>
               </div>
-              <div className="bg-gray-50 p-4 rounded-lg text-center">
-                <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Lessons</p>
-                <p className="font-bold text-lg text-gray-900 mt-1">{course?.lessons || "32"}</p>
+              <div className={`${darkMode ? 'dark-card' : 'light-card'} p-4 rounded-lg text-center`}>
+                <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide font-medium`}>Lessons</p>
+                <p className={`font-bold text-lg ${darkMode ? 'light-text' : 'dark-text'} mt-1`}>{course?.lessons || "32"}</p>
               </div>
-              <div className="bg-gray-50 p-4 rounded-lg text-center">
-                <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Students</p>
-                <p className="font-bold text-lg text-gray-900 mt-1">{course?.students?.toLocaleString() || "1,234"}</p>
+              <div className={`${darkMode ? 'dark-card' : 'light-card'} p-4 rounded-lg text-center`}>
+                <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide font-medium`}>Students</p>
+                <p className={`font-bold text-lg ${darkMode ? 'light-text' : 'dark-text'} mt-1`}>{course?.students?.toLocaleString() || "1,234"}</p>
               </div>
-              <div className="bg-gray-50 p-4 rounded-lg text-center">
-                <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Level</p>
-                <p className="font-bold text-lg text-gray-900 mt-1">{course?.level || "Beginner"}</p>
+              <div className={`${darkMode ? 'dark-card' : 'light-card'} p-4 rounded-lg text-center`}>
+                <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide font-medium`}>Level</p>
+                <p className={`font-bold text-lg ${darkMode ? 'light-text' : 'dark-text'} mt-1`}>{course?.level || "Beginner"}</p>
               </div>
             </div>
           </div>
@@ -214,8 +216,8 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
 
         {activeTab === 'author' && (
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">About the Author</h3>
-            <div className="bg-gray-50 p-6 rounded-lg">
+            <h3 className={`text-2xl font-bold ${darkMode ? 'light-text' : 'dark-text'} mb-4`}>About the Author</h3>
+            <div className={`${darkMode ? 'dark-card' : 'light-card'} p-6 rounded-lg`}>
               <div className="flex items-center space-x-4 mb-4">
                 <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center">
                   <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -223,11 +225,11 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
                   </svg>
                 </div>
                 <div>
-                  <h4 className="font-bold text-lg text-gray-900">{course?.instructor || "John Smith"}</h4>
-                  <p className="text-gray-600">Senior UI/UX Designer</p>
+                  <h4 className={`font-bold text-lg ${darkMode ? 'light-text' : 'dark-text'}`}>{course?.instructor || "John Smith"}</h4>
+                  <p className={darkMode ? 'text-gray-400' : 'text-gray-600'}>Senior UI/UX Designer</p>
                 </div>
               </div>
-              <p className="text-gray-700 leading-relaxed">
+              <p className={`${darkMode ? 'text-gray-300' : 'text-gray-700'} leading-relaxed`}>
                 With over 8 years of experience in design and development, our instructor has worked with leading tech companies and has trained thousands of students worldwide.
               </p>
             </div>
@@ -236,19 +238,19 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
 
         {activeTab === 'faq' && (
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h3>
+            <h3 className={`text-2xl font-bold ${darkMode ? 'light-text' : 'dark-text'} mb-6`}>Frequently Asked Questions</h3>
             <div className="space-y-4">
-              <div className="border border-gray-200 rounded-lg p-4">
-                <h4 className="font-medium text-gray-900 mb-2">How long do I have access to the course?</h4>
-                <p className="text-gray-600">You have lifetime access to the course materials once enrolled.</p>
+              <div className={`border ${darkMode ? 'dark-border' : 'light-border'} rounded-lg p-4`}>
+                <h4 className={`font-medium ${darkMode ? 'light-text' : 'dark-text'} mb-2`}>How long do I have access to the course?</h4>
+                <p className={darkMode ? 'text-gray-300' : 'text-gray-600'}>You have lifetime access to the course materials once enrolled.</p>
               </div>
-              <div className="border border-gray-200 rounded-lg p-4">
-                <h4 className="font-medium text-gray-900 mb-2">Is this course suitable for beginners?</h4>
-                <p className="text-gray-600">Yes, this course is designed for all skill levels, including complete beginners.</p>
+              <div className={`border ${darkMode ? 'dark-border' : 'light-border'} rounded-lg p-4`}>
+                <h4 className={`font-medium ${darkMode ? 'light-text' : 'dark-text'} mb-2`}>Is this course suitable for beginners?</h4>
+                <p className={darkMode ? 'text-gray-300' : 'text-gray-600'}>Yes, this course is designed for all skill levels, including complete beginners.</p>
               </div>
-              <div className="border border-gray-200 rounded-lg p-4">
-                <h4 className="font-medium text-gray-900 mb-2">Do I get a certificate upon completion?</h4>
-                <p className="text-gray-600">Yes, you will receive a certificate of completion that you can add to your portfolio.</p>
+              <div className={`border ${darkMode ? 'dark-border' : 'light-border'} rounded-lg p-4`}>
+                <h4 className={`font-medium ${darkMode ? 'light-text' : 'dark-text'} mb-2`}>Do I get a certificate upon completion?</h4>
+                <p className={darkMode ? 'text-gray-300' : 'text-gray-600'}>Yes, you will receive a certificate of completion that you can add to your portfolio.</p>
               </div>
             </div>
           </div>
@@ -256,7 +258,7 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
 
         {activeTab === 'announcements' && (
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Course Announcements</h3>
+            <h3 className={`text-2xl font-bold ${darkMode ? 'light-text' : 'dark-text'} mb-6`}>Course Announcements</h3>
             <div className="space-y-4">
               <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
                 <div className="flex">
@@ -282,7 +284,7 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
 
         {activeTab === 'reviews' && (
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Student Reviews</h3>
+            <h3 className={`text-2xl font-bold ${darkMode ? 'light-text' : 'dark-text'} mb-6`}>Student Reviews</h3>
             <div className="space-y-6">
               <div className="flex space-x-4">
                 <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
@@ -290,7 +292,7 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center space-x-2 mb-2">
-                    <h4 className="font-medium text-gray-900">Alex Johnson</h4>
+                    <h4 className={`font-medium ${darkMode ? 'light-text' : 'dark-text'}`}>Alex Johnson</h4>
                     <div className="flex text-yellow-400">
                       {[...Array(5)].map((_, i) => (
                         <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 20 20">
@@ -299,8 +301,8 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
                       ))}
                     </div>
                   </div>
-                  <p className="text-gray-600">Great course! Very comprehensive and well-structured. The instructor explains concepts clearly.</p>
-                  <p className="text-gray-400 text-sm mt-2">2 weeks ago</p>
+                  <p className={darkMode ? 'text-gray-300' : 'text-gray-600'}>Great course! Very comprehensive and well-structured. The instructor explains concepts clearly.</p>
+                  <p className={`${darkMode ? 'text-gray-400' : 'text-gray-400'} text-sm mt-2`}>2 weeks ago</p>
                 </div>
               </div>
               
@@ -310,7 +312,7 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center space-x-2 mb-2">
-                    <h4 className="font-medium text-gray-900">Sarah Wilson</h4>
+                    <h4 className={`font-medium ${darkMode ? 'light-text' : 'dark-text'}`}>Sarah Wilson</h4>
                     <div className="flex text-yellow-400">
                       {[...Array(4)].map((_, i) => (
                         <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 20 20">
@@ -322,8 +324,8 @@ const MoreInfo = ({ course, selectedVideo, selectedSection }) => {
                       </svg>
                     </div>
                   </div>
-                  <p className="text-gray-600">Good content overall. Could use more practical examples, but definitely worth taking.</p>
-                  <p className="text-gray-400 text-sm mt-2">1 month ago</p>
+                  <p className={darkMode ? 'text-gray-300' : 'text-gray-600'}>Good content overall. Could use more practical examples, but definitely worth taking.</p>
+                  <p className={`${darkMode ? 'text-gray-400' : 'text-gray-400'} text-sm mt-2`}>1 month ago</p>
                 </div>
               </div>
             </div>

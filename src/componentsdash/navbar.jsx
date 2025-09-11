@@ -2,29 +2,39 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useDarkMode } from '../context/DarkModeContext';
 
 const Navbar = ({ onSidebarToggle }) => {
   const navigate = useNavigate();
   const { getCartItemsCount } = useCart();
   const [notifications, setNotifications] = useState(5);
   const cartItems = getCartItemsCount();
+  const { darkMode } = useDarkMode();
 
   const handleCartClick = () => {
     navigate('/dashboard/cart');
   };
 
   return (
-    <header className="flex items-center justify-between px-3 py-2 bg-white border-b h-14 sm:h-16 sm:px-6 md:px-8 lg:px-10">
+    <header className={`flex items-center justify-between px-3 py-2 border-b h-14 sm:h-16 sm:px-6 md:px-8 lg:px-10 transition-colors duration-300 ${
+      darkMode 
+        ? 'bg-gray-900 border-gray-700 text-gray-100' 
+        : 'bg-white border-gray-200 text-gray-900'
+    }`}>
       {/* Breadcrumb and sidebar toggle */}
       <div className="flex items-center gap-2 flex-1 min-w-0">
         {/* Hamburger icon for mobile */}
         <button
-          className="p-2 rounded-full hover:bg-gray-100 transition sm:hidden"
+          className={`p-2 rounded-full transition sm:hidden ${
+            darkMode 
+              ? 'hover:bg-gray-800 text-gray-300' 
+              : 'hover:bg-gray-100 text-gray-700'
+          }`}
           onClick={onSidebarToggle}
           aria-label="Open sidebar"
         >
           <svg
-            className="w-6 h-6 text-gray-700"
+            className="w-6 h-6"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -38,15 +48,23 @@ const Navbar = ({ onSidebarToggle }) => {
         </button>
         
         {/* Breadcrumb - responsive text handling */}
-        <nav className="flex items-center text-gray-400 text-xs sm:text-sm gap-1 flex-nowrap overflow-hidden">
-          <span className="text-gray-500 whitespace-nowrap truncate">
+        <nav className={`flex items-center text-xs sm:text-sm gap-1 flex-nowrap overflow-hidden ${
+          darkMode ? 'text-gray-400' : 'text-gray-400'
+        }`}>
+          <span className={`whitespace-nowrap truncate ${
+            darkMode ? 'text-gray-300' : 'text-gray-500'
+          }`}>
             Courses
           </span>
           <span className="hidden xs:inline">/</span>
           <span className="hidden xs:inline whitespace-nowrap truncate">UIUX Design</span>
-          <span className="xs:hidden text-gray-500 whitespace-nowrap">...</span>
+          <span className="xs:hidden whitespace-nowrap">...</span>
           <span className="hidden xs:inline">/</span>
-          <span className="text-gray-500 whitespace-nowrap truncate">Figma from A to Z</span>
+          <span className={`whitespace-nowrap truncate ${
+            darkMode ? 'text-gray-300' : 'text-gray-500'
+          }`}>
+            Figma from A to Z
+          </span>
         </nav>
       </div>
       
@@ -55,10 +73,18 @@ const Navbar = ({ onSidebarToggle }) => {
         {/* Cart icon with badge */}
         <button 
           onClick={handleCartClick}
-          className="relative p-2 group hover:bg-gray-100 rounded-full transition-colors"
+          className={`relative p-2 group rounded-full transition-colors ${
+            darkMode 
+              ? 'hover:bg-gray-800' 
+              : 'hover:bg-gray-100'
+          }`}
         >
           <svg
-            className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500 group-hover:text-blue-600 transition-colors"
+            className={`w-5 h-5 sm:w-6 sm:h-6 transition-colors ${
+              darkMode 
+                ? 'text-gray-400 group-hover:text-blue-400' 
+                : 'text-gray-500 group-hover:text-blue-600'
+            }`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -74,9 +100,17 @@ const Navbar = ({ onSidebarToggle }) => {
         </button>
         
         {/* Notification icon with badge */}
-        <button className="relative p-2 group hover:bg-gray-100 rounded-full transition-colors">
+        <button className={`relative p-2 group rounded-full transition-colors ${
+          darkMode 
+            ? 'hover:bg-gray-800' 
+            : 'hover:bg-gray-100'
+        }`}>
           <svg
-            className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500 group-hover:text-blue-600 transition-colors"
+            className={`w-5 h-5 sm:w-6 sm:h-6 transition-colors ${
+              darkMode 
+                ? 'text-gray-400 group-hover:text-blue-400' 
+                : 'text-gray-500 group-hover:text-blue-600'
+            }`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -92,7 +126,11 @@ const Navbar = ({ onSidebarToggle }) => {
         </button>
         
         {/* User profile (visible on larger screens) */}
-        <div className="hidden md:flex items-center ml-2 cursor-pointer p-1 rounded-lg hover:bg-gray-100">
+        <div className={`hidden md:flex items-center ml-2 cursor-pointer p-1 rounded-lg transition-colors ${
+          darkMode 
+            ? 'hover:bg-gray-800' 
+            : 'hover:bg-gray-100'
+        }`}>
           {/* User profile content would go here */}
         </div>
       </div>

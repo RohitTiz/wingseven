@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useProfile } from '../context/ProfileContext'; // Import the profile context
+import { useProfile } from '../context/ProfileContext';
+import { useDarkMode } from '../context/DarkModeContext'; // Added import
 
 const ProfileAvatar = ({ 
   onSignOut = () => console.log('Signing out...'),
@@ -10,7 +11,8 @@ const ProfileAvatar = ({
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
-  const { profile } = useProfile(); // Get profile data from context
+  const { profile } = useProfile();
+  const { darkMode } = useDarkMode(); // Get dark mode state
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -79,6 +81,12 @@ const ProfileAvatar = ({
   const userEmail = profile?.email || 'user@example.com';
   const initials = getInitials(userName);
 
+  // Dynamic CSS classes based on dark mode
+  const bgClass = darkMode ? 'dark-bg' : 'light-bg';
+  const textClass = darkMode ? 'light-text' : 'dark-text';
+  const borderClass = darkMode ? 'dark-border' : 'light-border';
+  const cardClass = darkMode ? 'dark-card' : 'light-card';
+
   return (
     <div className="relative">
       {/* Avatar Button */}
@@ -89,7 +97,7 @@ const ProfileAvatar = ({
         aria-haspopup="true"
         onClick={() => setShowDropdown(!showDropdown)}
         onKeyDown={(e) => handleKeyDown(e, () => setShowDropdown(!showDropdown))}
-        className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold text-sm flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 border-2 border-white focus:outline-none focus:ring-2 focus:ring-purple-400 md:w-12 md:h-12"
+        className={`w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold text-sm flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 border-2 border-white focus:outline-none focus:ring-2 focus:ring-purple-400 md:w-12 md:h-12 ${darkMode ? 'border-gray-700' : 'border-white'}`}
       >
         {profile?.profileImage ? (
           <img 
@@ -106,24 +114,24 @@ const ProfileAvatar = ({
       {showDropdown && (
         <>
           <div 
-            className="fixed inset-0 z-40 backdrop-blur-sm bg-black/10 md:bg-transparent md:backdrop-blur-0" 
+            className={`fixed inset-0 z-40 backdrop-blur-sm transition-colors duration-300 ${darkMode ? 'bg-black/30' : 'bg-black/10'} md:bg-transparent md:backdrop-blur-0`} 
             onClick={() => setShowDropdown(false)}
             aria-hidden="true"
           />
           
           <div 
             ref={dropdownRef}
-            className="fixed bottom-0 left-0 right-0 w-full bg-white rounded-t-2xl shadow-2xl border border-gray-200 z-50 overflow-hidden animate-slide-up md:absolute md:bottom-auto md:top-full md:right-0 md:left-auto md:mt-2 md:rounded-xl md:animate-fade-in md:shadow-lg md:w-auto md:min-w-[280px]"
+            className={`fixed bottom-0 left-0 right-0 w-full rounded-t-2xl shadow-2xl z-50 overflow-hidden animate-slide-up md:absolute md:bottom-auto md:top-full md:right-0 md:left-auto md:mt-2 md:rounded-xl md:animate-fade-in md:shadow-lg md:w-auto md:min-w-[280px] transition-colors duration-300 ${cardClass} ${borderClass}`}
             role="menu"
             aria-orientation="vertical"
           >
             {/* Close button for mobile */}
             <div className="flex justify-center py-2 md:hidden">
-              <div className="w-10 h-1 bg-gray-300 rounded-full"></div>
+              <div className={`w-10 h-1 rounded-full transition-colors duration-300 ${darkMode ? 'bg-gray-600' : 'bg-gray-300'}`}></div>
             </div>
 
             {/* User Info Section */}
-            <div className="p-4 bg-gray-50 border-b border-gray-200">
+            <div className={`p-4 border-b transition-colors duration-300 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold text-lg flex items-center justify-center shrink-0 overflow-hidden">
                   {profile?.profileImage ? (
@@ -137,10 +145,10 @@ const ProfileAvatar = ({
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="font-semibold text-gray-900 truncate" title={userName}>
+                  <div className={`font-semibold truncate transition-colors duration-300 ${darkMode ? 'text-white' : 'text-gray-900'}`} title={userName}>
                     {userName}
                   </div>
-                  <div className="text-sm text-gray-500 truncate" title={userEmail}>
+                  <div className={`text-sm truncate transition-colors duration-300 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} title={userEmail}>
                     {userEmail}
                   </div>
                 </div>
@@ -152,22 +160,22 @@ const ProfileAvatar = ({
               <button 
                 onClick={handleDashboardClick}
                 onKeyDown={(e) => handleKeyDown(e, handleDashboardClick)}
-                className="w-full px-4 py-3 text-left text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors focus:outline-none focus:bg-gray-100 active:bg-gray-100"
+                className={`w-full px-4 py-3 text-left flex items-center gap-3 transition-colors duration-300 focus:outline-none active:bg-opacity-50 ${darkMode ? 'text-gray-200 hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-700' : 'text-gray-700 hover:bg-gray-50 focus:bg-gray-100 active:bg-gray-100'}`}
                 role="menuitem"
                 tabIndex={0}
               >
-                <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className={`w-5 h-5 transition-colors duration-300 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
                 <span className="text-sm font-medium">Dashboard</span>
               </button>
               
               <button 
-                className="w-full px-4 py-3 text-left text-blue-600 hover:bg-gray-50 flex items-center gap-3 transition-colors focus:outline-none focus:bg-gray-100 active:bg-gray-100"
+                className={`w-full px-4 py-3 text-left flex items-center gap-3 transition-colors duration-300 focus:outline-none active:bg-opacity-50 ${darkMode ? 'text-blue-400 hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-700' : 'text-blue-600 hover:bg-gray-50 focus:bg-gray-100 active:bg-gray-100'}`}
                 role="menuitem"
                 tabIndex={0}
               >
-                <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className={`w-5 h-5 transition-colors duration-300 ${darkMode ? 'text-blue-400' : 'text-blue-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
@@ -176,10 +184,10 @@ const ProfileAvatar = ({
             </div>
 
             {/* Theme Toggle */}
-            <div className="px-4 py-3 border-t border-gray-200">
+            <div className={`px-4 py-3 border-t transition-colors duration-300 ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
               <div className="flex items-center justify-between gap-2 text-xs">
                 <button 
-                  className="flex items-center gap-2 text-gray-600 hover:text-gray-800 active:text-gray-900 p-2 rounded-lg active:bg-gray-100"
+                  className={`flex items-center gap-2 p-2 rounded-lg transition-colors duration-300 ${darkMode ? 'text-gray-400 hover:text-gray-300 active:text-gray-200 active:bg-gray-700' : 'text-gray-600 hover:text-gray-800 active:text-gray-900 active:bg-gray-100'}`}
                   tabIndex={0}
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -189,7 +197,7 @@ const ProfileAvatar = ({
                 </button>
                 
                 <button 
-                  className="flex items-center gap-2 text-gray-600 hover:text-gray-800 active:text-gray-900 p-2 rounded-lg active:bg-gray-100"
+                  className={`flex items-center gap-2 p-2 rounded-lg transition-colors duration-300 ${darkMode ? 'text-gray-400 hover:text-gray-300 active:text-gray-200 active:bg-gray-700' : 'text-gray-600 hover:text-gray-800 active:text-gray-900 active:bg-gray-100'}`}
                   tabIndex={0}
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -199,7 +207,7 @@ const ProfileAvatar = ({
                 </button>
                 
                 <button 
-                  className="flex items-center gap-2 text-gray-600 hover:text-gray-800 active:text-gray-900 p-2 rounded-lg active:bg-gray-100"
+                  className={`flex items-center gap-2 p-2 rounded-lg transition-colors duration-300 ${darkMode ? 'text-gray-400 hover:text-gray-300 active:text-gray-200 active:bg-gray-700' : 'text-gray-600 hover:text-gray-800 active:text-gray-900 active:bg-gray-100'}`}
                   tabIndex={0}
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -211,11 +219,11 @@ const ProfileAvatar = ({
             </div>
 
             {/* Sign Out */}
-            <div className="border-t border-gray-200">
+            <div className={`border-t transition-colors duration-300 ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
               <button 
                 onClick={onSignOut}
                 onKeyDown={(e) => handleKeyDown(e, onSignOut)}
-                className="w-full px-4 py-3 text-left text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors focus:outline-none focus:bg-red-100 active:bg-red-100"
+                className={`w-full px-4 py-3 text-left flex items-center gap-3 transition-colors duration-300 focus:outline-none active:bg-opacity-50 ${darkMode ? 'text-red-400 hover:bg-red-900/30 focus:bg-red-900/30 active:bg-red-900/30' : 'text-red-600 hover:bg-red-50 focus:bg-red-100 active:bg-red-100'}`}
                 role="menuitem"
                 tabIndex={0}
               >

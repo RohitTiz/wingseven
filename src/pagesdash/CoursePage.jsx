@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDarkMode } from '../context/DarkModeContext';
 import VideoContent from '../componentsdash/videoContent';
 import MoreInfo from '../componentsdash/moreInfo';
 import CourseContent from '../componentsdash/courseContent';
@@ -8,6 +9,7 @@ import { coursesData } from '../data/coursesData';
 export const CoursePage = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { darkMode } = useDarkMode();
 
   // Use the first course as an example for this page
   const course = coursesData[0];
@@ -37,13 +39,19 @@ export const CoursePage = () => {
 
       {/* Mobile Menu Toggle Button */}
       <button
-        className="sm:hidden fixed top-16 right-3 z-50 bg-blue-600 text-white px-3 py-2 rounded-lg shadow-lg text-sm font-medium"
+        className={`sm:hidden fixed top-16 right-3 z-50 px-3 py-2 rounded-lg shadow-lg text-sm font-medium transition-colors duration-300 ${
+          darkMode 
+            ? 'bg-blue-500 text-white hover:bg-blue-600' 
+            : 'bg-blue-600 text-white hover:bg-blue-700'
+        }`}
         onClick={toggleMobileMenu}
       >
         {isMobileMenuOpen ? 'Close' : 'Content'}
       </button>
 
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 p-3 sm:p-4 md:p-6 bg-[#F6F8FA] min-h-screen pt-16 sm:pt-20 md:pt-6">
+      <div className={`flex flex-col sm:flex-row gap-3 sm:gap-6 p-3 sm:p-4 md:p-6 min-h-screen pt-16 sm:pt-20 md:pt-6 transition-colors duration-300 ${
+        darkMode ? 'bg-gray-900' : 'bg-[#F6F8FA]'
+      }`}>
         {/* Main Content Area */}
         <div className="flex-1 max-w-4xl mx-auto w-full">
           <VideoContent course={course} selectedVideo={selectedVideo} />
@@ -56,7 +64,9 @@ export const CoursePage = () => {
             w-full sm:w-[300px] md:w-[340px] flex-shrink-0 mx-auto
             transition-all duration-300 ease-in-out
             ${isMobileMenuOpen
-              ? 'fixed top-0 left-0 right-0 bottom-0 z-40 bg-white p-4 overflow-y-auto sm:static sm:block'
+              ? `fixed top-0 left-0 right-0 bottom-0 z-40 p-4 overflow-y-auto sm:static sm:block ${
+                  darkMode ? 'bg-gray-800' : 'bg-white'
+                }`
               : 'hidden sm:block'
             }
           `}
@@ -70,7 +80,11 @@ export const CoursePage = () => {
           {/* Close button for mobile */}
           {isMobileMenuOpen && (
             <button
-              className="sm:hidden fixed bottom-4 right-4 bg-red-600 text-white p-3 rounded-full shadow-lg text-lg"
+              className={`sm:hidden fixed bottom-4 right-4 p-3 rounded-full shadow-lg text-lg transition-colors duration-300 ${
+                darkMode 
+                  ? 'bg-red-500 text-white hover:bg-red-600' 
+                  : 'bg-red-600 text-white hover:bg-red-700'
+              }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               ✕

@@ -182,7 +182,7 @@ function BlogPage() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className={`w-full pl-10 pr-4 py-3 backdrop-blur-sm border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300 ${
                   darkMode
-                    ? 'bg-gray-800/90 text-gray-100 placeholder-gray-400'
+                    ? 'bg-white/20 text-gray-100 placeholder-gray-300'
                     : 'bg-white/90 text-gray-900'
                 }`}
               />
