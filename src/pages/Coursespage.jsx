@@ -25,49 +25,42 @@ const CoursePage = () => {
           ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' 
           : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'
       } overflow-hidden`}>
-        {/* Hero Section with Reduced Height */}
-        <section className="relative py-12 md:py-20 overflow-hidden bg-fixed bg-center bg-cover transition-colors duration-300" 
+        {/* Hero Section with specific class for overrides */}
+        <section className="course-hero relative py-12 md:py-20 overflow-hidden bg-fixed bg-center bg-cover transition-colors duration-300" 
           style={{ 
             backgroundImage: `url('https://images.unsplash.com/photo-1449157291145-7efd050a4d0e?w=600&auto=format&fit=crop&q=60')`,
             minHeight: '35vh'
           }}>
-          {/* Reduced opacity for dark mode overlay to show more of the image */}
-          <div className={`absolute inset-0 transition-colors duration-300 ${
-            darkMode 
-              ? 'bg-gradient-to-r from-blue-900/40 to-indigo-900/40' 
-              : 'bg-gradient-to-r from-blue-900/80 to-indigo-900/80'
-          }`}></div>
+          {/* Overlay with specific class */}
+          <div className="course-hero-overlay absolute inset-0 transition-colors duration-300 bg-gradient-to-r from-blue-900/80 to-indigo-900/80"></div>
+          
           <div className="container mx-auto px-4 text-center relative z-10 flex flex-col justify-center h-full">
-            <h1 className={`text-3xl md:text-5xl font-bold mb-4 transition-colors duration-300 ${
-              darkMode ? 'text-white' : 'text-white'
-            } transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <h1 className={`text-3xl md:text-5xl font-bold mb-4 transition-all duration-1000 transform ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
               Our Courses
             </h1>
-            <p className={`text-lg md:text-xl max-w-3xl mx-auto transition-colors duration-300 ${
-              darkMode ? 'text-blue-100' : 'text-blue-100'
-            } transition-all duration-1000 delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} font-light mb-6`}>
+            <p className={`text-lg md:text-xl max-w-3xl mx-auto font-light mb-6 transition-all duration-1000 delay-300 transform ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
               Transform your career with industry-leading courses designed by experts.
             </p>
-            <div className={`max-w-md mx-auto relative transition-all duration-1000 delay-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className={`max-w-md mx-auto relative transition-all duration-1000 delay-500 transform ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">🔍</span>
               <input
                 type="text"
                 placeholder="Search courses..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={`w-full pl-10 pr-4 py-3 transition-colors duration-300 ${
-                  darkMode 
-                    ? 'bg-gray-700/90 text-gray-100 placeholder-gray-400 focus:ring-blue-400' 
-                    : 'bg-white/90 text-gray-900 focus:ring-blue-500'
-                } backdrop-blur-sm border-0 rounded-xl focus:outline-none focus:ring-2`}
+                className="w-full pl-10 pr-4 py-3 backdrop-blur-sm border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
         </section>
 
-        {/* Use the CourseSection component */}
         <CourseSection />
-
       </div>
       <FreeCourseSection/>
       <BestWorkshopSection/>

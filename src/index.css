@@ -286,3 +286,57 @@ body.dark-mode::-webkit-scrollbar-thumb {
 body.dark-mode::-webkit-scrollbar-thumb:hover {
   background: #6b7280;
 }
+
+/* ===== HERO SECTION DARK MODE FIXES ===== */
+
+/* Override global dark mode styles for hero sections with background images */
+.hero-section,
+.course-hero {
+  position: relative;
+}
+
+/* Ensure hero section containers don't get dark backgrounds */
+body.dark-mode .hero-section .container,
+body.dark-mode .course-hero .container,
+body.dark-mode .hero-section .section,
+body.dark-mode .course-hero .section {
+  background-color: transparent !important;
+}
+
+/* Make sure text remains visible in both light and dark modes */
+.hero-section h1,
+.course-hero h1,
+.hero-section p,
+.course-hero p {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+body.dark-mode .hero-section h1,
+body.dark-mode .course-hero h1,
+body.dark-mode .hero-section p,
+body.dark-mode .course-hero p {
+  color: white !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Specific overrides for the course page hero section */
+body.dark-mode .course-hero-overlay {
+  background: linear-gradient(to right, rgba(30, 58, 138, 0.3), rgba(67, 56, 202, 0.3)) !important;
+}
+
+/* Ensure search input works well in both modes */
+.hero-section input,
+.course-hero input {
+  backdrop-filter: blur(10px);
+}
+
+body.dark-mode .hero-section input,
+body.dark-mode .course-hero input {
+  background-color: rgba(55, 65, 81, 0.9) !important;
+  color: #f9fafb !important;
+}
+
+body.dark-mode .hero-section input::placeholder,
+body.dark-mode .course-hero input::placeholder {
+  color: #9ca3af !important;
+}
