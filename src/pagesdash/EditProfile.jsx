@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from '../context/ProfileContext';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const EditProfile = () => {
   const navigate = useNavigate();
   const { profile, updateProfile } = useProfile();
+  const { darkMode } = useDarkMode();
   const [name, setName] = useState(profile.name);
   const [profileImage, setProfileImage] = useState(profile.profileImage);
   const [email, setEmail] = useState(profile.email);
@@ -54,13 +56,15 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">Edit Profile</h1>
+    <div className={`p-6 min-h-screen transition-colors duration-300 ${darkMode ? 'dark-bg' : 'light-bg'}`}>
+      <div className={`max-w-2xl mx-auto rounded-lg shadow-md p-6 transition-colors duration-300 ${darkMode ? 'dark-card' : 'light-card'}`}>
+        <h1 className={`text-2xl font-bold mb-6 transition-colors duration-300 ${darkMode ? 'light-text' : 'dark-text'}`}>
+          Edit Profile
+        </h1>
         
         {/* Success Message */}
         {isSaved && (
-          <div className="mb-6 p-4 bg-green-100 text-green-700 rounded-lg">
+          <div className={`mb-6 p-4 rounded-lg transition-colors duration-300 ${darkMode ? 'bg-green-900 text-green-200' : 'bg-green-100 text-green-700'}`}>
             Profile updated successfully! Redirecting...
           </div>
         )}
@@ -68,7 +72,9 @@ const EditProfile = () => {
         <form onSubmit={handleSubmit}>
           {/* Profile Image */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Profile Photo</label>
+            <label className={`block text-sm font-medium mb-2 transition-colors duration-300 ${darkMode ? 'light-text' : 'dark-text'}`}>
+              Profile Photo
+            </label>
             <div className="flex items-center space-x-4">
               <img
                 src={profileImage}
@@ -89,19 +95,23 @@ const EditProfile = () => {
                 >
                   Change Photo
                 </label>
-                <p className="text-sm text-gray-500 mt-1">JPG, PNG or GIF. Max 1MB.</p>
+                <p className={`text-sm mt-1 transition-colors duration-300 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  JPG, PNG or GIF. Max 1MB.
+                </p>
               </div>
             </div>
           </div>
 
           {/* Name */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+            <label className={`block text-sm font-medium mb-2 transition-colors duration-300 ${darkMode ? 'light-text' : 'dark-text'}`}>
+              Full Name
+            </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+              className={`w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-colors duration-300 ${darkMode ? 'dark-border dark-bg light-text' : 'light-border light-bg dark-text'}`}
               placeholder="Enter your name"
               required
             />
@@ -109,12 +119,14 @@ const EditProfile = () => {
 
           {/* Email */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+            <label className={`block text-sm font-medium mb-2 transition-colors duration-300 ${darkMode ? 'light-text' : 'dark-text'}`}>
+              Email Address
+            </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+              className={`w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-colors duration-300 ${darkMode ? 'dark-border dark-bg light-text' : 'light-border light-bg dark-text'}`}
               placeholder="Enter your email"
               required
             />
@@ -122,12 +134,14 @@ const EditProfile = () => {
 
           {/* Bio */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Bio</label>
+            <label className={`block text-sm font-medium mb-2 transition-colors duration-300 ${darkMode ? 'light-text' : 'dark-text'}`}>
+              Bio
+            </label>
             <textarea
               value={bio}
               onChange={(e) => setBio(e.target.value)}
               rows="4"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+              className={`w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-colors duration-300 ${darkMode ? 'dark-border dark-bg light-text' : 'light-border light-bg dark-text'}`}
               placeholder="Tell us about yourself"
             />
           </div>
@@ -143,7 +157,7 @@ const EditProfile = () => {
             <button
               type="button"
               onClick={() => navigate('/dashboard')}
-              className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              className={`px-6 py-2 rounded-lg transition-colors duration-300 ${darkMode ? 'dark-border text-gray-300 hover:bg-gray-700' : 'light-border text-gray-700 hover:bg-gray-100'}`}
             >
               Cancel
             </button>
