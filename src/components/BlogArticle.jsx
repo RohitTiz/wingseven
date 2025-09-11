@@ -3,12 +3,14 @@ import { useParams, Link } from 'react-router-dom';
 import AuthSection from '../components/AuthSection';
 import Footer from '../components/Footer';
 import blogArticleData from '../data/blogarticledata';
+import { useDarkMode } from '../context/DarkModeContext';
 
 function BlogArticle() {
   const { id } = useParams();
   const [article, setArticle] = useState(null);
   const [relatedArticles, setRelatedArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { darkMode } = useDarkMode();
 
   useEffect(() => {
     // Find the article by ID
@@ -33,10 +35,10 @@ function BlogArticle() {
     return (
       <>
         <AuthSection />
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
+        <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark-bg' : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'} flex items-center justify-center`}>
           <div className="text-center">
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-4 text-lg text-gray-600">Loading article...</p>
+            <p className={`mt-4 text-lg transition-colors duration-300 ${darkMode ? 'light-text' : 'text-gray-600'}`}>Loading article...</p>
           </div>
         </div>
       </>
@@ -47,10 +49,10 @@ function BlogArticle() {
     return (
       <>
         <AuthSection />
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
+        <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark-bg' : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'} flex items-center justify-center`}>
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">Article Not Found</h1>
-            <p className="text-lg text-gray-600 mb-8">The article you're looking for doesn't exist.</p>
+            <h1 className={`text-4xl font-bold transition-colors duration-300 ${darkMode ? 'light-text' : 'text-gray-800'} mb-4`}>Article Not Found</h1>
+            <p className={`text-lg transition-colors duration-300 ${darkMode ? 'light-text' : 'text-gray-600'} mb-8`}>The article you're looking for doesn't exist.</p>
             <Link 
               to="/blog" 
               className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all duration-300 shadow-md hover:shadow-lg"
@@ -66,29 +68,29 @@ function BlogArticle() {
   return (
     <>
       <AuthSection />
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-gray-900">
+      <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark-bg' : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'} ${darkMode ? 'light-text' : 'text-gray-900'}`}>
         {/* Article Header */}
-        <section className="relative py-16 md:py-24 overflow-hidden bg-white">
+        <section className={`relative py-16 md:py-24 overflow-hidden transition-colors duration-300 ${darkMode ? 'dark-card' : 'bg-white'}`}>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-8">
-              <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">
+              <span className={`inline-block px-4 py-2 transition-colors duration-300 ${darkMode ? 'bg-blue-900 text-blue-100' : 'bg-blue-100 text-blue-700'} rounded-full text-sm font-medium mb-4`}>
                 {article.category}
               </span>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+              <h1 className={`text-4xl md:text-5xl font-bold transition-colors duration-300 ${darkMode ? 'light-text' : 'text-gray-900'} mb-6 leading-tight`}>
                 {article.title}
               </h1>
-              <div className="flex items-center justify-center space-x-4 text-gray-600 mb-6">
+              <div className={`flex items-center justify-center space-x-4 transition-colors duration-300 ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-6`}>
                 <span>{article.publishDate}</span>
                 <span>•</span>
                 <span>{article.readTime} read</span>
               </div>
               <div className="flex items-center justify-center">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-blue-700 font-bold">{article.authorInitials}</span>
+                <div className={`w-12 h-12 transition-colors duration-300 ${darkMode ? 'bg-blue-900' : 'bg-blue-100'} rounded-full flex items-center justify-center mr-4`}>
+                  <span className={`transition-colors duration-300 ${darkMode ? 'text-blue-100' : 'text-blue-700'} font-bold`}>{article.authorInitials}</span>
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900">{article.author}</p>
-                  <p className="text-sm text-gray-600">{article.authorBio}</p>
+                  <p className={`font-medium transition-colors duration-300 ${darkMode ? 'light-text' : 'text-gray-900'}`}>{article.author}</p>
+                  <p className={`text-sm transition-colors duration-300 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{article.authorBio}</p>
                 </div>
               </div>
             </div>
@@ -96,17 +98,17 @@ function BlogArticle() {
         </section>
 
         {/* Article Content */}
-        <section className="py-12 bg-white">
+        <section className={`py-12 transition-colors duration-300 ${darkMode ? 'dark-card' : 'bg-white'}`}>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="prose prose-lg max-w-none">
               {article.content.map((item, index) => {
                 switch (item.type) {
                   case 'paragraph':
-                    return <p key={index} className="mb-6 text-gray-700 leading-relaxed">{item.text}</p>;
+                    return <p key={index} className={`mb-6 transition-colors duration-300 ${darkMode ? 'text-gray-300' : 'text-gray-700'} leading-relaxed`}>{item.text}</p>;
                   case 'heading':
-                    return <h2 key={index} className="text-2xl md:text-3xl font-bold text-gray-900 mt-12 mb-6">{item.text}</h2>;
+                    return <h2 key={index} className={`text-2xl md:text-3xl font-bold transition-colors duration-300 ${darkMode ? 'light-text' : 'text-gray-900'} mt-12 mb-6`}>{item.text}</h2>;
                   case 'subheading':
-                    return <h3 key={index} className="text-xl md:text-2xl font-semibold text-gray-800 mt-10 mb-4">{item.text}</h3>;
+                    return <h3 key={index} className={`text-xl md:text-2xl font-semibold transition-colors duration-300 ${darkMode ? 'text-gray-200' : 'text-gray-800'} mt-10 mb-4`}>{item.text}</h3>;
                   case 'image':
                     return (
                       <div key={index} className="my-8">
@@ -125,7 +127,7 @@ function BlogArticle() {
                     );
                   case 'list':
                     return (
-                      <ul key={index} className="list-disc pl-6 mb-6 text-gray-700">
+                      <ul key={index} className={`list-disc pl-6 mb-6 transition-colors duration-300 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                         {item.items.map((listItem, listIndex) => (
                           <li key={listIndex} className="mb-2">{listItem}</li>
                         ))}
@@ -138,8 +140,8 @@ function BlogArticle() {
             </div>
 
             {/* Key Takeaways */}
-            <div className="bg-blue-50 rounded-2xl p-8 my-16 border border-blue-100">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+            <div className={`rounded-2xl p-8 my-16 border transition-colors duration-300 ${darkMode ? 'bg-blue-900 border-blue-800' : 'bg-blue-50 border-blue-100'}`}>
+              <h3 className={`text-2xl font-bold transition-colors duration-300 ${darkMode ? 'light-text' : 'text-gray-900'} mb-6 flex items-center`}>
                 <svg className="w-6 h-6 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
@@ -151,7 +153,7 @@ function BlogArticle() {
                     <svg className="w-5 h-5 text-green-500 mt-1 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span className="text-gray-700">{takeaway}</span>
+                    <span className={`transition-colors duration-300 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>{takeaway}</span>
                   </li>
                 ))}
               </ul>
@@ -162,7 +164,7 @@ function BlogArticle() {
               {article.tags.map((tag, index) => (
                 <span 
                   key={index}
-                  className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
+                  className={`px-4 py-2 transition-colors duration-300 ${darkMode ? 'bg-gray-700 text-gray-200 hover:bg-gray-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'} rounded-full text-sm font-medium transition-colors`}
                 >
                   #{tag}
                 </span>
@@ -170,25 +172,21 @@ function BlogArticle() {
             </div>
 
             {/* Author Bio */}
-            <div className="bg-gray-50 rounded-2xl p-8 mb-16">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">About the Author</h3>
+            <div className={`rounded-2xl p-8 mb-16 transition-colors duration-300 ${darkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
+              <h3 className={`text-xl font-bold transition-colors duration-300 ${darkMode ? 'light-text' : 'text-gray-900'} mb-4`}>About the Author</h3>
               <div className="flex items-start">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mr-6 flex-shrink-0">
-                  <span className="text-blue-700 font-bold text-xl">{article.authorInitials}</span>
+                <div className={`w-16 h-16 transition-colors duration-300 ${darkMode ? 'bg-blue-900' : 'bg-blue-100'} rounded-full flex items-center justify-center mr-6 flex-shrink-0`}>
+                  <span className={`transition-colors duration-300 ${darkMode ? 'text-blue-100' : 'text-blue-700'} font-bold text-xl`}>{article.authorInitials}</span>
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900 text-lg">{article.author}</p>
-                  <p className="text-gray-600 mb-4">{article.authorBio}</p>
-                  <p className="text-sm text-gray-500">{article.followers}</p>
+                  <p className={`font-medium transition-colors duration-300 ${darkMode ? 'light-text' : 'text-gray-900'} text-lg`}>{article.author}</p>
+                  <p className={`transition-colors duration-300 ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-4`}>{article.authorBio}</p>
+                  <p className={`text-sm transition-colors duration-300 ${darkMode ? 'text-gray-500' : 'text-gray-500'}`}>{article.followers}</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
-
-        
-
-        
       </div>
     </>
   );
