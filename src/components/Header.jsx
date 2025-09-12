@@ -1,8 +1,8 @@
-// components/Header.js
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import SignupModal from './SignupModal';
 import ProfileAvatar from './ProfileAvatar';
+import DemoModal from '../pages/DemoModal'; // Import the new component
 // In Header.jsx
 import { useDarkMode } from '../context/DarkModeContext'; // Correct path
 
@@ -10,6 +10,7 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showDemoModal, setShowDemoModal] = useState(false); // State for demo modal
   const { darkMode, toggleDarkMode } = useDarkMode();
   const location = useLocation();
 
@@ -24,9 +25,9 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
   }, [location]);
 
   useEffect(() => {
-    document.body.classList.toggle('modal-open', showModal);
+    document.body.classList.toggle('modal-open', showModal || showDemoModal);
     return () => document.body.classList.remove('modal-open');
-  }, [showModal]);
+  }, [showModal, showDemoModal]);
 
   const handleSignUp = (email, name) => {
     setUserEmail(email);
@@ -150,7 +151,10 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
                 </svg>
               )}
             </button>
-            <button className={demoButtonClasses}>
+            <button 
+              className={demoButtonClasses}
+              onClick={() => setShowDemoModal(true)}
+            >
               Book a Demo
             </button>
             {userEmail ? (
@@ -188,7 +192,10 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
               </svg>
             )}
           </button>
-          <button className={demoButtonClasses}>
+          <button 
+            className={demoButtonClasses}
+            onClick={() => setShowDemoModal(true)}
+          >
             Book a Demo
           </button>
           {userEmail ? (
@@ -215,6 +222,12 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
           darkMode={darkMode}
         />
       )}
+      
+      <DemoModal 
+        isOpen={showDemoModal}
+        onClose={() => setShowDemoModal(false)}
+        darkMode={darkMode}
+      />
     </header>
   );
 };

@@ -109,8 +109,6 @@ iframe {
 
 
 
-
-
 /* Global Dark Mode Styles - Add these to your main CSS file (index.css or App.css) */
 
 /* Base styles for smooth transitions */
@@ -143,10 +141,17 @@ body.dark-mode .content-wrapper {
   color: #f9fafb;
 }
 
-/* Dark mode for cards and containers */
-body.dark-mode .card,
-body.dark-mode .container,
-body.dark-mode .section {
+/* Dark mode for cards and containers - FIXED: Exclude hero sections */
+body.dark-mode .card {
+  background-color: #1f2937;
+  border-color: #374151;
+  color: #f9fafb;
+}
+
+
+
+/* Only apply dark backgrounds to sections that are NOT hero sections */
+body.dark-mode .section:not(.hero-section):not(.course-hero) {
   background-color: #1f2937;
   border-color: #374151;
   color: #f9fafb;
@@ -295,11 +300,20 @@ body.dark-mode::-webkit-scrollbar-thumb:hover {
   position: relative;
 }
 
-/* Ensure hero section containers don't get dark backgrounds */
+/* Ensure hero section containers don't get dark backgrounds - STRENGTHENED */
+body.dark-mode .hero-section,
+body.dark-mode .course-hero,
 body.dark-mode .hero-section .container,
 body.dark-mode .course-hero .container,
 body.dark-mode .hero-section .section,
 body.dark-mode .course-hero .section {
+  background-color: transparent !important;
+}
+
+/* ADDITIONAL: Prevent any section with background image from getting dark overlay */
+body.dark-mode section[style*="background-image"],
+body.dark-mode section[style*="background-image"] .container,
+body.dark-mode section[style*="background-image"] .section {
   background-color: transparent !important;
 }
 
