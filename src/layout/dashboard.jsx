@@ -21,13 +21,17 @@ const DashboardLayout = () => {
     <div className={`flex h-screen transition-colors duration-300 ${
       darkMode ? 'bg-gray-900' : 'bg-gradient-to-br from-gray-50 to-gray-100'
     }`}>
-      {/* Desktop Sidebar */}
-      <div className="hidden lg:block flex-shrink-0">
-        <Sidebar 
-          isVisible={sidebarVisible} 
-          onToggle={toggleDesktopSidebar}
-          isMobile={false}
-        />
+      {/* Desktop Sidebar with fixed positioning */}
+      <div className={`hidden lg:block flex-shrink-0 transition-all duration-300 ${
+        sidebarVisible ? 'w-[280px]' : 'w-0'
+      } fixed top-0 left-0 h-full z-10`}>
+        <div className="h-full py-2 pl-2">
+          <Sidebar 
+            isVisible={sidebarVisible} 
+            onToggle={toggleDesktopSidebar}
+            isMobile={false}
+          />
+        </div>
       </div>
 
       {/* Mobile Sidebar */}
@@ -39,8 +43,10 @@ const DashboardLayout = () => {
         />
       </div>
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      {/* Main Content Area with margin adjustment for fixed sidebar */}
+      <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${
+        sidebarVisible ? 'lg:ml-[280px]' : 'lg:ml-0'
+      }`}>
         {/* Navbar */}
         <div className={`border-b shadow-sm transition-colors duration-300 flex-shrink-0 ${
           darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'

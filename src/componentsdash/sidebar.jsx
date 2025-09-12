@@ -97,8 +97,8 @@ const Sidebar = ({ isVisible, onToggle, isMobile }) => {
             : "relative"
         }`}
         style={{
-          width: '280px', // Fixed width instead of responsive classes
-          height: isMobile ? '100vh' : '100%',
+          width: '276px', // Reduced by 4px to account for padding
+          height: isMobile ? 'calc(100vh - 4px)' : 'calc(100% - 4px)', // Account for padding
           maxWidth: isMobile ? '85vw' : 'none'
         }}
       >
@@ -136,15 +136,15 @@ const Sidebar = ({ isVisible, onToggle, isMobile }) => {
           </button>
         )}
 
-        {/* Content Container */}
+        {/* Content Container - Adjusted for padding */}
         <div className="flex flex-col h-full overflow-hidden">
           {/* Logo Section */}
-          <div className={`px-6 py-6 border-b ${borderClass}`}>
+          <div className={`px-5 py-5 border-b ${borderClass}`}>
             <div 
               className="flex items-center gap-3 cursor-pointer group transition-transform duration-200 hover:scale-105"
               onClick={handleLogoClick}
             >
-              <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl w-12 h-12 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-200 flex-shrink-0">
+              <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl w-11 h-11 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-200 flex-shrink-0">
                 <span className="text-white text-xl font-bold">C</span>
               </div>
               <div className="flex flex-col">
@@ -159,7 +159,7 @@ const Sidebar = ({ isVisible, onToggle, isMobile }) => {
           </div>
 
           {/* Profile Section */}
-          <div className={`px-6 py-4 border-b ${borderClass}`}>
+          <div className={`px-5 py-3 border-b ${borderClass}`}>
             <div 
               className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-200 group ${
                 darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'
@@ -170,7 +170,7 @@ const Sidebar = ({ isVisible, onToggle, isMobile }) => {
                 <img
                   src={currentProfile.profileImage}
                   alt="Profile"
-                  className={`w-12 h-12 rounded-full object-cover border-2 transition-all duration-200 ${
+                  className={`w-11 h-11 rounded-full object-cover border-2 transition-all duration-200 ${
                     darkMode 
                       ? 'border-gray-700 group-hover:border-purple-500' 
                       : 'border-gray-100 group-hover:border-purple-300'
@@ -189,7 +189,7 @@ const Sidebar = ({ isVisible, onToggle, isMobile }) => {
                   Student
                 </p>
               </div>
-              <div className={`px-3 py-1 text-xs rounded-full transition-colors duration-200 ${
+              <div className={`px-2 py-1 text-xs rounded-full transition-colors duration-200 ${
                 darkMode 
                   ? 'bg-purple-900 text-purple-300 group-hover:bg-purple-800' 
                   : 'bg-purple-100 text-purple-700 group-hover:bg-purple-200'
@@ -200,8 +200,8 @@ const Sidebar = ({ isVisible, onToggle, isMobile }) => {
           </div>
 
           {/* Navigation Menu */}
-          <nav className="flex-1 px-4 py-6 overflow-y-auto">
-            <div className="space-y-2">
+          <nav className="flex-1 px-3 py-5 overflow-y-auto">
+            <div className="space-y-1">
               {menuItems.map((item) => {
                 const isActive = location.pathname === item.path;
                 const IconComponent = item.icon;
@@ -209,7 +209,7 @@ const Sidebar = ({ isVisible, onToggle, isMobile }) => {
                   <Link
                     key={item.label}
                     to={item.path}
-                    className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group relative ${
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group relative ${
                       isActive 
                         ? `${darkMode ? 'bg-purple-900 text-purple-200' : 'bg-purple-50 text-purple-700'} shadow-sm` 
                         : `${darkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}`
@@ -221,7 +221,7 @@ const Sidebar = ({ isVisible, onToggle, isMobile }) => {
                       <div className="absolute left-0 top-2 bottom-2 w-1 bg-purple-500 rounded-r-full"></div>
                     )}
                     
-                    <div className={`p-2 rounded-lg transition-colors duration-200 flex-shrink-0 ${
+                    <div className={`p-1.5 rounded-lg transition-colors duration-200 flex-shrink-0 ${
                       isActive 
                         ? `${darkMode ? 'bg-purple-800' : 'bg-purple-100'}` 
                         : `${darkMode ? 'group-hover:bg-gray-600' : 'group-hover:bg-gray-100'}`
@@ -239,14 +239,14 @@ const Sidebar = ({ isVisible, onToggle, isMobile }) => {
           </nav>
 
           {/* Settings and Support Items */}
-          <div className={`px-4 py-4 border-t space-y-2 ${borderClass}`}>
+          <div className={`px-3 py-3 border-t space-y-1 ${borderClass}`}>
             <div
-              className={`flex items-center gap-4 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 group ${
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer transition-all duration-200 group ${
                 darkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
               }`}
               onClick={handleMenuClick}
             >
-              <div className={`p-2 rounded-lg transition-colors duration-200 flex-shrink-0 ${
+              <div className={`p-1.5 rounded-lg transition-colors duration-200 flex-shrink-0 ${
                 darkMode ? 'group-hover:bg-gray-600' : 'group-hover:bg-gray-100'
               }`}>
                 <SettingsIcon darkMode={darkMode} />
@@ -255,12 +255,12 @@ const Sidebar = ({ isVisible, onToggle, isMobile }) => {
             </div>
             
             <div
-              className={`flex items-center gap-4 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 group ${
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer transition-all duration-200 group ${
                 darkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
               }`}
               onClick={handleMenuClick}
             >
-              <div className={`p-2 rounded-lg transition-colors duration-200 flex-shrink-0 ${
+              <div className={`p-1.5 rounded-lg transition-colors duration-200 flex-shrink-0 ${
                 darkMode ? 'group-hover:bg-gray-600' : 'group-hover:bg-gray-100'
               }`}>
                 <SupportIcon darkMode={darkMode} />

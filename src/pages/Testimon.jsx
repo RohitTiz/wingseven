@@ -26,7 +26,7 @@ const Workshops = () => {
       <section className={`relative py-20 md:py-32 overflow-hidden bg-fixed bg-center bg-cover transition-all duration-500`} 
         style={{ 
           backgroundImage: `url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80')`,
-          minHeight: '50vh'
+          minHeight: '35vh' // Changed from '50vh' to '35vh' to match CoursePage
         }}>
         
         {/* Completely transparent overlay - no dark background */}
@@ -64,6 +64,7 @@ const Workshops = () => {
         </div>
       </section>
 
+      {/* Rest of the component remains the same */}
       {/* Stats Section - Elegant dark mode */}
       <section className={`py-16 relative overflow-hidden transition-all duration-500 ${
         darkMode 
