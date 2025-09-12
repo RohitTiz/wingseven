@@ -119,7 +119,7 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
           <Link to="/" className={navLinkClasses()}>Home</Link>
           <Link to="/course" className={navLinkClasses()}>Courses</Link>
           <Link to="/specializations" className={navLinkClasses()}>Blogs</Link>
-          <Link to="/testimonials" className={navLinkClasses()}>Testimonials</Link>
+          <Link to="/testimonials" className={navLinkClasses()}>Workshops</Link>
           
           {/* Updated Contact Us link */}
           <Link 

@@ -10,7 +10,7 @@ const menuItems = [
   { label: "Code Challenges", icon: CodeIcon, path: "/dashboard/questions" },
 ];
 
-const Sidebar = ({ open, setOpen, isMobile, isCollapsed, onToggleCollapse }) => {
+const Sidebar = ({ isVisible, onToggle, isMobile }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { profile } = useProfile();
@@ -41,63 +41,79 @@ const Sidebar = ({ open, setOpen, isMobile, isCollapsed, onToggleCollapse }) => 
   }, []);
 
   const handleMenuClick = () => {
-    if (isMobile && setOpen) setOpen(false);
+    if (isMobile) onToggle();
   };
 
   const handleLogoClick = () => {
     navigate("/");
-    if (isMobile && setOpen) setOpen(false);
+    if (isMobile) onToggle();
   };
 
   const handleProfileClick = () => {
     navigate("/dashboard/edit-profile");
-    if (isMobile && setOpen) setOpen(false);
+    if (isMobile) onToggle();
   };
 
-  // For mobile, use the original open prop, for desktop use isCollapsed
-  const sidebarOpen = isMobile ? open : !isCollapsed;
-
   // Dynamic classes based on dark mode
-  const bgClass = darkMode ? 'dark-bg' : 'light-bg';
-  const textClass = darkMode ? 'light-text' : 'dark-text';
-  const borderClass = darkMode ? 'dark-border' : 'light-border';
-  const cardClass = darkMode ? 'dark-card' : 'light-card';
+  const bgClass = darkMode ? 'bg-gray-800' : 'bg-white';
+  const textClass = darkMode ? 'text-gray-200' : 'text-gray-700';
+  const borderClass = darkMode ? 'border-gray-700' : 'border-gray-200';
+
+  if (!isVisible && !isMobile) {
+    return (
+      <div className="relative">
+        {/* Toggle button when sidebar is hidden */}
+        <button
+          onClick={onToggle}
+          className={`fixed left-4 top-1/2 transform -translate-y-1/2 z-50 w-10 h-10 rounded-full shadow-lg border flex items-center justify-center transition-all duration-300 hover:scale-110 ${
+            darkMode 
+              ? 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700' 
+              : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+          }`}
+          aria-label="Show sidebar"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    );
+  }
 
   return (
     <>
       {/* Mobile overlay */}
-      {isMobile && open && (
+      {isMobile && isVisible && (
         <div 
-          className={`fixed inset-0 ${darkMode ? 'bg-black bg-opacity-70' : 'bg-black bg-opacity-50'} z-40 lg:hidden transition-colors duration-300`}
-          onClick={() => setOpen(false)}
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
+          onClick={onToggle}
         />
       )}
       
       <div
-        className={`flex flex-col h-full shadow-sm border-r transition-all duration-300 transition-colors duration-300 ${borderClass} ${bgClass} ${
+        className={`flex flex-col h-full shadow-lg border-r transition-all duration-300 ${borderClass} ${bgClass} ${
           isMobile 
-            ? `fixed top-0 left-0 z-50 transform ${open ? 'translate-x-0' : '-translate-x-full'} w-64 lg:relative lg:translate-x-0`
+            ? `fixed top-0 left-0 z-50 transform transition-transform duration-300 ${isVisible ? 'translate-x-0' : '-translate-x-full'}`
             : "relative"
-        } ${sidebarOpen ? "w-64" : "w-16"}`}
+        }`}
         style={{
+          width: '280px', // Fixed width instead of responsive classes
           height: isMobile ? '100vh' : '100%',
-          overflowY: 'auto'
+          maxWidth: isMobile ? '85vw' : 'none'
         }}
       >
-        {/* Collapse Toggle Button - Always visible on desktop */}
+        {/* Toggle Button for Desktop */}
         {!isMobile && (
           <button
-            onClick={onToggleCollapse}
-            className={`absolute -right-3 top-8 border rounded-full w-6 h-6 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-200 z-50 transition-colors duration-300 ${borderClass} ${darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-50'}`}
-            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-            style={{ zIndex: 1000 }}
+            onClick={onToggle}
+            className={`absolute -right-3 top-6 w-6 h-6 rounded-full shadow-md border flex items-center justify-center z-50 transition-all duration-200 hover:scale-110 ${
+              darkMode 
+                ? 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700' 
+                : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+            }`}
+            aria-label="Hide sidebar"
           >
-            <svg 
-              className={`w-3 h-3 transition-transform duration-200 transition-colors duration-300 ${darkMode ? 'text-gray-300' : 'text-gray-600'} ${isCollapsed ? 'rotate-180' : ''}`} 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
@@ -106,8 +122,12 @@ const Sidebar = ({ open, setOpen, isMobile, isCollapsed, onToggleCollapse }) => 
         {/* Mobile close button */}
         {isMobile && (
           <button
-            onClick={() => setOpen(false)}
-            className={`absolute top-4 right-4 p-1 rounded-full transition-colors duration-300 ${darkMode ? 'bg-gray-700 hover:bg-gray-600 text-gray-300' : 'bg-gray-100 hover:bg-gray-200 text-gray-600'} lg:hidden z-50`}
+            onClick={onToggle}
+            className={`absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center z-50 transition-colors duration-200 ${
+              darkMode 
+                ? 'bg-gray-700 hover:bg-gray-600 text-gray-300' 
+                : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
+            }`}
             aria-label="Close sidebar"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,138 +136,137 @@ const Sidebar = ({ open, setOpen, isMobile, isCollapsed, onToggleCollapse }) => 
           </button>
         )}
 
-        {/* Logo Section */}
-        <div className={`flex flex-col px-4 pt-6 pb-4 border-b rounded-lg transition-colors duration-300 ${cardClass} ${borderClass}`}>
-          <div 
-            className="flex items-center gap-3 cursor-pointer group"
-            onClick={handleLogoClick}
-          >
-            <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl w-10 h-10 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow flex-shrink-0">
-              <span className="text-white text-xl font-bold">C</span>
-            </div>
-            {sidebarOpen && (
-              <div className="flex flex-col min-w-0">
-                <span className={`text-lg font-bold truncate transition-colors duration-300 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+        {/* Content Container */}
+        <div className="flex flex-col h-full overflow-hidden">
+          {/* Logo Section */}
+          <div className={`px-6 py-6 border-b ${borderClass}`}>
+            <div 
+              className="flex items-center gap-3 cursor-pointer group transition-transform duration-200 hover:scale-105"
+              onClick={handleLogoClick}
+            >
+              <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl w-12 h-12 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-200 flex-shrink-0">
+                <span className="text-white text-xl font-bold">C</span>
+              </div>
+              <div className="flex flex-col">
+                <span className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                   Code Brain
                 </span>
-                <span className={`text-xs -mt-1 truncate transition-colors duration-300 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                   Learning Platform
                 </span>
               </div>
-            )}
+            </div>
           </div>
-        </div>
 
-        {/* Profile Section */}
-        {sidebarOpen && (
-          <div className={`px-4 py-4 border-b rounded-lg mt-2 transition-colors duration-300 ${cardClass} ${borderClass}`}>
+          {/* Profile Section */}
+          <div className={`px-6 py-4 border-b ${borderClass}`}>
             <div 
-              className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-colors duration-300 group relative ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'}`}
+              className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-200 group ${
+                darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'
+              }`}
+              onClick={handleProfileClick}
             >
               <div className="relative flex-shrink-0">
                 <img
                   src={currentProfile.profileImage}
                   alt="Profile"
-                  className={`w-10 h-10 rounded-full object-cover border-2 transition-colors duration-300 ${darkMode ? 'border-gray-700 group-hover:border-purple-700' : 'border-gray-100 group-hover:border-purple-200'}`}
+                  className={`w-12 h-12 rounded-full object-cover border-2 transition-all duration-200 ${
+                    darkMode 
+                      ? 'border-gray-700 group-hover:border-purple-500' 
+                      : 'border-gray-100 group-hover:border-purple-300'
+                  }`}
                   onError={(e) => {
                     e.target.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0QxRDFEMSI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6bTAgM2MyLjIxIDAgNCAxLjc5IDQgNHMtMS43OSA0LTQgNC00LTEuNzktNC00IDEuNzktNCA0LTR6bTAgMTcuMDJjLTMuMzMgMC02LjI4LTEuNzEtOC02LjAyIDIuMDUtMy4xNiA1LjI2LTUgOC41OC01IDMuMzIgMCA2LjUzIDEuODQgOC41OCA1LTIuMDUgMy4zMS01LjI2IDUuMDItOC41OCA1LjAyeiIvPjwvc3ZnPg==";
                   }}
                 />
-                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
+                <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 border-2 border-white rounded-full"></div>
               </div>
               <div className="flex-1 min-w-0">
-                <p className={`text-sm font-semibold truncate transition-colors duration-300 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{currentProfile.name || "User"}</p>
-                <p className={`text-xs truncate transition-colors duration-300 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>Student</p>
+                <p className={`text-sm font-semibold truncate ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  {currentProfile.name || "User"}
+                </p>
+                <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  Student
+                </p>
               </div>
-              <button 
-                onClick={handleProfileClick}
-                className={`text-xs px-2 py-1 rounded-md transition-colors duration-300 ${darkMode ? 'bg-purple-800 text-purple-200 hover:bg-purple-700' : 'bg-purple-100 text-purple-700 hover:bg-purple-200'}`}
-              >
+              <div className={`px-3 py-1 text-xs rounded-full transition-colors duration-200 ${
+                darkMode 
+                  ? 'bg-purple-900 text-purple-300 group-hover:bg-purple-800' 
+                  : 'bg-purple-100 text-purple-700 group-hover:bg-purple-200'
+              }`}>
                 Edit
-              </button>
+              </div>
             </div>
           </div>
-        )}
 
-        {/* Navigation Menu */}
-        <nav className={`flex-1 px-3 py-4 space-y-1 mt-2 rounded-lg transition-colors duration-300 ${cardClass}`}>
-          {menuItems.map((item) => {
-            const isActive = location.pathname === item.path;
-            const IconComponent = item.icon;
-            return (
-              <Link
-                key={item.label}
-                to={item.path}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group relative transition-colors duration-300
-                  ${isActive 
-                    ? `${darkMode ? 'bg-purple-900 text-purple-200' : 'bg-purple-50 text-purple-700'} shadow-sm` 
-                    : `${darkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}`
-                  }
-                `}
-                onClick={handleMenuClick}
-              >
-                {/* Active indicator */}
-                {isActive && (
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-purple-600 rounded-r-full"></div>
-                )}
-                
-                <div className={`p-1.5 rounded-lg transition-colors duration-300 flex-shrink-0 ${
-                  isActive 
-                    ? `${darkMode ? 'bg-purple-800' : 'bg-purple-100'}` 
-                    : `${darkMode ? 'bg-transparent group-hover:bg-gray-600' : 'bg-transparent group-hover:bg-gray-100'}`
-                }`}>
-                  <IconComponent active={isActive} darkMode={darkMode} />
-                </div>
-                
-                {sidebarOpen && (
-                  <span className="text-sm font-medium flex-1 truncate">
-                    {item.label}
-                  </span>
-                )}
-                
-                {/* Tooltip for collapsed state */}
-                {!sidebarOpen && (
-                  <div className={`absolute left-full ml-2 px-2 py-1 text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 transition-colors duration-300 ${darkMode ? 'bg-gray-700 text-white' : 'bg-gray-900 text-white'}`}>
-                    {item.label}
-                  </div>
-                )}
-              </Link>
-            );
-          })}
-        </nav>
+          {/* Navigation Menu */}
+          <nav className="flex-1 px-4 py-6 overflow-y-auto">
+            <div className="space-y-2">
+              {menuItems.map((item) => {
+                const isActive = location.pathname === item.path;
+                const IconComponent = item.icon;
+                return (
+                  <Link
+                    key={item.label}
+                    to={item.path}
+                    className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group relative ${
+                      isActive 
+                        ? `${darkMode ? 'bg-purple-900 text-purple-200' : 'bg-purple-50 text-purple-700'} shadow-sm` 
+                        : `${darkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}`
+                    }`}
+                    onClick={handleMenuClick}
+                  >
+                    {/* Active indicator */}
+                    {isActive && (
+                      <div className="absolute left-0 top-2 bottom-2 w-1 bg-purple-500 rounded-r-full"></div>
+                    )}
+                    
+                    <div className={`p-2 rounded-lg transition-colors duration-200 flex-shrink-0 ${
+                      isActive 
+                        ? `${darkMode ? 'bg-purple-800' : 'bg-purple-100'}` 
+                        : `${darkMode ? 'group-hover:bg-gray-600' : 'group-hover:bg-gray-100'}`
+                    }`}>
+                      <IconComponent active={isActive} darkMode={darkMode} />
+                    </div>
+                    
+                    <span className="text-sm font-medium">
+                      {item.label}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          </nav>
 
-        {/* Bottom Section */}
-        <div className={`px-3 pb-4 mt-auto space-y-1 rounded-lg mt-2 transition-colors duration-300 ${cardClass}`}>
-          <div
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer transition-all group relative transition-colors duration-300 ${darkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}`}
-            onClick={handleMenuClick}
-          >
-            <div className={`p-1.5 rounded-lg transition-colors duration-300 flex-shrink-0 ${darkMode ? 'group-hover:bg-gray-600' : 'group-hover:bg-gray-100'}`}>
-              <SettingsIcon darkMode={darkMode} />
-            </div>
-            {sidebarOpen && <span className="text-sm font-medium truncate">Settings</span>}
-            
-            {!sidebarOpen && (
-              <div className={`absolute left-full ml-2 px-2 py-1 text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 transition-colors duration-300 ${darkMode ? 'bg-gray-700 text-white' : 'bg-gray-900 text-white'}`}>
-                Settings
+          {/* Settings and Support Items */}
+          <div className={`px-4 py-4 border-t space-y-2 ${borderClass}`}>
+            <div
+              className={`flex items-center gap-4 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 group ${
+                darkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+              }`}
+              onClick={handleMenuClick}
+            >
+              <div className={`p-2 rounded-lg transition-colors duration-200 flex-shrink-0 ${
+                darkMode ? 'group-hover:bg-gray-600' : 'group-hover:bg-gray-100'
+              }`}>
+                <SettingsIcon darkMode={darkMode} />
               </div>
-            )}
-          </div>
-          
-          <div
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer transition-all group relative transition-colors duration-300 ${darkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}`}
-            onClick={handleMenuClick}
-          >
-            <div className={`p-1.5 rounded-lg transition-colors duration-300 flex-shrink-0 ${darkMode ? 'group-hover:bg-gray-600' : 'group-hover:bg-gray-100'}`}>
-              <SupportIcon darkMode={darkMode} />
+              <span className="text-sm font-medium">Settings</span>
             </div>
-            {sidebarOpen && <span className="text-sm font-medium truncate">Support</span>}
             
-            {!sidebarOpen && (
-              <div className={`absolute left-full ml-2 px-2 py-1 text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 transition-colors duration-300 ${darkMode ? 'bg-gray-700 text-white' : 'bg-gray-900 text-white'}`}>
-                Support
+            <div
+              className={`flex items-center gap-4 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 group ${
+                darkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+              }`}
+              onClick={handleMenuClick}
+            >
+              <div className={`p-2 rounded-lg transition-colors duration-200 flex-shrink-0 ${
+                darkMode ? 'group-hover:bg-gray-600' : 'group-hover:bg-gray-100'
+              }`}>
+                <SupportIcon darkMode={darkMode} />
               </div>
-            )}
+              <span className="text-sm font-medium">Support</span>
+            </div>
           </div>
         </div>
       </div>

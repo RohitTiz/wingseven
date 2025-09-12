@@ -1,0 +1,62 @@
+export const workshops = [
+  {
+    id: 1,
+    title: "React Masterclass",
+    instructor: "Sarah Johnson",
+    date: "2023-12-15T10:00:00",
+    duration: "3 hours",
+    location: "Tech Hub Innovation Center, Room 302",
+    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+    description: "Deep dive into React hooks, context API, and performance optimization techniques.",
+    price: "$79",
+    capacity: 30,
+    enrolled: 24,
+    level: "Intermediate",
+    tags: ["React", "JavaScript", "Frontend"]
+  },
+  {
+    id: 2,
+    title: "UX Design Fundamentals",
+    instructor: "Michael Chen",
+    date: "2023-12-18T14:00:00",
+    duration: "4 hours",
+    location: "Design Studio Downtown, Creative Space",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+    description: "Learn the principles of user-centered design and create intuitive interfaces.",
+    price: "$89",
+    capacity: 25,
+    enrolled: 18,
+    level: "Beginner",
+    tags: ["UX", "Design", "UI"]
+  },
+  {
+    id: 3,
+    title: "Node.js Backend Development",
+    instructor: "David Wilson",
+    date: "2023-12-20T09:30:00",
+    duration: "5 hours",
+    location: "Code Campus, Server Lab A",
+    image: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+    description: "Build scalable backend services with Node.js, Express, and MongoDB.",
+    price: "$99",
+    capacity: 20,
+    enrolled: 20,
+    level: "Advanced",
+    tags: ["Node.js", "Backend", "JavaScript"]
+  },
+  {
+    id: 4,
+    title: "Data Visualization with D3.js",
+    instructor: "Emily Rodriguez",
+    date: "2023-12-22T13:00:00",
+    duration: "4 hours",
+    location: "Data Institute, Visualization Lab",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+    description: "Create interactive and engaging data visualizations for the web.",
+    price: "$85",
+    capacity: 15,
+    enrolled: 12,
+    level: "Intermediate",
+    tags: ["Data", "Visualization", "JavaScript"]
+  }
+];
