@@ -41,15 +41,6 @@ function BlogCard({ article, categories = [], isFeatured = false }) {
           className="w-full h-48 object-cover rounded-lg shadow-lg"
         />
         
-        {/* Category Badge - Enhanced */}
-        <div className="absolute top-6 right-6">
-          <div className="relative">
-            <span className="px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-lg bg-blue-500 text-white">
-              {category.name}
-            </span>
-          </div>
-        </div>
-
         {/* Featured Badge - if applicable */}
         {isFeatured && (
           <div className="absolute top-6 left-6">
@@ -80,7 +71,7 @@ function BlogCard({ article, categories = [], isFeatured = false }) {
         {/* Spacer to push bottom content down */}
         <div className="flex-grow"></div>
         
-        {/* Blog Stats */}
+        {/* Blog Stats - Modified: Removed readTime, added category */}
         <div className="flex justify-between items-center mb-2 text-sm">
           <div className="flex items-center">
             <div className={`flex items-center space-x-1 transition-colors duration-300 ${
@@ -93,13 +84,9 @@ function BlogCard({ article, categories = [], isFeatured = false }) {
             </div>
           </div>
           
-          <div className={`flex items-center space-x-1 transition-colors duration-300 ${
-            darkMode ? 'text-gray-400' : 'text-gray-500'
-          }`}>
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"/>
-            </svg>
-            <span>{article.readTime || '5 min read'}</span>
+          {/* Category Badge - Moved from top-right to here */}
+          <div className="px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-lg bg-blue-500 text-white">
+            {category.name}
           </div>
         </div>
 
