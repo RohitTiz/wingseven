@@ -3,8 +3,12 @@ import { useDarkMode } from '../context/DarkModeContext';
 import AuthSection from '../components/AuthSection';
 import Footer from '../components/Footer';
 
-const IconWrapper = ({ children }) => (
-  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white p-2 shadow-lg">
+const IconWrapper = ({ children, darkMode }) => (
+  <div className={`w-12 h-12 rounded-full flex items-center justify-center p-2 shadow-lg ${
+    darkMode 
+      ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white' 
+      : 'bg-gradient-to-r from-blue-100 to-indigo-100 text-indigo-600'
+  }`}>
     {children}
   </div>
 );
@@ -72,41 +76,63 @@ const AboutPage = () => {
     setCurrentSlide(index);
   };
 
+  // Theme classes
+  const bgClass = darkMode ? 'bg-gray-900' : 'bg-gradient-to-br from-gray-50 to-gray-100';
+  const textClass = darkMode ? 'text-gray-100' : 'text-gray-800';
+  const cardClass = darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200 shadow-md';
+  const sectionHeadingClass = darkMode ? 'text-white' : 'text-gray-800';
+  const sectionSubtextClass = darkMode ? 'text-gray-300' : 'text-gray-600';
+  const statNumberClass = darkMode ? 'text-white' : 'text-gray-900';
+  const statLabelClass = darkMode ? 'text-gray-300' : 'text-gray-600';
+  const buttonPrimaryClass = darkMode 
+    ? 'bg-indigo-600 text-white hover:bg-indigo-700' 
+    : 'bg-indigo-600 text-white hover:bg-indigo-700';
+  const buttonSecondaryClass = darkMode 
+    ? 'bg-transparent border-2 border-white text-white hover:bg-white/20' 
+    : 'bg-transparent border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50';
+
   return (
     <>
       <AuthSection />
-      <div className={`min-h-screen overflow-hidden font-montserrat transition-colors duration-300 ${darkMode ? 'dark-bg' : 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900'}`}>
-        {/* Hero Section with Parallax Background */}
-        <section className="relative py-20 md:py-32 overflow-hidden bg-fixed bg-center bg-cover" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80)' }}>
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-indigo-900/80"></div>
-          <div className="container mx-auto px-4 text-center relative z-10">
-            <h1 className={`text-4xl md:text-6xl font-bold mb-6 text-white transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              Transforming Education <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-indigo-200">for Tomorrow</span>
-            </h1>
-            <p className="text-xl md:text-2xl max-w-3xl mx-auto text-blue-100 transition-all duration-1000 delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} font-light">
-              We're building the future of learning with innovative technology and passionate educators.
-            </p>
-            <div className="mt-10 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-8">
-              <button className="bg-white text-blue-600 font-semibold py-3 px-8 rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">Our Team</button>
-              <button className="bg-transparent border-2 border-white text-white font-semibold py-3 px-8 rounded-full hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-1">Our Courses</button>
+      <div className={`min-h-screen overflow-hidden font-montserrat transition-colors duration-300 ${bgClass} ${textClass}`}>
+        {/* Hero Section */}
+        <section className="relative py-20 md:py-32 overflow-hidden bg-center bg-cover" 
+          style={{ 
+            backgroundImage: 'url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80)',
+            height: '60vh',
+            minHeight: '400px'
+          }}>
+          <div className={`absolute inset-0 ${darkMode ? 'bg-gradient-to-r from-blue-900/80 to-indigo-900/80' : 'bg-gradient-to-r from-blue-600/80 to-indigo-600/80'}`}></div>
+          <div className="container mx-auto px-4 h-full flex items-center justify-center text-center relative z-10">
+            <div className="max-w-4xl">
+              <h1 className={`text-4xl md:text-6xl font-bold mb-6 text-white transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                Transforming Education <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-indigo-200">for Tomorrow</span>
+              </h1>
+              <p className="text-xl md:text-2xl max-w-3xl mx-auto text-blue-100 transition-all duration-1000 delay-300 font-light">
+                We're building the future of learning with innovative technology and passionate educators.
+              </p>
+              <div className="mt-10 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-8">
+                <button className={`font-semibold py-3 px-8 rounded-full transition-all duration-300 transform hover:-translate-y-1 shadow-lg ${buttonPrimaryClass}`}>Our Team</button>
+                <button className={`font-semibold py-3 px-8 rounded-full transition-all duration-300 transform hover:-translate-y-1 ${buttonSecondaryClass}`}>Our Courses</button>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Stats Section */}
-        <section className={`py-16 relative overflow-hidden transition-colors duration-300 ${darkMode ? 'dark-bg' : 'bg-gray-900'}`}>
-          <div className={`absolute -top-24 -right-24 w-64 h-64 rounded-full opacity-50 ${darkMode ? 'bg-gray-800' : 'bg-blue-900'}`}></div>
-          <div className={`absolute -bottom-24 -left-24 w-64 h-64 rounded-full opacity-50 ${darkMode ? 'bg-gray-800' : 'bg-indigo-900'}`}></div>
+        <section className={`py-16 relative overflow-hidden transition-colors duration-300 ${darkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
+          <div className={`absolute -top-24 -right-24 w-64 h-64 rounded-full opacity-50 ${darkMode ? 'bg-gray-800' : 'bg-blue-200'}`}></div>
+          <div className={`absolute -bottom-24 -left-24 w-64 h-64 rounded-full opacity-50 ${darkMode ? 'bg-gray-800' : 'bg-indigo-200'}`}></div>
           
           <div className="container mx-auto px-4 relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
               {stats.map((stat, index) => (
-                <div key={index} className={`p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 ${darkMode ? 'dark-card' : 'bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700'}`}>
-                  <div className="flex justify-center mb-4 text-blue-600">
-                    <IconWrapper><stat.icon /></IconWrapper>
+                <div key={index} className={`p-6 rounded-2xl transition-all duration-500 transform hover:-translate-y-2 border ${cardClass}`}>
+                  <div className="flex justify-center mb-4">
+                    <IconWrapper darkMode={darkMode}><stat.icon /></IconWrapper>
                   </div>
-                  <h3 className={`text-3xl font-bold mb-2 ${darkMode ? 'light-text' : 'text-white'}`}>{stat.number}</h3>
-                  <p className={`font-medium ${darkMode ? 'light-text' : 'text-gray-300'}`}>{stat.label}</p>
+                  <h3 className={`text-3xl font-bold mb-2 ${statNumberClass}`}>{stat.number}</h3>
+                  <p className={`font-medium ${statLabelClass}`}>{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -114,44 +140,43 @@ const AboutPage = () => {
         </section>
 
         {/* Mission & Vision Section */}
-        <section className={`py-16 relative overflow-hidden transition-colors duration-300 ${darkMode ? 'dark-bg' : 'bg-gradient-to-b from-gray-900 to-gray-800'}`}>
-          <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-gray-900 to-transparent"></div>
+        <section className={`py-16 relative overflow-hidden transition-colors duration-300 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
           <div className="container mx-auto px-4 text-center">
-            <h2 className={`text-3xl md:text-4xl font-bold mb-12 relative inline-block ${darkMode ? 'light-text' : 'text-white'}`}>
+            <h2 className={`text-3xl md:text-4xl font-bold mb-12 relative inline-block ${sectionHeadingClass}`}>
               Our Mission & Vision
               <span className="absolute bottom-0 left-0 w-1/2 h-1 bg-gradient-to-r from-blue-500 to-indigo-600 transform translate-y-2"></span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <div className={`p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 ${darkMode ? 'dark-card' : 'bg-gray-800 border border-gray-700'}`}>
+              <div className={`p-8 rounded-2xl transition-all duration-500 transform hover:-translate-y-2 border ${cardClass}`}>
                 <div className="text-blue-600 mb-6">
-                  <div className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center ${darkMode ? 'bg-blue-900/30' : 'bg-blue-900/50'}`}>
+                  <div className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center ${darkMode ? 'bg-blue-900/30' : 'bg-blue-100'}`}>
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                     </svg>
                   </div>
                 </div>
-                <h3 className={`text-xl font-semibold mb-4 ${darkMode ? 'light-text' : 'text-white'}`}>Our Mission</h3>
-                <p className={`leading-relaxed ${darkMode ? 'light-text' : 'text-gray-300'}`}>Empowering learners worldwide through accessible, innovative education that adapts to the needs of tomorrow's workforce.</p>
+                <h3 className={`text-xl font-semibold mb-4 ${sectionHeadingClass}`}>Our Mission</h3>
+                <p className={`leading-relaxed ${sectionSubtextClass}`}>Empowering learners worldwide through accessible, innovative education that adapts to the needs of tomorrow's workforce.</p>
               </div>
-              <div className={`p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 ${darkMode ? 'dark-card' : 'bg-gray-800 border border-gray-700'}`}>
+              <div className={`p-8 rounded-2xl transition-all duration-500 transform hover:-translate-y-2 border ${cardClass}`}>
                 <div className="text-indigo-600 mb-6">
-                  <div className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center ${darkMode ? 'bg-indigo-900/30' : 'bg-indigo-900/50'}`}>
+                  <div className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center ${darkMode ? 'bg-indigo-900/30' : 'bg-indigo-100'}`}>
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
                     </svg>
                   </div>
                 </div>
-                <h3 className={`text-xl font-semibold mb-4 ${darkMode ? 'light-text' : 'text-white'}`}>Our Vision</h3>
-                <p className={`leading-relaxed ${darkMode ? 'light-text' : 'text-gray-300'}`}>A world where quality education fosters opportunity and drives personal and professional growth for everyone, everywhere.</p>
+                <h3 className={`text-xl font-semibold mb-4 ${sectionHeadingClass}`}>Our Vision</h3>
+                <p className={`leading-relaxed ${sectionSubtextClass}`}>A world where quality education fosters opportunity and drives personal and professional growth for everyone, everywhere.</p>
               </div>
             </div>
           </div>
         </section>
 
         {/* Image Carousel Section */}
-        <section className={`py-16 transition-colors duration-300 ${darkMode ? 'dark-bg' : 'bg-gradient-to-b from-gray-900 to-gray-800'}`}>
+        <section className={`py-16 transition-colors duration-300 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
           <div className="container mx-auto px-4">
-            <h2 className={`text-3xl md:text-4xl font-bold text-center mb-12 ${darkMode ? 'light-text' : 'text-white'}`}>Learning Environment</h2>
+            <h2 className={`text-3xl md:text-4xl font-bold text-center mb-12 ${sectionHeadingClass}`}>Learning Environment</h2>
             
             <div className="relative max-w-5xl mx-auto overflow-hidden rounded-2xl shadow-2xl">
               <div className="carousel-container relative h-64 md:h-96">
@@ -203,34 +228,34 @@ const AboutPage = () => {
         </section>
 
         {/* Meet Our Team Section */}
-        <section className={`py-16 relative overflow-hidden transition-colors duration-300 ${darkMode ? 'dark-bg' : 'bg-gray-900'}`}>
-          <div className={`absolute -top-24 -left-24 w-64 h-64 rounded-full ${darkMode ? 'bg-gray-800 opacity-30' : 'bg-indigo-900 opacity-30'}`}></div>
-          <div className={`absolute -bottom-24 -right-24 w-64 h-64 rounded-full ${darkMode ? 'bg-gray-800 opacity-30' : 'bg-blue-900 opacity-30'}`}></div>
+        <section className={`py-16 relative overflow-hidden transition-colors duration-300 ${darkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
+          <div className={`absolute -top-24 -left-24 w-64 h-64 rounded-full ${darkMode ? 'bg-gray-800 opacity-30' : 'bg-indigo-100 opacity-30'}`}></div>
+          <div className={`absolute -bottom-24 -right-24 w-64 h-64 rounded-full ${darkMode ? 'bg-gray-800 opacity-30' : 'bg-blue-100 opacity-30'}`}></div>
           
           <div className="container mx-auto px-4 text-center relative z-10">
-            <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${darkMode ? 'light-text' : 'text-white'}`}>Meet Our Team</h2>
-            <p className={`mb-12 max-w-2xl mx-auto ${darkMode ? 'light-text' : 'text-gray-300'}`}>The passionate educators and innovators driving our mission forward.</p>
+            <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${sectionHeadingClass}`}>Meet Our Team</h2>
+            <p className={`mb-12 max-w-2xl mx-auto ${sectionSubtextClass}`}>The passionate educators and innovators driving our mission forward.</p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {team.map((member, index) => (
-                <div key={index} className={`group p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 ${darkMode ? 'dark-card' : 'bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700'}`}>
+                <div key={index} className={`group p-6 rounded-2xl transition-all duration-500 transform hover:-translate-y-2 border ${cardClass}`}>
                   <div className="relative mb-6 overflow-hidden rounded-full w-40 h-40 mx-auto">
                     <img 
                       src={member.image} 
                       alt={member.name} 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-blue-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className={`absolute inset-0 bg-gradient-to-t from-blue-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${darkMode ? 'from-blue-900/40' : 'from-blue-600/40'}`}></div>
                   </div>
-                  <h3 className={`text-xl font-semibold mb-1 ${darkMode ? 'light-text' : 'text-white'}`}>{member.name}</h3>
+                  <h3 className={`text-xl font-semibold mb-1 ${sectionHeadingClass}`}>{member.name}</h3>
                   <p className="text-blue-400 font-medium">{member.role}</p>
                   <div className="mt-4 flex justify-center space-x-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <button className={`w-8 h-8 rounded-full flex items-center justify-center text-blue-400 transition-colors ${darkMode ? 'bg-blue-900/30 hover:bg-blue-900/50' : 'bg-blue-900/50 hover:bg-blue-900/70'}`}>
+                    <button className={`w-8 h-8 rounded-full flex items-center justify-center text-blue-400 transition-colors ${darkMode ? 'bg-blue-900/30 hover:bg-blue-900/50' : 'bg-blue-100 hover:bg-blue-200'}`}>
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
                       </svg>
                     </button>
-                    <button className={`w-8 h-8 rounded-full flex items-center justify-center text-blue-400 transition-colors ${darkMode ? 'bg-blue-900/30 hover:bg-blue-900/50' : 'bg-blue-900/50 hover:bg-blue-900/70'}`}>
+                    <button className={`w-8 h-8 rounded-full flex items-center justify-center text-blue-400 transition-colors ${darkMode ? 'bg-blue-900/30 hover:bg-blue-900/50' : 'bg-blue-100 hover:bg-blue-200'}`}>
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                       </svg>
@@ -243,18 +268,17 @@ const AboutPage = () => {
         </section>
 
         {/* Why Join Us Section */}
-        <section className={`py-16 relative overflow-hidden transition-colors duration-300 ${darkMode ? 'dark-bg' : 'bg-gradient-to-b from-gray-900 to-gray-800'}`}>
-          <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-gray-900 to-transparent"></div>
+        <section className={`py-16 relative overflow-hidden transition-colors duration-300 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
           <div className="container mx-auto px-4 text-center relative z-10">
-            <h2 className={`text-3xl md:text-4xl font-bold mb-12 ${darkMode ? 'light-text' : 'text-white'}`}>Why Join Us?</h2>
+            <h2 className={`text-3xl md:text-4xl font-bold mb-12 ${sectionHeadingClass}`}>Why Join Us?</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
               {features.map((feature, index) => (
-                <div key={index} className={`group p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 ${darkMode ? 'dark-card' : 'bg-gray-800 border border-gray-700'}`}>
-                  <div className="text-blue-600 mb-6">
-                    <IconWrapper><feature.icon /></IconWrapper>
+                <div key={index} className={`group p-6 rounded-2xl transition-all duration-500 transform hover:-translate-y-2 border ${cardClass}`}>
+                  <div className="mb-6">
+                    <IconWrapper darkMode={darkMode}><feature.icon /></IconWrapper>
                   </div>
-                  <h3 className={`text-xl font-semibold mb-4 group-hover:text-blue-400 transition-colors ${darkMode ? 'light-text' : 'text-white'}`}>{feature.title}</h3>
-                  <p className={`leading-relaxed ${darkMode ? 'light-text' : 'text-gray-300'}`}>{feature.description}</p>
+                  <h3 className={`text-xl font-semibold mb-4 group-hover:text-blue-400 transition-colors ${sectionHeadingClass}`}>{feature.title}</h3>
+                  <p className={`leading-relaxed ${sectionSubtextClass}`}>{feature.description}</p>
                 </div>
               ))}
             </div>
@@ -262,23 +286,23 @@ const AboutPage = () => {
         </section>
 
         {/* Testimonials Section */}
-        <section className={`py-16 relative overflow-hidden transition-colors duration-300 ${darkMode ? 'dark-bg' : 'bg-gray-900'}`}>
-          <div className={`absolute -top-24 -right-24 w-64 h-64 rounded-full ${darkMode ? 'bg-gray-800 opacity-30' : 'bg-blue-900 opacity-30'}`}></div>
+        <section className={`py-16 relative overflow-hidden transition-colors duration-300 ${darkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
+          <div className={`absolute -top-24 -right-24 w-64 h-64 rounded-full ${darkMode ? 'bg-gray-800 opacity-30' : 'bg-blue-100 opacity-30'}`}></div>
           <div className="container mx-auto px-4 text-center relative z-10">
-            <h2 className={`text-3xl md:text-4xl font-bold mb-12 ${darkMode ? 'light-text' : 'text-white'}`}>What Our Students Say</h2>
+            <h2 className={`text-3xl md:text-4xl font-bold mb-12 ${sectionHeadingClass}`}>What Our Students Say</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {testimonials.map((testimonial, index) => (
-                <div key={index} className={`p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 ${darkMode ? 'dark-card' : 'bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700'}`}>
+                <div key={index} className={`p-6 rounded-2xl transition-all duration-500 transform hover:-translate-y-2 border ${cardClass}`}>
                   <div className="flex items-center mb-6">
                     <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4 shadow-md">
                       {testimonial.initials}
                     </div>
                     <div className="text-left">
-                      <h4 className={`font-semibold ${darkMode ? 'light-text' : 'text-white'}`}>{testimonial.name}</h4>
+                      <h4 className={`font-semibold ${sectionHeadingClass}`}>{testimonial.name}</h4>
                       <p className="text-blue-400 text-sm">{testimonial.role}</p>
                     </div>
                   </div>
-                  <p className={`text-left italic ${darkMode ? 'light-text' : 'text-gray-300'}`}>"{testimonial.quote}"</p>
+                  <p className={`text-left italic ${sectionSubtextClass}`}>"{testimonial.quote}"</p>
                   <div className="flex mt-4">
                     {[...Array(5)].map((_, i) => (
                       <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
@@ -292,10 +316,10 @@ const AboutPage = () => {
           </div>
         </section>
 
-        {/* CTA Banner Section - Clean and Elegant */}
-        <section className={`py-8 relative transition-colors duration-300 ${darkMode ? 'dark-bg' : 'bg-gray-900'}`}>
+        {/* CTA Banner Section */}
+        <section className={`py-8 relative transition-colors duration-300 ${darkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
           <div className="container mx-auto px-4">
-            <div className="relative bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl shadow-lg overflow-visible min-h-[280px]">
+            <div className={`relative rounded-xl shadow-lg overflow-visible min-h-[280px] ${darkMode ? 'bg-gradient-to-r from-indigo-800 to-indigo-900' : 'bg-gradient-to-r from-indigo-600 to-indigo-700'}`}>
               
               {/* Main content container */}
               <div className="flex flex-col md:flex-row items-end justify-between p-6 md:p-8 relative z-10 h-full">
@@ -361,38 +385,6 @@ const AboutPage = () => {
         
         body {
           font-family: 'Poppins', sans-serif;
-        }
-        
-        /* Dark mode classes */
-        .dark-bg {
-          background-color: #1a202c;
-          color: #e2e8f0;
-        }
-        
-        .light-text {
-          color: #e2e8f0;
-        }
-        
-        .dark-text {
-          color: #2d3748;
-        }
-        
-        .dark-border {
-          border-color: #4a5568;
-        }
-        
-        .light-border {
-          border-color: #e2e8f0;
-        }
-        
-        .dark-card {
-          background-color: #2d3748;
-          color: #e2e8f0;
-        }
-        
-        .light-card {
-          background-color: #ffffff;
-          color: #2d3748;
         }
         
         /* Smooth scrolling */
