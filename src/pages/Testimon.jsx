@@ -22,78 +22,62 @@ const Workshops = () => {
     <>
       <AuthSection />
       
-      {/* Hero Section - Text floating naturally over background */}
-      <section className={`relative py-20 md:py-32 overflow-hidden bg-fixed bg-center bg-cover transition-all duration-500`} 
+      {/* Hero Section - Updated to match blog page styling with 15% increased height */}
+      <section className="relative py-16 md:py-28 overflow-hidden bg-fixed bg-center bg-cover" 
         style={{ 
           backgroundImage: `url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80')`,
-          minHeight: '35vh' // Changed from '50vh' to '35vh' to match CoursePage
+          minHeight: '40vh' // Increased by 15% (from 35vh to 40vh)
         }}>
         
-        {/* Completely transparent overlay - no dark background */}
-        <div className="absolute inset-0 bg-transparent"></div>
+        {/* Purple tint overlay matching blog page */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-indigo-900/80"></div>
         
-        {/* Floating gradient orbs for ambiance */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className={`absolute top-20 right-20 w-72 h-72 rounded-full blur-3xl opacity-20 animate-pulse ${
-            darkMode ? 'bg-gradient-to-r from-cyan-400 to-blue-500' : 'bg-gradient-to-r from-white/30 to-blue-200/40'
-          }`}></div>
-          <div className={`absolute bottom-20 left-20 w-72 h-72 rounded-full blur-3xl opacity-20 animate-pulse delay-1000 ${
-            darkMode ? 'bg-gradient-to-r from-purple-500 to-pink-500' : 'bg-gradient-to-r from-indigo-200/40 to-white/30'
-          }`}></div>
-        </div>
-
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className={`text-4xl md:text-6xl font-bold mb-6 transition-all duration-1000 transform ${
+        <div className="container mx-auto px-4 text-center relative z-10 flex flex-col justify-center h-full">
+          <h1 className={`text-4xl md:text-6xl font-bold mb-6 text-white transition-all duration-1000 transform ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          } ${
-            darkMode 
-              ? 'text-white drop-shadow-2xl [text-shadow:_0_4px_12px_rgb(0_0_0_/_50%)]' 
-              : 'text-white drop-shadow-2xl [text-shadow:_0_4px_12px_rgb(0_0_0_/_40%)]'
           }`}>
             Upcoming Workshops
           </h1>
-          <p className={`text-xl md:text-2xl max-w-3xl mx-auto transition-all duration-1000 delay-300 transform ${
+          <p className={`text-xl md:text-2xl max-w-3xl mx-auto text-blue-100 transition-all duration-1000 delay-300 transform ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          } font-light ${
-            darkMode 
-              ? 'text-gray-100 drop-shadow-lg [text-shadow:_0_2px_8px_rgb(0_0_0_/_60%)]' 
-              : 'text-blue-50 drop-shadow-lg [text-shadow:_0_2px_8px_rgb(0_0_0_/_40%)]'
-          }`}>
+          } font-light mb-8`}>
             Join our expert-led workshops and enhance your skills with hands-on learning experiences
           </p>
         </div>
       </section>
 
-      {/* Rest of the component remains the same */}
-      {/* Stats Section - Elegant dark mode */}
+      {/* Unified Stats and Filter Section */}
       <section className={`py-16 relative overflow-hidden transition-all duration-500 ${
         darkMode 
-          ? 'bg-gradient-to-br from-slate-950 via-gray-900 to-slate-900' 
-          : 'bg-gradient-to-br from-gray-50 to-blue-50'
+          ? 'bg-gradient-to-br from-slate-900 via-gray-800 to-slate-900' 
+          : 'bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50'
       }`}>
-        <div className={`absolute -top-24 -right-24 w-64 h-64 rounded-full blur-3xl opacity-30 ${
+        {/* Background elements */}
+        <div className={`absolute -top-24 -right-24 w-64 h-64 rounded-full blur-3xl opacity-20 ${
           darkMode ? 'bg-gradient-to-r from-blue-500 to-purple-500' : 'bg-gradient-to-r from-blue-200 to-indigo-300'
         }`}></div>
-        <div className={`absolute -bottom-24 -left-24 w-64 h-64 rounded-full blur-3xl opacity-30 ${
+        <div className={`absolute -bottom-24 -left-24 w-64 h-64 rounded-full blur-3xl opacity-20 ${
           darkMode ? 'bg-gradient-to-r from-purple-500 to-pink-500' : 'bg-gradient-to-r from-indigo-200 to-purple-300'
         }`}></div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+          {/* Stats Section */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
             {[
-              { value: `${workshops.length}+`, label: 'Upcoming Workshops' },
-              { value: '15+', label: 'Expert Instructors' },
-              { value: '98%', label: 'Satisfaction Rate' },
-              { value: '500+', label: 'Participants' }
+              { value: `${workshops.length}+`, label: 'Upcoming Workshops', icon: '📅' },
+              { value: '15+', label: 'Expert Instructors', icon: '👨‍🏫' },
+              { value: '98%', label: 'Satisfaction Rate', icon: '⭐' },
+              { value: '500+', label: 'Participants', icon: '👥' }
             ].map((stat, index) => (
               <div 
                 key={index}
-                className={`p-6 rounded-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 ${
+                className={`p-6 rounded-2xl transition-all duration-500 transform hover:-translate-y-1 ${
                   darkMode 
-                    ? 'bg-gradient-to-br from-slate-800/50 to-gray-800/50 backdrop-blur-sm border border-slate-700/50 shadow-2xl shadow-blue-900/20 text-white hover:shadow-blue-500/20' 
-                    : 'bg-white/80 backdrop-blur-sm border border-white/50 shadow-xl shadow-blue-900/10 text-gray-800 hover:shadow-blue-500/20'
-                }`}
+                    ? 'bg-gradient-to-br from-slate-800/60 to-gray-800/60 border border-slate-700/50 text-white hover:shadow-blue-500/20' 
+                    : 'bg-white/90 border border-white/50 text-gray-800 hover:shadow-blue-500/20'
+                } shadow-lg flex flex-col items-center text-center`}
               >
+                <div className="text-3xl mb-3">{stat.icon}</div>
                 <div className={`text-3xl font-bold mb-2 transition-colors duration-300 ${
                   darkMode 
                     ? 'bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent' 
@@ -107,31 +91,28 @@ const Workshops = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Filter Section - Modern dark mode */}
-      <section className={`py-10 transition-all duration-500 ${
-        darkMode 
-          ? 'bg-gradient-to-br from-slate-950 via-gray-900 to-slate-900' 
-          : 'bg-gradient-to-br from-gray-50 to-blue-50'
-      }`}>
-        <div className="container mx-auto px-4">
+            
+          {/* Filter Section */}
           <div className="flex flex-wrap justify-center gap-4">
             {['all', 'beginner', 'intermediate', 'advanced'].map((level) => (
               <button 
                 key={level}
-                className={`px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105 font-medium ${
+                className={`px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105 font-medium flex items-center ${
                   filter === level 
                     ? darkMode
                       ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/30 border border-blue-500/50' 
                       : 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30'
                     : darkMode
-                      ? 'bg-slate-800/50 text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 hover:border-slate-600/50 shadow-md backdrop-blur-sm' 
-                      : 'bg-white/80 text-gray-700 border border-gray-200/50 hover:bg-gray-50/80 shadow-md backdrop-blur-sm'
+                      ? 'bg-slate-700/50 text-slate-300 border border-slate-600/50 hover:bg-slate-600/50 hover:border-slate-500/50 shadow-md backdrop-blur-sm' 
+                      : 'bg-white/90 text-gray-700 border border-gray-200/50 hover:bg-gray-100/80 shadow-md backdrop-blur-sm'
                 }`}
                 onClick={() => setFilter(level)}
               >
+                <span className="mr-2">
+                  {level === 'all' ? '🎯' : 
+                   level === 'beginner' ? '🌱' : 
+                   level === 'intermediate' ? '🚀' : '🏆'}
+                </span>
                 {level === 'all' ? 'All Workshops' : level.charAt(0).toUpperCase() + level.slice(1)}
               </button>
             ))}

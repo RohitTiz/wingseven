@@ -112,7 +112,7 @@ const CourseSection = () => {
     >
       <div className="max-w-7xl mx-auto">
         {/* Section Header - Updated with your style */}
-        <div className="text-center mb-12 sm:mb-16 md:mb-20">
+        {/* <div className="text-center mb-12 sm:mb-16 md:mb-20">
           <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 transition-all duration-700 transform ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           } ${darkMode ? 'text-light-text' : 'text-dark-text'}`} 
@@ -120,7 +120,7 @@ const CourseSection = () => {
           >
             Explore Our <span className="text-blue-600">Courses</span>
           </h2>
-        </div>
+        </div> */}
 
         {/* Filter Controls */}
         <div className="mb-16">
