@@ -1,10 +1,12 @@
 // componentsdash/Quiz.jsx
 import React, { useState } from 'react';
+import { useDarkMode } from '../context/DarkModeContext';
 import QuizResult from './QuizResult';
 
 const optionLetter = ['A', 'B', 'C', 'D'];
 
 const Quiz = ({ quiz, onBack, onComplete }) => {
+  const { darkMode } = useDarkMode();
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
   const [answers, setAnswers] = useState([]);
@@ -66,24 +68,32 @@ const Quiz = ({ quiz, onBack, onComplete }) => {
           }}
         />
       ) : (
-        <div className="flex flex-col items-center justify-center min-h-[60vh] p-4 sm:p-6">
+        <div className={`flex flex-col items-center justify-center min-h-[60vh] p-4 sm:p-6 transition-colors duration-300 ${darkMode ? 'dark-bg' : 'light-bg'}`}>
           <button
             onClick={onBack}
-            className="self-start mb-4 px-3 py-1 sm:px-4 sm:py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 text-sm sm:text-base"
+            className={`self-start mb-4 px-3 py-1 sm:px-4 sm:py-2 rounded-lg hover:bg-opacity-80 text-sm sm:text-base transition-colors duration-300 ${
+              darkMode ? 'dark-card text-light-text hover:bg-gray-700' : 'bg-gray-200 text-dark-text hover:bg-gray-300'
+            }`}
           >
             ← Back to Quizzes
           </button>
           
           {/* Progress Bar */}
-          <div className="w-full max-w-xl mb-4 sm:mb-6 bg-gray-200 rounded-full h-2 sm:h-2.5">
+          <div className={`w-full max-w-xl mb-4 sm:mb-6 rounded-full h-2 sm:h-2.5 transition-colors duration-300 ${
+            darkMode ? 'dark-border bg-gray-700' : 'light-border bg-gray-200'
+          }`}>
             <div 
-              className="bg-[#7C3AED] h-2 sm:h-2.5 rounded-full" 
+              className="bg-[#7C3AED] h-2 sm:h-2.5 rounded-full transition-colors duration-300" 
               style={{ width: `${((current + 1) / quiz.questions.length) * 100}%` }}
             ></div>
           </div>
           
-          <div className="text-xl sm:text-2xl font-bold mb-2 text-center">Question {current + 1}/{quiz.questions.length}</div>
-          <div className="text-base sm:text-lg text-center mb-4 sm:mb-6 max-w-2xl font-medium text-gray-700 px-2">
+          <div className={`text-xl sm:text-2xl font-bold mb-2 text-center transition-colors duration-300 ${darkMode ? 'text-light-text' : 'text-dark-text'}`}>
+            Question {current + 1}/{quiz.questions.length}
+          </div>
+          <div className={`text-base sm:text-lg text-center mb-4 sm:mb-6 max-w-2xl font-medium px-2 transition-colors duration-300 ${
+            darkMode ? 'text-gray-300' : 'text-gray-700'
+          }`}>
             {quiz.questions[current].question}
           </div>
           
@@ -92,14 +102,15 @@ const Quiz = ({ quiz, onBack, onComplete }) => {
               <button
                 key={idx}
                 onClick={() => handleOptionClick(idx)}
-                className={`flex items-center gap-3 sm:gap-4 px-4 py-2 sm:px-6 sm:py-3 rounded-xl shadow transition-all text-left
-                  ${selected === idx ? 'bg-[#653DDE] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'}
-                  font-medium text-sm sm:text-base border-2
-                  ${selected === idx ? 'border-[#653DDE]' : 'border-transparent'}
+                className={`flex items-center gap-3 sm:gap-4 px-4 py-2 sm:px-6 sm:py-3 rounded-xl shadow transition-all duration-300 text-left font-medium text-sm sm:text-base border-2
+                  ${selected === idx 
+                    ? 'bg-[#653DDE] text-white border-[#653DDE]' 
+                    : `${darkMode ? 'dark-card hover:bg-gray-700 text-light-text border-dark-border' : 'bg-white hover:bg-gray-50 text-dark-text border-transparent'}`
+                  }
                 `}
               >
-                <span className={`w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-sm sm:text-lg font-bold
-                  ${selected === idx ? 'bg-white text-[#653DDE]' : 'bg-[#653DDE] text-[#ffffff]'}
+                <span className={`w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-sm sm:text-lg font-bold transition-colors duration-300
+                  ${selected === idx ? 'bg-white text-[#653DDE]' : 'bg-[#653DDE] text-white'}
                 `}>
                   {optionLetter[idx]}
                 </span>
@@ -112,7 +123,9 @@ const Quiz = ({ quiz, onBack, onComplete }) => {
             {!isFirst && (
               <button
                 onClick={handlePrev}
-                className="px-4 py-2 sm:px-6 sm:py-2 rounded-lg bg-gray-100 text-gray-700 font-semibold shadow hover:bg-gray-200 text-sm sm:text-base"
+                className={`px-4 py-2 sm:px-6 sm:py-2 rounded-lg font-semibold shadow hover:bg-opacity-80 text-sm sm:text-base transition-colors duration-300 ${
+                  darkMode ? 'dark-card text-light-text hover:bg-gray-700' : 'bg-gray-100 text-dark-text hover:bg-gray-200'
+                }`}
               >
                 Previous
               </button>
@@ -120,7 +133,7 @@ const Quiz = ({ quiz, onBack, onComplete }) => {
             {!isLast && (
               <button
                 onClick={handleNext}
-                className="px-4 py-2 sm:px-6 sm:py-2 rounded-lg bg-[#7C3AED] text-white font-semibold shadow hover:bg-[#6D28D9] text-sm sm:text-base"
+                className="px-4 py-2 sm:px-6 sm:py-2 rounded-lg bg-[#7C3AED] text-white font-semibold shadow hover:bg-[#6D28D9] text-sm sm:text-base transition-colors duration-300"
                 disabled={selected === null}
               >
                 Next
@@ -129,7 +142,7 @@ const Quiz = ({ quiz, onBack, onComplete }) => {
             {isLast && (
               <button
                 onClick={handleSubmit}
-                className="px-4 py-2 sm:px-6 sm:py-2 rounded-lg bg-[#7C3AED] text-white font-semibold shadow hover:bg-[#6D28D9] text-sm sm:text-base"
+                className="px-4 py-2 sm:px-6 sm:py-2 rounded-lg bg-[#7C3AED] text-white font-semibold shadow hover:bg-[#6D28D9] text-sm sm:text-base transition-colors duration-300"
                 disabled={selected === null}
               >
                 Submit

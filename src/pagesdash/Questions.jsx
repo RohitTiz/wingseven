@@ -1,16 +1,22 @@
 // pagesdash/Questions.jsx
 import React, { useState, useEffect } from 'react';
+import { useDarkMode } from '../context/DarkModeContext';
 import { quizData } from '../data/quizData';
 import QuizCard from '../componentsdash/QuizCard';
 import Quiz from '../componentsdash/Quiz';
 
 export const Questions = () => {
+  const { darkMode } = useDarkMode();
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [showQuiz, setShowQuiz] = useState(false);
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [courseFilter, setCourseFilter] = useState('all');
   const [completedQuizzes, setCompletedQuizzes] = useState([]);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+
+  // Extract unique course names from quiz data
+  const availableCourses = ['all', ...new Set(quizData.map(quiz => quiz.course || 'General'))];
 
   // Load completed quizzes from localStorage on component mount
   useEffect(() => {
@@ -43,19 +49,21 @@ export const Questions = () => {
     localStorage.setItem('completedQuizzes', JSON.stringify(updatedCompletedQuizzes));
   };
 
-  // Filter quizzes based on selected filter and search term
+  // Filter quizzes based on selected filter, search term, and course filter
   const filteredQuizzes = quizData.filter(quiz => {
     const isCompleted = completedQuizzes.some(q => q.id === quiz.id);
     
     const matchesFilter = filter === 'all' || 
                          (filter === 'completed' && isCompleted) ||
-                         (filter === 'not-completed' && !isCompleted) ||
                          quiz.difficulty.toLowerCase() === filter;
     
     const matchesSearch = quiz.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          quiz.description.toLowerCase().includes(searchTerm.toLowerCase());
     
-    return matchesFilter && matchesSearch;
+    const matchesCourse = courseFilter === 'all' || 
+                         (quiz.course || 'General').toLowerCase() === courseFilter.toLowerCase();
+    
+    return matchesFilter && matchesSearch && matchesCourse;
   });
 
   if (showQuiz && selectedQuiz) {
@@ -69,84 +77,98 @@ export const Questions = () => {
   }
 
   return (
-    <div className="p-4 sm:p-6">
-      <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">Available Quizzes</h1>
+    <div className={`p-4 sm:p-6 transition-colors duration-300 ${darkMode ? 'dark-bg' : 'light-bg'}`}>
+      <h1 className={`text-xl sm:text-2xl font-bold mb-4 sm:mb-6 transition-colors duration-300 ${darkMode ? 'light-text' : 'dark-text'}`}>
+        Available Quizzes
+      </h1>
       
       {/* Mobile Filter Toggle */}
       <button
         onClick={() => setShowMobileFilters(!showMobileFilters)}
-        className="md:hidden mb-4 w-full px-4 py-2 bg-[#7C3AED] text-white rounded-lg font-medium flex items-center justify-center"
+        className="md:hidden mb-4 w-full px-4 py-2 bg-[#7C3AED] text-white rounded-lg font-medium flex items-center justify-center hover:bg-[#6D28D9] transition-colors duration-300"
       >
         {showMobileFilters ? 'Hide Filters' : 'Show Filters'}
         <span className="ml-2">{showMobileFilters ? '▲' : '▼'}</span>
       </button>
       
       {/* Filter and Search Controls */}
-      <div className={`mb-6 flex-col md:flex-row gap-4 items-start md:items-center ${showMobileFilters ? 'flex' : 'hidden md:flex'}`}>
+      <div className={`mb-6 flex-col md:flex-row gap-4 items-start md:items-center transition-colors duration-300 ${showMobileFilters ? 'flex' : 'hidden md:flex'}`}>
         <div className="flex flex-wrap gap-2 mb-4 md:mb-0 justify-center md:justify-start">
           <button
             onClick={() => setFilter('all')}
-            className={`px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium rounded-lg ${
-              filter === 'all' ? 'bg-[#7C3AED] text-white' : 'bg-gray-200 text-gray-700'
+            className={`px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium rounded-lg transition-colors duration-300 ${
+              filter === 'all' ? 'bg-[#7C3AED] text-white' : `${darkMode ? 'dark-card text-gray-300' : 'bg-gray-200 text-gray-700'}`
             }`}
           >
             All
           </button>
           <button
             onClick={() => setFilter('completed')}
-            className={`px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium rounded-lg ${
-              filter === 'completed' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700'
+            className={`px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium rounded-lg transition-colors duration-300 ${
+              filter === 'completed' ? 'bg-green-500 text-white' : `${darkMode ? 'dark-card text-gray-300' : 'bg-gray-200 text-gray-700'}`
             }`}
           >
             Completed
           </button>
           <button
-            onClick={() => setFilter('not-completed')}
-            className={`px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium rounded-lg ${
-              filter === 'not-completed' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
-            }`}
-          >
-            Not Done
-          </button>
-          <button
             onClick={() => setFilter('easy')}
-            className={`px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium rounded-lg ${
-              filter === 'easy' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700'
+            className={`px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium rounded-lg transition-colors duration-300 ${
+              filter === 'easy' ? 'bg-green-500 text-white' : `${darkMode ? 'dark-card text-gray-300' : 'bg-gray-200 text-gray-700'}`
             }`}
           >
             Easy
           </button>
           <button
             onClick={() => setFilter('medium')}
-            className={`px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium rounded-lg ${
-              filter === 'medium' ? 'bg-yellow-500 text-white' : 'bg-gray-200 text-gray-700'
+            className={`px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium rounded-lg transition-colors duration-300 ${
+              filter === 'medium' ? 'bg-yellow-500 text-white' : `${darkMode ? 'dark-card text-gray-300' : 'bg-gray-200 text-gray-700'}`
             }`}
           >
             Medium
           </button>
           <button
             onClick={() => setFilter('hard')}
-            className={`px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium rounded-lg ${
-              filter === 'hard' ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-700'
+            className={`px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium rounded-lg transition-colors duration-300 ${
+              filter === 'hard' ? 'bg-red-500 text-white' : `${darkMode ? 'dark-card text-gray-300' : 'bg-gray-200 text-gray-700'}`
             }`}
           >
             Hard
           </button>
         </div>
         
-        <div className="w-full md:flex-1 md:max-w-xs">
-          <input
-            type="text"
-            placeholder="Search quizzes..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7C3AED] text-sm sm:text-base"
-          />
+        <div className="flex flex-col sm:flex-row w-full gap-4">
+          <div className="w-full sm:flex-1 sm:max-w-xs">
+            <input
+              type="text"
+              placeholder="Search quizzes..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7C3AED] text-sm sm:text-base transition-colors duration-300 ${
+                darkMode ? 'dark-border dark-bg light-text placeholder-gray-400' : 'border-gray-300 bg-white text-gray-700'
+              }`}
+            />
+          </div>
+          
+          <div className="w-full sm:flex-1 sm:max-w-xs">
+            <select
+              value={courseFilter}
+              onChange={(e) => setCourseFilter(e.target.value)}
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7C3AED] text-sm sm:text-base transition-colors duration-300 ${
+                darkMode ? 'dark-border dark-bg light-text' : 'border-gray-300 bg-white text-gray-700'
+              }`}
+            >
+              {availableCourses.map(course => (
+                <option key={course} value={course}>
+                  {course === 'all' ? 'All Courses' : course}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
       
       {/* Results Count */}
-      <div className="mb-4 text-xs sm:text-sm text-gray-600">
+      <div className={`mb-4 text-xs sm:text-sm transition-colors duration-300 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
         Showing {filteredQuizzes.length} of {quizData.length} quizzes
         {completedQuizzes.length > 0 && ` • ${completedQuizzes.length} completed`}
       </div>
@@ -171,14 +193,15 @@ export const Questions = () => {
           })}
         </div>
       ) : (
-        <div className="text-center py-8 sm:py-12 text-gray-500">
+        <div className={`text-center py-8 sm:py-12 transition-colors duration-300 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
           <p className="text-base sm:text-lg mb-4">No quizzes found matching your criteria.</p>
           <button
             onClick={() => {
               setFilter('all');
               setSearchTerm('');
+              setCourseFilter('all');
             }}
-            className="px-4 py-2 sm:px-6 sm:py-2 bg-[#7C3AED] text-white rounded-lg hover:bg-[#6D28D9] text-sm sm:text-base"
+            className="px-4 py-2 sm:px-6 sm:py-2 bg-[#7C3AED] text-white rounded-lg hover:bg-[#6D28D9] text-sm sm:text-base transition-colors duration-300"
           >
             Clear Filters
           </button>
