@@ -91,8 +91,8 @@ const InsideCourse = () => {
       >
         {/* Main content area - increased width for video */}
         <div className="flex-1 flex flex-col overflow-hidden md:w-[70%]">
-          {/* Video container with responsive height */}
-          <div className={`h-auto md:h-[50vh] rounded-xl shadow-sm overflow-hidden transition-colors duration-300 ${
+          {/* Video container with increased height */}
+          <div className={`h-auto md:h-[65vh] rounded-xl shadow-sm overflow-hidden transition-colors duration-300 ${
             darkMode ? 'dark-card' : 'light-card'
           }`}>
             <VideoContent course={course} selectedVideo={selectedVideo} />

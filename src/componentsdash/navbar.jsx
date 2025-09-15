@@ -48,24 +48,7 @@ const Navbar = ({ onSidebarToggle }) => {
         </button>
         
         {/* Breadcrumb - responsive text handling */}
-        <nav className={`flex items-center text-xs sm:text-sm gap-1 flex-nowrap overflow-hidden ${
-          darkMode ? 'text-gray-400' : 'text-gray-400'
-        }`}>
-          <span className={`whitespace-nowrap truncate ${
-            darkMode ? 'text-gray-300' : 'text-gray-500'
-          }`}>
-            Courses
-          </span>
-          <span className="hidden xs:inline">/</span>
-          <span className="hidden xs:inline whitespace-nowrap truncate">UIUX Design</span>
-          <span className="xs:hidden whitespace-nowrap">...</span>
-          <span className="hidden xs:inline">/</span>
-          <span className={`whitespace-nowrap truncate ${
-            darkMode ? 'text-gray-300' : 'text-gray-500'
-          }`}>
-            Figma from A to Z
-          </span>
-        </nav>
+        
       </div>
       
       {/* Right icons with cart and notification */}
