@@ -1,29 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useDarkMode } from '../context/DarkModeContext';
-import { dummyBooks, dummyVideos, dummyAudiobooks } from '../dummydata/dummyBooks';
+import { dummyBooks } from '../dummydata/dummyBooks';
 
 export const StudyMaterials = () => {
   const { darkMode } = useDarkMode();
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState('books');
   const [sortBy, setSortBy] = useState('newest');
   const [filteredContent, setFilteredContent] = useState([]);
 
   // Get unique categories for filter buttons
   const categories = ['all', ...new Set(dummyBooks.map(book => book.category))];
 
-  // Filter and sort content based on active tab, category, search query, and sort option
+  // Filter and sort content based on category, search query, and sort option
   useEffect(() => {
-    let content = [];
+    let content = [...dummyBooks];
     
-    // Select the appropriate content based on active tab
-    if (activeTab === 'books') {
-      content = [...dummyBooks];
-    } else if (activeTab === 'audiobooks') {
-      content = [...dummyAudiobooks];
-    }
-
     // Filter by category
     if (activeCategory !== 'all') {
       content = content.filter(item => item.category === activeCategory);
@@ -54,9 +46,9 @@ export const StudyMaterials = () => {
     }
 
     setFilteredContent(content);
-  }, [activeTab, activeCategory, searchQuery, sortBy]);
+  }, [activeCategory, searchQuery, sortBy]);
 
-  // Render content cards based on active tab
+  // Render content cards
   const renderContentCards = () => {
     if (filteredContent.length === 0) {
       return (
@@ -67,7 +59,7 @@ export const StudyMaterials = () => {
             </svg>
           </div>
           <p className={`${darkMode ? 'text-gray-400' : 'text-gray-500'} text-lg`}>
-            No {activeTab} found matching your criteria.
+            No books found matching your criteria.
           </p>
           <button 
             className={`mt-4 ${darkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-800'} font-medium transition-colors duration-300`}
@@ -96,15 +88,6 @@ export const StudyMaterials = () => {
           <div className={`absolute top-3 left-3 ${darkMode ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'} text-xs font-semibold px-2.5 py-0.5 rounded transition-colors duration-300`}>
             {item.category || 'Uncategorized'}
           </div>
-          {activeTab === 'audiobooks' && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className={`${darkMode ? 'bg-gray-800 bg-opacity-80' : 'bg-white bg-opacity-80'} rounded-full p-3 transition-colors duration-300`}>
-                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 001.414 1.414m2.828-9.9a9 9 0 012.728-2.728" />
-                </svg>
-              </div>
-            </div>
-          )}
         </div>
         
         <div className="p-4 flex flex-col flex-grow">
@@ -128,7 +111,6 @@ export const StudyMaterials = () => {
             <div className={`flex justify-between items-center text-sm mb-3 ${darkMode ? 'text-gray-400' : 'text-gray-500'} transition-colors duration-300`}>
               <span>{item.date}</span>
               {item.pages && <span>{item.pages} pages</span>}
-              {item.duration && <span>{item.duration}</span>}
             </div>
             
             <div className="flex items-center justify-between">
@@ -142,12 +124,10 @@ export const StudyMaterials = () => {
               </div>
               
               <button className={`bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center duration-300`}>
-                <>
-                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                  {activeTab === 'audiobooks' ? 'LISTEN' : 'DOWNLOAD'}
-                </>
+                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                DOWNLOAD
               </button>
             </div>
           </div>
@@ -164,7 +144,7 @@ export const StudyMaterials = () => {
           Study Materials
         </h1>
         <p className={`text-lg max-w-3xl mx-auto transition-colors duration-300 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-          Access our comprehensive collection of books and audiobooks to enhance your learning experience.
+          Access our comprehensive collection of books to enhance your learning experience.
         </p>
       </div>
 
@@ -179,7 +159,7 @@ export const StudyMaterials = () => {
             </div>
             <input
               type="text"
-              placeholder={`Search by title, ${activeTab === 'books' ? 'author' : 'creator'}, or topic...`}
+              placeholder="Search by title, author, or topic..."
               className={`block w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300 ${darkMode ? 'border-gray-700 bg-gray-800 text-white' : 'border-gray-300 bg-white text-gray-900'}`}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -221,31 +201,10 @@ export const StudyMaterials = () => {
         </div>
       </div>
 
-      {/* Content Tabs */}
-      <div className={`border-b mb-8 transition-colors duration-300 ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-        <nav className="flex space-x-8">
-          {['books', 'audiobooks'].map(tab => (
-            <button
-              key={tab}
-              className={`py-4 px-1 text-lg font-medium border-b-2 transition-colors duration-300 ${activeTab === tab 
-                ? (darkMode ? 'border-blue-500 text-blue-400' : 'border-blue-500 text-blue-600')
-                : (darkMode ? 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-500' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300')
-              }`}
-              onClick={() => {
-                setActiveTab(tab);
-                setActiveCategory('all');
-              }}
-            >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
-            </button>
-          ))}
-        </nav>
-      </div>
-
       {/* Results Count and Sort */}
       <div className="mb-6 flex justify-between items-center">
         <p className={`transition-colors duration-300 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-          Showing <span className="font-semibold">{filteredContent.length}</span> {activeTab}
+          Showing <span className="font-semibold">{filteredContent.length}</span> books
         </p>
         <div className="flex items-center space-x-2">
           <span className={`font-medium transition-colors duration-300 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
@@ -276,7 +235,7 @@ export const StudyMaterials = () => {
               Latest Additions
             </h2>
             <p className={`transition-colors duration-300 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              Explore the newest resources in our collection
+              Explore the newest books in our collection
             </p>
           </div>
           <button className={`font-medium transition-colors duration-300 ${darkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-800'}`}>
@@ -308,15 +267,9 @@ export const StudyMaterials = () => {
                         <span>{item.pages} pages</span>
                       </>
                     )}
-                    {item.duration && (
-                      <>
-                        <span className="mx-2">•</span>
-                        <span>{item.duration}</span>
-                      </>
-                    )}
                   </div>
                   <button className={`mt-3 text-sm font-medium transition-colors duration-300 ${darkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-800'}`}>
-                    {activeTab === 'audiobooks' ? 'Listen now' : 'Download now'} &rarr;
+                    Download now &rarr;
                   </button>
                 </div>
               </div>
