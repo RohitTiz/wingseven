@@ -6,6 +6,7 @@ const DemoModal = ({ isOpen, onClose, darkMode = false }) => {
     email: '',
     course: '',
     phone: '',
+    date: '',
     time: ''
   });
 
@@ -48,6 +49,7 @@ const DemoModal = ({ isOpen, onClose, darkMode = false }) => {
         email: '',
         course: '',
         phone: '',
+        date: '',
         time: ''
       });
       setSubmitted(false);
@@ -60,6 +62,15 @@ const DemoModal = ({ isOpen, onClose, darkMode = false }) => {
   const modalClasses = `fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`;
   const overlayClasses = `fixed inset-0 bg-black/50 transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0'}`;
   const contentClasses = `relative w-full max-w-md rounded-2xl shadow-2xl transform transition-all duration-500 ${isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-8'} ${darkMode ? 'bg-gradient-to-br from-gray-800 to-gray-900 text-white' : 'bg-gradient-to-br from-white to-gray-50 text-gray-800'} max-h-[85vh] overflow-hidden flex flex-col border ${darkMode ? 'border-gray-700' : 'border-gray-200'}`;
+
+  // Calculate min and max dates for the date input
+  const today = new Date();
+  const maxDate = new Date();
+  maxDate.setMonth(today.getMonth() + 3); // Allow booking up to 3 months in advance
+
+  const formatDate = (date) => {
+    return date.toISOString().split('T')[0];
+  };
 
   return (
     <>
@@ -165,6 +176,25 @@ const DemoModal = ({ isOpen, onClose, darkMode = false }) => {
                   </div>
 
                   <div className="relative">
+                    <label htmlFor="date" className="block text-sm font-medium mb-2">
+                      Preferred Date *
+                    </label>
+                    <input
+                      type="date"
+                      id="date"
+                      name="date"
+                      value={formData.date}
+                      onChange={handleChange}
+                      required
+                      min={formatDate(today)}
+                      max={formatDate(maxDate)}
+                      className={`w-full px-4 py-3 rounded-xl border ${darkMode ? 'bg-gray-700/50 border-gray-600' : 'bg-white border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300`}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="relative">
                     <label htmlFor="time" className="block text-sm font-medium mb-2">
                       Time Slot *
                     </label>
@@ -187,22 +217,22 @@ const DemoModal = ({ isOpen, onClose, darkMode = false }) => {
                       </svg>
                     </div>
                   </div>
-                </div>
 
-                <div className="relative">
-                  <label htmlFor="phone" className="block text-sm font-medium mb-2">
-                    Phone Number *
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                    className={`w-full px-4 py-3 rounded-xl border ${darkMode ? 'bg-gray-700/50 border-gray-600 placeholder-gray-400' : 'bg-white border-gray-300 placeholder-gray-500'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300`}
-                    placeholder="Enter your phone number"
-                  />
+                  <div className="relative">
+                    <label htmlFor="phone" className="block text-sm font-medium mb-2">
+                      Phone Number *
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      required
+                      className={`w-full px-4 py-3 rounded-xl border ${darkMode ? 'bg-gray-700/50 border-gray-600 placeholder-gray-400' : 'bg-white border-gray-300 placeholder-gray-500'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300`}
+                      placeholder="Enter phone number"
+                    />
+                  </div>
                 </div>
 
                 <button

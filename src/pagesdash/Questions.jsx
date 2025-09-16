@@ -54,8 +54,7 @@ export const Questions = () => {
     const isCompleted = completedQuizzes.some(q => q.id === quiz.id);
     
     const matchesFilter = filter === 'all' || 
-                         (filter === 'completed' && isCompleted) ||
-                         quiz.difficulty.toLowerCase() === filter;
+                         (filter === 'completed' && isCompleted);
     
     const matchesSearch = quiz.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          quiz.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -109,30 +108,6 @@ export const Questions = () => {
             }`}
           >
             Completed
-          </button>
-          <button
-            onClick={() => setFilter('easy')}
-            className={`px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium rounded-lg transition-colors duration-300 ${
-              filter === 'easy' ? 'bg-green-500 text-white' : `${darkMode ? 'dark-card text-gray-300' : 'bg-gray-200 text-gray-700'}`
-            }`}
-          >
-            Easy
-          </button>
-          <button
-            onClick={() => setFilter('medium')}
-            className={`px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium rounded-lg transition-colors duration-300 ${
-              filter === 'medium' ? 'bg-yellow-500 text-white' : `${darkMode ? 'dark-card text-gray-300' : 'bg-gray-200 text-gray-700'}`
-            }`}
-          >
-            Medium
-          </button>
-          <button
-            onClick={() => setFilter('hard')}
-            className={`px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm font-medium rounded-lg transition-colors duration-300 ${
-              filter === 'hard' ? 'bg-red-500 text-white' : `${darkMode ? 'dark-card text-gray-300' : 'bg-gray-200 text-gray-700'}`
-            }`}
-          >
-            Hard
           </button>
         </div>
         
