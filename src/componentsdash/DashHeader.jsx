@@ -2,7 +2,7 @@
 import React from 'react';
 import { useDarkMode } from '../context/DarkModeContext';
 
-const DashHeader = ({ showActions, courseTitle }) => {
+const DashHeader = ({ showActions, courseTitle, customAction }) => {
   const { darkMode } = useDarkMode();
 
   return (
@@ -84,27 +84,31 @@ const DashHeader = ({ showActions, courseTitle }) => {
         </div>
 
         {/* Right Side - Action Buttons */}
-        <div className="flex items-center space-x-3">
-          {/* Share Button */}
-          <button className={`px-4 py-2 text-sm font-medium rounded-md border transition-colors ${
-            darkMode 
-              ? 'border-gray-600 text-gray-300 hover:bg-gray-800' 
-              : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-          }`}>
-            Share
-          </button>
+        {showActions && (
+          <div className="flex items-center space-x-3 actions-container">
+            {customAction || (
+              <>
+                {/* Default buttons if no customAction provided */}
+                <button className={`px-4 py-2 text-sm font-medium rounded-md border transition-colors ${
+                  darkMode 
+                    ? 'border-gray-600 text-gray-300 hover:bg-gray-800' 
+                    : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                }`}>
+                  Share
+                </button>
 
-          {/* Brochure Button - More elegant and professional */}
-          {showActions && (
-            <button className={`px-5 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
-              darkMode 
-                ? 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg hover:shadow-purple-500/25' 
-                : 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg hover:shadow-purple-500/25 hover:-translate-y-0.5'
-            }`}>
-              Brochure
-            </button>
-          )}
-        </div>
+                {/* Brochure Button - More elegant and professional */}
+                <button className={`px-5 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+                  darkMode 
+                    ? 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg hover:shadow-purple-500/25' 
+                    : 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg hover:shadow-purple-500/25 hover:-translate-y-0.5'
+                }`}>
+                  Brochure
+                </button>
+              </>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

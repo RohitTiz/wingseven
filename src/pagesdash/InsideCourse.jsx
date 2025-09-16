@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import VideoContent from '../componentsdash/videoContent';
 import MoreInfo from '../componentsdash/moreInfo';
 import CourseContent from '../componentsdash/courseContent';
@@ -9,6 +9,7 @@ import { useDarkMode } from '../context/DarkModeContext';
 
 const InsideCourse = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [selectedSection, setSelectedSection] = useState(null);
   const [isMobileView, setIsMobileView] = useState(false);
@@ -60,13 +61,34 @@ const InsideCourse = () => {
     setShowContentPanel(!showContentPanel);
   };
 
+  // Function to handle assignment button click
+  const handleAssignmentClick = () => {
+    navigate(`/dashboard/courses/${id}/assignments`);
+  };
+
   if (!course) {
     return <div className={`p-4 text-center transition-colors duration-300 ${darkMode ? 'dark-bg dark-text' : 'light-bg dark-text'}`}>Course not found</div>;
   }
 
   return (
     <>
-      <Header showActions={true} courseTitle={course.title} />
+      <Header 
+        showActions={true} 
+        courseTitle={course.title} 
+        // Pass the assignment button as a custom action
+        customAction={
+          <button
+            onClick={handleAssignmentClick}
+            className={`px-4 py-2 rounded-lg font-medium transition-colors duration-300 ${
+              darkMode 
+                ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                : 'bg-blue-500 hover:bg-blue-600 text-white'
+            }`}
+          >
+            Assignments
+          </button>
+        }
+      />
       
       {/* Mobile content toggle button */}
       {isMobileView && (

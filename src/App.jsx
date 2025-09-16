@@ -27,6 +27,7 @@ import InsideCourse from './pagesdash/InsideCourse';
 import CourseCards from './componentsdash/CourseCards';
 import EditProfile from './pagesdash/EditProfile';
 import CartPage from './pagesdash/CartPage';
+import AssignmentsPage from './pagesdash/AssignmentsPage'; // Import the new AssignmentsPage
 
 // Admin components
 import AdminLayout from './admin/layout/AdminLayout';
@@ -72,6 +73,7 @@ const App = () => {
                 <Route path="questions" element={<Questions />} />
                 <Route path="courses" element={<CourseCards />} />
                 <Route path="courses/:id" element={<InsideCourse />} />
+                <Route path="courses/:id/assignments" element={<AssignmentsPage />} /> {/* Add assignments route */}
                 <Route path="quizresult" element={<QuizResultHistory />} />
                 <Route path="edit-profile" element={<EditProfile />} />
                 <Route path="cart" element={<CartPage />} />

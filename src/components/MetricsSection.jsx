@@ -61,7 +61,7 @@ const LearningProcessSection = () => {
       title: "Watch Video",
       description: "The first step to learn programming is to watch video carefully and take notes.",
       color: "from-blue-500 to-blue-600",
-      bgColor: darkMode ? "bg-blue-900/20" : "bg-blue-50",
+      bgColor: darkMode ? "bg-blue-900" : "bg-blue-50", // Changed from bg-blue-900/20 to bg-blue-900
       textColor: darkMode ? "text-blue-300" : "text-blue-600",
       delay: 0
     },
@@ -70,7 +70,7 @@ const LearningProcessSection = () => {
       title: "Write Code",
       description: "Now write every single line of code and execute it. Don't expect your code to run the first time.",
       color: "from-green-500 to-green-600",
-      bgColor: darkMode ? "bg-green-900/20" : "bg-green-50",
+      bgColor: darkMode ? "bg-green-900" : "bg-green-50", // Changed from bg-green-900/20 to bg-green-900
       textColor: darkMode ? "text-green-300" : "text-green-600",
       delay: 200
     },
@@ -79,7 +79,7 @@ const LearningProcessSection = () => {
       title: "Build Something",
       description: "Just learning the syntax is not enough. Take some time and build real-world projects.",
       color: "from-purple-500 to-purple-600",
-      bgColor: darkMode ? "bg-purple-900/20" : "bg-purple-50",
+      bgColor: darkMode ? "bg-purple-900" : "bg-purple-50", // Changed from bg-purple-900/20 to bg-purple-900
       textColor: darkMode ? "text-purple-300" : "text-purple-600",
       delay: 400
     }
@@ -126,7 +126,7 @@ const LearningProcessSection = () => {
 
       {/* Header */}
       <div className="text-center mb-12 sm:mb-16 md:mb-20">
-        <div className={`inline-flex items-center gap-2 ${darkMode ? 'bg-blue-900/30 text-blue-300' : 'bg-blue-50 text-blue-600'} px-4 py-2 rounded-full text-sm font-medium mb-6 transition-all duration-700 transform ${
+        <div className={`inline-flex items-center gap-2 ${darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-50 text-blue-600'} px-4 py-2 rounded-full text-sm font-medium mb-6 transition-all duration-700 transform ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
         }`}>
           <BookOpenIcon />
@@ -151,8 +151,8 @@ const LearningProcessSection = () => {
         {/* Desktop Layout - Horizontal */}
         <div className="hidden lg:block">
           <div className="flex items-center justify-between relative">
-            {/* Enhanced Curvy/Wavy Connecting Line */}
-            <div className="absolute top-1/2 left-0 right-0 transform -translate-y-1/2 z-0">
+            {/* Enhanced Curvy/Wavy Connecting Line - Moved behind cards with z-index */}
+            <div className="absolute top-1/2 left-0 right-0 transform -translate-y-1/2 z-0"> {/* Changed to z-0 */}
               <svg 
                 viewBox="0 0 1000 200" 
                 className="w-full h-24"
@@ -194,7 +194,7 @@ const LearningProcessSection = () => {
               const isActive = activeCard === index;
               
               return (
-                <div key={index} className="relative z-10">
+                <div key={index} className="relative z-10"> {/* Cards have z-10 */}
                   <div 
                     className={`group cursor-pointer transition-all duration-700 transform ${
                       isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
