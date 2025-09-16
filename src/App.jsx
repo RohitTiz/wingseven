@@ -27,7 +27,8 @@ import InsideCourse from './pagesdash/InsideCourse';
 import CourseCards from './componentsdash/CourseCards';
 import EditProfile from './pagesdash/EditProfile';
 import CartPage from './pagesdash/CartPage';
-import AssignmentsPage from './pagesdash/AssignmentsPage'; // Import the new AssignmentsPage
+import AssignmentsPage from './pagesdash/AssignmentsPage';
+import PaymentHistory from './pagesdash/PaymentHistory'; // Add this import
 
 // Admin components
 import AdminLayout from './admin/layout/AdminLayout';
@@ -41,12 +42,11 @@ import AdminAnalytics from './admin/pages/Analytics';
 import blogData from './data/blogdata';
 import { ProfileProvider } from './context/ProfileContext';
 import { CartProvider } from './context/CartContext';
-// In your App.jsx, update the import
-import { DarkModeProvider } from './context/DarkModeContext'; // This should now work // Import DarkModeProvider
+import { DarkModeProvider } from './context/DarkModeContext';
 
 const App = () => {
   return (
-    <DarkModeProvider> {/* Wrap with DarkModeProvider */}
+    <DarkModeProvider>
       <ProfileProvider>
         <CartProvider>
           <div className="app-container">
@@ -73,10 +73,11 @@ const App = () => {
                 <Route path="questions" element={<Questions />} />
                 <Route path="courses" element={<CourseCards />} />
                 <Route path="courses/:id" element={<InsideCourse />} />
-                <Route path="courses/:id/assignments" element={<AssignmentsPage />} /> {/* Add assignments route */}
+                <Route path="courses/:id/assignments" element={<AssignmentsPage />} />
                 <Route path="quizresult" element={<QuizResultHistory />} />
                 <Route path="edit-profile" element={<EditProfile />} />
                 <Route path="cart" element={<CartPage />} />
+                <Route path="payment-history" element={<PaymentHistory />} /> {/* Add this route */}
               </Route>
 
               {/* Admin Routes */}

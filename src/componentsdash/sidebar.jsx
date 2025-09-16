@@ -8,6 +8,7 @@ const menuItems = [
   { label: "Study Materials", icon: BookIcon, path: "/dashboard/study-materials" },
   { label: "Courses", icon: CoursesIcon, path: "/dashboard/courses" },
   { label: "Code Challenges", icon: CodeIcon, path: "/dashboard/questions" },
+  { label: "Payment History", icon: PaymentIcon, path: "/dashboard/payment-history" }, // Added this line
 ];
 
 const Sidebar = ({ isVisible, onToggle, isMobile }) => {
@@ -307,6 +308,15 @@ function CodeIcon({ active, darkMode }) {
   return (
     <svg className="w-5 h-5" fill={color} viewBox="0 0 24 24">
       <path d="M14.6 16.6l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4zm-5.2 0L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4z"/>
+    </svg>
+  );
+}
+
+function PaymentIcon({ active, darkMode }) {
+  const color = active ? "#7C3AED" : (darkMode ? "#D1D5DB" : "currentColor");
+  return (
+    <svg className="w-5 h-5" fill={color} viewBox="0 0 24 24">
+      <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/>
     </svg>
   );
 }
