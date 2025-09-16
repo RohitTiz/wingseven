@@ -77,7 +77,7 @@ function BlogPage() {
   ];
 
   const MobileCategorySelector = () => (
-    <div className="lg:hidden mb-6 px-4">
+    <div className="lg:hidden mb-6 px-2">
       <div className={`backdrop-blur-sm rounded-xl p-4 border shadow-lg mb-4 transition-colors duration-300 ${
         darkMode 
           ? 'bg-gray-800/90 border-gray-700' 
@@ -159,14 +159,14 @@ function BlogPage() {
           ? 'bg-gray-900 text-gray-100' 
           : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-gray-900'
       }`}>
-        {/* Hero Section */}
-        <section className="relative py-12 md:py-20 overflow-hidden bg-fixed bg-center bg-cover" 
+        {/* Hero Section - Reduced side margins */}
+        <section className="relative py-12 md:py-20 overflow-hidden bg-fixed bg-center bg-cover px-2" 
           style={{ 
             backgroundImage: `url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')`,
             minHeight: '35vh'
           }}>
           <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-indigo-900/80"></div>
-          <div className="container mx-auto px-4 text-center relative z-10 flex flex-col justify-center h-full">
+          <div className="container mx-auto px-2 text-center relative z-10 flex flex-col justify-center h-full">
             <h1 className={`text-3xl md:text-5xl font-bold mb-4 text-white transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               Our Blog
             </h1>
@@ -191,7 +191,8 @@ function BlogPage() {
         </section>
 
         <div className="relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12">
+          {/* Reduced side padding from px-4 sm:px-6 md:px-8 to px-2 */}
+          <div className="max-w-7xl mx-auto px-2 py-8 md:py-12">
             <MobileCategorySelector />
             
             <div className="flex flex-col lg:flex-row gap-8">
@@ -199,7 +200,7 @@ function BlogPage() {
               <div className="w-full lg:w-9/12 order-1">
                 {selectedCategory === 'all' && sortedFeaturedArticles.length > 0 && (
                   <div className="mb-12">
-                    <div className="flex justify-between items-center mb-6">
+                    <div className="flex justify-between items-center mb-6 px-2">
                       <h2 className={`text-3xl font-semibold ${
                         darkMode ? 'text-gray-100' : 'text-gray-900'
                       }`}>Featured Posts</h2>
@@ -213,12 +214,14 @@ function BlogPage() {
                          activeFilter === 'best' ? 'Top Rated' : 'Most Read'}
                       </span>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {/* Modified grid to use gap-4 and adjusted column sizing */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       {sortedFeaturedArticles.map((article, index) => (
                         <div
                           key={article.id}
                           className="flex justify-center"
                         >
+                          {/* Removed max-width constraint on BlogCard wrapper */}
                           <div className="block w-full transform hover:scale-[1.02] transition-all duration-500"
                             style={{ animationDelay: `${index * 0.2}s` }}>
                             <BlogCard 
@@ -234,7 +237,7 @@ function BlogPage() {
                 )}
 
                 <div className="mb-12">
-                  <div className="flex justify-between items-center mb-6">
+                  <div className="flex justify-between items-center mb-6 px-2">
                     <h2 className={`text-3xl font-semibold ${
                       darkMode ? 'text-gray-100' : 'text-gray-900'
                     }`}>
@@ -259,12 +262,14 @@ function BlogPage() {
                       }`}>Try different keywords or categories</p>
                     </div>
                   ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    // Fixed: Removed the curly braces that were causing the syntax error
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       {filteredArticles.map((article, index) => (
                         <div
                           key={article.id}
                           className="flex justify-center"
                         >
+                          {/* Removed max-width constraint on BlogCard wrapper */}
                           <div className="block w-full transform hover:scale-[1.02] transition-all duration-500"
                             style={{ animationDelay: `${index * 0.1}s` }}>
                             <BlogCard 
@@ -285,8 +290,8 @@ function BlogPage() {
                 </div>
               </div>
 
-              {/* Right Sidebar - Categories & Filters */}
-              <div className="w-full lg:w-3/12 order-2 space-y-6">
+              {/* Right Sidebar - Reduced width to give more space to cards */}
+              <div className="w-full lg:w-2/12 order-2 space-y-6">
                 {/* Categories Box with rounded corners */}
                 <div className={`backdrop-blur-sm rounded-2xl p-6 border shadow-lg sticky top-4 transition-colors duration-300 ${
                   darkMode
@@ -374,7 +379,7 @@ function BlogPage() {
             
             @media (min-width: 1024px) {
               .blog-card {
-                max-width: 21rem;
+                max-width: 24rem; /* Increased from 21rem to 24rem */
               }
             }
             
