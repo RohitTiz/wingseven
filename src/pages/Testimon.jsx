@@ -18,18 +18,68 @@ const Workshops = () => {
     ? workshops 
     : workshops.filter(workshop => workshop.level.toLowerCase() === filter);
 
+  // SVG Icons for stats section
+  const CalendarIcon = () => (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+  );
+
+  const InstructorIcon = () => (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+    </svg>
+  );
+
+  const StarIcon = () => (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+    </svg>
+  );
+
+  const UsersIcon = () => (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg>
+  );
+
+  // Filter Icons
+  const AllIcon = () => (
+    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+    </svg>
+  );
+
+  const BeginnerIcon = () => (
+    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+    </svg>
+  );
+
+  const IntermediateIcon = () => (
+    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+    </svg>
+  );
+
+  const AdvancedIcon = () => (
+    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+    </svg>
+  );
+
   return (
     <>
       <AuthSection />
       
-      {/* Hero Section - Updated to match blog page styling with 15% increased height */}
+      {/* Hero Section */}
       <section className="relative py-16 md:py-28 overflow-hidden bg-fixed bg-center bg-cover" 
         style={{ 
           backgroundImage: `url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80')`,
-          minHeight: '40vh' // Increased by 15% (from 35vh to 40vh)
+          minHeight: '40vh'
         }}>
         
-        {/* Purple tint overlay matching blog page */}
+        {/* Purple tint overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-indigo-900/80"></div>
         
         <div className="container mx-auto px-4 text-center relative z-10 flex flex-col justify-center h-full">
@@ -64,10 +114,10 @@ const Workshops = () => {
           {/* Stats Section */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
             {[
-              { value: `${workshops.length}+`, label: 'Upcoming Workshops', icon: '📅' },
-              { value: '15+', label: 'Expert Instructors', icon: '👨‍🏫' },
-              { value: '98%', label: 'Satisfaction Rate', icon: '⭐' },
-              { value: '500+', label: 'Participants', icon: '👥' }
+              { value: `${workshops.length}+`, label: 'Upcoming Workshops', icon: <CalendarIcon /> },
+              { value: '15+', label: 'Expert Instructors', icon: <InstructorIcon /> },
+              { value: '98%', label: 'Satisfaction Rate', icon: <StarIcon /> },
+              { value: '500+', label: 'Participants', icon: <UsersIcon /> }
             ].map((stat, index) => (
               <div 
                 key={index}
@@ -77,7 +127,11 @@ const Workshops = () => {
                     : 'bg-white/90 border border-white/50 text-gray-800 hover:shadow-blue-500/20'
                 } shadow-lg flex flex-col items-center text-center`}
               >
-                <div className="text-3xl mb-3">{stat.icon}</div>
+                <div className={`p-3 rounded-full mb-3 ${darkMode ? 'bg-slate-700/50' : 'bg-blue-100'}`}>
+                  <span className={`${darkMode ? 'text-blue-400' : 'text-blue-600'}`}>
+                    {stat.icon}
+                  </span>
+                </div>
                 <div className={`text-3xl font-bold mb-2 transition-colors duration-300 ${
                   darkMode 
                     ? 'bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent' 
@@ -94,11 +148,16 @@ const Workshops = () => {
             
           {/* Filter Section */}
           <div className="flex flex-wrap justify-center gap-4">
-            {['all', 'beginner', 'intermediate', 'advanced'].map((level) => (
+            {[
+              { key: 'all', label: 'All Workshops', icon: <AllIcon /> },
+              { key: 'beginner', label: 'Beginner', icon: <BeginnerIcon /> },
+              { key: 'intermediate', label: 'Intermediate', icon: <IntermediateIcon /> },
+              { key: 'advanced', label: 'Advanced', icon: <AdvancedIcon /> }
+            ].map((item) => (
               <button 
-                key={level}
+                key={item.key}
                 className={`px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105 font-medium flex items-center ${
-                  filter === level 
+                  filter === item.key 
                     ? darkMode
                       ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/30 border border-blue-500/50' 
                       : 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30'
@@ -106,14 +165,10 @@ const Workshops = () => {
                       ? 'bg-slate-700/50 text-slate-300 border border-slate-600/50 hover:bg-slate-600/50 hover:border-slate-500/50 shadow-md backdrop-blur-sm' 
                       : 'bg-white/90 text-gray-700 border border-gray-200/50 hover:bg-gray-100/80 shadow-md backdrop-blur-sm'
                 }`}
-                onClick={() => setFilter(level)}
+                onClick={() => setFilter(item.key)}
               >
-                <span className="mr-2">
-                  {level === 'all' ? '🎯' : 
-                   level === 'beginner' ? '🌱' : 
-                   level === 'intermediate' ? '🚀' : '🏆'}
-                </span>
-                {level === 'all' ? 'All Workshops' : level.charAt(0).toUpperCase() + level.slice(1)}
+                {item.icon}
+                {item.label}
               </button>
             ))}
           </div>
@@ -159,7 +214,7 @@ const Workshops = () => {
         </div>
       </section>
 
-      {/* CTA Section - Stunning dark mode */}
+      {/* CTA Section */}
       <section className={`py-16 text-center relative overflow-hidden transition-all duration-500 ${
         darkMode 
           ? 'bg-gradient-to-br from-slate-900 via-blue-900/20 to-purple-900/20' 

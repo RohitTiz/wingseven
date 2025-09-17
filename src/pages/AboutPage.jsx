@@ -316,58 +316,87 @@ const AboutPage = () => {
           </div>
         </section>
 
-        {/* CTA Banner Section */}
-        <section className={`py-8 relative transition-colors duration-300 ${darkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
+        {/* Enhanced CTA Banner Section */}
+        <section className={`py-16 md:py-24 relative overflow-hidden transition-colors duration-300 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
           <div className="container mx-auto px-4">
-            <div className={`relative rounded-xl shadow-lg overflow-visible min-h-[280px] ${darkMode ? 'bg-gradient-to-r from-indigo-800 to-indigo-900' : 'bg-gradient-to-r from-indigo-600 to-indigo-700'}`}>
+            <div className={`relative rounded-2xl shadow-2xl overflow-hidden ${darkMode ? 'bg-gradient-to-r from-indigo-900 to-indigo-800' : 'bg-gradient-to-r from-indigo-600 to-indigo-700'}`}>
               
-              {/* Main content container */}
-              <div className="flex flex-col md:flex-row items-end justify-between p-6 md:p-8 relative z-10 h-full">
+              {/* Background pattern */}
+              <div className="absolute inset-0 opacity-10">
+                <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                  <pattern id="circuit-pattern" x="0" y="0" width="0.05" height="0.05">
+                    <path d="M0,0 L10,10" stroke="white" strokeWidth="0.5" />
+                    <path d="M10,0 L0,10" stroke="white" strokeWidth="0.5" />
+                  </pattern>
+                  <rect x="0" y="0" width="100" height="100" fill="url(#circuit-pattern)" />
+                </svg>
+              </div>
+              
+              {/* Floating elements */}
+              <div className="absolute top-10 left-10 w-8 h-8 rounded-full bg-white/10 animate-pulse"></div>
+              <div className="absolute top-20 right-20 w-12 h-12 rounded-full bg-white/5 animate-pulse delay-300"></div>
+              <div className="absolute bottom-16 left-24 w-6 h-6 rounded-full bg-white/15 animate-pulse delay-700"></div>
+              <div className="absolute bottom-10 right-10 w-10 h-10 rounded-full bg-white/8 animate-pulse delay-1000"></div>
+              
+              <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between p-8 md:p-12">
                 
-                {/* Left side - Student image that extends above banner */}
-                <div className="md:flex-shrink-0 md:mr-6 mb-4 md:mb-0 relative flex items-end" style={{ height: '320px' }}>
-                  {/* Image container */}
-                  <div className="relative h-full flex items-end" style={{ width: '220px' }}>
-                    <img 
-                      src="/aboutus/girl.png" 
-                      alt="Student learning" 
-                      className="w-full object-contain"
-                      style={{ 
-                        height: '150%',
-                        filter: 'drop-shadow(0 12px 10px rgba(0, 0, 0, 0.2))',
-                        transform: 'translateY(7%)',
-                        alignSelf: 'flex-end',
-                        maxWidth: 'none'
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* Center content */}
-                <div className="flex-1 text-white text-center md:text-left pb-4">
-                  <h2 className="text-2xl md:text-3xl font-bold mb-3 leading-tight">
-                    Ready to Start Your <span className="text-blue-100">Coding Journey</span>?
+                {/* Text content */}
+                <div className="flex-1 text-center lg:text-left mb-10 lg:mb-0">
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+                    Ready to Start Your <span className="text-blue-200">Coding Journey</span>?
                   </h2>
-                  <p className="text-base md:text-lg mb-4 opacity-95 max-w-2xl">
-                    Join our community of 50,000+ learners transforming their careers through our platform!
+                  <p className="text-lg md:text-xl text-indigo-100 mb-6 max-w-2xl mx-auto lg:mx-0">
+                    Join our community of <span className="font-semibold text-white">50,000+ learners</span> transforming their careers through our innovative platform!
                   </p>
                   
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-                    <button className="bg-white text-indigo-600 font-semibold py-3 px-6 rounded-full hover:bg-gray-50 transition-all duration-300 transform hover:-translate-y-0.5 shadow-md text-base">
+                  {/* Stats badges */}
+                  <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-8">
+                    <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+                      <svg className="w-5 h-5 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                      <span className="text-white text-sm font-medium">98% Success Rate</span>
+                    </div>
+                    <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+                      <svg className="w-5 h-5 text-yellow-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                      <span className="text-white text-sm font-medium">24/7 Support</span>
+                    </div>
+                  </div>
+                  
+                  {/* CTA buttons */}
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <button className="bg-white text-indigo-600 font-semibold py-3 px-8 rounded-full hover:bg-gray-50 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl flex items-center justify-center">
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                      </svg>
                       Get Started Now
                     </button>
-                    <button className="bg-transparent border border-white text-white font-medium py-3 px-6 rounded-full hover:bg-white/10 transition-all duration-300 text-base">
+                    <button className="bg-transparent border-2 border-white text-white font-medium py-3 px-8 rounded-full hover:bg-white/10 transition-all duration-300 flex items-center justify-center">
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                      </svg>
                       Explore Courses
                     </button>
                   </div>
                 </div>
-
-                {/* Right side - Minimal decorative element */}
-                <div className="hidden lg:flex flex-shrink-0 ml-6 items-end pb-4">
-                  <div className="text-blue-200 opacity-80">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M12 3L1 9L12 15L21 10.09V17H23V9L12 3ZM5 13.18V17.18L12 21L19 17.18V13.18L12 15.18L5 13.18Z"/>
-                    </svg>
+                
+                {/* Visual element - Code snippet illustration */}
+                <div className="hidden lg:block flex-shrink-0 ml-8">
+                  <div className={`relative rounded-lg p-6 shadow-lg ${darkMode ? 'bg-indigo-800' : 'bg-indigo-500'} border border-indigo-400/30`}>
+                    <div className="absolute top-3 left-3 flex space-x-1.5">
+                      <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                      <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                      <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                    </div>
+                    <div className="pt-6 font-mono text-sm text-white">
+                      <div className="text-blue-300">// Start your journey today</div>
+                      <div className="text-purple-300 mt-2"><span className="text-blue-300">const</span> success <span className="text-blue-300">=</span> <span className="text-green-300">await</span> startCodingJourney();</div>
+                      <div className="text-gray-300 mt-2"><span className="text-blue-300">if</span> (success) &#123;</div>
+                      <div className="text-yellow-300 ml-4">celebrateCareerChange();</div>
+                      <div className="text-gray-300">&#125;</div>
+                    </div>
                   </div>
                 </div>
               </div>
