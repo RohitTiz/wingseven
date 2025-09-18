@@ -4,6 +4,7 @@ import VideoContent from '../componentsdash/videoContent';
 import MoreInfo from '../componentsdash/moreInfo';
 import CourseContent from '../componentsdash/courseContent';
 import Header from '../componentsdash/DashHeader';
+import CertificationCompo from '../componentsdash/CertificationCompo';
 import { coursesData } from '../data/coursesData';
 import { useDarkMode } from '../context/DarkModeContext';
 
@@ -15,6 +16,7 @@ const InsideCourse = () => {
   const [isMobileView, setIsMobileView] = useState(false);
   const [showContentPanel, setShowContentPanel] = useState(false);
   const [containerHeight, setContainerHeight] = useState('100vh');
+  const [completedLectures, setCompletedLectures] = useState({});
   const { darkMode } = useDarkMode();
   const course = coursesData.find(c => c.id === parseInt(id));
 
@@ -64,6 +66,11 @@ const InsideCourse = () => {
   // Function to handle assignment button click
   const handleAssignmentClick = () => {
     navigate(`/dashboard/courses/${id}/assignments`);
+  };
+
+  // Function to update completed lectures (passed to CourseContent)
+  const updateCompletedLectures = (newCompletedLectures) => {
+    setCompletedLectures(newCompletedLectures);
   };
 
   if (!course) {
@@ -128,6 +135,13 @@ const InsideCourse = () => {
               selectedSection={selectedSection} 
             />
           </div>
+
+          {/* Add the Certification Component here */}
+          <CertificationCompo 
+            course={course} 
+            courseContent={course.courseContent}
+            completedLectures={completedLectures}
+          />
         </div>
         
         {/* Course content panel - moved to right side */}
@@ -159,6 +173,8 @@ const InsideCourse = () => {
             courseContent={course.courseContent} 
             onVideoSelect={handleVideoSelect}
             selectedVideo={selectedVideo}
+            completedLectures={completedLectures}
+            onUpdateCompletedLectures={updateCompletedLectures}
           />
         </div>
       </div>

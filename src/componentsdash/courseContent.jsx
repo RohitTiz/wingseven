@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useDarkMode } from '../context/DarkModeContext';
 
-const CourseContent = ({ courseContent, onVideoSelect }) => {
+const CourseContent = ({ courseContent, onVideoSelect, selectedVideo, completedLectures, onUpdateCompletedLectures }) => {
   const { darkMode } = useDarkMode();
   const [openSections, setOpenSections] = useState(new Set([0])); // Start with first section open
-  const [completedLectures, setCompletedLectures] = useState({});
   const [activeSection, setActiveSection] = useState(0); // Track active section
 
   // Default content matching your design
@@ -49,10 +48,11 @@ const CourseContent = ({ courseContent, onVideoSelect }) => {
 
   const toggleLectureCompletion = (sectionIndex, lectureIndex) => {
     const key = `${sectionIndex}-${lectureIndex}`;
-    setCompletedLectures(prev => ({
-      ...prev,
-      [key]: !prev[key]
-    }));
+    const newCompletedLectures = {
+      ...completedLectures,
+      [key]: !completedLectures[key]
+    };
+    onUpdateCompletedLectures(newCompletedLectures);
   };
 
   // Calculate overall progress
@@ -226,31 +226,44 @@ const CourseContent = ({ courseContent, onVideoSelect }) => {
                   {section.lectures.map((lecture, lidx) => {
                     const lectureKey = `${idx}-${lidx}`;
                     const isCompleted = completedLectures[lectureKey];
+                    const isSelected = selectedVideo && selectedVideo.title === lecture.title;
                     
                     return (
                       <div
                         key={lidx}
                         className={`px-4 py-3 border-t cursor-pointer transition-colors duration-300 ${
-                          darkMode 
-                            ? 'border-gray-600 hover:bg-gray-600' 
-                            : 'border-gray-100 hover:bg-gray-100'
+                          isSelected
+                            ? (darkMode ? 'bg-blue-900/20 border-l-4 border-l-blue-500' : 'bg-blue-100 border-l-4 border-l-blue-500')
+                            : (darkMode 
+                                ? 'border-gray-600 hover:bg-gray-600' 
+                                : 'border-gray-100 hover:bg-gray-100')
                         }`}
                         onClick={() => handleVideoClick(lecture, section)}
                       >
                         <div className="flex items-center">
-                          {/* Play icon */}
+                          {/* Play icon - change to filled icon if selected */}
                           <div className="flex-shrink-0 mr-3">
-                            <svg 
-                              className={`w-4 h-4 transition-colors duration-300 ${
-                                darkMode 
-                                  ? 'text-gray-400' 
-                                  : 'text-gray-600'
-                              }`}
-                              fill="currentColor" 
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M8 5v14l11-7z"/>
-                            </svg>
+                            {isSelected ? (
+                              <svg 
+                                className="w-4 h-4 text-blue-500"
+                                fill="currentColor" 
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                              </svg>
+                            ) : (
+                              <svg 
+                                className={`w-4 h-4 transition-colors duration-300 ${
+                                  darkMode 
+                                    ? 'text-gray-400' 
+                                    : 'text-gray-600'
+                                }`}
+                                fill="currentColor" 
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M8 5v14l11-7z"/>
+                              </svg>
+                            )}
                           </div>
                           
                           {/* Lecture title */}
@@ -258,7 +271,9 @@ const CourseContent = ({ courseContent, onVideoSelect }) => {
                             <p className={`text-sm font-medium truncate transition-colors duration-300 ${
                               isCompleted 
                                 ? 'text-gray-500 line-through' 
-                                : (darkMode ? 'text-white' : 'text-gray-900')
+                                : (isSelected 
+                                    ? (darkMode ? 'text-blue-300' : 'text-blue-700')
+                                    : (darkMode ? 'text-white' : 'text-gray-900'))
                             }`}>
                               {lecture.title}
                             </p>
@@ -267,9 +282,11 @@ const CourseContent = ({ courseContent, onVideoSelect }) => {
                           {/* Duration */}
                           <div className="flex-shrink-0 ml-3">
                             <span className={`text-xs transition-colors duration-300 ${
-                              darkMode 
-                                ? 'text-gray-400' 
-                                : 'text-gray-500'
+                              isSelected
+                                ? (darkMode ? 'text-blue-300' : 'text-blue-600')
+                                : (darkMode 
+                                    ? 'text-gray-400' 
+                                    : 'text-gray-500')
                             }`}>
                               {lecture.duration}
                             </span>
@@ -292,9 +309,11 @@ const CourseContent = ({ courseContent, onVideoSelect }) => {
                                 </div>
                               ) : (
                                 <div className={`w-5 h-5 border-2 rounded-full transition-colors duration-300 ${
-                                  darkMode 
-                                    ? 'border-gray-500 hover:border-gray-400' 
-                                    : 'border-gray-300 hover:border-gray-400'
+                                  isSelected
+                                    ? (darkMode ? 'border-blue-400' : 'border-blue-500')
+                                    : (darkMode 
+                                        ? 'border-gray-500 hover:border-gray-400' 
+                                        : 'border-gray-300 hover:border-gray-400')
                                 }`}></div>
                               )}
                             </button>
