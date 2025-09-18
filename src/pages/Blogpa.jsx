@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthSection from '../components/AuthSection';
 import Footer from '../components/Footer';
@@ -17,6 +17,7 @@ function BlogPage() {
   const [showSortDropdown, setShowSortDropdown] = useState(false);
   const navigate = useNavigate();
   const { darkMode } = useDarkMode(); // Added dark mode hook
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -33,6 +34,20 @@ function BlogPage() {
 
   useEffect(() => {
     setIsVisible(true);
+  }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowSortDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   // Use categories from imported blogData
@@ -294,85 +309,59 @@ function BlogPage() {
               {/* Right Sidebar - Reduced width to give more space to cards */}
               <div className="w-full lg:w-2/12 order-2 space-y-6">
                 {/* Sort by Box with rounded corners - Now a dropdown */}
-                <div className={`backdrop-blur-sm rounded-2xl p-6 border shadow-lg sticky top-4 transition-colors duration-300 ${
+                <div ref={dropdownRef} className={`backdrop-blur-sm rounded-2xl p-6 border shadow-lg sticky top-4 transition-all duration-300 ${
                   darkMode
                     ? 'bg-gray-800/90 border-gray-700'
                     : 'bg-white/90 border-blue-200/50'
                 }`}>
-                  <div className="flex justify-between items-center mb-3">
-                    <h3 className={`text-lg font-semibold ${
-                      darkMode ? 'text-gray-100' : 'text-gray-900'
-                    }`}>Sort by</h3>
-                    <button 
-                      onClick={() => setShowSortDropdown(!showSortDropdown)}
-                      className={`p-1 rounded-md lg:hidden transition-colors duration-300 ${
-                        darkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700'
-                      }`}
-                    >
-                      {showSortDropdown ? '▲' : '▼'}
-                    </button>
-                  </div>
+                  <h3 className={`text-lg font-semibold mb-3 ${
+                    darkMode ? 'text-gray-100' : 'text-gray-900'
+                  }`}>Sort by</h3>
                   
-                  {/* Desktop view - always show */}
-                  <div className="hidden lg:block space-y-2">
-                    {filterOptions.map((filter) => (
-                      <button
-                        key={filter.id}
-                        onClick={() => setActiveFilter(filter.id)}
-                        className={`w-full text-left px-4 py-2 rounded-xl transition-all duration-300 text-sm font-medium ${
-                          activeFilter === filter.id
-                            ? darkMode
-                              ? 'bg-blue-800 text-blue-100 border border-blue-600'
-                              : 'bg-blue-100 text-blue-700 border border-blue-300'
-                            : darkMode
-                              ? 'text-gray-300 hover:bg-gray-700'
-                              : 'text-gray-700 hover:bg-gray-100'
-                        }`}
-                      >
-                        <span className="mr-2">{filter.icon}</span>
-                        {filter.label}
-                      </button>
-                    ))}
-                  </div>
-                  
-                  {/* Mobile view - dropdown */}
-                  <div className="lg:hidden">
+                  {/* Desktop view - dropdown */}
+                  <div className="relative">
                     <button
                       onClick={() => setShowSortDropdown(!showSortDropdown)}
-                      className={`w-full text-left px-4 py-2 rounded-xl transition-all duration-300 text-sm font-medium ${
+                      className={`w-full text-left px-4 py-2 rounded-xl transition-all duration-300 text-sm font-medium flex items-center justify-between ${
                         darkMode
-                          ? 'bg-gray-700 text-gray-300'
-                          : 'bg-gray-100 text-gray-700'
+                          ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                       }`}
                     >
-                      {filterOptions.find(f => f.id === activeFilter)?.icon} {filterOptions.find(f => f.id === activeFilter)?.label} ▼
+                      <span>
+                        {filterOptions.find(f => f.id === activeFilter)?.icon} 
+                        {filterOptions.find(f => f.id === activeFilter)?.label}
+                      </span>
+                      <span className="transform transition-transform duration-300">
+                        {showSortDropdown ? '▲' : '▼'}
+                      </span>
                     </button>
                     
-                    {showSortDropdown && (
-                      <div className="mt-2 space-y-2">
-                        {filterOptions.map((filter) => (
-                          <button
-                            key={filter.id}
-                            onClick={() => {
-                              setActiveFilter(filter.id);
-                              setShowSortDropdown(false);
-                            }}
-                            className={`w-full text-left px-4 py-2 rounded-xl transition-all duration-300 text-sm font-medium ${
-                              activeFilter === filter.id
-                                ? darkMode
-                                  ? 'bg-blue-800 text-blue-100 border border-blue-600'
-                                  : 'bg-blue-100 text-blue-700 border border-blue-300'
-                                : darkMode
-                                  ? 'text-gray-300 hover:bg-gray-700'
-                                  : 'text-gray-700 hover:bg-gray-100'
-                            }`}
-                          >
-                            <span className="mr-2">{filter.icon}</span>
-                            {filter.label}
-                          </button>
-                        ))}
-                      </div>
-                    )}
+                    <div className={`mt-1 space-y-1 overflow-hidden transition-all duration-300 ${
+                      showSortDropdown ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'
+                    }`}>
+                      {filterOptions.map((filter) => (
+                        <button
+                          key={filter.id}
+                          onClick={() => {
+                            setActiveFilter(filter.id);
+                            setShowSortDropdown(false);
+                          }}
+                          className={`w-full text-left px-4 py-2 rounded-xl transition-all duration-300 text-sm font-medium ${
+                            activeFilter === filter.id
+                              ? darkMode
+                                ? 'bg-blue-800 text-blue-100 border border-blue-600'
+                                : 'bg-blue-100 text-blue-700 border border-blue-300'
+                              : darkMode
+                                ? 'text-gray-300 hover:bg-gray-700'
+                                : 'text-gray-700 hover:bg-gray-100'
+                          }`}
+                        >
+                          <span className="mr-2">{filter.icon}</span>
+                          {filter.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
                 
