@@ -118,8 +118,9 @@ const Sidebar = ({ isVisible, onToggle, isMobile }) => {
         }`}
         style={{
           width: '276px',
-          height: isMobile ? 'calc(100vh - 4px)' : 'calc(100% - 4px)',
-          maxWidth: isMobile ? '85vw' : 'none'
+          height: isMobile ? '100vh' : '100%',
+          maxWidth: isMobile ? '85vw' : 'none',
+          borderRadius: isMobile ? '0 12px 12px 0' : '0'
         }}
       >
         {/* Toggle Button for Desktop */}
@@ -159,7 +160,7 @@ const Sidebar = ({ isVisible, onToggle, isMobile }) => {
         {/* Content Container */}
         <div className="flex flex-col h-full overflow-hidden">
           {/* Logo Section */}
-          <div className={`px-5 py-5 border-b ${borderClass}`}>
+          <div className={`px-5 py-4 border-b ${borderClass}`}>
             <div 
               className="flex items-center gap-3 cursor-pointer group transition-transform duration-200 hover:scale-105"
               onClick={handleLogoClick}
@@ -220,7 +221,7 @@ const Sidebar = ({ isVisible, onToggle, isMobile }) => {
           </div>
 
           {/* Navigation Menu */}
-          <nav className="flex-1 px-3 py-5 overflow-y-auto">
+          <nav className="flex-1 px-3 py-4 overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <div className="space-y-1">
               {menuItems.map((item) => {
                 const isActive = location.pathname === item.path;
