@@ -13,13 +13,19 @@ const blogArticleData = {
       followers: "0 followers · 1 following",
       content: [
         {
+          type: "image", // Added hero image in content
+          src: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHl0aG9ufGVufDB8fDB8fHww"
+        },
+        {
           type: "paragraph",
           text: "In Python development, virtual environments are essential for managing project dependencies and isolating package installations. They help prevent conflicts between different projects by creating separate spaces for each one. In this article, we'll explore why virtual environments are important and provide a step-by-step guide on how to set them up quickly and easily."
         },
+         
         {
           type: "heading",
           text: "Why Use Virtual Environments?"
         },
+        
         {
           type: "paragraph",
           text: "Imagine you're juggling multiple Python projects, each requiring different library versions or even different Python versions. Without virtual environments, managing these dependencies can quickly become chaotic. Here's how virtual environments can help:"

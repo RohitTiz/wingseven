@@ -1,9 +1,15 @@
 // componentsdash/DashHeader.jsx
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDarkMode } from '../context/DarkModeContext';
 
 const DashHeader = ({ showActions, courseTitle, customAction }) => {
   const { darkMode } = useDarkMode();
+  const navigate = useNavigate();
+
+  const handleBackClick = () => {
+    navigate(-1); // Go back to previous page
+  };
 
   return (
     <div className={`${darkMode ? 'dark-bg dark-border' : 'bg-white light-border'} shadow-sm border-b transition-colors duration-300`}>
@@ -11,7 +17,11 @@ const DashHeader = ({ showActions, courseTitle, customAction }) => {
         {/* Left Side - Back Arrow + Course Info */}
         <div className="flex items-center space-x-4">
           {/* Back Arrow - Plain, no box */}
-          <button className="transition-colors">
+          <button 
+            onClick={handleBackClick}
+            className="transition-colors hover:opacity-70"
+            aria-label="Go back"
+          >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path 
                 d="M15 18L9 12L15 6" 

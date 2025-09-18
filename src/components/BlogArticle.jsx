@@ -1,3 +1,4 @@
+// components/BlogArticle.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import AuthSection from '../components/AuthSection';
@@ -96,6 +97,21 @@ function BlogArticle() {
             </div>
           </div>
         </section>
+
+        {/* Hero Image Section */}
+        {article.heroImage && (
+          <section className="relative w-full">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="rounded-2xl overflow-hidden shadow-xl mb-12">
+                <img 
+                  src={article.heroImage} 
+                  alt={article.title}
+                  className="w-full h-64 md:h-96 object-cover"
+                />
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Article Content */}
         <section className={`py-12 transition-colors duration-300 ${darkMode ? 'dark-card' : 'bg-white'}`}>
