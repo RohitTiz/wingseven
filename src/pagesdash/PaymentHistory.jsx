@@ -51,15 +51,20 @@ const PaymentHistory = () => {
   const bgClass = darkMode ? 'bg-gray-900' : 'bg-gray-50';
   const textClass = darkMode ? 'text-white' : 'text-gray-900';
   const cardClass = darkMode ? 'bg-gray-800' : 'bg-white';
+  const borderClass = darkMode ? 'border-gray-700' : 'border-gray-200';
 
   if (loading) {
     return (
-      <div className={`min-h-screen p-6 ${bgClass}`}>
+      <div className={`min-h-screen p-4 ${bgClass}`}>
         <div className="max-w-6xl mx-auto">
           <div className="animate-pulse">
             <div className={`h-8 w-48 ${darkMode ? 'bg-gray-700' : 'bg-gray-300'} rounded mb-6`}></div>
             {[...Array(4)].map((_, i) => (
-              <div key={i} className={`h-20 ${darkMode ? 'bg-gray-800' : 'bg-gray-200'} rounded-lg mb-4`}></div>
+              <div key={i} className={`h-32 ${darkMode ? 'bg-gray-800' : 'bg-gray-200'} rounded-lg mb-4 p-4`}>
+                <div className={`h-4 ${darkMode ? 'bg-gray-700' : 'bg-gray-300'} rounded mb-3 w-3/4`}></div>
+                <div className={`h-4 ${darkMode ? 'bg-gray-700' : 'bg-gray-300'} rounded mb-3 w-1/2`}></div>
+                <div className={`h-4 ${darkMode ? 'bg-gray-700' : 'bg-gray-300'} rounded w-1/3`}></div>
+              </div>
             ))}
           </div>
         </div>
@@ -68,7 +73,7 @@ const PaymentHistory = () => {
   }
 
   return (
-    <div className={`min-h-screen p-6 ${bgClass}`}>
+    <div className={`min-h-screen p-4 ${bgClass}`}>
       <div className="max-w-6xl mx-auto">
         <h1 className={`text-2xl font-bold mb-6 ${textClass}`}>Payment History</h1>
         
@@ -84,62 +89,102 @@ const PaymentHistory = () => {
             </p>
           </div>
         ) : (
-          <div className={`rounded-lg overflow-hidden shadow ${cardClass}`}>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className={`${darkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
-                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                      Course
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                      Amount
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                      Date
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                      Invoice
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {payments.map((payment) => (
-                    <tr key={payment.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900 dark:text-white">
-                          {payment.courseName}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900 dark:text-white">
-                          ${payment.amount}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900 dark:text-white">
-                          {new Date(payment.date).toLocaleDateString()}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          payment.status === 'Completed' 
-                            ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100'
-                            : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100'
-                        }`}>
-                          {payment.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                        {payment.invoiceId}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <div className="space-y-4">
+            {/* Mobile card view */}
+            <div className="block md:hidden">
+              {payments.map((payment) => (
+                <div key={payment.id} className={`rounded-lg p-4 mb-4 shadow ${cardClass} border ${borderClass}`}>
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className={`font-semibold text-lg ${textClass}`}>
+                      {payment.courseName}
+                    </h3>
+                    <span className={`px-2 py-1 text-xs leading-4 font-semibold rounded-full ${
+                      payment.status === 'Completed' 
+                        ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100'
+                        : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100'
+                    }`}>
+                      {payment.status}
+                    </span>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Amount</p>
+                      <p className={`font-medium ${textClass}`}>${payment.amount}</p>
+                    </div>
+                    <div>
+                      <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Date</p>
+                      <p className={`font-medium ${textClass}`}>{new Date(payment.date).toLocaleDateString()}</p>
+                    </div>
+                    <div className="col-span-2">
+                      <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Invoice ID</p>
+                      <p className={`font-medium ${textClass}`}>{payment.invoiceId}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Desktop table view */}
+            <div className="hidden md:block">
+              <div className={`rounded-lg overflow-hidden shadow ${cardClass}`}>
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className={`${darkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
+                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                          Course
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                          Amount
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                          Date
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                          Status
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                          Invoice
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                      {payments.map((payment) => (
+                        <tr key={payment.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-gray-900 dark:text-white">
+                              {payment.courseName}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900 dark:text-white">
+                              ${payment.amount}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900 dark:text-white">
+                              {new Date(payment.date).toLocaleDateString()}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                              payment.status === 'Completed' 
+                                ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100'
+                                : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100'
+                            }`}>
+                              {payment.status}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                            {payment.invoiceId}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         )}
