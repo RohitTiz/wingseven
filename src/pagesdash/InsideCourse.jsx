@@ -202,17 +202,9 @@ const InsideCourse = () => {
               isMobile={isMobileView}
             />
           </div>
-
-          {/* Add the Certification Component here */}
-          <CertificationCompo 
-            course={course} 
-            courseContent={course.courseContent}
-            completedLectures={completedLectures}
-            isMobile={isMobileView}
-          />
         </div>
         
-        {/* Course content panel - moved to right side */}
+        {/* Right side panel containing both Course Content and Certificate */}
         <div 
           ref={contentPanelRef}
           className={`
@@ -252,6 +244,16 @@ const InsideCourse = () => {
             onUpdateCompletedLectures={updateCompletedLectures}
             isMobile={isMobileView}
           />
+          
+          {/* Certificate component placed below course content */}
+          <div className="mt-4">
+            <CertificationCompo 
+              course={course} 
+              courseContent={course.courseContent}
+              completedLectures={completedLectures}
+              isMobile={isMobileView}
+            />
+          </div>
         </div>
 
         {/* Overlay for mobile when content panel is open */}

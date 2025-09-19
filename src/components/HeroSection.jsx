@@ -112,7 +112,7 @@ const HeroSection = () => {
   };
 
   // Dynamic classes based on dark mode
-  const sectionClasses = `w-full min-h-screen border-b flex flex-col lg:flex-row justify-center items-center px-4 sm:px-6 md:px-10 lg:px-14 xl:px-16 py-6 sm:py-8 md:py-10 lg:py-12 xl:py-14 box-border gap-4 sm:gap-5 md:gap-6 lg:gap-8 xl:gap-10 overflow-hidden ${
+  const sectionClasses = `w-full min-h-screen border-b flex flex-col lg:flex-row justify-center items-center px-4 sm:px-6 md:px-8 lg:px-12 py-2 sm:py-3 md:py-4 box-border gap-2 sm:gap-3 md:gap-4 overflow-hidden ${
     darkMode 
       ? 'bg-gradient-to-br from-gray-900 to-gray-800 border-gray-700' 
       : 'bg-gradient-to-br from-white to-blue-50 border-gray-100'
@@ -122,7 +122,7 @@ const HeroSection = () => {
     darkMode ? 'text-white' : 'text-gray-900'
   } transition-colors duration-300`;
 
-  const textClasses = `font-inter text-xs sm:text-sm md:text-base leading-relaxed mb-4 sm:mb-5 md:mb-6 max-w-[450px] md:max-w-[500px] lg:max-w-[550px] ${
+  const textClasses = `font-inter text-xs sm:text-sm md:text-base leading-relaxed mb-2 sm:mb-3 md:mb-4 max-w-[450px] md:max-w-[500px] lg:max-w-[550px] ${
     darkMode ? 'text-gray-300' : 'text-gray-600'
   } transition-colors duration-300`;
 
@@ -147,9 +147,9 @@ const HeroSection = () => {
       {/* Main container to center everything */}
       <div className="w-full max-w-[1200px] flex flex-col lg:flex-row justify-between items-center h-full">
         {/* Left Section - Text Content */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center order-1 lg:order-1 items-center lg:items-start text-center lg:text-left lg:mr-[30px] xl:mr-[50px]">
+        <div className="w-full lg:w-1/2 flex flex-col justify-center order-1 lg:order-1 items-center lg:items-start text-center lg:text-left lg:mr-[20px] xl:mr-[30px]">
           {/* Text container with proper line spacing */}
-          <div className="mb-3 sm:mb-4 md:mb-5">
+          <div className="mb-1 sm:mb-2 md:mb-3">
             {/* First line - Static text */}
             <div className={headingClasses}>
               Find Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-pink-600">Ideal</span>
@@ -171,7 +171,7 @@ const HeroSection = () => {
             Master in-demand technologies with our comprehensive curriculum.
           </p>
 
-          <div className="flex gap-2 sm:gap-3 md:gap-4 mb-5 sm:mb-6 md:mb-7 justify-center lg:justify-start">
+          <div className="flex gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4 md:mb-5 justify-center lg:justify-start">
             <button
               ref={button1Ref}
               onClick={handleBrowseCourses}
@@ -216,7 +216,7 @@ const HeroSection = () => {
           </div>
 
           {/* Statistics Section */}
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 max-w-[450px]">
+          <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 max-w-[450px]">
             <div className={statCardClasses}>
               <span className="font-bold text-lg sm:text-xl md:text-2xl">1500+</span>
               <span className={statSubtextClasses}>Free Coding Videos</span>
@@ -230,9 +230,9 @@ const HeroSection = () => {
         </div>
 
         {/* Right Section - Image */}
-        <div className="w-full lg:w-1/2 flex flex-col items-center justify-center relative order-2 lg:order-2 mb-4 sm:mb-6 md:mb-8 lg:mb-0">
+        <div className="w-full lg:w-1/2 flex flex-col items-center justify-center relative order-2 lg:order-2 mb-2 sm:mb-3 md:mb-4 lg:mb-0">
           <div className="relative">
-            <div className={`absolute -inset-3 sm:-inset-4 rounded-2xl blur-lg opacity-70 z-0 ${
+            <div className={`absolute -inset-2 sm:-inset-3 rounded-2xl blur-lg opacity-70 z-0 ${
               darkMode 
                 ? 'bg-gradient-to-r from-gray-800 to-gray-700' 
                 : 'bg-gradient-to-r from-blue-100 to-indigo-100'
@@ -240,21 +240,21 @@ const HeroSection = () => {
             <img 
               src="/image/main.png" 
               alt="Hero" 
-              className="w-full max-w-[220px] xs:max-w-[260px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[420px] xl:max-w-[480px] 2xl:max-w-[550px] h-auto z-10 relative rounded-lg" 
+              className="w-full max-w-[200px] xs:max-w-[240px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] xl:max-w-[450px] 2xl:max-w-[500px] h-auto z-10 relative rounded-lg" 
               loading="lazy"
             />
           </div>
           
           {/* Decorative elements */}
           <div className="hidden sm:block absolute top-0 left-0 w-full h-full pointer-events-none z-20">
-            <div className="absolute top-[-5%] left-[45%] w-[60px] sm:w-[80px] md:w-[100px] lg:w-[120px] xl:w-[140px] animate-float" style={{ animationDuration: '3.5s' }}>
+            <div className="absolute top-[-5%] left-[45%] w-[50px] sm:w-[70px] md:w-[90px] lg:w-[100px] xl:w-[120px] animate-float" style={{ animationDuration: '3.5s' }}>
               <div className={decorativeElementClasses}>
                 <span className={`text-xs font-bold ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}>12K+</span>
                 <span className={`text-[10px] ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Students</span>
               </div>
             </div>
             
-            <div className="absolute top-[15%] sm:top-[20%] left-[5%] w-[30px] sm:w-[40px] md:w-[50px] lg:w-[60px] xl:w-[70px] animate-float" style={{ animationDuration: '6s' }}>
+            <div className="absolute top-[15%] sm:top-[20%] left-[5%] w-[25px] sm:w-[35px] md:w-[45px] lg:w-[50px] xl:w-[60px] animate-float" style={{ animationDuration: '6s' }}>
               <div className={`p-1 sm:p-1.5 rounded-full shadow-lg border ${
                 darkMode 
                   ? 'bg-gray-800 border-gray-700 text-blue-400' 
@@ -266,7 +266,7 @@ const HeroSection = () => {
               </div>
             </div>
             
-            <div className="absolute bottom-[5%] left-[80%] w-[15px] sm:w-[20px] md:w-[25px] lg:w-[30px] xl:w-[40px] animate-float" style={{ animationDuration: '3s' }}>
+            <div className="absolute bottom-[5%] left-[80%] w-[12px] sm:w-[18px] md:w-[22px] lg:w-[25px] xl:w-[35px] animate-float" style={{ animationDuration: '3s' }}>
               <div className={`p-0.5 sm:p-1 rounded-lg shadow-lg border ${
                 darkMode 
                   ? 'bg-gray-800 border-gray-700 text-blue-400' 
