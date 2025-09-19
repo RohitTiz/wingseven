@@ -47,10 +47,10 @@ const CertificationCompo = ({ course, courseContent, completedLectures }) => {
 
   return (
     <>
-      {/* Wrapper div with reduced width */}
-      <div className="w-1/3 min-w-[300px]">
-        <div className={`mt-8 p-5 rounded-xl shadow-sm transition-colors duration-300 ${
-          darkMode ? 'bg-gray-800' : 'bg-white'
+      {/* Wrapper div with same width as CourseContent */}
+      <div className="w-full max-w-md mx-auto">
+        <div className={`mt-8 p-5 rounded-xl shadow-sm border transition-colors duration-300 ${
+          darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'
         }`}>
           <h2 className={`text-xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-800'}`}>
             Course Certificate
