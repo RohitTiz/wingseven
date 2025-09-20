@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const ChatWidget = () => {
+  const { darkMode } = useDarkMode();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     { text: 'Hello! How can we help you today?', sender: 'bot' }
@@ -26,7 +28,9 @@ const ChatWidget = () => {
       {/* Chat Toggle Button */}
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-5 right-5 w-14 h-14 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 text-white flex items-center justify-center cursor-pointer shadow-lg transition-transform hover:scale-110 z-50"
+        className={`fixed bottom-5 right-5 w-14 h-14 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 text-white flex items-center justify-center cursor-pointer shadow-lg transition-transform hover:scale-110 z-50 transition-colors duration-300 ${
+          darkMode ? 'dark-bg' : 'light-bg'
+        }`}
       >
         {isOpen ? (
           <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -41,7 +45,9 @@ const ChatWidget = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-5 w-80 max-w-[90vw] h-[380px] bg-white rounded-xl shadow-xl flex flex-col z-50 overflow-hidden">
+        <div className={`fixed bottom-24 right-5 w-80 max-w-[90vw] h-[380px] rounded-xl shadow-xl flex flex-col z-50 overflow-hidden transition-colors duration-300 ${
+          darkMode ? 'dark-card' : 'light-card'
+        }`}>
           <div className="p-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold text-sm flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v10l-4-4H7a2 2 0 01-2-2V6a2 2 0 012-2h6" />
@@ -49,14 +55,22 @@ const ChatWidget = () => {
             Live Chat
           </div>
 
-          <div className="flex-1 p-4 overflow-y-auto bg-gradient-to-b from-gray-50 to-white space-y-3">
+          <div className={`flex-1 p-4 overflow-y-auto space-y-3 transition-colors duration-300 ${
+            darkMode 
+              ? 'bg-gradient-to-b from-gray-800 to-gray-900' 
+              : 'bg-gradient-to-b from-gray-50 to-white'
+          }`}>
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`max-w-[85%] text-sm px-4 py-2 rounded-lg shadow-sm ${
+                className={`max-w-[85%] text-sm px-4 py-2 rounded-lg shadow-sm transition-colors duration-300 ${
                   message.sender === 'user'
                     ? 'bg-gradient-to-br from-blue-600 to-blue-400 text-white self-end rounded-br-none'
-                    : 'bg-white text-gray-800 self-start rounded-bl-none'
+                    : `self-start rounded-bl-none ${
+                        darkMode 
+                          ? 'bg-gray-700 text-gray-100' 
+                          : 'bg-white text-gray-800'
+                      }`
                 }`}
               >
                 {message.text}
@@ -64,18 +78,24 @@ const ChatWidget = () => {
             ))}
           </div>
 
-          <div className="p-3 border-t border-gray-200 bg-white flex items-center gap-2">
+          <div className={`p-3 flex items-center gap-2 transition-colors duration-300 ${
+            darkMode ? 'dark-bg border-gray-700' : 'light-bg border-gray-200'
+          } border-t`}>
             <input
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
               placeholder="Type your message..."
-              className="flex-1 px-4 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className={`flex-1 px-4 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors duration-300 ${
+                darkMode 
+                  ? 'dark-bg dark-border text-gray-100 placeholder-gray-400' 
+                  : 'light-bg light-border text-gray-800 placeholder-gray-500'
+              }`}
             />
             <button
               onClick={handleSendMessage}
-              className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-400 rounded-lg text-white flex items-center justify-center hover:opacity-90"
+              className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-400 rounded-lg text-white flex items-center justify-center hover:opacity-90 transition-colors duration-300"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
