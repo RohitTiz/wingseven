@@ -55,14 +55,6 @@ const CourseContent = ({ courseContent, onVideoSelect, selectedVideo, completedL
     onUpdateCompletedLectures(newCompletedLectures);
   };
 
-  // Calculate overall progress
-  const totalLectures = contentToUse.reduce((total, section) => 
-    total + section.lectures.length, 0);
-  
-  const completedCount = Object.values(completedLectures).filter(Boolean).length;
-  const progressPercentage = totalLectures > 0 ? 
-    Math.round((completedCount / totalLectures) * 100) : 0;
-
   // Handle video selection with section information
   const handleVideoClick = (lecture, section) => {
     if (onVideoSelect) {
@@ -100,33 +92,7 @@ const CourseContent = ({ courseContent, onVideoSelect, selectedVideo, completedL
           </button>
         </div>
         
-        {/* Progress section */}
-        <div className="mb-3">
-          <div className="flex items-center justify-between text-sm mb-2">
-            <span className={`transition-colors duration-300 ${
-              darkMode 
-                ? 'text-gray-400' 
-                : 'text-gray-600'
-            }`}>{progressPercentage}% complete</span>
-            <span className={`transition-colors duration-300 ${
-              darkMode 
-                ? 'text-gray-400' 
-                : 'text-gray-600'
-            }`}>{completedCount}/{totalLectures}</span>
-          </div>
-          <div className={`w-full rounded-full h-2 transition-colors duration-300 ${
-            darkMode 
-              ? 'bg-gray-700' 
-              : 'bg-gray-200'
-          }`}>
-            <div 
-              className="bg-blue-500 h-2 rounded-full transition-all duration-300" 
-              style={{ width: `${progressPercentage}%` }}
-            ></div>
-          </div>
-        </div>
-        
-        {/* Course stats */}
+        {/* Course stats - Removed progress section, kept only basic stats */}
         <div className={`text-sm transition-colors duration-300 ${
           darkMode 
             ? 'text-gray-400' 
@@ -134,7 +100,7 @@ const CourseContent = ({ courseContent, onVideoSelect, selectedVideo, completedL
         }`}>
           <span>{contentToUse.length} sections</span>
           <span className="mx-2">•</span>
-          <span>{totalLectures} lectures</span>
+          <span>{contentToUse.reduce((total, section) => total + section.lectures.length, 0)} lectures</span>
           <span className="mx-2">•</span>
           <span>4h 26m total length</span>
         </div>
@@ -203,7 +169,7 @@ const CourseContent = ({ courseContent, onVideoSelect, selectedVideo, completedL
                   </svg>
                 </div>
                 
-                {/* Section progress */}
+                {/* Section progress - This remains for individual sections */}
                 <div className={`mt-2 w-full rounded-full h-1.5 transition-colors duration-300 ${
                   darkMode 
                     ? 'bg-gray-700' 
