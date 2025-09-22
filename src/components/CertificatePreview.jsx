@@ -216,7 +216,7 @@ const CertificatePreview = () => {
                   {/* Updated logo container with proper sizing and visibility */}
                   <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl flex items-center justify-center shadow-lg shadow-black/20 bg-white p-2 overflow-visible">
                     <img 
-                      src="/images/mainlogo.png" 
+                      src="/image/mainlogo.png" 
                       alt="Logo" 
                       className="w-full h-full object-contain max-w-full max-h-full"
                       onError={(e) => {
@@ -365,12 +365,7 @@ const CertificatePreview = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col md:flex-row gap-3 md:gap-4">
-              <button className="flex-1 bg-gradient-to-r from-green-600 to-teal-600 text-white py-3 md:py-4 px-4 md:px-6 rounded-2xl font-bold text-base md:text-lg hover:shadow-2xl hover:shadow-green-500/25 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
-                <EyeIcon className="w-4 h-4 md:w-5 md:h-5" />
-                Preview Certificate
-              </button>
-            </div>
+            
           </div>
         </div>
       </div>

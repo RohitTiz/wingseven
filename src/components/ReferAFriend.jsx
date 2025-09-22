@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const ReferAFriend = () => {
   const [copied, setCopied] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { darkMode } = useDarkMode();
 
   const referralCode = "FRIEND2024";
   const referralLink = "https://yourapp.com/invite/FRIEND2024";
@@ -62,6 +64,12 @@ const ReferAFriend = () => {
   const glareX = mousePosition.x * 100;
   const glareY = mousePosition.y * 100;
 
+  // Dynamic classes based on dark mode
+  const bgClass = darkMode ? 'dark-bg' : 'light-bg';
+  const textClass = darkMode ? 'light-text' : 'dark-text';
+  const borderClass = darkMode ? 'dark-border' : 'light-border';
+  const cardClass = darkMode ? 'dark-card' : 'light-card';
+
   return (
     <>
       {/* Dynamic Background with Changing Images */}
@@ -78,16 +86,26 @@ const ReferAFriend = () => {
               alt="Background"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/70 to-black/80"></div>
+            <div className={`absolute inset-0 bg-gradient-to-br transition-colors duration-300 ${
+              darkMode ? 'from-black/70 via-black/80 to-black/90' : 'from-black/60 via-black/70 to-black/80'
+            }`}></div>
           </div>
         ))}
         
         {/* Animated particles/dots overlay */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white/20 rounded-full animate-pulse"></div>
-          <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-white/30 rounded-full animate-ping"></div>
-          <div className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 bg-white/25 rounded-full animate-pulse"></div>
-          <div className="absolute top-2/3 right-1/4 w-1 h-1 bg-white/20 rounded-full animate-ping"></div>
+          <div className={`absolute top-1/4 left-1/4 w-2 h-2 rounded-full animate-pulse ${
+            darkMode ? 'bg-white/30' : 'bg-white/20'
+          }`}></div>
+          <div className={`absolute top-1/3 right-1/3 w-1 h-1 rounded-full animate-ping ${
+            darkMode ? 'bg-white/40' : 'bg-white/30'
+          }`}></div>
+          <div className={`absolute bottom-1/4 left-1/3 w-1.5 h-1.5 rounded-full animate-pulse ${
+            darkMode ? 'bg-white/35' : 'bg-white/25'
+          }`}></div>
+          <div className={`absolute top-2/3 right-1/4 w-1 h-1 rounded-full animate-ping ${
+            darkMode ? 'bg-white/30' : 'bg-white/20'
+          }`}></div>
         </div>
       </div>
 
@@ -109,7 +127,9 @@ const ReferAFriend = () => {
         >
           {/* Floating Shadow */}
           <div 
-            className="absolute inset-0 bg-black/40 rounded-2xl blur-xl transform translate-y-4 scale-95"
+            className={`absolute inset-0 rounded-2xl blur-xl transform translate-y-4 scale-95 transition-colors duration-300 ${
+              darkMode ? 'bg-black/60' : 'bg-black/40'
+            }`}
             style={{
               transform: `translateY(${8 + Math.abs(tiltX) * 0.5}px) scale(${0.95 + Math.abs(tiltX + tiltY) * 0.002})`,
               transition: 'transform 0.3s ease-out',
@@ -117,7 +137,7 @@ const ReferAFriend = () => {
           ></div>
 
           {/* Main Card */}
-          <div className="relative bg-white rounded-2xl overflow-hidden shadow-2xl">
+          <div className={`relative rounded-2xl overflow-hidden shadow-2xl transition-colors duration-300 ${cardClass}`}>
             {/* Holographic Glare Effect */}
             <div 
               className="absolute inset-0 opacity-0 hover:opacity-30 transition-opacity duration-300 pointer-events-none rounded-2xl"
@@ -132,7 +152,11 @@ const ReferAFriend = () => {
             {/* Close Button */}
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-black/10 hover:bg-black/20 transition-all duration-200 flex items-center justify-center text-gray-700 hover:text-gray-900"
+              className={`absolute top-4 right-4 z-10 w-8 h-8 rounded-full transition-all duration-200 flex items-center justify-center transition-colors duration-300 ${
+                darkMode 
+                  ? 'bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white' 
+                  : 'bg-black/10 hover:bg-black/20 text-gray-700 hover:text-gray-900'
+              }`}
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path d="M13 1L1 13M1 1l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -146,7 +170,9 @@ const ReferAFriend = () => {
                 alt="Team collaboration"
                 className="w-full h-full object-cover opacity-30"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              <div className={`absolute inset-0 bg-gradient-to-t transition-colors duration-300 ${
+                darkMode ? 'from-black/70 via-transparent to-transparent' : 'from-black/60 via-transparent to-transparent'
+              }`}></div>
               <div className="absolute bottom-4 left-6 text-white">
                 <h1 className="text-xl font-light tracking-wide mb-1">Refer Friends</h1>
                 <p className="text-xs text-gray-200 font-light">Earn rewards together</p>
@@ -156,39 +182,73 @@ const ReferAFriend = () => {
             <div className="p-5">
               {/* Benefits - Compact */}
               <div className="grid grid-cols-3 gap-3 mb-6">
-                <div className="text-center p-3 rounded-lg bg-gradient-to-br from-emerald-50 to-emerald-100">
+                <div className={`text-center p-3 rounded-lg transition-colors duration-300 ${
+                  darkMode 
+                    ? 'bg-gradient-to-br from-emerald-900/30 to-emerald-800/30 border border-emerald-800/50' 
+                    : 'bg-gradient-to-br from-emerald-50 to-emerald-100'
+                }`}>
                   <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=24&h=24&fit=crop" 
                        alt="Money" className="w-5 h-5 rounded mx-auto mb-2"/>
-                  <h3 className="text-xs font-medium text-emerald-800 mb-1">$20 Credit</h3>
-                  <p className="text-xs text-emerald-600">Per referral</p>
+                  <h3 className={`text-xs font-medium mb-1 transition-colors duration-300 ${
+                    darkMode ? 'text-emerald-200' : 'text-emerald-800'
+                  }`}>$20 Credit</h3>
+                  <p className={`text-xs transition-colors duration-300 ${
+                    darkMode ? 'text-emerald-300' : 'text-emerald-600'
+                  }`}>Per referral</p>
                 </div>
                 
-                <div className="text-center p-3 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100">
+                <div className={`text-center p-3 rounded-lg transition-colors duration-300 ${
+                  darkMode 
+                    ? 'bg-gradient-to-br from-blue-900/30 to-blue-800/30 border border-blue-800/50' 
+                    : 'bg-gradient-to-br from-blue-50 to-blue-100'
+                }`}>
                   <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=24&h=24&fit=crop" 
                        alt="Gift" className="w-5 h-5 rounded mx-auto mb-2"/>
-                  <h3 className="text-xs font-medium text-blue-800 mb-1">Exclusive</h3>
-                  <p className="text-xs text-blue-600">Special deals</p>
+                  <h3 className={`text-xs font-medium mb-1 transition-colors duration-300 ${
+                    darkMode ? 'text-blue-200' : 'text-blue-800'
+                  }`}>Exclusive</h3>
+                  <p className={`text-xs transition-colors duration-300 ${
+                    darkMode ? 'text-blue-300' : 'text-blue-600'
+                  }`}>Special deals</p>
                 </div>
                 
-                <div className="text-center p-3 rounded-lg bg-gradient-to-br from-purple-50 to-purple-100">
+                <div className={`text-center p-3 rounded-lg transition-colors duration-300 ${
+                  darkMode 
+                    ? 'bg-gradient-to-br from-purple-900/30 to-purple-800/30 border border-purple-800/50' 
+                    : 'bg-gradient-to-br from-purple-50 to-purple-100'
+                }`}>
                   <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=24&h=24&fit=crop" 
                        alt="Crown" className="w-5 h-5 rounded mx-auto mb-2"/>
-                  <h3 className="text-xs font-medium text-purple-800 mb-1">VIP Status</h3>
-                  <p className="text-xs text-purple-600">Premium access</p>
+                  <h3 className={`text-xs font-medium mb-1 transition-colors duration-300 ${
+                    darkMode ? 'text-purple-200' : 'text-purple-800'
+                  }`}>VIP Status</h3>
+                  <p className={`text-xs transition-colors duration-300 ${
+                    darkMode ? 'text-purple-300' : 'text-purple-600'
+                  }`}>Premium access</p>
                 </div>
               </div>
 
               {/* Referral Code - Compact */}
               <div className="text-center mb-6">
-                <p className="text-xs text-gray-500 mb-2">Your referral code</p>
-                <div className="bg-gray-50 border-2 border-dashed border-gray-200 rounded-lg p-3 mb-3">
-                  <span className="text-lg font-mono tracking-widest text-gray-900">{referralCode}</span>
+                <p className={`text-xs mb-2 transition-colors duration-300 ${
+                  darkMode ? 'text-gray-400' : 'text-gray-500'
+                }`}>Your referral code</p>
+                <div className={`border-2 border-dashed rounded-lg p-3 mb-3 transition-colors duration-300 ${
+                  darkMode 
+                    ? 'bg-gray-900/50 border-gray-700' 
+                    : 'bg-gray-50 border-gray-200'
+                }`}>
+                  <span className={`text-lg font-mono tracking-widest transition-colors duration-300 ${
+                    darkMode ? 'text-white' : 'text-gray-900'
+                  }`}>{referralCode}</span>
                 </div>
                 <button
                   onClick={copyToClipboard}
-                  className={`w-full py-2.5 px-4 rounded-lg font-medium transition-all duration-200 ${
+                  className={`w-full py-2.5 px-4 rounded-lg font-medium transition-all duration-200 transition-colors duration-300 ${
                     copied
                       ? 'bg-emerald-500 text-white'
+                      : darkMode
+                      ? 'bg-gray-700 hover:bg-gray-600 text-white'
                       : 'bg-gray-900 hover:bg-gray-800 text-white'
                   }`}
                 >
@@ -210,7 +270,11 @@ const ReferAFriend = () => {
                 
                 <button
                   onClick={shareViaEmail}
-                  className="flex items-center justify-center space-x-2 py-2.5 px-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors duration-200"
+                  className={`flex items-center justify-center space-x-2 py-2.5 px-3 rounded-lg transition-colors duration-200 ${
+                    darkMode 
+                      ? 'bg-gray-500 hover:bg-gray-400 text-white' 
+                      : 'bg-gray-600 hover:bg-gray-700 text-white'
+                  }`}
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
@@ -220,13 +284,23 @@ const ReferAFriend = () => {
               </div>
 
               {/* Progress - Minimized */}
-              <div className="p-3 bg-gray-50 rounded-lg">
+              <div className={`p-3 rounded-lg transition-colors duration-300 ${
+                darkMode ? 'bg-gray-800/50' : 'bg-gray-50'
+              }`}>
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-medium text-gray-700">Progress</span>
-                  <span className="text-xs text-gray-500">3/5</span>
+                  <span className={`text-xs font-medium transition-colors duration-300 ${
+                    darkMode ? 'text-gray-300' : 'text-gray-700'
+                  }`}>Progress</span>
+                  <span className={`text-xs transition-colors duration-300 ${
+                    darkMode ? 'text-gray-400' : 'text-gray-500'
+                  }`}>3/5</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-1.5">
-                  <div className="bg-gray-800 h-1.5 rounded-full transition-all duration-500" style={{width: '60%'}}></div>
+                <div className={`w-full rounded-full h-1.5 transition-colors duration-300 ${
+                  darkMode ? 'bg-gray-700' : 'bg-gray-200'
+                }`}>
+                  <div className={`h-1.5 rounded-full transition-all duration-500 ${
+                    darkMode ? 'bg-gray-300' : 'bg-gray-800'
+                  }`} style={{width: '60%'}}></div>
                 </div>
               </div>
             </div>
@@ -239,7 +313,11 @@ const ReferAFriend = () => {
         <div className="fixed bottom-6 right-6 z-40">
           <button
             onClick={() => setIsOpen(true)}
-            className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-medium shadow-lg transition-colors duration-200"
+            className={`px-6 py-3 rounded-lg font-medium shadow-lg transition-colors duration-200 ${
+              darkMode 
+                ? 'bg-gray-700 hover:bg-gray-600 text-white' 
+                : 'bg-gray-900 hover:bg-gray-800 text-white'
+            }`}
           >
             Refer Friends
           </button>
