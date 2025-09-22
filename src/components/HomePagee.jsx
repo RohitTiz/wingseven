@@ -16,6 +16,7 @@ import ChatWidget from '../components/ChatWidget.jsx';
 import Header from './Header.jsx';
 import AuthSection from './AuthSection';
 import Footer from './Footer.jsx';
+import ExploreCourse from '../components/ExploreCourse'; // Import the new component
 
 const HomePage = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -54,21 +55,10 @@ const HomePage = () => {
   return (
     <>
       <AuthSection />
-      <div style={{ paddingTop: '0px' }}>
+      {/* <div style={{ paddingTop: '0px' }}> */}
         <HeroSection />
-        <MetricsSection />
-        
-        {/* Section Header with the exact style from CourseSection */}
-        <div ref={sectionRef} className="text-center mb-12 sm:mb-16 md:mb-20">
-          <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 transition-all duration-700 transform ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-          } ${darkMode ? 'text-light-text' : 'text-dark-text'}`} 
-          style={{ transitionDelay: '200ms' }}
-          >
-            Explore Our <span className="text-blue-600">Courses</span>
-          </h2>
-        </div>
-
+        <MetricsSection />     
+        <ExploreCourse />
         <CourseSection />
         <FreeCourseSection/>
         <FacultySection />
@@ -81,7 +71,7 @@ const HomePage = () => {
         <ContactUs />
         <ChatWidget />
         <Footer />
-      </div>
+      {/* </div> */}
     </>
   );
 };
