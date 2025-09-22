@@ -115,7 +115,7 @@ const LearningProcessSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className={`w-full bg-gradient-to-br ${darkMode ? 'from-gray-900 to-gray-800' : 'from-gray-50 to-white'} py-16 sm:py-20 md:py-24 lg:py-28 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 overflow-hidden relative transition-colors duration-300`}
+      className={`w-full bg-gradient-to-br ${darkMode ? 'from-gray-900 to-gray-800' : 'from-gray-50 to-white'} py-8 sm:py-10 md:py-12 lg:py-14 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 overflow-hidden relative transition-colors duration-300`}
     >
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -125,13 +125,8 @@ const LearningProcessSection = () => {
       </div>
 
       {/* Header */}
-      <div className="text-center mb-12 sm:mb-16 md:mb-20">
-        <div className={`inline-flex items-center gap-2 ${darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-50 text-blue-600'} px-4 py-2 rounded-full text-sm font-medium mb-6 transition-all duration-700 transform ${
-          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-        }`}>
-          <BookOpenIcon />
-          Learning Process
-        </div>
+      <div className="text-center mb-8 sm:mb-10 md:mb-12">
+        
         
         <h2 className={`font-inter font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl ${darkMode ? 'text-white' : 'text-gray-900'} mb-4 sm:mb-6 transition-all duration-700 transform ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
@@ -236,7 +231,7 @@ const LearningProcessSection = () => {
         </div>
 
         {/* Mobile/Tablet Layout - Vertical */}
-        <div className="lg:hidden space-y-8">
+        <div className="lg:hidden space-y-6">
           {steps.map((step, index) => {
             const Icon = step.icon;
             const isActive = activeCard === index;
@@ -288,7 +283,7 @@ const LearningProcessSection = () => {
         </div>
 
         {/* Call to Action */}
-        <div className={`text-center mt-16 transition-all duration-700 transform ${
+        <div className={`text-center mt-12 transition-all duration-700 transform ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
         }`} style={{ transitionDelay: '1200ms' }}>
           <button className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-blue-800 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
