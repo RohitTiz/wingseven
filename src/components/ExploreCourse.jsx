@@ -76,7 +76,7 @@ const ExploreCourse = () => {
   }, [isVisible]);
 
   return (
-    <div className={`py-4 min-h-0 relative overflow-hidden transition-colors duration-300 ${
+    <div className={`flex items-center justify-center relative overflow-hidden transition-colors duration-300 ${
       darkMode 
         ? 'bg-gradient-to-br from-gray-900 to-gray-800' 
         : 'bg-gradient-to-br from-gray-50 to-white'
@@ -100,26 +100,29 @@ const ExploreCourse = () => {
         }`}></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 h-full" ref={containerRef}>
-        <div ref={sectionRef} className="text-center flex flex-col justify-center min-h-[70vh]">
+      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16" ref={containerRef}>
+        <div ref={sectionRef} className="flex flex-col items-center justify-center h-full">
+          {/* Changed to use flex-grow and equal spacing */}
+          <div className="flex-grow"></div>
+          
           <h2 
             ref={titleRef}
-            className={`font-space-grotesk font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-3 transition-colors duration-300 ${
+            className={`font-space-grotesk font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-6 transition-colors duration-300 text-center ${
               darkMode ? 'text-gray-100' : 'text-gray-900'
             } opacity-0 transform translate-y-12`}
             style={{ textShadow: darkMode ? '0 4px 20px rgba(255,255,255,0.05)' : '0 4px 20px rgba(0,0,0,0.1)' }}
           >
             Explore Our{' '}
-            <span className="gradient-text text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 relative">
+            <span className="gradient-text text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 relative inline-block">
               Courses
               <div className={`absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 ${
                 darkMode ? 'opacity-30' : 'opacity-20'
-              } blur-sm`}></div>
+              } blur-sm -z-10`}></div>
             </span>
           </h2>
           
           {/* Futuristic decorative elements */}
-          <div className="mt-4 flex justify-center space-x-6">
+          <div className="flex justify-center space-x-6">
             {[1, 2, 3].map((item, index) => (
               <div 
                 key={item}
@@ -134,6 +137,9 @@ const ExploreCourse = () => {
               </div>
             ))}
           </div>
+          
+          {/* Added equal spacing at the bottom */}
+          <div className="flex-grow"></div>
         </div>
       </div>
 
