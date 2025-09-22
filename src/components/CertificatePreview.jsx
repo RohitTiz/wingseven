@@ -169,12 +169,6 @@ const CertificatePreview = () => {
           }`} style={{ transitionDelay: '200ms' }}>
             Your Digital <span className="text-green-600">Achievement</span>
           </h2>
-          
-          <p className={`text-lg md:text-xl max-w-2xl mx-auto leading-relaxed px-2 ${
-            darkMode ? 'text-slate-400' : 'text-slate-600'
-          }`}>
-            Earn industry-recognized certificates that showcase your coding mastery and unlock new career opportunities
-          </p>
         </div>
 
         {/* Certificate Selector */}
@@ -216,10 +210,10 @@ const CertificatePreview = () => {
               {/* Certificate Background Waves */}
               <WavePattern />
               
-              {/* Certificate Header with New Logo */}
+              {/* Certificate Header with Improved Logo */}
               <div className="flex items-center justify-between mb-4 md:mb-6 relative z-10">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center">
+                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center shadow-lg shadow-black/20">
                     <img 
                       src="/public/image/mainlogo.png" 
                       alt="Let's Code Brain Logo" 
@@ -230,11 +224,11 @@ const CertificatePreview = () => {
                       }}
                     />
                     {/* Fallback logo if image doesn't load */}
-                    <div className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r ${currentCert.color} rounded-xl flex items-center justify-center hidden`}>
+                    <div className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r ${currentCert.color} rounded-xl flex items-center justify-center hidden shadow-inner`}>
                       <AwardIcon className="w-6 h-6 md:w-8 md:h-8 text-white" />
                     </div>
                   </div>
-                  <div>
+                  <div className="text-left">
                     <h3 className={`font-bold text-sm md:text-base ${
                       darkMode ? 'text-slate-200' : 'text-slate-800'
                     }`}>Let's Code Brain</h3>
@@ -380,39 +374,8 @@ const CertificatePreview = () => {
                 <EyeIcon className="w-4 h-4 md:w-5 md:h-5" />
                 Preview Certificate
               </button>
-              <button className={`flex-1 backdrop-blur-md py-3 md:py-4 px-4 md:px-6 rounded-2xl font-bold text-base md:text-lg border transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 ${
-                darkMode 
-                  ? 'bg-slate-800/90 text-slate-300 border-slate-700 hover:bg-slate-800 hover:shadow-lg' 
-                  : 'bg-white/90 text-slate-700 border-slate-200 hover:bg-white hover:shadow-lg'
-              }`}>
-                <DownloadIcon className="w-4 h-4 md:w-5 md:h-5" />
-                Download Sample
-              </button>
             </div>
           </div>
-        </div>
-
-        {/* Stats Section */}
-        <div className="mt-16 md:mt-20 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto">
-          {[
-            { number: "10,000+", label: "Certificates Issued", icon: AwardIcon },
-            { number: "95%", label: "Career Success Rate", icon: StarIcon },
-            { number: "50+", label: "Industry Partners", icon: ZapIcon }
-          ].map((stat, index) => (
-            <div key={index} className={`text-center backdrop-blur-md rounded-2xl p-4 md:p-6 border shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 ${
-              darkMode 
-                ? 'bg-slate-800/90 border-slate-700' 
-                : 'bg-white/90 border-slate-200'
-            }`}>
-              <stat.icon className="w-6 h-6 md:w-8 md:h-8 text-green-600 mx-auto mb-2 md:mb-3" />
-              <div className={`text-xl md:text-2xl lg:text-3xl font-black mb-1 md:mb-2 ${
-                darkMode ? 'text-slate-200' : 'text-slate-800'
-              }`}>{stat.number}</div>
-              <div className={`text-xs md:text-sm font-medium ${
-                darkMode ? 'text-slate-400' : 'text-slate-600'
-              }`}>{stat.label}</div>
-            </div>
-          ))}
         </div>
       </div>
 
