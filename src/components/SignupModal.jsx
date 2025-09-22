@@ -76,17 +76,17 @@ const ForgotPasswordModal = ({ onClose, onBack }) => {
 
   return (
     <div className={`fixed inset-0 backdrop-blur-sm flex justify-center items-center z-50 p-4 transition-colors duration-300 ${darkMode ? 'bg-dark-bg/80' : 'bg-light-bg/80'}`}>
-      <div className={`rounded-2xl p-6 w-full max-w-sm text-center relative shadow-lg transition-colors duration-300 ${darkMode ? 'bg-dark-card from-gray-800 to-gray-900' : 'bg-light-card from-blue-50 to-white'} bg-gradient-to-b`}>
+      <div className={`rounded-2xl p-6 w-full max-w-sm text-center relative shadow-lg transition-colors duration-300 ${darkMode ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-blue-50 to-white'} border ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
         <button 
           onClick={onBack} 
-          className={`absolute top-4 left-4 bg-transparent border-none text-lg cursor-pointer transition-colors duration-300 ${darkMode ? 'text-light-text' : 'text-dark-text'}`}
+          className={`absolute top-4 left-4 bg-transparent border-none text-lg cursor-pointer transition-colors duration-300 ${darkMode ? 'text-gray-200 hover:text-white' : 'text-gray-700 hover:text-gray-900'}`}
           aria-label="Go back"
         >
           ←
         </button>
         <button 
           onClick={onClose} 
-          className={`absolute top-4 right-4 bg-transparent border-none text-xl cursor-pointer transition-colors duration-300 ${darkMode ? 'text-light-text' : 'text-dark-text'}`}
+          className={`absolute top-4 right-4 bg-transparent border-none text-xl cursor-pointer transition-colors duration-300 ${darkMode ? 'text-gray-200 hover:text-white' : 'text-gray-700 hover:text-gray-900'}`}
           aria-label="Close modal"
         >
           ×
@@ -94,8 +94,8 @@ const ForgotPasswordModal = ({ onClose, onBack }) => {
         
         {step === 'phone' ? (
           <>
-            <h2 className={`text-xl md:text-2xl font-bold mb-2 transition-colors duration-300 ${darkMode ? 'text-light-text' : 'text-dark-text'}`}>Forgot Password?</h2>
-            <p className={`text-xs md:text-sm mb-6 leading-relaxed transition-colors duration-300 ${darkMode ? 'text-light-text' : 'text-dark-text'}`}>
+            <h2 className={`text-xl md:text-2xl font-bold mb-2 transition-colors duration-300 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Forgot Password?</h2>
+            <p className={`text-xs md:text-sm mb-6 leading-relaxed transition-colors duration-300 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               Enter your phone number and we'll send you an OTP to reset your password
             </p>
             
@@ -103,7 +103,7 @@ const ForgotPasswordModal = ({ onClose, onBack }) => {
               <select
                 value={countryCode}
                 onChange={e => setCountryCode(e.target.value)}
-                className={`w-full md:w-28 p-3 rounded-xl border text-sm outline-none cursor-pointer transition-colors duration-300 ${darkMode ? 'bg-dark-card border-dark-border text-light-text' : 'bg-light-card border-light-border text-dark-text'}`}
+                className={`w-full md:w-28 p-3 rounded-xl border text-sm outline-none cursor-pointer transition-colors duration-300 ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
               >
                 {popularCountries.map(country => (
                   <option key={country.code} value={country.code}>
@@ -116,22 +116,22 @@ const ForgotPasswordModal = ({ onClose, onBack }) => {
                 placeholder="Phone number"
                 value={phoneNumber}
                 onChange={e => setPhoneNumber(e.target.value)}
-                className={`w-full p-3 rounded-xl border text-sm outline-none transition-colors duration-300 ${darkMode ? 'bg-dark-card border-dark-border text-light-text focus:border-light-border' : 'bg-light-card border-light-border text-dark-text focus:border-dark-border'}`}
+                className={`w-full p-3 rounded-xl border text-sm outline-none transition-colors duration-300 ${darkMode ? 'bg-gray-700 border-gray-600 text-white focus:border-blue-400' : 'bg-white border-gray-300 text-gray-900 focus:border-blue-500'}`}
                 inputMode="numeric"
               />
             </div>
             
             <button 
               onClick={handleSendOtp}
-              className={`w-full p-3 text-white border-none rounded-xl text-sm font-semibold cursor-pointer transition-colors duration-300 ${darkMode ? 'bg-light-text hover:bg-gray-300' : 'bg-dark-text hover:bg-gray-800'}`}
+              className={`w-full p-3 text-white border-none rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-md`}
             >
               Send OTP
             </button>
           </>
         ) : (
           <>
-            <h2 className={`text-xl md:text-2xl font-bold mb-2 transition-colors duration-300 ${darkMode ? 'text-light-text' : 'text-dark-text'}`}>Enter OTP</h2>
-            <p className={`text-xs md:text-sm mb-6 leading-relaxed transition-colors duration-300 ${darkMode ? 'text-light-text' : 'text-dark-text'}`}>
+            <h2 className={`text-xl md:text-2xl font-bold mb-2 transition-colors duration-300 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Enter OTP</h2>
+            <p className={`text-xs md:text-sm mb-6 leading-relaxed transition-colors duration-300 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               We've sent a 6-digit code to {countryCode} {phoneNumber}
             </p>
             
@@ -143,7 +143,7 @@ const ForgotPasswordModal = ({ onClose, onBack }) => {
                   type="text"
                   value={digit}
                   onChange={e => handleOtpChange(index, e.target.value)}
-                  className={`w-10 h-12 rounded-xl border-2 text-lg text-center outline-none font-semibold transition-colors duration-300 ${darkMode ? 'bg-dark-card border-dark-border text-light-text focus:border-light-border' : 'bg-light-card border-light-border text-dark-text focus:border-dark-border'}`}
+                  className={`w-10 h-12 rounded-xl border-2 text-lg text-center outline-none font-semibold transition-colors duration-300 ${darkMode ? 'bg-gray-700 border-gray-600 text-white focus:border-blue-400' : 'bg-white border-gray-300 text-gray-900 focus:border-blue-500'}`}
                   maxLength="1"
                   inputMode="numeric"
                 />
@@ -152,12 +152,12 @@ const ForgotPasswordModal = ({ onClose, onBack }) => {
             
             <button 
               onClick={handleVerifyOtp}
-              className={`w-full p-3 text-white border-none rounded-xl text-sm font-semibold cursor-pointer transition-colors duration-300 ${darkMode ? 'bg-light-text hover:bg-gray-300' : 'bg-dark-text hover:bg-gray-800'}`}
+              className={`w-full p-3 text-white border-none rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-md`}
             >
               Verify OTP
             </button>
             
-            <div className={`text-xs md:text-sm mt-4 transition-colors duration-300 ${darkMode ? 'text-light-text' : 'text-dark-text'}`}>
+            <div className={`text-xs md:text-sm mt-4 transition-colors duration-300 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               {canResend ? (
                 <button
                   onClick={handleResend}
@@ -219,10 +219,15 @@ const SignupModal = ({ onClose, onSignUp }) => {
           alert('Passwords do not match');
           return;
         }
+        
+        // Store user name in localStorage
+        const fullName = `${firstName} ${lastName}`;
+        localStorage.setItem('userName', fullName);
+        
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
-          onSignUp(email, `${firstName} ${lastName}`);
+          onSignUp(email, fullName);
           onClose();
         }, 1500);
       } else {
@@ -302,12 +307,12 @@ const SignupModal = ({ onClose, onSignUp }) => {
       `}</style>
       
       <div className={`fixed inset-0 backdrop-blur flex justify-center items-center z-[2000] p-4 transition-colors duration-300 ${darkMode ? 'bg-dark-bg/80' : 'bg-light-bg/80'}`}>
-        <div className={`rounded-2xl p-6 w-full max-w-md text-center shadow-lg relative flex flex-col no-scrollbar transition-colors duration-300 ${darkMode ? 'bg-dark-card from-gray-800 to-gray-900' : 'bg-light-card from-blue-50 to-white'} bg-gradient-to-b ${
+        <div className={`rounded-2xl p-6 w-full max-w-md text-center shadow-lg relative flex flex-col no-scrollbar transition-colors duration-300 ${darkMode ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-blue-50 to-white'} border ${darkMode ? 'border-gray-700' : 'border-gray-200'} ${
           activeTab === 'signup' ? 'min-h-[580px] max-h-[90vh]' : 'min-h-[520px] max-h-[90vh]'
         }`}>
           <button 
             onClick={onClose} 
-            className={`absolute -top-6 -right-6 border rounded-full w-10 h-10 flex items-center justify-center text-xl cursor-pointer z-[2100] shadow-md transition-colors duration-300 ${darkMode ? 'bg-dark-card border-dark-border text-light-text hover:bg-gray-700' : 'bg-light-card border-light-border text-dark-text hover:bg-gray-100'}`}
+            className={`absolute -top-6 -right-6 border rounded-full w-10 h-10 flex items-center justify-center text-xl cursor-pointer z-[2100] shadow-md transition-colors duration-300 ${darkMode ? 'bg-gray-800 border-gray-700 text-white hover:bg-gray-700' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'}`}
             aria-label="Close modal"
           >
             ×
@@ -316,22 +321,38 @@ const SignupModal = ({ onClose, onSignUp }) => {
           <div className={`flex justify-center rounded-full mb-5 overflow-hidden transition-colors duration-300 ${darkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
             <button
               onClick={() => setActiveTab('login')}
-              className={`px-4 py-2 border-none font-semibold rounded-full cursor-pointer transition-all text-sm flex-1 ${activeTab === 'login' ? (darkMode ? 'bg-light-text text-dark-text' : 'bg-dark-text text-light-text') : (darkMode ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-200 text-gray-500 hover:bg-gray-300')}`}
+              className={`px-4 py-2 border-none font-semibold rounded-full cursor-pointer transition-all text-sm flex-1 ${
+                activeTab === 'login' 
+                  ? darkMode 
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md' 
+                    : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md'
+                  : darkMode 
+                    ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' 
+                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+              }`}
             >
               Login
             </button>
             <button
               onClick={() => setActiveTab('signup')}
-              className={`px-4 py-2 border-none font-semibold rounded-full cursor-pointer transition-all text-sm flex-1 ${activeTab === 'signup' ? (darkMode ? 'bg-light-text text-dark-text' : 'bg-dark-text text-light-text') : (darkMode ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-200 text-gray-500 hover:bg-gray-300')}`}
+              className={`px-4 py-2 border-none font-semibold rounded-full cursor-pointer transition-all text-sm flex-1 ${
+                activeTab === 'signup' 
+                  ? darkMode 
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md' 
+                    : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md'
+                  : darkMode 
+                    ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' 
+                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+              }`}
             >
               Register
             </button>
           </div>
 
-          <h2 className={`text-lg md:text-xl font-bold mb-1 transition-colors duration-300 ${darkMode ? 'text-light-text' : 'text-dark-text'}`}>
+          <h2 className={`text-lg md:text-xl font-bold mb-1 transition-colors duration-300 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
             {activeTab === 'signup' ? 'Create Account' : 'Welcome Back'}
           </h2>
-          <p className={`text-xs md:text-sm mb-5 leading-relaxed transition-colors duration-300 ${darkMode ? 'text-light-text' : 'text-dark-text'}`}>
+          <p className={`text-xs md:text-sm mb-5 leading-relaxed transition-colors duration-300 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
             {activeTab === 'signup' 
               ? 'Please fill in your details to get started'
               : 'Sign in to continue to your account'
@@ -347,14 +368,14 @@ const SignupModal = ({ onClose, onSignUp }) => {
                     placeholder="First name"
                     value={firstName}
                     onChange={e => setFirstName(e.target.value)}
-                    className={`w-full p-3 rounded-xl border text-sm outline-none mb-3 transition-colors duration-300 ${darkMode ? 'bg-dark-card border-dark-border text-light-text focus:border-light-border' : 'bg-light-card border-light-border text-dark-text focus:border-dark-border'}`}
+                    className={`w-full p-3 rounded-xl border text-sm outline-none mb-3 transition-colors duration-300 ${darkMode ? 'bg-gray-700 border-gray-600 text-white focus:border-blue-400' : 'bg-white border-gray-300 text-gray-900 focus:border-blue-500'}`}
                   />
                   <input
                     type="text"
                     placeholder="Last name"
                     value={lastName}
                     onChange={e => setLastName(e.target.value)}
-                    className={`w-full p-3 rounded-xl border text-sm outline-none mb-3 transition-colors duration-300 ${darkMode ? 'bg-dark-card border-dark-border text-light-text focus:border-light-border' : 'bg-light-card border-light-border text-dark-text focus:border-dark-border'}`}
+                    className={`w-full p-3 rounded-xl border text-sm outline-none mb-3 transition-colors duration-300 ${darkMode ? 'bg-gray-700 border-gray-600 text-white focus:border-blue-400' : 'bg-white border-gray-300 text-gray-900 focus:border-blue-500'}`}
                   />
                 </>
               )}
@@ -364,7 +385,7 @@ const SignupModal = ({ onClose, onSignUp }) => {
                 placeholder={activeTab === 'signup' ? 'Enter your email' : 'Enter your email'}
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className={`w-full p-3 rounded-xl border text-sm outline-none mb-3 transition-colors duration-300 ${darkMode ? 'bg-dark-card border-dark-border text-light-text focus:border-light-border' : 'bg-light-card border-light-border text-dark-text focus:border-dark-border'}`}
+                className={`w-full p-3 rounded-xl border text-sm outline-none mb-3 transition-colors duration-300 ${darkMode ? 'bg-gray-700 border-gray-600 text-white focus:border-blue-400' : 'bg-white border-gray-300 text-gray-900 focus:border-blue-500'}`}
                 inputMode="email"
               />
 
@@ -373,7 +394,7 @@ const SignupModal = ({ onClose, onSignUp }) => {
                   <select
                     value={countryCode}
                     onChange={e => setCountryCode(e.target.value)}
-                    className={`w-full md:w-24 p-3 rounded-xl border text-sm outline-none cursor-pointer transition-colors duration-300 ${darkMode ? 'bg-dark-card border-dark-border text-light-text' : 'bg-light-card border-light-border text-dark-text'}`}
+                    className={`w-full md:w-24 p-3 rounded-xl border text-sm outline-none cursor-pointer transition-colors duration-300 ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
                   >
                     {popularCountries.map(country => (
                       <option key={country.code} value={country.code}>
@@ -387,7 +408,7 @@ const SignupModal = ({ onClose, onSignUp }) => {
                     placeholder="Phone number"
                     value={phoneNumber}
                     onChange={e => setPhoneNumber(e.target.value)}
-                    className={`w-full p-3 rounded-xl border text-sm outline-none transition-colors duration-300 ${darkMode ? 'bg-dark-card border-dark-border text-light-text focus:border-light-border' : 'bg-light-card border-light-border text-dark-text focus:border-dark-border'}`}
+                    className={`w-full p-3 rounded-xl border text-sm outline-none transition-colors duration-300 ${darkMode ? 'bg-gray-700 border-gray-600 text-white focus:border-blue-400' : 'bg-white border-gray-300 text-gray-900 focus:border-blue-500'}`}
                     inputMode="tel"
                   />
                 </div>
@@ -398,7 +419,7 @@ const SignupModal = ({ onClose, onSignUp }) => {
                 placeholder={activeTab === 'signup' ? 'Create a password' : 'Enter your password'}
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                className={`w-full p-3 rounded-xl border text-sm outline-none mb-3 transition-colors duration-300 ${darkMode ? 'bg-dark-card border-dark-border text-light-text focus:border-light-border' : 'bg-light-card border-light-border text-dark-text focus:border-dark-border'}`}
+                className={`w-full p-3 rounded-xl border text-sm outline-none mb-3 transition-colors duration-300 ${darkMode ? 'bg-gray-700 border-gray-600 text-white focus:border-blue-400' : 'bg-white border-gray-300 text-gray-900 focus:border-blue-500'}`}
               />
 
               {activeTab === 'signup' && (
@@ -407,11 +428,11 @@ const SignupModal = ({ onClose, onSignUp }) => {
                   placeholder="Confirm your password"
                   value={confirmPassword}
                   onChange={e => setConfirmPassword(e.target.value)}
-                  className={`w-full p-3 rounded-xl border text-sm outline-none mb-3 transition-colors duration-300 ${darkMode ? 'bg-dark-card border-dark-border text-light-text focus:border-light-border' : 'bg-light-card border-light-border text-dark-text focus:border-dark-border'}`}
+                  className={`w-full p-3 rounded-xl border text-sm outline-none mb-3 transition-colors duration-300 ${darkMode ? 'bg-gray-700 border-gray-600 text-white focus:border-blue-400' : 'bg-white border-gray-300 text-gray-900 focus:border-blue-500'}`}
                 />
               )}
 
-              <div className={`text-right text-xs mb-3 transition-colors duration-300 ${darkMode ? 'text-light-text' : 'text-dark-text'} ${
+              <div className={`text-right text-xs mb-3 transition-colors duration-300 ${darkMode ? 'text-gray-300' : 'text-gray-600'} ${
                 activeTab === 'login' ? 'visible' : 'invisible'
               }`}>
                 <button
@@ -423,13 +444,13 @@ const SignupModal = ({ onClose, onSignUp }) => {
               </div>
 
               {activeTab === 'signup' && (
-                <div className={`flex items-center justify-start mb-4 text-xs transition-colors duration-300 ${darkMode ? 'text-light-text' : 'text-dark-text'}`}>
+                <div className={`flex items-center justify-start mb-4 text-xs transition-colors duration-300 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                   <input
                     type="checkbox"
                     id="terms"
                     checked={agreeToTerms}
                     onChange={e => setAgreeToTerms(e.target.checked)}
-                    className={`mr-2 w-4 h-4 transition-colors duration-300 ${darkMode ? 'accent-light-text' : 'accent-dark-text'}`}
+                    className={`mr-2 w-4 h-4 transition-colors duration-300 ${darkMode ? 'accent-blue-400' : 'accent-blue-500'}`}
                   />
                   <label htmlFor="terms" className="cursor-pointer">
                     I agree to the <a href="#" className={`transition-colors duration-300 ${darkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-500 hover:text-blue-600'}`}>Terms</a>
@@ -439,13 +460,13 @@ const SignupModal = ({ onClose, onSignUp }) => {
 
               <button 
                 onClick={handleSignUp}
-                className={`w-full p-3 text-white border-none rounded-xl text-sm font-semibold cursor-pointer mb-3 transition-colors duration-300 ${darkMode ? 'bg-light-text hover:bg-gray-300' : 'bg-dark-text hover:bg-gray-800'}`}
+                className={`w-full p-3 text-white border-none rounded-xl text-sm font-semibold cursor-pointer mb-3 transition-all duration-300 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-md transform hover:scale-105`}
               >
                 {activeTab === 'signup' ? 'Create Account' : 'Sign In'}
               </button>
 
               {activeTab === 'signup' ? (
-                <div className={`text-xs transition-colors duration-300 ${darkMode ? 'text-light-text' : 'text-dark-text'}`}>
+                <div className={`text-xs transition-colors duration-300 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                   Already have an account?{' '}
                   <button
                     onClick={() => setActiveTab('login')} 
@@ -455,7 +476,7 @@ const SignupModal = ({ onClose, onSignUp }) => {
                   </button>
                 </div>
               ) : (
-                <div className={`text-xs transition-colors duration-300 ${darkMode ? 'text-light-text' : 'text-dark-text'}`}>
+                <div className={`text-xs transition-colors duration-300 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                   Don't have an account?{' '}
                   <button
                     onClick={() => setActiveTab('signup')} 
@@ -470,24 +491,24 @@ const SignupModal = ({ onClose, onSignUp }) => {
 
           {activeTab === 'login' && (
             <div className="pt-2">
-              <div className={`text-xs mb-2 transition-colors duration-300 ${darkMode ? 'text-light-text' : 'text-dark-text'}`}>
+              <div className={`text-xs mb-2 transition-colors duration-300 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 Or log in with
               </div>
               <div className="flex justify-center gap-3">
                 <button 
-                  className={`w-10 h-10 rounded-xl border flex items-center justify-center cursor-pointer transition-colors duration-300 ${darkMode ? 'bg-dark-card border-dark-border hover:bg-gray-700' : 'bg-light-card border-light-border hover:bg-gray-50'}`}
+                  className={`w-10 h-10 rounded-xl border flex items-center justify-center cursor-pointer transition-colors duration-300 ${darkMode ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' : 'bg-white border-gray-300 hover:bg-gray-50'}`}
                   aria-label="Login with Google"
                 >
                   <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google" width="18" />
                 </button>
                 <button 
-                  className={`w-10 h-10 rounded-xl border flex items-center justify-center cursor-pointer transition-colors duration-300 ${darkMode ? 'bg-dark-card border-dark-border hover:bg-gray-700' : 'bg-light-card border-light-border hover:bg-gray-50'}`}
+                  className={`w-10 h-10 rounded-xl border flex items-center justify-center cursor-pointer transition-colors duration-300 ${darkMode ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' : 'bg-white border-gray-300 hover:bg-gray-50'}`}
                   aria-label="Login with Facebook"
                 >
                   <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="18" />
                 </button>
                 <button 
-                  className={`w-10 h-10 rounded-xl border flex items-center justify-center cursor-pointer transition-colors duration-300 ${darkMode ? 'bg-dark-card border-dark-border hover:bg-gray-700' : 'bg-light-card border-light-border hover:bg-gray-50'}`}
+                  className={`w-10 h-10 rounded-xl border flex items-center justify-center cursor-pointer transition-colors duration-300 ${darkMode ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' : 'bg-white border-gray-300 hover:bg-gray-50'}`}
                   aria-label="Login with Apple"
                 >
                   <img src="https://cdn-icons-png.flaticon.com/512/831/831276.png" alt="Apple" width="18" />
@@ -501,9 +522,9 @@ const SignupModal = ({ onClose, onSignUp }) => {
       {/* Success Message */}
       {showSuccess && (
         <div className={`fixed inset-0 backdrop-blur-sm flex justify-center items-center z-[4000] animate-fadeIn p-4 transition-colors duration-300 ${darkMode ? 'bg-dark-bg/80' : 'bg-light-bg/80'}`}>
-          <div className={`rounded-2xl p-6 text-center shadow-lg max-w-sm w-full transform animate-popIn transition-colors duration-300 ${darkMode ? 'bg-dark-card' : 'bg-light-card'}`}>
+          <div className={`rounded-2xl p-6 text-center shadow-lg max-w-sm w-full transform animate-popIn transition-colors duration-300 ${darkMode ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-blue-50 to-white'} border ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
             <div className="text-5xl text-green-500 mb-4 animate-bounce">✓</div>
-            <div className={`text-lg md:text-xl font-semibold transition-colors duration-300 ${darkMode ? 'text-light-text' : 'text-dark-text'}`}>
+            <div className={`text-lg md:text-xl font-semibold transition-colors duration-300 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
               {activeTab === 'signup' ? 'Successfully Registered!' : 'Successfully Logged In!'}
             </div>
           </div>
