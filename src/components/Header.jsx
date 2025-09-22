@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SignupModal from './SignupModal';
 import ProfileAvatar from './ProfileAvatar';
-import DemoModal from '../pages/DemoModal'; // Import the new component
-// In Header.jsx
-import { useDarkMode } from '../context/DarkModeContext'; // Correct path
+import DemoModal from '../pages/DemoModal';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, setUserName = () => {} }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [showDemoModal, setShowDemoModal] = useState(false); // State for demo modal
+  const [showDemoModal, setShowDemoModal] = useState(false);
   const { darkMode, toggleDarkMode } = useDarkMode();
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -41,19 +41,39 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
 
   // Function to handle Contact Us navigation
   const handleContactClick = (e) => {
-    // If we're not on the homepage, navigate to homepage first
     if (location.pathname !== '/') {
-      // Use React Router navigation to go to homepage
-      // The actual navigation will be handled by the Link component
-      return; // Let the Link handle navigation
+      return;
     }
-    
-    // If we're already on homepage, scroll to contact section
     e.preventDefault();
     const contactSection = document.getElementById('contact');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  // Handler functions for ProfileAvatar buttons
+  const handleDashboardClick = () => {
+    navigate('/dashboard');
+  };
+
+  const handleCartClick = () => {
+    navigate('/cart');
+  };
+
+  const handleWishlistClick = () => {
+    navigate('/wishlist');
+  };
+
+  const handleHelpSupportClick = () => {
+    navigate('/help-support');
+  };
+
+  const handleReferFriendClick = () => {
+    navigate('/refer-friend');
+  };
+
+  const handleNotificationClick = () => {
+    navigate('/notifications');
   };
 
   // Dynamic classes based on dark mode
@@ -122,7 +142,6 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
           <Link to="/specializations" className={navLinkClasses()}>Blogs</Link>
           <Link to="/testimonials" className={navLinkClasses()}>Workshops</Link>
           
-          {/* Updated Contact Us link */}
           <Link 
             to="/#contact" 
             onClick={handleContactClick}
@@ -159,9 +178,13 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
             </button>
             {userEmail ? (
               <ProfileAvatar 
-                user={{ email: userEmail, name: userName || userEmail.split('@')[0] }} 
                 onSignOut={handleSignOut}
-                darkMode={darkMode}
+                onDashboardClick={handleDashboardClick}
+                onCartClick={handleCartClick}
+                onWishlistClick={handleWishlistClick}
+                onHelpSupportClick={handleHelpSupportClick}
+                onReferFriendClick={handleReferFriendClick}
+                onNotificationClick={handleNotificationClick}
               />
             ) : (
               <button 
@@ -200,9 +223,13 @@ const Header = ({ userEmail = null, setUserEmail = () => {}, userName = null, se
           </button>
           {userEmail ? (
             <ProfileAvatar 
-              user={{ email: userEmail, name: userName || userEmail.split('@')[0] }} 
               onSignOut={handleSignOut}
-              darkMode={darkMode}
+              onDashboardClick={handleDashboardClick}
+              onCartClick={handleCartClick}
+              onWishlistClick={handleWishlistClick}
+              onHelpSupportClick={handleHelpSupportClick}
+              onReferFriendClick={handleReferFriendClick}
+              onNotificationClick={handleNotificationClick}
             />
           ) : (
             <button 
