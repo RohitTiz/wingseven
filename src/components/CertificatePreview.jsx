@@ -70,15 +70,15 @@ const CertificatePreview = () => {
   const currentCert = certificates[selectedCert];
 
   // Simple SVG icons as components
-  const AwardIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  const AwardIcon = ({ className = "w-6 h-6" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
       <circle cx="12" cy="8" r="7"/>
       <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
     </svg>
   );
 
-  const StarIcon = ({ filled = false }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill={filled ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  const StarIcon = ({ filled = false, className = "w-4 h-4" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill={filled ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
     </svg>
   );
@@ -210,31 +210,27 @@ const CertificatePreview = () => {
               {/* Certificate Background Waves */}
               <WavePattern />
               
-              {/* Certificate Header with Improved Logo */}
+              {/* Fixed Certificate Header with Logo */}
               <div className="flex items-center justify-between mb-4 md:mb-6 relative z-10">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center shadow-lg shadow-black/20">
+                  {/* Updated logo container with proper sizing and visibility */}
+                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl flex items-center justify-center shadow-lg shadow-black/20 bg-white p-2 overflow-visible">
                     <img 
-                      src="/public/image/mainlogo.png" 
-                      alt="Let's Code Brain Logo" 
-                      className="w-full h-full object-contain"
+                      src="/images/mainlogo.png" 
+                      alt="Logo" 
+                      className="w-full h-full object-contain max-w-full max-h-full"
                       onError={(e) => {
                         e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'block';
+                        const fallback = e.target.nextElementSibling;
+                        if (fallback) {
+                          fallback.style.display = 'flex';
+                        }
                       }}
                     />
                     {/* Fallback logo if image doesn't load */}
-                    <div className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r ${currentCert.color} rounded-xl flex items-center justify-center hidden shadow-inner`}>
-                      <AwardIcon className="w-6 h-6 md:w-8 md:h-8 text-white" />
+                    <div className={`w-20 h-20 md:w-24 md:h-24 bg-gradient-to-r ${currentCert.color} rounded-xl hidden items-center justify-center shadow-inner`}>
+                      <AwardIcon className="w-10 h-10 md:w-12 md:h-12 text-white" />
                     </div>
-                  </div>
-                  <div className="text-left">
-                    <h3 className={`font-bold text-sm md:text-base ${
-                      darkMode ? 'text-slate-200' : 'text-slate-800'
-                    }`}>Let's Code Brain</h3>
-                    <p className={`text-xs md:text-sm ${
-                      darkMode ? 'text-slate-400' : 'text-slate-600'
-                    }`}>Certification Authority</p>
                   </div>
                 </div>
                 <div className="flex gap-0.5 md:gap-1">
@@ -386,6 +382,13 @@ const CertificatePreview = () => {
         }
         .animation-delay-2000 { animation-delay: 2s; }
         .animation-delay-4000 { animation-delay: 4s; }
+        
+        /* Ensure logo image displays properly */
+        img[alt="Logo"] {
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
+        }
         
         /* Disable hover effects on touch devices */
         @media (hover: none) {

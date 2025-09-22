@@ -1,9 +1,11 @@
 // componentsdash/CartNotification.jsx
 import React, { useEffect, useState } from 'react';
 import { useCart } from '../context/CartContext';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const CartNotification = () => {
   const { isNotificationVisible } = useCart();
+  const { darkMode } = useDarkMode();
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -20,7 +22,11 @@ const CartNotification = () => {
 
   return (
     <div className="fixed top-4 right-4 z-50 animate-slide-in-right">
-      <div className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-3">
+      <div className={`transition-colors duration-300 ${
+        darkMode 
+          ? 'bg-green-600 border border-green-500 text-white' 
+          : 'bg-green-500 text-white'
+      } px-6 py-3 rounded-lg shadow-lg flex items-center gap-3`}>
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
           className="h-6 w-6" 
@@ -32,11 +38,19 @@ const CartNotification = () => {
         </svg>
         <div>
           <p className="font-semibold">Successfully Added to Cart!</p>
-          <p className="text-sm opacity-90">Course has been added to your cart</p>
+          <p className={`text-sm transition-colors duration-300 ${
+            darkMode ? 'opacity-80' : 'opacity-90'
+          }`}>
+            Course has been added to your cart
+          </p>
         </div>
         <button 
           onClick={() => setShow(false)}
-          className="ml-2 hover:bg-green-600 rounded-full p-1"
+          className={`ml-2 rounded-full p-1 transition-colors duration-300 ${
+            darkMode 
+              ? 'hover:bg-green-700' 
+              : 'hover:bg-green-600'
+          }`}
         >
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
