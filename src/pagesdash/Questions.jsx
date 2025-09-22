@@ -3,7 +3,6 @@ import { useDarkMode } from '../context/DarkModeContext';
 import { quizData } from '../data/quizData';
 import QuizCard from '../componentsdash/QuizCard';
 import Quiz from '../componentsdash/Quiz';
-import { FiFilter, FiX, FiSearch, FiCheckCircle, FiRefreshCw } from 'react-icons/fi';
 
 export const Questions = () => {
   const { darkMode } = useDarkMode();
@@ -123,7 +122,7 @@ export const Questions = () => {
           {/* Stats */}
           <div className={`flex flex-wrap gap-4 text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
             <div className="flex items-center">
-              <FiCheckCircle className="mr-1 text-green-500" />
+              <span className="mr-1 text-green-500">✓</span>
               <span>{stats.completedCount} Completed</span>
             </div>
             <div>
@@ -137,7 +136,7 @@ export const Questions = () => {
           onClick={() => setShowMobileFilters(!showMobileFilters)}
           className="md:hidden mb-4 w-full px-4 py-3 bg-indigo-600 text-white rounded-lg font-medium flex items-center justify-center hover:bg-indigo-700 transition-colors duration-300"
         >
-          <FiFilter className="mr-2" />
+          <span className="mr-2">☰</span>
           {showMobileFilters ? 'Hide Filters' : 'Show Filters'}
         </button>
         
@@ -149,7 +148,7 @@ export const Questions = () => {
               onClick={clearAllFilters}
               className={`text-sm flex items-center ${darkMode ? 'text-indigo-400 hover:text-indigo-300' : 'text-indigo-600 hover:text-indigo-800'}`}
             >
-              <FiRefreshCw className="mr-1" /> Reset
+              <span className="mr-1">↻</span> Reset
             </button>
           </div>
           
@@ -220,7 +219,7 @@ export const Questions = () => {
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FiSearch className={`${darkMode ? 'text-gray-500' : 'text-gray-400'}`} />
+                  <span className={`${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>🔍</span>
                 </div>
                 <input
                   type="text"
@@ -236,7 +235,7 @@ export const Questions = () => {
                     onClick={() => setSearchTerm('')}
                     className="absolute inset-y-0 right-0 pr-3 flex items-center"
                   >
-                    <FiX className={`${darkMode ? 'text-gray-500 hover:text-gray-400' : 'text-gray-400 hover:text-gray-600'}`} />
+                    <span className={`${darkMode ? 'text-gray-500 hover:text-gray-400' : 'text-gray-400 hover:text-gray-600'}`}>×</span>
                   </button>
                 )}
               </div>

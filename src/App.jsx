@@ -15,6 +15,12 @@ import CourseDetails from './components/CourseDetails';
 import Checkout from './components/Checkout';
 import AuthSection from './components/AuthSection';
 
+// Add these imports at the top
+import ReferAFriend from './components/ReferAFriend';
+import HelpSupport from './components/HelpSupport';
+import Notifications from './components/Notifications';
+import Wishlist from './components/Wishlist';
+
 // Dashboard components
 import DashboardLayout from './layout/dashboard';
 import { StudyMaterials } from './pagesdash/StudyMaterials';
@@ -64,6 +70,12 @@ const App = () => {
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/cart" element={<CartPage />} />
               
+              {/* Then add these routes inside your <Routes> component: */}
+              <Route path="/refer-friend" element={<ReferAFriend />} />
+              <Route path="/help-support" element={<HelpSupport />} />
+              <Route path="/notifications" element={<Notifications />} />
+              <Route path="/wishlist" element={<Wishlist />} />
+
               {/* Dashboard Routes */}
               <Route path="/dashboard" element={<DashboardLayout />}>
                 <Route index element={<DashPanel />} />
