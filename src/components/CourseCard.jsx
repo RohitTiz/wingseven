@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDarkMode } from '../context/DarkModeContext';
 
 const CourseCard = ({ course }) => {
   const navigate = useNavigate();
   const { darkMode } = useDarkMode();
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [showWishlistText, setShowWishlistText] = useState(false);
 
   // Handle double click navigation
   const handleCourseClick = () => {
@@ -14,6 +16,13 @@ const CourseCard = ({ course }) => {
   const handleImageClick = (e) => {
     e.stopPropagation();
     navigate(`/courses/${course.id}`);
+  };
+
+  const handleWishlistClick = (e) => {
+    e.stopPropagation();
+    setIsWishlisted(!isWishlisted);
+    // Here you would typically also update the wishlist in your state management or API
+    // For now, we'll just toggle the local state
   };
 
   return (
@@ -36,6 +45,45 @@ const CourseCard = ({ course }) => {
           className="w-full h-48 object-cover rounded-lg shadow-lg"
         />
         
+        {/* Wishlist Heart Icon - Top Left */}
+        <div 
+          className="absolute top-6 left-6 group cursor-pointer"
+          onClick={handleWishlistClick}
+          onMouseEnter={() => setShowWishlistText(true)}
+          onMouseLeave={() => setShowWishlistText(false)}
+        >
+          <div className="relative">
+            {/* Heart Icon */}
+            <div className={`p-2 rounded-full transition-all duration-300 ${
+              isWishlisted 
+                ? 'bg-red-500 text-white shadow-lg' 
+                : 'bg-white text-gray-600 shadow-md hover:bg-red-50'
+            }`}>
+              <svg 
+                className="w-5 h-5" 
+                fill={isWishlisted ? "currentColor" : "none"}
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" 
+                />
+              </svg>
+            </div>
+            
+            {/* Tooltip Text */}
+            {showWishlistText && (
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-gray-800 text-white text-xs rounded-md whitespace-nowrap z-10">
+                {isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-800 rotate-45"></div>
+              </div>
+            )}
+          </div>
+        </div>
+        
         {/* Course Type Badge - Enhanced */}
         <div className="absolute top-6 right-6">
           <div className="relative">
@@ -49,9 +97,9 @@ const CourseCard = ({ course }) => {
           </div>
         </div>
 
-        {/* Popular Course Badge - if applicable */}
+        {/* Popular Course Badge - if applicable - moved down to avoid overlap */}
         {course.isPopular && (
-          <div className="absolute top-6 left-6">
+          <div className="absolute top-16 left-6">
             <div className="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center space-x-1">
               <span>⭐</span>
               <span>POPULAR</span>
