@@ -1,4 +1,3 @@
-// componentsdash/QuizCard.jsx
 import React from 'react';
 import { useDarkMode } from '../context/DarkModeContext';
 
@@ -46,23 +45,6 @@ const QuizCard = ({ quiz, onClick, isCompleted, score, total }) => {
             darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-500'
           }`}>
             {quiz.duration} min
-          </span>
-        </div>
-        
-        <div className="mt-3 sm:mt-4 flex items-center flex-wrap gap-2">
-          <span className={`text-xs sm:text-sm font-medium transition-colors duration-300 ${
-            darkMode ? 'text-gray-300' : 'text-gray-700'
-          }`}>
-            Difficulty:
-          </span>
-          <span className={`px-2 py-1 rounded-full text-xs font-semibold transition-colors duration-300 ${
-            quiz.difficulty === 'Easy' ? 
-              `${darkMode ? 'bg-green-800/40 text-green-300' : 'bg-green-100 text-green-800'}` :
-            quiz.difficulty === 'Medium' ? 
-              `${darkMode ? 'bg-yellow-800/40 text-yellow-300' : 'bg-yellow-100 text-yellow-800'}` :
-              `${darkMode ? 'bg-red-800/40 text-red-300' : 'bg-red-100 text-red-800'}`
-          }`}>
-            {quiz.difficulty}
           </span>
         </div>
         
